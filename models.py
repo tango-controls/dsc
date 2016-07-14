@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.conf import settings
 
 # Create your models here.
 
@@ -13,14 +13,12 @@ class DeviceServer(models.Model):
 
     created_by = models.ForeignKey(
         AUTH_USER_MODEL,
-        verbose_name=_('created by'),
         editable=False,
         on_delete=models.SET_NULL,
         related_name='created_%(class)ss',
         blank=True, null=True,)
 
     created_at = models.DateTimeField(
-        verbose_name=_('created on'),
         editable=False,
         auto_now_add=True)
 
