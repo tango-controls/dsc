@@ -26,7 +26,7 @@ class DeviceServer(models.Model):
         auto_now_add=True)
 
     license = models.ForeignKey(
-        'DeviceServerLicnese',
+        'DeviceServerLicense',
         editable=True,
         on_delete=models.SET_NULL,  # important to avoid deletion of entries when user is removed from the system
         related_name='licensed_device_servers',
@@ -68,7 +68,7 @@ class DeviceServerRepository(models.Model):
     device_server = models.OneToOneField(DeviceServer, related_name='repository')
 
 
-class DeviceServerLicnese(models.Model):
+class DeviceServerLicense(models.Model):
     """Model for providing info about licencing of devcie servers."""
     name = models.CharField(primary_key=True, max_length=64)
     description = models.TextField()
