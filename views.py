@@ -12,5 +12,5 @@ def index(request):
     '''
     return HttpResponse("Hello, world. You're at the DS Catalogue index.")
 
-def ds_detail(request):
+def ds_detail(request,device_server_id):
     return HttpResponse("Hello, world. Soon, you will see DS detail here.")
