@@ -43,7 +43,7 @@ class DeviceServerActivity(models.Model):
         AUTH_USER_MODEL,
         editable=False,
         on_delete=models.SET_NULL, # important to avoid deletion of entries when user is removed from the system
-        related_name='device_servers_cativities',
+        related_name='device_servers_activities',
         blank=True, null=True,)
 
     created_at = models.DateTimeField(

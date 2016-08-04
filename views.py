@@ -13,6 +13,9 @@ def index(request):
     '''
     return HttpResponse("Hello, world. You're at the DS Catalogue index.")
 
-def ds_detail(request,device_server_id):
+def device_server_detail(request,device_server_id):
     device_server = get_object_or_404(DeviceServer,pk=device_server_id)
-    return HttpResponse("Hello, world. Soon, you will see DS detail here.")
+    context = {
+        'device_server':device_server,
+    }
+    return render(request,'dsc/devcie_server_detail.html', context)
