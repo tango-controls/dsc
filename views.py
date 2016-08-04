@@ -18,4 +18,4 @@ def device_server_detail(request,device_server_id):
     context = {
         'device_server':device_server,
     }
-    return render(request,'dsc/devcie_server_detail.html', context)
+    return render(request,'dsc/device_server_detail.html', context)
