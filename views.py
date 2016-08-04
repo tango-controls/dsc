@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
+from .models import *
 
 # Create your views here
 
@@ -13,4 +14,5 @@ def index(request):
     return HttpResponse("Hello, world. You're at the DS Catalogue index.")
 
 def ds_detail(request,device_server_id):
+    device_server = get_object_or_404(DeviceServer,pk=device_server_id)
     return HttpResponse("Hello, world. Soon, you will see DS detail here.")
