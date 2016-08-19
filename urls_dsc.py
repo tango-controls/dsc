@@ -14,7 +14,7 @@ urlpatterns = patterns(
 
     # TODO dodać content actions view
     url(
-         r'^dsc/(?P<slug>[\w-]+)/$',
+         r'^dsc/(?P<device_server_slug>[\w-]+)/$',
          DeviceServerDetailView.as_view(),
          name='device_server_detail'),
 )

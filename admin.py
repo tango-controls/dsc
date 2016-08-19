@@ -7,15 +7,16 @@ from webu.admin import (
 )
 # Register your models here.
 #TODO Administracja wszystkimi obiektami DSC
-'''
+
 @admin.register(DeviceClass, DeviceServerRepository,
                 DeviceServerDocumentation, DeviceClassInfo,
                 DeviceServerActivity, DeviceServerLicense,
                 DeviceAttribute, DeviceCommand,
                 DevicePipe, DeviceProperty, DeviceAttributeInfo)
+class DeviceServersAdminPanel(admin.ModelAdmin):
+    pass
+
 '''
-
-
 class DeviceServersAdmin(WebuTopModelAdminMixin,
     FrontendEditableAdminMixinFactory('name'),
     PlaceholderAdminMixin,
@@ -27,3 +28,4 @@ class DeviceServersAdmin(WebuTopModelAdminMixin,
     pass
 
 admin.site.register(DeviceServer, DeviceServersAdmin)
+'''

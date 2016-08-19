@@ -19,8 +19,8 @@ from django_tables2 import RequestConfig
 def index(request):
     return HttpResponse("Hello, world. You're at the DS Catalogue index.")
 
-def device_server_detail(request,device_server_id):
-    device_server = get_object_or_404(DeviceServer,pk=device_server_id)
+def device_server_detail(request,device_server_slug):
+    device_server = get_object_or_404(DeviceServer, slug = device_server_slug)
     context = {
         'device_server':device_server,
     }
