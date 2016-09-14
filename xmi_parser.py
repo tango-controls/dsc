@@ -24,3 +24,37 @@ class TangoXmiParser:
 
         # TODO: Implement
         return None
+    def get_device_classes(self):
+        '''
+        Parse the .xmi file for classes definitions
+        :return:
+        '''
+        # TODO: Implement
+        return None
+
+    def get_device_class_info(self, cl):
+        '''
+        Return info realated to class
+        :param cl: name or DeviceClass object for which the info has to be retrived
+        :return: DevicClassInfo objec
+        '''
+        # TODO: Implement
+        return None
+
+    def get_device_attributes(self, cl):
+        '''
+        Retrun list of attributes for class cl
+        :param cl: name or DeviceClass obejct
+        :return: list of DeviceAttribute obejcts
+        '''
+        # TODO: Implement
+        return None
+
+    def get_device_commands(self, cl):
+        '''
+        Retrun list of attributes for class cl
+        :param cl: name or DeviceClass obejct
+        :return: list of DeviceAttribute obejcts
+        '''
+        # TODO: Implement
+        return None
