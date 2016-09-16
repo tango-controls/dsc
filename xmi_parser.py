@@ -11,6 +11,32 @@ import re
 
 logger = logging.getLogger(__name__)
 
+pogoDslDataTypes = {
+    'BooleanType': 'DevBoolean',
+    'FloatType': 'DevFloat',
+    'DoubleType': 'DevDouble',
+    'IntType': 'DevLong',
+    'LongType': 'DevLong64',
+    'ShortType': 'DevShort',
+    'StringType': 'DevString',
+    'UIntType': 'DevULong',
+    'ULongType': 'DevULong64',
+    'UShortType': 'DevUShort',
+    'UCharType': 'DevUChar',
+    'CharType': 'DevChar',
+    'CharArrayType': 'DevVarCharArray',
+    'DoubleArrayType': 'DevVarDoubleArray',
+    'DoubleStringArrayType': 'DevVarDoubleStringArray',
+    'FloatArrayType': 'DevVarFloatArray',
+    'LongArrayType': 'DevVarLong64Array',
+    'IntArrayType': 'DevVarLongArray',
+    'LongStringArrayType': 'DevVarLongStringArray',
+    'ShortArrayType': 'DevVarShortArray',
+    'StringArrayType': 'DevVarStringArray',
+    'ULongArrayType': 'DevVarULong64Array',
+    'UIntArrayType': 'DevVarULongArray',
+    'UShortArrayType': 'DevVarUShortArray'
+}
 
 class TangoXmiParser:
     """
@@ -144,13 +170,29 @@ class TangoXmiParser:
             logger.error("Class of provided name does not exist in the xmi file.")
             return None
 
-        # find related description element
-        description_element = class_element.find('description')
-        if description_element is None:
-            logger.error("No description for the class in the XMI file.")
-            return None
+        # find attribute elements
+        attributes_list = []
+        attributes_elements = class_element.findall('attributes')
+        # parse all elements
+        for attribute_element in attributes_elements:
+            attribute_name = attribute_element.attrib.get('name')
+            attribute_type = attribute_element.attrib.get('attType')
+            attribute_data_type_element = attribute_element.find('dataType')
+            if attribute_data_type_element is None:
+                logger.error('An attribute has no dataType info in .xmi file.')
+                attribute_data_type = 'unknown'
+            else:
+                attribute_xsi_type =   attribute_data_type_element.attrib.get('xsi:type').split(':')[1]
+                attribute_data_type = pogoDslDataTypes.get(attribute_xsi_type)
 
-        return None
+            attribute_description = ''
+
+            properties_element = attribute_element.find('properties')
+            attribute_description = ''
+
+
+
+        return attributes_list
 
     def get_device_commands(self, cl):
         """
