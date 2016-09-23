@@ -10,13 +10,13 @@ urlpatterns = patterns(
     url(
         r'^dsc/$',      #TODO delete dsc as the view will be in cms plugin content on device_server_catalogue site
         DeviceServerListView.as_view(),
-        name='device_server_list'),
+        name='deviceserver_list'),
 
     # TODO dodać content actions view
     url(
-         r'^dsc/(?P<device_server_slug>[\w-]+)/$',
+         r'^dsc/ds/(?P<pk>.*)/$',
          DeviceServerDetailView.as_view(),
-         name='device_server_detail'),
+         name='deviceserver_detail'),
 )
 
 '''

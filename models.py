@@ -51,12 +51,13 @@ class DeviceServer(models.Model): #tango Content, chaged from models.Model
 
     name = models.CharField(
         max_length=64,
-        verbose_name = ('Device Server'))
+        verbose_name = 'Device Server')
 
-    slug = models.SlugField(
-        verbose_name=('slug'),
-        max_length=250,
-        unique=True,)
+    # TODO: check if it is necessery. It makes trouble upon migration
+    # slug = models.SlugField(
+    #     verbose_name=('slug'),
+    #     max_length=250,
+    #     unique=True,)
 
     description = models.TextField()
 
@@ -77,54 +78,55 @@ class DeviceServer(models.Model): #tango Content, chaged from models.Model
         on_delete=models.SET_NULL,  # important to avoid deletion of entries when user is removed from the system
         related_name='licensed_device_servers',
         blank=True, null=True,
-        verbose_name=('License'))
+        verbose_name='License')
 
     status = models.CharField(
-        verbose_name=('Status'),
+        verbose_name='Status',
         max_length=10,
-        choices=STATUS_CHOICES,
-        default=STATUS_NEW,)
+        # choices=STATUS_CHOICES,
+        default=STATUS_NEW,
+    )
 
-    objects = ObjectManager()
-
-    class QuerySet(
-        models.query.QuerySet,
-    ):
-        pass
+    # objects = ObjectManager()
+    #
+    # class QuerySet(
+    #     models.query.QuerySet,
+    # ):
+    #     pass
 
     # TODO
-    class Meta:
-        app_label = 'dsc'
-        verbose_name = ('device server')
-        verbose_name_plural = ('device servers')
-        ordering = [ 'name', ]
+    # class Meta:
+    #     app_label = 'dsc'
+    #     verbose_name = 'device server'
+    #     verbose_name_plural = 'device servers'
+        # ordering = [ 'name', ]
 
         #TODO add special permissions, verbose names
-        '''
-        permissions = (
-            ('view_device_servers', _('view (all) device servers')),
-            ('view_published_structure', _('view published institutions')),
-            ('view_mine_draft_structure', _('view my draft institutions')),
-            ('change_mine_draft_structure', _('change my draft institutions')),
-            ('publish_structure', _('(un)publish institutions')),
-        )
 
+        # permissions = (
+        #     ('view_device_servers', _('view (all) device servers')),
+        #     ('view_published_structure', _('view published institutions')),
+        #     ('view_mine_draft_structure', _('view my draft institutions')),
+        #     ('change_mine_draft_structure', _('change my draft institutions')),
+        #     ('publish_structure', _('(un)publish institutions')),
+        # )
+        #
+        #
+        # verbose_names = {
+        #     'masculine': True,
+        #     'undefined_sing': _('a device server'),
+        #     'undefined_plur': _('device servers'),
+        #     'defined_sing': _("the device server"),
+        #     'defined_plur': _('the device servers'),
+        # }
 
-    verbose_names = {
-        'masculine': True,
-        'undefined_sing': _('a device server'),
-        'undefined_plur': _('device servers'),
-        'defined_sing': _("the device server"),
-        'defined_plur': _('the device servers'),
-    }
-    '''
 
     def __str__(self):
         return '%s' % self.name
 
     def get_absolute_url(self, pk):
-        return '/dsc/%d' % self.pk
-        #return reverse('deviceserver_detail', kwargs={'slug': self.slug})  #args=[self.pk]
+        #return '/dsc/%d' % self.pk
+        return reverse('deviceserver_detail', kwargs={'pk': self.pk})  #args=[self.pk]
 
 ###############################################################################################
 
@@ -268,4 +270,4 @@ class DeviceServerPluginModel(CMSPlugin): #LastPublishedObjectPluginBase
     #TODO prepare plugin for administration CMS
     class Meta:
         app_label = 'dsc'
-        verbose_name = ('Device Servers Catalogue plugin')
+        verbose_name = 'Device Servers Catalogue plugin'

@@ -50,10 +50,18 @@ class DeviceServerActionView(ContentActionViewMixin, DeviceServerDetailView):
 
 class DeviceServerListView(SingleTableView):
         model = DeviceServer
-        table_class = DeviceServerTable
+        # table_class = DeviceServerTable
         template_name = 'deviceserver_list.html'
-        #table = DeviceServerTable(DeviceServer.objects.all())
+        # table = DeviceServerTable(DeviceServer.objects.all())
         table_pagination = {
             'per_page': 20
         }
+
+        def render(self, context, instance, placeholder):
+            context = super(DeviceServerListView, self).render(context, instance, placeholder)
+            context['table_class'] = DeviceServerTable
+            table=DeviceServerTable(DeviceServer.objects.all())
+            RequestConfig(request).configure(table)
+            context['table']=table
+            return context
 
