@@ -1,32 +1,4 @@
-{% extends request.is_ajax|yesno:"layout/ajax.html,layout/normal.html" %}
 {% load cms_tags i18n thumbnail webu_utils %}
-
-{% block meta_title %}
-    {% with meta_title=device_server.name  %}
-        {{ block.super }}
-    {% endwith %}
-{% endblock %}
-
-{% if newsbox_seo %}
-    {% block extrahead %}
-        {% with meta_description=news.newsbox_meta_description meta_keywords=news.newsbox_meta_keywords %}
-            {{ block.super}}
-            {% if not news.newsbox_indexed %}
-                <meta name="robots" content="noindex" />
-            {% endif %}
-        {% endwith %}
-    {% endblock %}
-{% endif %}
-
-{% block breadcrumb %}
-    {% with breadcrumb_last_label=device_server.name %}
-        {{ block.super }}
-    {% endwith %}
-{% endblock %}
-
-{% block content_header %}
-<h1>Device Servers Catalogue</h1>
-{% endblock %}
 
 {% block content %}
 <h2>{{device_server.name}}</h2>

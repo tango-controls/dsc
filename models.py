@@ -53,10 +53,11 @@ class DeviceServer(models.Model): #tango Content, chaged from models.Model
         max_length=64,
         verbose_name = ('Device Server'))
 
-    slug = models.SlugField(
-        verbose_name=('slug'),
-        max_length=250,
-        unique=True,)
+    # TODO: check if it is necessery. It makes trouble upon migration
+    # slug = models.SlugField(
+    #     verbose_name=('slug'),
+    #     max_length=250,
+    #     unique=True,)
 
     description = models.TextField()
 
@@ -123,8 +124,8 @@ class DeviceServer(models.Model): #tango Content, chaged from models.Model
         return '%s' % self.name
 
     def get_absolute_url(self, pk):
-        return '/dsc/%d' % self.pk
-        #return reverse('deviceserver_detail', kwargs={'slug': self.slug})  #args=[self.pk]
+        #return '/dsc/%d' % self.pk
+        return reverse('deviceserver_detail', kwargs={'pk': self.pk})  #args=[self.pk]
 
 ###############################################################################################
 
