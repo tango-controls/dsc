@@ -8,6 +8,9 @@ class RepoHandler:
         self.temp_repo_path = temp_repo_path
         self.xmi_sotrage_path = xmi_storage_path
         self.archives_storage_path = archives_storage_path
+        self.connected = False
+        self.downloaded = False
+
 
     def connect(self, url, path_within_repository):
         """
