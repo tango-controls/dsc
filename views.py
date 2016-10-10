@@ -34,6 +34,10 @@ class DeviceServerDetailView(BreadcrumbMixinDetailView, CustomModelDetailView, C
     model = DeviceServer
     template_name = 'dsc/deviceserver_detail.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(DeviceServerDetailView, self).get_context_data(**kwargs)
+        return context
+
 '''
 class DeviceServerListView(FilterGetFormViewMixin, CMSListView):
     #TODO should be changed on table view

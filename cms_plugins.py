@@ -35,7 +35,6 @@ class DeviceServerPlugin(CMSPluginBase): #LastPublishedObjectPluginBase
             'per_page': 20
         }
 
-
         # clean context from nested context to get around of bug in context.flatten (django tracker #24765)
 
         context_inside = True

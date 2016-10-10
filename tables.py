@@ -7,7 +7,7 @@ class DeviceServerTable(tables.Table):
     #TODO add activitytype = download and here should be the sum
     downloads = tables.Column(accessor='activities.activity_type', verbose_name= 'Downloads')
     #TODO NO category in the model - must be add
-    # name = tables.LinkColumn() #'deviceserver_detail', args=[A('pk')], empty_values=()
+    name = tables.LinkColumn('deviceserver_detail', args=[A('pk')] )
     selection = tables.CheckBoxColumn(accessor="pk", attrs = { "th__input":
                                         {"onclick": "toggle(this)"}},
                                          orderable=False)
