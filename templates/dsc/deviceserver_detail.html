@@ -1,9 +1,7 @@
+{% extends request.is_ajax|yesno:"layout/ajax.html,layout/normal.html" %}
 {% load cms_tags i18n thumbnail webu_utils %}
-
 {% block content %}
-
 <h2>{{deviceserver.name}}</h2>
-
 <div><b>Downloads:</b> {{ deviceserver.no_downloads }}</div>
 <div><b>Repository:</b> {{device_server.repository.url}}</div>
 <div><b>License:</b> <a href="{{device_server.license.url}}">{{device_server.license.name}}</a></div>
