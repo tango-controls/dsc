@@ -8,7 +8,7 @@ from webu.admin import (
 # Register your models here.
 #TODO Administracja wszystkimi obiektami DSC
 
-@admin.register(DeviceClass, DeviceServerRepository,
+@admin.register(DeviceServer, DeviceClass, DeviceServerRepository,
                 DeviceServerDocumentation, DeviceClassInfo,
                 DeviceServerActivity, DeviceServerLicense,
                 DeviceAttribute, DeviceCommand,
