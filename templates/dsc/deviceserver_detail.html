@@ -7,14 +7,22 @@
 <div><b>Downloads:</b> {{ deviceserver.no_downloads }}</div>
 <div><b>Repository:</b> {{device_server.repository.url}}</div>
 <div><b>License:</b> <a href="{{device_server.license.url}}">{{device_server.license.name}}</a></div>
-<h3>Specification:</h3>
+<h3>Implements classes:</h3>
+<ul>
+{% for dc in deviceserver.device_classes_set.all: }
+<li>
+<h4>{{ dc.name }}</h4>
 <div>
+
+
     Properties: <br/>
     {# % render_table properties % #}
     <br/>
     Attributes: <br/>
 
 </div>
-
+</li>
+{% endfor %}
+</ul>
 
 {% endblock %}

@@ -7,6 +7,7 @@ from webu.custom_models.views import CustomModelDetailView
 from webu.views import CMSListView, CMSDetailView
 from tango.views import ContentActionViewMixin, FilterGetFormViewMixin, BreadcrumbMixinDetailView
 from django_tables2 import SingleTableView
+from tables import DeviceAttributesTable, DeviceCommandsTable, DevicePipesTable, DevicePropertiesTable
 #import django_filters
 
 from django.shortcuts import render
@@ -36,6 +37,14 @@ class DeviceServerDetailView(BreadcrumbMixinDetailView, CustomModelDetailView, C
 
     def get_context_data(self, **kwargs):
         context = super(DeviceServerDetailView, self).get_context_data(**kwargs)
+        print context['deviceserver'].__dict__
+        # get all classes
+        context['device_classes'] = context['deviceserver'].device_classes_set.all()
+        # for all classes tables of attributes, properties  and so will be provided
+        for cl in context['device_classes']:
+            context['device_classes_properties'] = {cl.name:DevicePropertiesTable(cl.properties_set.all())}
+            context['device_classes_attributes'] = {cl.name:DeviceAttributesTable(cl.attributes_set.all())}
+
         return context
 
 '''

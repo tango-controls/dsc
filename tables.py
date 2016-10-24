@@ -1,5 +1,5 @@
 import django_tables2 as tables
-from models import DeviceServer, DeviceServerActivity
+from models import DeviceServer, DeviceServerActivity, DeviceAttribute, DeviceProperty, DevicePipe, DeviceCommand
 from django_tables2.utils import A
 
 class DeviceServerTable(tables.Table):
@@ -17,3 +17,26 @@ class DeviceServerTable(tables.Table):
         fields = ('name', 'repository', 'license')
         sequence = ('selection', 'name','repository', 'license', 'downloads',)
 
+
+class DevicePropertiesTable(tables.Table):
+    class Meta:
+        model = DeviceProperty
+        fields = ('name','property_type', 'descritption')
+
+
+class DeviceAttributesTable(tables.Table):
+    class Meta:
+        model = DeviceAttribute
+        fields = ('name','property_type', 'descritption')
+
+
+class DevicePipesTable(tables.Table):
+    class Meta:
+        model = DevicePipe
+        fields = ('name','property_type', 'descritption')
+
+
+class DeviceCommandsTable(tables.Table):
+    class Meta:
+        model = DeviceCommand
+        fields = ('name','property_type', 'descritption')
