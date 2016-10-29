@@ -21,22 +21,22 @@ class DeviceServerTable(tables.Table):
 class DevicePropertiesTable(tables.Table):
     class Meta:
         model = DeviceProperty
-        fields = ('name','property_type', 'descritption')
+        fields = ('name','property_type', 'description')
 
 
 class DeviceAttributesTable(tables.Table):
     class Meta:
         model = DeviceAttribute
-        fields = ('name','property_type', 'descritption')
+        fields = ('name','attribute_type', 'description')
 
 
 class DevicePipesTable(tables.Table):
     class Meta:
         model = DevicePipe
-        fields = ('name','property_type', 'descritption')
+        fields = ('name', 'description')
 
 
 class DeviceCommandsTable(tables.Table):
     class Meta:
         model = DeviceCommand
-        fields = ('name','property_type', 'descritption')
+        fields = ('name','description')

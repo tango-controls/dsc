@@ -1,28 +1,59 @@
 {% extends request.is_ajax|yesno:"layout/ajax.html,layout/normal.html" %}
 {% load cms_tags i18n thumbnail webu_utils %}
+{% load render_table from django_tables2 %}
+{% load staticfiles %}
+
 {% block content_header %}
 <h1 style="text-transform: none">{{deviceserver.name}}</h1>
 {% endblock %}
 {% block content %}
 <div><b>Downloads:</b> {{ deviceserver.no_downloads }}</div>
-<div><b>Repository:</b> {{device_server.repository.url}}</div>
-<div><b>License:</b> <a href="{{device_server.license.url}}">{{device_server.license.name}}</a></div>
+<div><b>Repository:</b> {{deviceserver.repository.url}}</div>
+<div><b>License:</b> <a href="{{deviceserver.license.url}}">{{deviceserver.license.name}}</a></div>
 <h3>Implements classes:</h3>
-<ul>
-{% for dc in deviceserver.device_classes_set.all: }
-<li>
-<h4>{{ dc.name }}</h4>
-<div>
 
+<div id="dsc-detail-tabs">
+    <ul style="background: #35a635;color: rgb(85,85,85);">
+        {% for cl_name, spec in specifications.items %}
 
-    Properties: <br/>
-    {# % render_table properties % #}
-    <br/>
-    Attributes: <br/>
+            <li>
+                <a href="#dsc-{{spec.cl.name}}-class-tab"><span>{{spec.cl.name}}</span></a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    {% for cl_name, spec in specifications.items %}
+
+        <div id="dsc-{{spec.cl.name}}-class-tab">
+            <div><span style="font-weight:bold;">Description:</span> {{ spec.cl.description }}</div>
+            <div>
+                <span style="font-weight:bold;">Attributes:</span>
+                {% render_table spec.attributes_table %}
+            </div>
+            <div>
+                <span style="font-weight:bold;">Commands:</span>
+                {% render_table spec.commands_table %}
+            </div>
+            <div>
+                <span style="font-weight:bold;">Pipes:</span>
+                {% render_table spec.pipes_table %}
+            </div>
+            <div>
+                <span style="font-weight:bold;">Properties:</span>
+                {% render_table spec.properties_table %}
+            </div>
+
+        </div>
+    {% endfor %}
 
 </div>
-</li>
-{% endfor %}
-</ul>
+
+{% endblock %}
+
+{% block extra_script %}
+    {{ block.super }}
+    <script language="JavaScript">
+        $("#dsc-detail-tabs").tabs();
+    </script>
 
 {% endblock %}

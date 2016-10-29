@@ -50,6 +50,7 @@ class DeviceServerDetailView(BreadcrumbMixinDetailView, CustomModelDetailView, C
             context['specifications'][cl.name]['properties_table'] = DevicePropertiesTable(cl.properties.all())
             context['specifications'][cl.name]['attributes_table'] = DeviceAttributesTable(cl.attributes.all())
             context['specifications'][cl.name]['commands_table'] = DeviceCommandsTable(cl.commands.all())
+            context['specifications'][cl.name]['pipes_table'] = DevicePipesTable(cl.pipes.all())
             context['specifications'][cl.name]['info'] = cl.info
             context['specifications'][cl.name]['cl'] = cl
         print '****************************'
