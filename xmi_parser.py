@@ -11,32 +11,7 @@ import re
 
 logger = logging.getLogger(__name__)
 
-pogoDslDataTypes = {
-    'BooleanType': 'DevBoolean',
-    'FloatType': 'DevFloat',
-    'DoubleType': 'DevDouble',
-    'IntType': 'DevLong',
-    'LongType': 'DevLong64',
-    'ShortType': 'DevShort',
-    'StringType': 'DevString',
-    'UIntType': 'DevULong',
-    'ULongType': 'DevULong64',
-    'UShortType': 'DevUShort',
-    'UCharType': 'DevUChar',
-    'CharType': 'DevChar',
-    'CharArrayType': 'DevVarCharArray',
-    'DoubleArrayType': 'DevVarDoubleArray',
-    'DoubleStringArrayType': 'DevVarDoubleStringArray',
-    'FloatArrayType': 'DevVarFloatArray',
-    'LongArrayType': 'DevVarLong64Array',
-    'IntArrayType': 'DevVarLongArray',
-    'LongStringArrayType': 'DevVarLongStringArray',
-    'ShortArrayType': 'DevVarShortArray',
-    'StringArrayType': 'DevVarStringArray',
-    'ULongArrayType': 'DevVarULong64Array',
-    'UIntArrayType': 'DevVarULongArray',
-    'UShortArrayType': 'DevVarUShortArray'
-}
+pogoDslDataTypes = models.DS_COMMAND_DATATYPES
 
 class TangoXmiParser:
     """
@@ -77,9 +52,15 @@ class TangoXmiParser:
             name = cl.attrib.get('name')
             description_element = self.classes_elements[0].find('description')
             description = ''
+            lic = ''
+            class_copyright = ''
+            language = ''
             if description_element is not None:
                 description = description_element.attrib.get('description')
-            cls.append(models.DeviceClass(name=name, description=description))
+                lic = description_element.attrib.get('license')
+                class_copyright = description_element.attrib.get('copyright')
+                language = description_element.attrib.get('language')
+            cls.append(models.DeviceClass(name=name, description=description, license=lic, language=language))
 
         return cls
 
@@ -132,6 +113,7 @@ class TangoXmiParser:
         platform = identification_element.attrib.get('platform')
         bus = identification_element.attrib.get('bus')
         manufacturer = identification_element.attrib.get('manufacturer')
+        product = identification_element.attrib.get('reference')
         # key words are listed in their own tag
         kw_elements = identification_element.findall('keyWords')
         key_words = ','.join([kw.text for kw in kw_elements])
@@ -144,7 +126,8 @@ class TangoXmiParser:
             platform=platform,
             bus=bus,
             manufacturer=manufacturer,
-            key_words=key_words
+            key_words=key_words,
+            product_reference=product
         )
 
     def get_device_attributes(self, cl):
