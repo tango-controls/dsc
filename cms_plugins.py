@@ -29,12 +29,11 @@ class DeviceServerPlugin(CMSPluginBase): #LastPublishedObjectPluginBase
         context = super(DeviceServerPlugin, self).render(context, instance, placeholder)
         context['table_class'] = DeviceServerTable
         table = DeviceServerTable(DeviceServer.objects.all())
-        #RequestConfig(request).configure(table)
+        RequestConfig(context['request']).configure(table)
         context['table']= table
-        context['table_pagination'] = {
-            'per_page': 20
-        }
-
+        #context['table_pagination'] = {
+        #    'per_page': 20
+        #}
 
         # clean context from nested context to get around of bug in context.flatten (django tracker #24765)
 

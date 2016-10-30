@@ -8,13 +8,13 @@ from tango.cms_urls import content_action_urls #TODO do przemyślenia i implemen
 urlpatterns = patterns(
     '',
     url(
-        r'^dsc/$',      #TODO delete dsc as the view will be in cms plugin content on device_server_catalogue site
+        r'^/$',      #TODO delete dsc as the view will be in cms plugin content on device_server_catalogue site
         DeviceServerListView.as_view(),
         name='deviceserver_list'),
 
     # TODO dodać content actions view
     url(
-         r'^dsc/ds/(?P<pk>.*)/$',
+         r'^ds/(?P<pk>.*)/$',
          DeviceServerDetailView.as_view(),
          name='deviceserver_detail'),
 )

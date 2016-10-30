@@ -173,6 +173,9 @@ class DeviceServer(models.Model): #tango Content, chaged from models.Model
         #return '/dsc/%d' % self.pk
         return reverse('deviceserver_detail', kwargs={'pk': self.pk})  #args=[self.pk]
 
+    def no_downloads(self):
+        return self.activities.filter(activity_type = DS_ACTIVITY_DOWNLOAD).count()
+
 ###############################################################################################
 
 class DeviceServerActivity(models.Model):
