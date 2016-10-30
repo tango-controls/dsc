@@ -210,8 +210,11 @@ class DeviceServerActivity(models.Model):
 class DeviceServerDocumentation(models.Model):
     """Model for providing reference to device server documentation."""
     documentation_type = models.SlugField(verbose_name='Documentation type',
-                                          choices=['README', 'Manual', 'Installation Guide',
-                                                   'Generated', 'Source documentation'])
+                                          choices=zip(['README', 'Manual', 'InstGuide',
+                                                       'Generated', 'SourceDoc'],
+                                                      ['README', 'Manual', 'Installation Guide',
+                                                       'Generated', 'Source Documentation']
+                                                      ))
     url = models.URLField(verbose_name='URL')
     device_server = models.ForeignKey(DeviceServer, related_name='documentation')
 
@@ -222,10 +225,11 @@ class DeviceServerRepository(models.Model):
     """Model for referencing repository where the device serve could be found"""
     repository_type = models.SlugField(
         verbose_name ='Repository Type',
-        choices= ['GIT', 'SVN', 'Mercurial', 'FTP', 'Other']
+        choices=zip(['GIT', 'SVN', 'Mercurial', 'FTP', 'Other'],
+                    ['GIT', 'SVN', 'Mercurial', 'FTP', 'Other'])
     )
     url = models.URLField(verbose_name='URL')
-    path_in_repository = models.CharField(max_length=255, verbose_name='Path')
+    path_in_repository = models.CharField(max_length=255, verbose_name='Path', blank=True, default='')
     device_server = models.OneToOneField(DeviceServer, related_name='repository')
 
 
@@ -235,8 +239,8 @@ class DeviceServerRepository(models.Model):
 class DeviceServerLicense(models.Model):
     """Model for providing info about licencing of devcie servers."""
     name = models.CharField(primary_key=True, max_length=64, verbose_name='License')
-    description = models.TextField(verbose_name='Description')
-    url = models.URLField(blank=True, verbose_name='URL')
+    description = models.TextField(verbose_name='Description', blank=True, null=True, default='')
+    url = models.URLField(blank=True, verbose_name='URL', null=True)
 
     def __str__(self):
         return '%s' % self.name
@@ -244,17 +248,20 @@ class DeviceServerLicense(models.Model):
 class DeviceClass(models.Model):
     """Model to describe device classes implemented by device server"""
     name =models.CharField(max_length=64, verbose_name='Name')
-    description = models.TextField(verbose_name='Description')
+    description = models.TextField(verbose_name='Description', blank=True, null=True)
     device_server = models.ForeignKey(DeviceServer,related_name='device_classes')
     license = models.ForeignKey(
         'DeviceServerLicense',
         editable=True,
         on_delete=models.SET_NULL,  # important to avoid deletion of entries when license is removed from the system
-        related_name='licensed_device_servers',
+        related_name='licensed_device_classes',
         blank=True, null=True,
         verbose_name='License')
-    class_copyright = models.CharField(max_length=128, verbose_name="Copyright")
-    language = models.CharField(max_length=32, choices=['Cpp', 'Python', 'PythonHL', 'Java', 'C#'], verbose_name='Language')
+    class_copyright = models.CharField(max_length=128, verbose_name="Copyright", default='')
+    language = models.CharField(max_length=32,
+                                choices=zip(['Cpp', 'Python', 'PythonHL', 'Java', 'CSharp', 'LabView'],
+                                            ['Cpp', 'Python', 'PythonHL', 'Java', 'CSharp', 'LabView']),
+                                verbose_name='Language', default='Cpp')
 
 
     def __str__(self):
@@ -265,15 +272,16 @@ class DeviceClassInfo(models.Model):
     device_class = models.OneToOneField(DeviceClass, related_name='info')
     xmi_file = models.CharField(max_length=128) # this will store a link to source xmi_file
     contact_email = models.EmailField(verbose_name='Contact')
-    class_family = models.CharField(max_length=64)  # TODO: implement class family choices
+    class_family = models.CharField(max_length=64, blank=True, null=True, default='')  # TODO: implement class family choices
     platform = models.CharField(max_length=64,
-                                choices=['Windows','Unix Like', 'All Platforms'],
-                                verbose_name='Platform')
-    bus = models.CharField(max_length=64, verbose_name='Bus')  # TODO: implement bus choices
-    manufacturer = models.CharField(max_length=64,verbose_name='Manufacturer')  # at the beginning there will
+                                choices=zip(['Windows','Unix Like', 'All Platforms'],
+                                            ['Windows', 'Unix Like', 'All Platforms']),
+                                verbose_name='Platform', default='All Platforms')
+    bus = models.CharField(max_length=64, verbose_name='Bus', blank=True, null=True)  # TODO: implement bus choices
+    manufacturer = models.CharField(max_length=64,verbose_name='Manufacturer',default='', null=True)  # at the beginning there will
                                                                                 # not be any manufacturer table
-    key_words = models.SlugField(verbose_name="Key words")
-    product_reference = models.CharField(max_length=64, verbose_name="Product")
+    key_words = models.CharField(max_length=255, verbose_name="Key words", blank=True, null=True)
+    product_reference = models.CharField(max_length=64, verbose_name="Product", default='')
 
     def __str__(self):
         return '%s' % self.device_class
@@ -281,9 +289,11 @@ class DeviceClassInfo(models.Model):
 class DeviceAttribute(models.Model):
     """Model for providing basic description of attribute"""
     name = models.CharField(max_length=64, verbose_name='Name')
-    description = models.TextField(verbose_name='Description')
-    attribute_type = models.SlugField(choices=['Scalar','Spectrum','Image'], verbose_name='Type')
-    data_type = models.SlugField(choices=DS_ATTRIBUTE_DATATYPES.items(),verbose_name='Data Type')
+    description = models.TextField(verbose_name='Description', blank=True, null=True)
+    attribute_type = models.SlugField(choices=zip(['Scalar','Spectrum','Image'],['Scalar','Spectrum','Image']),
+                                      verbose_name='Type', default='Scalar')
+    data_type = models.SlugField(choices=zip(DS_ATTRIBUTE_DATATYPES.values(),DS_ATTRIBUTE_DATATYPES.values()),
+                                 verbose_name='Data Type', default='DevString')
     device_class = models.ForeignKey(DeviceClass, related_name='attributes')
 
     def __str__(self):
@@ -292,9 +302,11 @@ class DeviceAttribute(models.Model):
 class DeviceCommand(models.Model):
     """Model for providing basic description of attribute"""
     name = models.CharField(max_length=64,verbose_name='Name')
-    description = models.TextField(verbose_name='Description')
-    input_type = models.SlugField(choices=DS_COMMAND_DATATYPES.items(), verbose_name='Argument Type')
-    output_type = models.SlugField(choices=DS_COMMAND_DATATYPES.items(), verbose_name='Output Type')
+    description = models.TextField(verbose_name='Description', blank=True, null=True)
+    input_type = models.SlugField(choices=zip(DS_COMMAND_DATATYPES.values(),DS_COMMAND_DATATYPES.values()),
+                                  verbose_name='Argument Type')
+    output_type = models.SlugField(choices=zip(DS_COMMAND_DATATYPES.values(),DS_COMMAND_DATATYPES.values()),
+                                   verbose_name='Output Type')
     device_class = models.ForeignKey(DeviceClass, related_name='commands')
 
     def __str__(self):
@@ -303,7 +315,7 @@ class DeviceCommand(models.Model):
 class DevicePipe(models.Model):
     """Model for providing basic description of attribute"""
     name = models.CharField(max_length=64, verbose_name='Name')
-    description = models.TextField(verbose_name='Description')
+    description = models.TextField(verbose_name='Description', blank=True)
     device_class = models.ForeignKey(DeviceClass, related_name='pipes')
 
     def __str__(self):
@@ -312,8 +324,9 @@ class DevicePipe(models.Model):
 class DeviceProperty(models.Model):
     """Model for providing basic description of attribute"""
     name = models.CharField(max_length=64, verbose_name='Name')
-    description = models.TextField(verbose_name='Description')
-    property_type = models.SlugField(choices=DS_ATTRIBUTE_DATATYPES.items(), verbose_name='Type')
+    description = models.TextField(verbose_name='Description', blank=True)
+    property_type = models.SlugField(choices=zip(DS_ATTRIBUTE_DATATYPES.values(),DS_ATTRIBUTE_DATATYPES.values()),
+                                     verbose_name='Type')
     device_class = models.ForeignKey(DeviceClass, related_name='properties')
 
     def __str__(self):
