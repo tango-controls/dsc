@@ -3,7 +3,7 @@ from models import DeviceServer, DeviceServerActivity, DeviceAttribute, DevicePr
 from django_tables2.utils import A
 
 class DeviceServerTable(tables.Table):
-    repository = tables.Column(accessor='repository.path_in_repository')
+    repository = tables.Column(accessor='repository.path_in_repository', verbose_name='Repository')
     #TODO add activitytype = download and here should be the sum
     downloads = tables.Column(accessor='activities.activity_type', verbose_name= 'Downloads')
     #TODO NO category in the model - must be add
@@ -21,13 +21,13 @@ class DeviceServerTable(tables.Table):
 class DevicePropertiesTable(tables.Table):
     class Meta:
         model = DeviceProperty
-        fields = ('name','property_type', 'description')
+        fields = ('name', 'description')
 
 
 class DeviceAttributesTable(tables.Table):
     class Meta:
         model = DeviceAttribute
-        fields = ('name','attribute_type', 'description')
+        fields = ('name','description')
 
 
 class DevicePipesTable(tables.Table):

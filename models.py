@@ -257,7 +257,7 @@ class DeviceClass(models.Model):
         related_name='licensed_device_classes',
         blank=True, null=True,
         verbose_name='License')
-    class_copyright = models.CharField(max_length=128, verbose_name="Copyright", default='')
+    class_copyright = models.CharField(max_length=128, verbose_name="Copyright", default='', blank=True)
     language = models.CharField(max_length=32,
                                 choices=zip(['Cpp', 'Python', 'PythonHL', 'Java', 'CSharp', 'LabView'],
                                             ['Cpp', 'Python', 'PythonHL', 'Java', 'CSharp', 'LabView']),

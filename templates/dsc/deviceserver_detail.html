@@ -9,9 +9,13 @@
 {% block content %}
 <div><span style="font-weight:bold;">Downloads:</span> {{ deviceserver.no_downloads }}</div>
 <div><span style="font-weight:bold;">Repository:</span> {{deviceserver.repository.url}}</div>
-<div><span style="font-weight:bold;">License:</span> <a href="{{deviceserver.license.url}}">{{deviceserver.license.name}}</a></div>
 
-<h3>Implements classes:</h3>
+<div>
+    <span style="font-weight:bold;">Added by:</span>{{deviceserver.created_by.name}}
+    <span style="font-weight:bold;">on:</span>{{deviceserver.created_at}}
+</div>
+
+<hr />
 <div id="dsc-detail-tabs">
     <ul style="background: #35a635;color: rgb(85,85,85);">
         {% for cl_name, spec in specifications.items %}
@@ -26,6 +30,32 @@
 
         <div id="dsc-{{spec.cl.name}}-class-tab">
             <div><span style="font-weight:bold;">Description:</span> {{ spec.cl.description }}</div>
+            {% if spec.cl.info.platform %}
+                <div><span style="font-weight:bold;">Platform:</span> {{spec.cl.info.platform}}</div>
+            {% endif %}
+            <div><span style="font-weight:bold;">License:</span>
+                <a href="{{spec.cl.license.url}}" target="_blank">{{spec.cl.license.name}}</a>
+            </div>
+            {% if spec.cl.info.manufacturer or spec.cl.info.bus %}
+                <h4>Hardware</h4>
+                <hr />
+                {% if spec.cl.info.manufacturer %}
+                    <div><span style="font-weight:bold;">Manufacturer:</span> {{spec.cl.info.manufacturer}}
+                        {% if spec.cl.info.product_reference %},
+                            <span style="font-weight:bold;">Product:</span>{{spec.cl.info.product_reference}}
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+                {% if spec.cl.info.bus %}
+                    <div><span style="font-weight:bold;">Bus:</span> {{spec.cl.info.bus}}</div>
+                {% endif %}
+
+            {% endif %}
+
+
+            <h4>Interface</h4>
+            <hr />
             <div>
                 <span style="font-weight:bold;">Attributes:</span>
                 {% render_table spec.attributes_table %}
