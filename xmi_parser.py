@@ -265,14 +265,14 @@ class TangoXmiParser:
         properties_elements = class_element.findall('deviceProperties') + class_element.findall('classProperties')
         # parse all elements
         for property_element in properties_elements:
-            # basic command information
+            # basic property information
             property_name = property_element.attrib.get('name')
             property_description = property_element.attrib.get('description')
             # data type
             property_xsi_type = property_element.find('type').attrib.get('xsi:type').split(':')[1]
             property_type = pogoDslDataTypes.get(property_xsi_type)
 
-            # append attribute to the list
+            # append property to the list
             properties_list.append(models.DeviceProperty(name=property_name,
                                                          descritpion=property_description,
                                                          property_type=property_type,
@@ -280,3 +280,43 @@ class TangoXmiParser:
 
         # return list
         return properties_list
+
+    def get_device_pipes(self, cl):
+        """
+        Parse of xmi file to find pipes
+        :param cl: name or DeviceClass object
+        :return: list of DevicePipe objects
+        """
+
+        # find class name
+        if isinstance(cl, str):
+            name = cl
+        elif isinstance(cl, models.DeviceClass):
+            name = cl.name
+        elif hasattr(cl, 'attrib'):
+            name = cl.attrib.get('name')
+        else:
+            name = str(cl)
+
+        # find class element in the .xmi
+        class_element = next((x for x in self.classes_elements if x.attrib.get('name') == name), None)
+        if class_element is None:
+            logger.error("Class of provided name does not exist in the xmi file.")
+            return None
+
+        # find property elements
+        pipes_list = []
+        pipes_elements = class_element.findall('pipes')
+        # parse all elements
+        for pipe_element in pipes_elements:
+            # basic information
+            pipe_name = pipe_element.attrib.get('name')
+            pipe_description = pipe_element.attrib.get('description')
+
+            # append pipe to the list
+            pipes_list.append(models.DevicePipe(name=pipe_name,
+                                                descritpion=pipe_description))
+
+        # return list
+        return pipes_list
+
