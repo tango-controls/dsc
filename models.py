@@ -305,8 +305,10 @@ class DeviceCommand(models.Model):
     description = models.TextField(verbose_name='Description', blank=True, null=True)
     input_type = models.SlugField(choices=zip(DS_COMMAND_DATATYPES.values(),DS_COMMAND_DATATYPES.values()),
                                   verbose_name='Argument Type')
+    input_description = models.TextField(verbose_name='Argin description', blank=True, null=True)
     output_type = models.SlugField(choices=zip(DS_COMMAND_DATATYPES.values(),DS_COMMAND_DATATYPES.values()),
                                    verbose_name='Output Type')
+    output_description = models.TextField(verbose_name='Argout description', blank=True, null=True)
     device_class = models.ForeignKey(DeviceClass, related_name='commands')
 
     def __str__(self):
@@ -327,6 +329,7 @@ class DeviceProperty(models.Model):
     description = models.TextField(verbose_name='Description', blank=True)
     property_type = models.SlugField(choices=zip(DS_ATTRIBUTE_DATATYPES.values(),DS_ATTRIBUTE_DATATYPES.values()),
                                      verbose_name='Type')
+    is_class_property=models.BooleanField(verbose_name='Class property',blank=True,default=False)
     device_class = models.ForeignKey(DeviceClass, related_name='properties')
 
     def __str__(self):

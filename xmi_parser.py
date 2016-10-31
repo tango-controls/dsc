@@ -133,10 +133,10 @@ class TangoXmiParser:
     def get_device_attributes(self, cl):
         """
         Retrun list of attributes for class cl
-        :param cl: name or DeviceClass obejct
+        :param cl: name or DeviceClass object
         :return: list of DeviceAttribute obejcts
         """
-        # TODO: Implement
+
         # find class name
         if isinstance(cl, str):
             name = cl
@@ -158,6 +158,7 @@ class TangoXmiParser:
         attributes_elements = class_element.findall('attributes')
         # parse all elements
         for attribute_element in attributes_elements:
+
             attribute_name = attribute_element.attrib.get('name')
             attribute_type = attribute_element.attrib.get('attType')
             attribute_data_type_element = attribute_element.find('dataType')
@@ -169,20 +170,113 @@ class TangoXmiParser:
                 attribute_data_type = pogoDslDataTypes.get(attribute_xsi_type)
 
             attribute_description = ''
+            attribute_properties_element = attribute_element.find('properties')
+            if attribute_properties_element is not None:
+                attribute_description = attribute_properties_element.attrib.get('description')
 
-            properties_element = attribute_element.find('properties')
-            attribute_description = ''
+            # append attribute to the list
+            attributes_list.append(models.DeviceAttribute(name=attribute_name,
+                                                          descritpion=attribute_description,
+                                                          data_type=attribute_data_type,
+                                                          attribute_type=attribute_type))
 
-
-
+        # return list
         return attributes_list
 
     def get_device_commands(self, cl):
         """
         Retrun list of commands for class cl
-        :param cl: name or DeviceClass obejct
-        :return: list of DeviceCommand obejcts
+        :param cl: name or DeviceClass object
+        :return: list of DeviceCommand objects
         """
-        # TODO: Implement
+        # find class name
+        if isinstance(cl, str):
+            name = cl
+        elif isinstance(cl, models.DeviceClass):
+            name = cl.name
+        elif hasattr(cl, 'attrib'):
+            name = cl.attrib.get('name')
+        else:
+            name = str(cl)
 
-        return None
+        # find class element in the .xmi
+        class_element = next((x for x in self.classes_elements if x.attrib.get('name') == name), None)
+        if class_element is None:
+            logger.error("Class of provided name does not exist in the xmi file.")
+            return None
+
+        # find attribute elements
+        commands_list = []
+        commands_elements = class_element.findall('commands')
+        # parse all elements
+        for command_element in commands_elements:
+            # basic command information
+            command_name = command_element.attrib.get('name')
+            command_description = command_element.attrib.get('description')
+            # data types and descriptions
+            argin_element = command_element.find('argin')
+            if argin_element is not None:
+                input_xsi_type = argin_element.find('type').attrib.get('xsi:type').split(':')[1]
+                input_type = pogoDslDataTypes.get(input_xsi_type)
+                input_description = argin_element.attrib.get('description')
+
+            argout_element = command_element.find('argout')
+            if argout_element is not None:
+                argout_xsi_type = argout_element.find('type').attrib.get('xsi:type').split(':')[1]
+                output_type = pogoDslDataTypes.get(input_xsi_type)
+                output_description = argout_element.attrib.get('description')
+
+            # append attribute to the list
+            commands_list.append(models.DeviceCommand(name=command_name,
+                                                      descritpion=command_description,
+                                                      input_type=input_type,
+                                                      input_description=input_description,
+                                                      output_type=output_type,
+                                                      output_description=output_description))
+
+        # return list
+        return commands_list
+
+    def get_device_properties(self, cl):
+        """
+        Retrun list of class and device properties for class cl
+        :param cl: name or DeviceClass object
+        :return: list of DeviceProperty objects
+        """
+
+        # find class name
+        if isinstance(cl, str):
+            name = cl
+        elif isinstance(cl, models.DeviceClass):
+            name = cl.name
+        elif hasattr(cl, 'attrib'):
+            name = cl.attrib.get('name')
+        else:
+            name = str(cl)
+
+        # find class element in the .xmi
+        class_element = next((x for x in self.classes_elements if x.attrib.get('name') == name), None)
+        if class_element is None:
+            logger.error("Class of provided name does not exist in the xmi file.")
+            return None
+
+        # find property elements
+        properties_list = []
+        properties_elements = class_element.findall('deviceProperties') + class_element.findall('classProperties')
+        # parse all elements
+        for property_element in properties_elements:
+            # basic command information
+            property_name = property_element.attrib.get('name')
+            property_description = property_element.attrib.get('description')
+            # data type
+            property_xsi_type = property_element.find('type').attrib.get('xsi:type').split(':')[1]
+            property_type = pogoDslDataTypes.get(property_xsi_type)
+
+            # append attribute to the list
+            properties_list.append(models.DeviceProperty(name=property_name,
+                                                         descritpion=property_description,
+                                                         property_type=property_type,
+                                                         is_class_property=(property_element.tag == 'classProperty')))
+
+        # return list
+        return properties_list
