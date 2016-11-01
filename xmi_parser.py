@@ -8,6 +8,7 @@ import models
 import os
 import logging
 import re
+from django.db.models import ObjectDoesNotExist
 
 logger = logging.getLogger(__name__)
 
@@ -37,9 +38,13 @@ class TangoXmiParser:
         description_element = self.classes_elements[0].find('description')
         if description_element is not None:
             description = description_element.attrib['description']
-            ds_license = description_element.attrib['license']
+            ds_license_name = description_element.attrib['license']
+            try:
+                ds_license = models.DeviceServerLicense.objects.get(name=ds_license_name)
+            except models.DeviceServerLicense.DoesNotExist:
+                ds_license_name = models.DeviceServerLicense(name=ds_license_name, description='', url='')
 
-        return models.DeviceServer(name=name, descritpition=description, license=ds_license)
+        return models.DeviceServer(name=name, description=description, license=ds_license)
 
     def get_device_classes(self):
         """
@@ -57,7 +62,11 @@ class TangoXmiParser:
             language = ''
             if description_element is not None:
                 description = description_element.attrib.get('description')
-                lic = description_element.attrib.get('license')
+                license_name = description_element.attrib.get('license')
+                try:
+                    lic = models.DeviceServerLicense.objects.get(name=license_name)
+                except models.DeviceServerLicense.DoesNotExist:
+                    lic = models.DeviceServerLicense(name=license_name, description='', url='')
                 class_copyright = description_element.attrib.get('copyright')
                 language = description_element.attrib.get('language')
             cls.append(models.DeviceClass(name=name, description=description, license=lic, language=language))
