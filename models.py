@@ -10,8 +10,7 @@ from cms.models.pluginmodel import CMSPlugin
 
 AUTH_USER_MODEL = settings.AUTH_USER_MODEL
 
-#Device Server statuses
-
+# Device Server statuses
 STATUS_NEW = 'new'
 STATUS_UPDATED = 'updated'
 STATUS_CERTIFIED= 'certified'
@@ -25,8 +24,8 @@ STATUS_CHOICES = (
     (STATUS_DELETED, ('Deleted')),
 )
 
-#List of Device Servers activities
-#TODO fill list, do we add subactivites of edit like import form, add attribute etc
+# List of Device Servers activities
+# TODO fill list, do we add subactivites of edit like import form, add attribute etc
 DS_ACTIVITY_ADD = 'add'
 DS_ACTIVITY_EDIT = 'edit'
 DS_ACTIVITY_DOWNLOAD = 'download'
@@ -41,7 +40,6 @@ DS_ACTIVITY_CHOICES = (
     (DS_ACTIVITY_APPLY_FOR_CERT, ('Apply for cerification')),
     (DS_ACTIVITY_CERTIFY, ('Certify')),
 )
-
 
 
 DS_COMMAND_DATATYPES = {
@@ -89,27 +87,23 @@ DS_ATTRIBUTE_DATATYPES = {
 
 # TODO extend class Content from tango if needed
 ###############################################################################################
-@python_2_unicode_compatible
-class DeviceServer(models.Model): #tango Content, chaged from models.Model
-    """Model for a DeviceServer basic entities."""
-    # TODO: implement interface
 
+
+@python_2_unicode_compatible
+class DeviceServer(models.Model):
+    """Model for a DeviceServer basic entities."""
+
+    # TODO: implement interface
     name = models.CharField(
         max_length=64,
-        verbose_name = 'Device Server')
-
-    # TODO: check if it is necessery. It makes trouble upon migration
-    # slug = models.SlugField(
-    #     verbose_name=('slug'),
-    #     max_length=250,
-    #     unique=True,)
+        verbose_name='Device Server')
 
     description = models.TextField(verbose_name='Description')
 
     created_by = models.ForeignKey(
         AUTH_USER_MODEL,
         editable=False,
-        on_delete=models.SET_NULL, # important to avoid deletion of entries when user is removed from the system
+        on_delete=models.SET_NULL,  # important to avoid deletion of entries when user is removed from the system
         related_name='created_device_servers',
         blank=True, null=True,)
 
@@ -144,53 +138,52 @@ class DeviceServer(models.Model): #tango Content, chaged from models.Model
     #     app_label = 'dsc'
     #     verbose_name = 'device server'
     #     verbose_name_plural = 'device servers'
-        # ordering = [ 'name', ]
+    #     ordering = [ 'name', ]
 
-        #TODO add special permissions, verbose names
+    # TODO add special permissions, verbose names
 
-        # permissions = (
-        #     ('view_device_servers', _('view (all) device servers')),
-        #     ('view_published_structure', _('view published institutions')),
-        #     ('view_mine_draft_structure', _('view my draft institutions')),
-        #     ('change_mine_draft_structure', _('change my draft institutions')),
-        #     ('publish_structure', _('(un)publish institutions')),
-        # )
-        #
-        #
-        # verbose_names = {
-        #     'masculine': True,
-        #     'undefined_sing': _('a device server'),
-        #     'undefined_plur': _('device servers'),
-        #     'defined_sing': _("the device server"),
-        #     'defined_plur': _('the device servers'),
-        # }
-
+    # permissions = (
+    #     ('view_device_servers', _('view (all) device servers')),
+    #     ('view_published_structure', _('view published institutions')),
+    #     ('view_mine_draft_structure', _('view my draft institutions')),
+    #     ('change_mine_draft_structure', _('change my draft institutions')),
+    #     ('publish_structure', _('(un)publish institutions')),
+    # )
+    #
+    #
+    # verbose_names = {
+    #     'masculine': True,
+    #     'undefined_sing': _('a device server'),
+    #     'undefined_plur': _('device servers'),
+    #     'defined_sing': _("the device server"),
+    #     'defined_plur': _('the device servers'),
+    # }
 
     def __str__(self):
         return '%s' % self.name
 
     def get_absolute_url(self, pk):
-        #return '/dsc/%d' % self.pk
-        return reverse('deviceserver_detail', kwargs={'pk': self.pk})  #args=[self.pk]
+        return reverse('deviceserver_detail', kwargs={'pk': self.pk})
 
     def no_downloads(self):
-        return self.activities.filter(activity_type = DS_ACTIVITY_DOWNLOAD).count()
+        return self.activities.filter(activity_type=DS_ACTIVITY_DOWNLOAD).count()
 
 ###############################################################################################
+
 
 class DeviceServerActivity(models.Model):
     """Model for tracking of activity around Device Server."""
     activity_type = models.CharField(
-        verbose_name=('Activity'),
+        verbose_name='Activity',
         max_length=10,
-        choices=DS_ACTIVITY_CHOICES,)
+        choices=DS_ACTIVITY_CHOICES)
 
     activity_info = models.TextField()
 
     created_by = models.ForeignKey(
         AUTH_USER_MODEL,
         editable=False,
-        on_delete=models.SET_NULL, # important to avoid deletion of entries when user is removed from the system
+        on_delete=models.SET_NULL,  # important to avoid deletion of entries when user is removed from the system
         related_name='device_servers_activities',
         blank=True, null=True,)
 
@@ -201,11 +194,13 @@ class DeviceServerActivity(models.Model):
     device_server = models.ForeignKey(DeviceServer, related_name='activities')
 
     def downloads(self):
-       down = self.activity_type.DS_ACTIVITY_DOWNLOAD.count() #returns count of downloads
-       return down
+        """Return number of downloads"""
+        down = self.activity_type.DS_ACTIVITY_DOWNLOAD.count()
+        return down
 
     def __str__(self):
         return '%s' % self.activity_type
+
 
 class DeviceServerDocumentation(models.Model):
     """Model for providing reference to device server documentation."""
@@ -221,10 +216,11 @@ class DeviceServerDocumentation(models.Model):
     def __str__(self):
         return '%s' % self.url
 
+
 class DeviceServerRepository(models.Model):
     """Model for referencing repository where the device serve could be found"""
     repository_type = models.SlugField(
-        verbose_name ='Repository Type',
+        verbose_name='Repository Type',
         choices=zip(['GIT', 'SVN', 'Mercurial', 'FTP', 'Other'],
                     ['GIT', 'SVN', 'Mercurial', 'FTP', 'Other'])
     )
@@ -232,9 +228,9 @@ class DeviceServerRepository(models.Model):
     path_in_repository = models.CharField(max_length=255, verbose_name='Path', blank=True, default='')
     device_server = models.OneToOneField(DeviceServer, related_name='repository')
 
-
     def __str__(self):
         return '%s' % self.url
+
 
 class DeviceServerLicense(models.Model):
     """Model for providing info about licencing of devcie servers."""
@@ -245,17 +241,19 @@ class DeviceServerLicense(models.Model):
     def __str__(self):
         return '%s' % self.name
 
+
 class DeviceClass(models.Model):
     """Model to describe device classes implemented by device server"""
-    name =models.CharField(max_length=64, verbose_name='Name')
+    name = models.CharField(max_length=64, verbose_name='Name')
     description = models.TextField(verbose_name='Description', blank=True, null=True)
-    device_server = models.ForeignKey(DeviceServer,related_name='device_classes')
+    device_server = models.ForeignKey(DeviceServer, related_name='device_classes')
     license = models.ForeignKey(
         'DeviceServerLicense',
         editable=True,
         on_delete=models.SET_NULL,  # important to avoid deletion of entries when license is removed from the system
         related_name='licensed_device_classes',
-        blank=True, null=True,
+        blank=True,
+        null=True,
         verbose_name='License')
     class_copyright = models.CharField(max_length=128, verbose_name="Copyright", default='', blank=True)
     language = models.CharField(max_length=32,
@@ -263,56 +261,62 @@ class DeviceClass(models.Model):
                                             ['Cpp', 'Python', 'PythonHL', 'Java', 'CSharp', 'LabView']),
                                 verbose_name='Language', default='Cpp')
 
-
     def __str__(self):
         return '%s' % self.name
+
 
 class DeviceClassInfo(models.Model):
     """Model for information about device server."""
     device_class = models.OneToOneField(DeviceClass, related_name='info')
-    xmi_file = models.CharField(max_length=128) # this will store a link to source xmi_file
+    xmi_file = models.CharField(max_length=128)  # this will store a link to source xmi_file
     contact_email = models.EmailField(verbose_name='Contact')
-    class_family = models.CharField(max_length=64, blank=True, null=True, default='')  # TODO: implement class family choices
+    class_family = models.CharField(max_length=64, blank=True, null=True, default='')  # TODO: implement choices
     platform = models.CharField(max_length=64,
-                                choices=zip(['Windows','Unix Like', 'All Platforms'],
+                                choices=zip(['Windows', 'Unix Like', 'All Platforms'],
                                             ['Windows', 'Unix Like', 'All Platforms']),
                                 verbose_name='Platform', default='All Platforms')
     bus = models.CharField(max_length=64, verbose_name='Bus', blank=True, null=True)  # TODO: implement bus choices
-    manufacturer = models.CharField(max_length=64,verbose_name='Manufacturer',default='', null=True)  # at the beginning there will
-                                                                                # not be any manufacturer table
+    manufacturer = models.CharField(max_length=64, verbose_name='Manufacturer', default='', null=True)
+    # at the beginning there will not be any manufacturer table
     key_words = models.CharField(max_length=255, verbose_name="Key words", blank=True, null=True)
     product_reference = models.CharField(max_length=64, verbose_name="Product", default='')
 
     def __str__(self):
         return '%s' % self.device_class
 
+
 class DeviceAttribute(models.Model):
     """Model for providing basic description of attribute"""
     name = models.CharField(max_length=64, verbose_name='Name')
     description = models.TextField(verbose_name='Description', blank=True, null=True)
-    attribute_type = models.SlugField(choices=zip(['Scalar','Spectrum','Image'],['Scalar','Spectrum','Image']),
+    attribute_type = models.SlugField(choices=zip(['Scalar', 'Spectrum', 'Image'],
+                                                  ['Scalar', 'Spectrum', 'Image']),
                                       verbose_name='Type', default='Scalar')
-    data_type = models.SlugField(choices=zip(DS_ATTRIBUTE_DATATYPES.values(),DS_ATTRIBUTE_DATATYPES.values()),
+    data_type = models.SlugField(choices=zip(DS_ATTRIBUTE_DATATYPES.values(), DS_ATTRIBUTE_DATATYPES.values()),
                                  verbose_name='Data Type', default='DevString')
     device_class = models.ForeignKey(DeviceClass, related_name='attributes')
 
     def __str__(self):
         return '%s' % self.name
 
+
 class DeviceCommand(models.Model):
     """Model for providing basic description of attribute"""
-    name = models.CharField(max_length=64,verbose_name='Name')
+    name = models.CharField(max_length=64, verbose_name='Name')
     description = models.TextField(verbose_name='Description', blank=True, null=True)
-    input_type = models.SlugField(choices=zip(DS_COMMAND_DATATYPES.values(),DS_COMMAND_DATATYPES.values()),
+    input_type = models.SlugField(choices=zip(DS_COMMAND_DATATYPES.values(),
+                                              DS_COMMAND_DATATYPES.values()),
                                   verbose_name='Argument Type')
     input_description = models.TextField(verbose_name='Argin description', blank=True, null=True)
-    output_type = models.SlugField(choices=zip(DS_COMMAND_DATATYPES.values(),DS_COMMAND_DATATYPES.values()),
+    output_type = models.SlugField(choices=zip(DS_COMMAND_DATATYPES.values(),
+                                               DS_COMMAND_DATATYPES.values()),
                                    verbose_name='Output Type')
     output_description = models.TextField(verbose_name='Argout description', blank=True, null=True)
     device_class = models.ForeignKey(DeviceClass, related_name='commands')
 
     def __str__(self):
         return '%s' % self.name
+
 
 class DevicePipe(models.Model):
     """Model for providing basic description of attribute"""
@@ -323,17 +327,20 @@ class DevicePipe(models.Model):
     def __str__(self):
         return '%s' % self.name
 
+
 class DeviceProperty(models.Model):
     """Model for providing basic description of attribute"""
     name = models.CharField(max_length=64, verbose_name='Name')
     description = models.TextField(verbose_name='Description', blank=True)
-    property_type = models.SlugField(choices=zip(DS_ATTRIBUTE_DATATYPES.values(),DS_ATTRIBUTE_DATATYPES.values()),
+    property_type = models.SlugField(choices=zip(DS_ATTRIBUTE_DATATYPES.values(),
+                                                 DS_ATTRIBUTE_DATATYPES.values()),
                                      verbose_name='Type')
-    is_class_property=models.BooleanField(verbose_name='Class property',blank=True,default=False)
+    is_class_property = models.BooleanField(verbose_name='Class property', blank=True, default=False)
     device_class = models.ForeignKey(DeviceClass, related_name='properties')
 
     def __str__(self):
         return '%s' % self.name
+
 
 class DeviceAttributeInfo(models.Model):
     """Model for providing additional infos about attributes. For future extenstion."""
@@ -345,9 +352,96 @@ class DeviceAttributeInfo(models.Model):
 
 ###############################################################################################
 
-class DeviceServerPluginModel(CMSPlugin): #LastPublishedObjectPluginBase
+
+class DeviceServerAddModel(models.Model):
+    """This model is used to provide form and optionally do background processing"""
+    name = models.CharField(max_length=64, verbose_name='Name')
+    description = models.TextField(verbose_name='Description', blank=True)
+
+    # repository
+    process_from_repository = models.BooleanField(verbose_name='Use repository only', blank=True, default=False)
+    repository_type = models.SlugField(
+        verbose_name='Repository Type',
+        choices=zip(['GIT', 'SVN', 'Mercurial', 'FTP', 'Other'],
+                    ['GIT', 'SVN', 'Mercurial', 'FTP', 'Other'])
+    )
+    repository_url = models.URLField(verbose_name='URL')
+    repository_path = models.CharField(max_length=255, verbose_name='Path', blank=True, default='')
+
+    # documentation
+    readme_file = models.FileField(verbose_name='README upload file:', upload_to='dsc_readmes', blank=True, null=True)
+    documentation1_type = models.SlugField(verbose_name='Documentation type',
+                                          choices=zip(['README', 'Manual', 'InstGuide',
+                                                       'Generated', 'SourceDoc'],
+                                                      ['README', 'Manual', 'Installation Guide',
+                                                       'Generated', 'Source Documentation']
+                                                      ), null=True, blank=True)
+    documentation1_url = models.URLField(verbose_name='URL', blank=True, null=True, default='')
+    documentation2_type = models.SlugField(verbose_name='Documentation type',
+                                           choices=zip(['README', 'Manual', 'InstGuide',
+                                                        'Generated', 'SourceDoc'],
+                                                       ['README', 'Manual', 'Installation Guide',
+                                                        'Generated', 'Source Documentation']
+                                                       ), null=True, blank=True)
+    documentation2_url = models.URLField(verbose_name='URL', blank=True, null=True, default='')
+
+
+    # xmi file
+    use_uploaded_xmi_file = models.BooleanField(verbose_name='Use uploaded .xmi to populate database',
+                                                blank=True,
+                                                default=True)
+    xmi_file = models.FileField(verbose_name='DeviceServer XMI file',
+                                upload_to='dsc_xmi_files',
+                                blank=True,
+                                null=True)
+
+    # manual info
+    use_manual_info = models.BooleanField(verbose_name='Provide all data manualy', blank=True, default=False)
+    class_name = models.CharField(max_length=64, verbose_name='Name', blank=True)
+    contact_email = models.EmailField(verbose_name='Contact')
+
+    class_copyright = models.CharField(max_length=128, verbose_name="Copyright", default='', blank=True)
+    language = models.CharField(max_length=32,
+                                choices=zip(['Cpp', 'Python', 'PythonHL', 'Java', 'CSharp', 'LabView'],
+                                            ['Cpp', 'Python', 'PythonHL', 'Java', 'CSharp', 'LabView']),
+                                verbose_name='Language', default='Cpp')
+
+    class_family = models.CharField(max_length=64, blank=True, null=True, default='')  # TODO: implement choices
+    platform = models.CharField(max_length=64,
+                                choices=zip(['Windows', 'Unix Like', 'All Platforms'],
+                                            ['Windows', 'Unix Like', 'All Platforms']),
+                                verbose_name='Platform', default='All Platforms')
+    bus = models.CharField(max_length=64, verbose_name='Bus', blank=True, null=True)  # TODO: implement bus choices
+    manufacturer = models.CharField(max_length=64, verbose_name='Manufacturer', default='', null=True, blank=True)
+    # at the beginning there will not be any manufacturer table
+    key_words = models.CharField(max_length=255, verbose_name="Key words", blank=True, null=True, default='')
+    product_reference = models.CharField(max_length=64, verbose_name="Product", default='')
+
+
+
+    # internal information
+    created_by = models.ForeignKey(
+        AUTH_USER_MODEL,
+        editable=False,
+        on_delete=models.SET_NULL,  # important to avoid deletion of entries when user is removed from the system
+        related_name='device_servers_activities',
+        blank=True, null=True,)
+
+    created_at = models.DateTimeField(
+        editable=False,
+        auto_now_add=True)
+
+    processed_ok = models.BooleanField(default=False)
+
+    processed_with_errors = models.BooleanField(default=False)
+
+###################################################################################
+
+
+class DeviceServerPluginModel(CMSPlugin):
     model = DeviceServer
-    #TODO prepare plugin for administration CMS
+
+    # TODO prepare plugin for administration CMS
     class Meta:
         app_label = 'dsc'
         verbose_name = 'Device Servers Catalogue plugin'
