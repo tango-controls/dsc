@@ -17,24 +17,21 @@ class DeviceServerFilterForm(BaseForm):
 
 class DeviceServerAddForm(forms.ModelForm):
 
-
-    # def clean_use_manual_info(self):
-    #    umi = self.cleaned_data['use_manual_info']
-    #l    return umi
-
-    # def clean_use_uploaded_xmi_file(self):
+    def clean(self):
+        """Will check if fields are provided according to checkbox"""
+        cleaned_data = super(DeviceServerAddForm, self).clean()
 
 
     class Meta:
         model = DeviceServerAddModel
-        fields = ['name', 'description',
+        fields = ['use_uploaded_xmi_file', 'xmi_file',
                   'repository_type', 'repository_url', 'repository_path',
                   'readme_file',
                   'documentation1_type', 'documentation1_url',
                   'documentation2_type', 'documentation2_url',
-                  'use_uploaded_xmi_file', 'xmi_file',
                   'use_manual_info',
-                  'class_name', 'contact_email', 'class_copyright'
+                  'name', 'description',
+                  'class_name', 'contact_email', 'class_copyright',
                   'platform', 'language',
                   'class_family', 'manufacturer', 'product_reference', 'bus',
                   'key_words'

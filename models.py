@@ -355,8 +355,8 @@ class DeviceAttributeInfo(models.Model):
 
 class DeviceServerAddModel(models.Model):
     """This model is used to provide form and optionally do background processing"""
-    name = models.CharField(max_length=64, verbose_name='Name')
-    description = models.TextField(verbose_name='Description', blank=True)
+    name = models.CharField(max_length=64, verbose_name='Name', blank=True, default='')
+    description = models.TextField(verbose_name='Description', blank=True, default='')
 
     # repository
     process_from_repository = models.BooleanField(verbose_name='Use repository only', blank=True, default=False)
@@ -397,8 +397,8 @@ class DeviceServerAddModel(models.Model):
 
     # manual info
     use_manual_info = models.BooleanField(verbose_name='Provide all data manualy', blank=True, default=False)
-    class_name = models.CharField(max_length=64, verbose_name='Name', blank=True)
-    contact_email = models.EmailField(verbose_name='Contact')
+    class_name = models.CharField(max_length=64, verbose_name='Name', blank=True, default='')
+    contact_email = models.EmailField(verbose_name='Contact', blank=True,default='')
 
     class_copyright = models.CharField(max_length=128, verbose_name="Copyright", default='', blank=True)
     language = models.CharField(max_length=32,
@@ -415,7 +415,7 @@ class DeviceServerAddModel(models.Model):
     manufacturer = models.CharField(max_length=64, verbose_name='Manufacturer', default='', null=True, blank=True)
     # at the beginning there will not be any manufacturer table
     key_words = models.CharField(max_length=255, verbose_name="Key words", blank=True, null=True, default='')
-    product_reference = models.CharField(max_length=64, verbose_name="Product", default='')
+    product_reference = models.CharField(max_length=64, verbose_name="Product", default='', blank=True)
 
 
 
@@ -424,7 +424,7 @@ class DeviceServerAddModel(models.Model):
         AUTH_USER_MODEL,
         editable=False,
         on_delete=models.SET_NULL,  # important to avoid deletion of entries when user is removed from the system
-        related_name='device_servers_activities',
+        related_name='device_servers_add_activities',
         blank=True, null=True,)
 
     created_at = models.DateTimeField(

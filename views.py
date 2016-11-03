@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from models import DeviceServer
+from forms import DeviceServerAddForm
 from tables import DeviceServerTable
 from django.views.generic import TemplateView, FormView
 from webu.custom_models.views import CustomModelDetailView
@@ -8,6 +9,7 @@ from webu.views import CMSListView, CMSDetailView
 from tango.views import ContentActionViewMixin, FilterGetFormViewMixin, BreadcrumbMixinDetailView
 from django_tables2 import SingleTableView
 from tables import DeviceAttributesTable, DeviceCommandsTable, DevicePipesTable, DevicePropertiesTable
+from xmi_parser import TangoXmiParser
 #import django_filters
 
 from django.shortcuts import render
@@ -49,8 +51,23 @@ class DeviceServerDetailView(BreadcrumbMixinDetailView, CustomModelDetailView, C
 
 class DeviceServerAddView(FormView):
 
+    template_name = 'dsc/deviceserver_add.html'
+    form_class = DeviceServerAddForm
+
     def form_valid(self, form):
-        # This method is called when valid form data has been POSTed.
-        # It should return an HttpResponse.
-        form.send_email()
+
+        # just let IDE knows the type
+        assert (isinstance(form, DeviceServerAddForm))
+
+        # remember data passed from the form
+        form.save()
+
+        if form.cleaned_data['use_uploaded_xmi_file']:
+            # use xmi file
+            parser = TangoXmiParser(form.cleaned_data['xmi_file'])
+            print ""
+        else:
+            # use manualy provided info
+            pass
+
         return super(DeviceServerAddView, self).form_valid(form)
