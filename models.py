@@ -360,12 +360,15 @@ class DeviceServerAddModel(models.Model):
 
     # repository
     process_from_repository = models.BooleanField(verbose_name='Use repository only', blank=True, default=False)
+    available_in_repository = models.BooleanField(verbose_name='Available in repository', blank=True, default=False)
+
     repository_type = models.SlugField(
         verbose_name='Repository Type',
         choices=zip(['GIT', 'SVN', 'Mercurial', 'FTP', 'Other'],
-                    ['GIT', 'SVN', 'Mercurial', 'FTP', 'Other'])
+                    ['GIT', 'SVN', 'Mercurial', 'FTP', 'Other']),
+        blank=True, default=''
     )
-    repository_url = models.URLField(verbose_name='URL')
+    repository_url = models.URLField(verbose_name='URL', blank=True, default='')
     repository_path = models.CharField(max_length=255, verbose_name='Path', blank=True, default='')
 
     # documentation
@@ -396,7 +399,7 @@ class DeviceServerAddModel(models.Model):
                                 null=True)
 
     # manual info
-    use_manual_info = models.BooleanField(verbose_name='Provide all data manualy', blank=True, default=False)
+    use_manual_info = models.BooleanField(verbose_name='Provide data manually', blank=True, default=False)
     class_name = models.CharField(max_length=64, verbose_name='Name', blank=True, default='')
     contact_email = models.EmailField(verbose_name='Contact', blank=True,default='')
 

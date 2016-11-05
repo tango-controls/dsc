@@ -10,6 +10,7 @@ from tango.views import ContentActionViewMixin, FilterGetFormViewMixin, Breadcru
 from django_tables2 import SingleTableView
 from tables import DeviceAttributesTable, DeviceCommandsTable, DevicePipesTable, DevicePropertiesTable
 from xmi_parser import TangoXmiParser
+from django.core.urlresolvers import reverse, reverse_lazy
 #import django_filters
 
 from django.shortcuts import render
@@ -53,6 +54,7 @@ class DeviceServerAddView(FormView):
 
     template_name = 'dsc/deviceserver_add.html'
     form_class = DeviceServerAddForm
+    success_url = reverse_lazy('home')
 
     def form_valid(self, form):
 
@@ -64,8 +66,8 @@ class DeviceServerAddView(FormView):
 
         if form.cleaned_data['use_uploaded_xmi_file']:
             # use xmi file
-            parser = TangoXmiParser(form.cleaned_data['xmi_file'])
-            print ""
+            parser = TangoXmiParser(xml_string=form.cleaned_data['xmi_string'])
+            print "\n----------------\n\nproperly paresed XMI file :)\n\n-----\n"
         else:
             # use manualy provided info
             pass
