@@ -12,16 +12,18 @@ AUTH_USER_MODEL = settings.AUTH_USER_MODEL
 
 # Device Server statuses
 STATUS_NEW = 'new'
+STATUS_VERIFIED = 'verified'
 STATUS_UPDATED = 'updated'
 STATUS_CERTIFIED= 'certified'
 STATUS_ARCHIVED = 'archived'
 STATUS_DELETED = 'deleted'
 STATUS_CHOICES = (
-    (STATUS_NEW, ('New')),
-    (STATUS_UPDATED, ('Updated')),
-    (STATUS_CERTIFIED, ('Certified')),
-    (STATUS_ARCHIVED, ('Archived')),
-    (STATUS_DELETED, ('Deleted')),
+    (STATUS_NEW, 'New'),
+    (STATUS_VERIFIED, 'Verified'),
+    (STATUS_UPDATED, 'Updated'),
+    (STATUS_CERTIFIED, 'Certified'),
+    (STATUS_ARCHIVED, 'Archived'),
+    (STATUS_DELETED, 'Deleted'),
 )
 
 # List of Device Servers activities
@@ -33,12 +35,12 @@ DS_ACTIVITY_DELETE = 'delete'
 DS_ACTIVITY_APPLY_FOR_CERT = 'apply_for_cert'
 DS_ACTIVITY_CERTIFY = 'certify'
 DS_ACTIVITY_CHOICES = (
-    (DS_ACTIVITY_ADD, ('Add')),
-    (DS_ACTIVITY_EDIT, ('Edit')),
-    (DS_ACTIVITY_DOWNLOAD, ('Download')),
-    (DS_ACTIVITY_DELETE, ('Delete')),
-    (DS_ACTIVITY_APPLY_FOR_CERT, ('Apply for cerification')),
-    (DS_ACTIVITY_CERTIFY, ('Certify')),
+    (DS_ACTIVITY_ADD, 'Add'),
+    (DS_ACTIVITY_EDIT, 'Edit'),
+    (DS_ACTIVITY_DOWNLOAD, 'Download'),
+    (DS_ACTIVITY_DELETE, 'Delete'),
+    (DS_ACTIVITY_APPLY_FOR_CERT, 'Apply for cerification'),
+    (DS_ACTIVITY_CERTIFY, 'Certify'),
 )
 
 
@@ -125,6 +127,15 @@ class DeviceServer(models.Model):
         # choices=STATUS_CHOICES,
         default=STATUS_NEW,
     )
+
+    readme = models.FileField(verbose_name='Readme', upload_to='dsc_readmes', null=True, blank=True, max_length=100000)
+
+    add_device_object = models.ForeignKey('DeviceServerAddModel',
+                                          related_name='device_server_created',
+                                          on_delete=models.SET_NULL,
+                                          null=True,
+                                          blank=True,
+                                          verbose_name='Created with')
 
     # objects = ObjectManager()
     #
@@ -234,7 +245,8 @@ class DeviceServerRepository(models.Model):
 
 class DeviceServerLicense(models.Model):
     """Model for providing info about licencing of devcie servers."""
-    name = models.CharField(primary_key=True, max_length=64, verbose_name='License')
+    name = models.CharField(primary_key=True, max_length=64, verbose_name='License',
+                            )
     description = models.TextField(verbose_name='Description', blank=True, null=True, default='')
     url = models.URLField(blank=True, verbose_name='URL', null=True)
 
@@ -306,11 +318,11 @@ class DeviceCommand(models.Model):
     description = models.TextField(verbose_name='Description', blank=True, null=True)
     input_type = models.SlugField(choices=zip(DS_COMMAND_DATATYPES.values(),
                                               DS_COMMAND_DATATYPES.values()),
-                                  verbose_name='Argument Type')
+                                  verbose_name='Argument Type',blank=True, null=True)
     input_description = models.TextField(verbose_name='Argin description', blank=True, null=True)
     output_type = models.SlugField(choices=zip(DS_COMMAND_DATATYPES.values(),
                                                DS_COMMAND_DATATYPES.values()),
-                                   verbose_name='Output Type')
+                                   verbose_name='Output Type',blank=True, null=True)
     output_description = models.TextField(verbose_name='Argout description', blank=True, null=True)
     device_class = models.ForeignKey(DeviceClass, related_name='commands')
 
@@ -355,7 +367,7 @@ class DeviceAttributeInfo(models.Model):
 
 class DeviceServerAddModel(models.Model):
     """This model is used to provide form and optionally do background processing"""
-    name = models.CharField(max_length=64, verbose_name='Name', blank=True, default='')
+    name = models.CharField(max_length=64, verbose_name='Device server name', blank=True, default='')
     description = models.TextField(verbose_name='Description', blank=True, default='')
 
     # repository
@@ -368,18 +380,23 @@ class DeviceServerAddModel(models.Model):
                     ['GIT', 'SVN', 'Mercurial', 'FTP', 'Other']),
         blank=True, default=''
     )
-    repository_url = models.URLField(verbose_name='URL', blank=True, default='')
-    repository_path = models.CharField(max_length=255, verbose_name='Path', blank=True, default='')
+    repository_url = models.URLField(verbose_name='Repository URL', blank=True, default='')
+    repository_path = models.CharField(max_length=255, verbose_name='Path within reposiroty', blank=True, default='')
 
     # documentation
-    readme_file = models.FileField(verbose_name='README upload file:', upload_to='dsc_readmes', blank=True, null=True)
+    upload_readme = models.BooleanField(verbose_name='Upload README', blank=True, default=False)
+    readme_file = models.FileField(verbose_name='README file', upload_to='dsc_readmes',
+                                   blank=True, null=True, max_length=100000)
+    other_documentation1 = models.BooleanField(verbose_name='Link to other documentation', blank=True, default=False)
     documentation1_type = models.SlugField(verbose_name='Documentation type',
-                                          choices=zip(['README', 'Manual', 'InstGuide',
+                                           choices=zip(['README', 'Manual', 'InstGuide',
                                                        'Generated', 'SourceDoc'],
                                                       ['README', 'Manual', 'Installation Guide',
                                                        'Generated', 'Source Documentation']
                                                       ), null=True, blank=True)
     documentation1_url = models.URLField(verbose_name='URL', blank=True, null=True, default='')
+
+    other_documentation2 = models.BooleanField(verbose_name='Link to other documentation', blank=True, default=False)
     documentation2_type = models.SlugField(verbose_name='Documentation type',
                                            choices=zip(['README', 'Manual', 'InstGuide',
                                                         'Generated', 'SourceDoc'],
@@ -388,20 +405,20 @@ class DeviceServerAddModel(models.Model):
                                                        ), null=True, blank=True)
     documentation2_url = models.URLField(verbose_name='URL', blank=True, null=True, default='')
 
-
     # xmi file
-    use_uploaded_xmi_file = models.BooleanField(verbose_name='Use uploaded .xmi to populate database',
+    use_uploaded_xmi_file = models.BooleanField(verbose_name='Upload .xmi file to populate database.',
                                                 blank=True,
                                                 default=True)
-    xmi_file = models.FileField(verbose_name='DeviceServer XMI file',
+    xmi_file = models.FileField(verbose_name='.XMI file',
                                 upload_to='dsc_xmi_files',
                                 blank=True,
                                 null=True)
 
     # manual info
     use_manual_info = models.BooleanField(verbose_name='Provide data manually', blank=True, default=False)
-    class_name = models.CharField(max_length=64, verbose_name='Name', blank=True, default='')
-    contact_email = models.EmailField(verbose_name='Contact', blank=True,default='')
+    class_name = models.CharField(max_length=64, verbose_name='Class name', blank=True, default='')
+    class_description = models.TextField(verbose_name='Class description', blank=True, default='')
+    contact_email = models.EmailField(verbose_name='Contact email', blank=True,default='')
 
     class_copyright = models.CharField(max_length=128, verbose_name="Copyright", default='', blank=True)
     language = models.CharField(max_length=32,
@@ -419,6 +436,7 @@ class DeviceServerAddModel(models.Model):
     # at the beginning there will not be any manufacturer table
     key_words = models.CharField(max_length=255, verbose_name="Key words", blank=True, null=True, default='')
     product_reference = models.CharField(max_length=64, verbose_name="Product", default='', blank=True)
+    license_name = models.CharField(max_length=64, verbose_name='License type', blank=True, default='GPL')
 
 
 

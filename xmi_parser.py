@@ -40,7 +40,10 @@ class TangoXmiParser:
         :return: device server object created from the file
         """
 
-        name = os.path.splitext(os.path.basename(self.file))[0]
+        if self.file=='':
+            name = self.classes_elements[0].attrib['name']
+        else:
+            name = os.path.splitext(os.path.basename(self.file))[0]
         description = None
         ds_license = None
         description_element = self.classes_elements[0].find('description')

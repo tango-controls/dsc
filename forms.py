@@ -21,14 +21,18 @@ class DeviceServerAddForm(forms.ModelForm):
     def clean(self):
         """Will check if fields are provided according to checkboxes"""
         cleaned_data = super(DeviceServerAddForm, self).clean()
+
+        if not cleaned_data['use_uploaded_xmi_file'] and not cleaned_data['use_manual_info']:
+            raise forms.ValidationError('You must provide either .XMI file or enter information manually.')
+
         if cleaned_data['use_uploaded_xmi_file']:
             try:
                 xmi_file = cleaned_data['xmi_file']
 
                 if xmi_file.size < 10:
-                    raise forms.ValidationError('The uploaded .XMI file seems to be empty!')
+                    raise forms.ValidationError('The uploaded .XMI file seems to be empty.')
                 if xmi_file.size > 1000000:
-                    raise forms.ValidationError('The uploaded files is to large to be Tango .XMI file!')
+                    raise forms.ValidationError('The uploaded file is to large to be a Tango .XMI file.')
 
                 xmi_string = xmi_file.read()
                 cleaned_data['xmi_string'] = xmi_string
@@ -46,21 +50,19 @@ class DeviceServerAddForm(forms.ModelForm):
             if not cleaned_data['use_uploaded_xmi_file']:
                 if len(cleaned_data['name']) == 0 or len(cleaned_data['description']) == '' \
                         or len(cleaned_data['contact_email']) == 0:
-                    raise forms.ValidationError('You must provide at leas name, description and contact information.')
+                    raise forms.ValidationError('You must provide at least name, description and contact information.')
 
         return cleaned_data
 
     class Meta:
         model = DeviceServerAddModel
         fields = ['use_uploaded_xmi_file', 'xmi_file',
-                  'available_in_repository', 'repository_type', 'repository_url', 'repository_path',
-                  'readme_file',
-                  'documentation1_type', 'documentation1_url',
-                  'documentation2_type', 'documentation2_url',
                   'use_manual_info',
-                  'name', 'description',
-                  'class_name', 'contact_email', 'class_copyright',
-                  'platform', 'language',
-                  'class_family', 'manufacturer', 'product_reference', 'bus',
-                  'key_words'
+                  'name', 'description', 'contact_email', 'platform', 'language', 'license_name',
+                  'available_in_repository', 'repository_type', 'repository_url', 'repository_path',
+                  'upload_readme', 'readme_file',
+                  'other_documentation1',
+                  'documentation1_type', 'documentation1_url',
+                  'class_name', 'class_description', 'class_copyright', 'class_family',
+                  'manufacturer', 'product_reference', 'bus', 'key_words'
                   ]
