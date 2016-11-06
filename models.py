@@ -280,7 +280,7 @@ class DeviceClass(models.Model):
 class DeviceClassInfo(models.Model):
     """Model for information about device server."""
     device_class = models.OneToOneField(DeviceClass, related_name='info')
-    xmi_file = models.CharField(max_length=128)  # this will store a link to source xmi_file
+    xmi_file = models.CharField(max_length=128, blank=True, null=True)  # this will store a link to source xmi_file
     contact_email = models.EmailField(verbose_name='Contact')
     class_family = models.CharField(max_length=64, blank=True, null=True, default='')  # TODO: implement choices
     platform = models.CharField(max_length=64,
