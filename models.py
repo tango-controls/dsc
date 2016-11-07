@@ -179,6 +179,32 @@ class DeviceServer(models.Model):
     def no_downloads(self):
         return self.activities.filter(activity_type=DS_ACTIVITY_DOWNLOAD).count()
 
+    def manufacturers(self):
+        mfs = []
+        for cl in self.device_classes.all():
+            m = cl.info.manufacturer
+            if m != '' and m is not None and m not in mfs:
+                mfs.append(m)
+
+        return '; '.join(mfs)
+
+    def products(self):
+        mfs = []
+        for cl in self.device_classes.all():
+            m = cl.info.product_reference
+            if m != '' and m is not None and m not in mfs:
+                mfs.append(m)
+
+        return '; '.join(mfs)
+
+    def family(self):
+        mfs = []
+        for cl in self.device_classes.all():
+            m = cl.info.class_family
+            if m != '' and m is not None and m not in mfs:
+                mfs.append(m)
+
+        return '; '.join(mfs)
 ###############################################################################################
 
 
