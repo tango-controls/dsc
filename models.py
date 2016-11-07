@@ -34,6 +34,7 @@ DS_ACTIVITY_DOWNLOAD = 'download'
 DS_ACTIVITY_DELETE = 'delete'
 DS_ACTIVITY_APPLY_FOR_CERT = 'apply_for_cert'
 DS_ACTIVITY_CERTIFY = 'certify'
+DS_ACTIVITY_VERIFICATION = 'verification'
 DS_ACTIVITY_CHOICES = (
     (DS_ACTIVITY_ADD, 'Add'),
     (DS_ACTIVITY_EDIT, 'Edit'),
@@ -41,6 +42,7 @@ DS_ACTIVITY_CHOICES = (
     (DS_ACTIVITY_DELETE, 'Delete'),
     (DS_ACTIVITY_APPLY_FOR_CERT, 'Apply for cerification'),
     (DS_ACTIVITY_CERTIFY, 'Certify'),
+    (DS_ACTIVITY_VERIFICATION, 'Verification'),
 )
 
 
@@ -137,29 +139,21 @@ class DeviceServer(models.Model):
                                           blank=True,
                                           verbose_name='Created with')
 
-    # objects = ObjectManager()
-    #
-    # class QuerySet(
-    #     models.query.QuerySet,
-    # ):
-    #     pass
-
-    # TODO
-    # class Meta:
+    class Meta:
+        permissions = (
+            ('add_deviceserver', 'add a new device server'),
+            ('change_deviceserver', 'update existed device servers'),
+            ('delete_deviceserver', 'delete device servers'),
+            ('admin_deviceserver', 'do various administration tasks on device servers'),
+        )
     #     app_label = 'dsc'
     #     verbose_name = 'device server'
     #     verbose_name_plural = 'device servers'
     #     ordering = [ 'name', ]
 
-    # TODO add special permissions, verbose names
+    # TODO addverbose names
 
-    # permissions = (
-    #     ('view_device_servers', _('view (all) device servers')),
-    #     ('view_published_structure', _('view published institutions')),
-    #     ('view_mine_draft_structure', _('view my draft institutions')),
-    #     ('change_mine_draft_structure', _('change my draft institutions')),
-    #     ('publish_structure', _('(un)publish institutions')),
-    # )
+
     #
     #
     # verbose_names = {
