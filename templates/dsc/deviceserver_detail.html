@@ -7,15 +7,23 @@
 <h1 style="text-transform: none">{{deviceserver.name}}</h1>
 {% endblock %}
 {% block content %}
-<div><span style="font-weight:bold;">Downloads:</span> {{ deviceserver.no_downloads }}</div>
-<div><span style="font-weight:bold;">Repository:</span> {{deviceserver.repository.url}}</div>
-
-<div>
-    <span style="font-weight:bold;">Added by:</span>{{deviceserver.created_by.name}}
-    <span style="font-weight:bold;">on:</span>{{deviceserver.created_at}}
+{# <div><span style="font-weight:bold;">Downloads:</span> {{ deviceserver.no_downloads }}</div> #}
+<div><span style="font-weight:bold;">Status:</span> {{ deviceserver.status }}</div>
+<div><span style="font-weight:bold;">Repository:</span>
+    <a href="{{deviceserver.repository.url}}" target="_blank">
+        {{deviceserver.repository.url}}
+    </a>
+</div>
+<div><span style="font-weight:bold;">Contact:</span>
+    {% for cl in deviceserver.device_classes.all %}
+        {{ cl.info.contact_email|urlize }};
+    {% endfor %}
 </div>
 
+
+<br />
 <hr />
+<br />
 <div id="dsc-detail-tabs">
     <ul style="background: #35a635;color: rgb(85,85,85);">
         {% for cl_name, spec in specifications.items %}
@@ -24,24 +32,32 @@
                 <a href="#dsc-{{spec.cl.name}}-class-tab"><span>{{spec.cl.name}}</span></a>
             </li>
         {% endfor %}
+        <li style="float:right;">
+            <a href="#dsc-documentation-tab"><span>Documentation</span></a>
+        </li>
     </ul>
 
     {% for cl_name, spec in specifications.items %}
 
         <div id="dsc-{{spec.cl.name}}-class-tab">
-            <div><span style="font-weight:bold;">Description:</span> {{ spec.cl.description }}</div>
+            <div><span style="font-weight:bold;">Description:</span> <br />{{ spec.cl.description }}</div>
             {% if spec.cl.info.platform %}
                 <div><span style="font-weight:bold;">Platform:</span> {{spec.cl.info.platform}}</div>
             {% endif %}
             <div><span style="font-weight:bold;">License:</span>
                 <a href="{{spec.cl.license.url}}" target="_blank">{{spec.cl.license.name}}</a>
             </div>
+            <div><span style="font-weight:bold;">Contact:</span>
+                {{ spec.cl.info.contact_email|urlize }}
+            </div>
             {% if spec.cl.info.manufacturer or spec.cl.info.bus %}
                 <h4>Hardware</h4>
                 <hr />
                 {% if spec.cl.info.manufacturer %}
                     <div><span style="font-weight:bold;">Manufacturer:</span> {{spec.cl.info.manufacturer}}
-                        {% if spec.cl.info.product_reference %},
+                    </div>
+                    <div>
+                        {% if spec.cl.info.product_reference %}
                             <span style="font-weight:bold;">Product:</span>{{spec.cl.info.product_reference}}
                         {% endif %}
                     </div>
@@ -75,7 +91,27 @@
 
         </div>
     {% endfor %}
+    <div id="dsc-documentation-tab">
+        {% for doc in deviceserver.documentation.all %}
+        <div>
+            <span style="font-weight:bold;">{{doc.documentation_type}}:</span>
+            <a href="{{doc.url}}" target="_blank">{{doc.url}}</a>
+            <hr />
+        </div>
+        {% endfor %}
+        {% if readme %}
+        <div>
+            <h4>README</h4>
+            {{readme|linebreaks}}
+        </div>
+        {% endif %}
 
+    </div>
+
+</div>
+<div>
+    <span style="font-weight:bold;">Added by:</span>{{deviceserver.created_by}}
+    <span style="font-weight:bold;">on:</span>{{deviceserver.created_at}}
 </div>
 
 {% endblock %}

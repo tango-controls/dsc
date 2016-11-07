@@ -10,7 +10,8 @@ from tango.views import ContentActionViewMixin, FilterGetFormViewMixin, Breadcru
 from django_tables2 import SingleTableView
 from tables import DeviceAttributesTable, DeviceCommandsTable, DevicePipesTable, DevicePropertiesTable
 from xmi_parser import TangoXmiParser
-from django.core.urlresolvers import reverse, reverse_lazy
+from django.core.urlresolvers import reverse
+from django.db import models
 #import django_filters
 
 from django.shortcuts import render
@@ -42,6 +43,11 @@ class DeviceServerDetailView(BreadcrumbMixinDetailView, CustomModelDetailView, C
             context['specifications'][cl.name]['info'] = cl.info
             context['specifications'][cl.name]['cl'] = cl
 
+        readme_file = context['deviceserver'].readme
+        try:
+            context['readme'] = readme_file.read()
+        except:
+            pass
         return context
 
 
