@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 import models as dsc_models
-from forms import DeviceServerAddForm
+from forms import DeviceServerAddForm, DeviceServerSearchForm
 from tables import DeviceServerTable
 from django.views.generic import TemplateView, FormView
 from webu.custom_models.views import CustomModelDetailView
@@ -12,6 +12,7 @@ from tables import DeviceAttributesTable, DeviceCommandsTable, DevicePipesTable,
 from xmi_parser import TangoXmiParser
 from django.core.urlresolvers import reverse
 from django.db import models
+from dal import autocomplete
 #import django_filters
 
 from django.shortcuts import render
@@ -49,6 +50,49 @@ class DeviceServerDetailView(BreadcrumbMixinDetailView, CustomModelDetailView, C
         except:
             pass
         return context
+
+
+class DeviceServerSearchView(FormView):
+    """View that process search """
+    template_name = 'dsc/deviceserver_search.html'
+    form_class = DeviceServerSearchForm
+
+    def form_valid(self, form):
+        return super(DeviceServerSearchView, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('deviceserver_detail', kwargs={'pk': self.device_server.pk})
+
+
+class DeviceServerManufacturerAutocomplete(autocomplete.Select2ListView):
+    """Provide autocomplete feature for manufacturer fields"""
+    def get_list(self):
+        return dsc_models.DeviceClassInfo.objects.all().values_list('manufacturer',flat=True).distinct()
+
+
+class DeviceServerProductAutocomplete(autocomplete.Select2ListView):
+    """Provide autocomplete feature for product fields"""
+    def get_list(self):
+
+        manufacturer = self.request.forwarded.get('manufacturer', None)
+        if manufacturer:
+            return dsc_models.DeviceClassInfo.objects.filter(manufacturer=manufacturer).\
+                values_list('product_reference',flat=True).distinct()
+
+        return dsc_models.DeviceClassInfo.objects.\
+            values_list('product_reference', flat=True).distinct()
+
+
+class DeviceServerFamilyAutocomplete(autocomplete.Select2ListView):
+    """Provide autocomplete feature for product fields"""
+    def get_list(self):
+        return dsc_models.DeviceClassInfo.objects.all().values_list('class_family', flat=True).distinct()
+
+
+class DeviceServerLicenseAutocomplete(autocomplete.Select2ListView):
+    """Provide autocomplete feature for product fields"""
+    def get_list(self):
+        return dsc_models.DeviceServerLicense.objects.all().values_list('name', flat=True).distinct()
 
 
 class DeviceServerAddView(FormView):

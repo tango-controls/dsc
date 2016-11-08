@@ -15,6 +15,9 @@ class DeviceServerFilterForm(BaseForm):
         return queryset
     # TODO filter form for DS list if needed
 
+class DeviceServerSearchForm(BaseForm):
+    pass
+
 
 class DeviceServerAddForm(forms.ModelForm):
 
