@@ -12,7 +12,7 @@ from tables import DeviceAttributesTable, DeviceCommandsTable, DevicePipesTable,
 from xmi_parser import TangoXmiParser
 from django.core.urlresolvers import reverse
 from django.db import models
-from dal import autocomplete
+import dal.autocomplete
 #import django_filters
 
 from django.shortcuts import render
@@ -64,17 +64,17 @@ class DeviceServerSearchView(FormView):
         return reverse('deviceserver_detail', kwargs={'pk': self.device_server.pk})
 
 
-class DeviceServerManufacturerAutocomplete(autocomplete.Select2ListView):
+class DeviceServerManufacturerAutocomplete(dal.autocomplete.Select2ListView):
     """Provide autocomplete feature for manufacturer fields"""
     def get_list(self):
         return dsc_models.DeviceClassInfo.objects.all().values_list('manufacturer',flat=True).distinct()
 
 
-class DeviceServerProductAutocomplete(autocomplete.Select2ListView):
+class DeviceServerProductAutocomplete(dal.autocomplete.Select2ListView):
     """Provide autocomplete feature for product fields"""
     def get_list(self):
 
-        manufacturer = self.request.forwarded.get('manufacturer', None)
+        manufacturer = self.forwarded.get('manufacturer', None)
         if manufacturer:
             return dsc_models.DeviceClassInfo.objects.filter(manufacturer=manufacturer).\
                 values_list('product_reference',flat=True).distinct()
@@ -83,13 +83,13 @@ class DeviceServerProductAutocomplete(autocomplete.Select2ListView):
             values_list('product_reference', flat=True).distinct()
 
 
-class DeviceServerFamilyAutocomplete(autocomplete.Select2ListView):
+class DeviceServerFamilyAutocomplete(dal.autocomplete.Select2ListView):
     """Provide autocomplete feature for product fields"""
     def get_list(self):
         return dsc_models.DeviceClassInfo.objects.all().values_list('class_family', flat=True).distinct()
 
 
-class DeviceServerLicenseAutocomplete(autocomplete.Select2ListView):
+class DeviceServerLicenseAutocomplete(dal.autocomplete.Select2ListView):
     """Provide autocomplete feature for product fields"""
     def get_list(self):
         return dsc_models.DeviceServerLicense.objects.all().values_list('name', flat=True).distinct()

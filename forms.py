@@ -4,9 +4,12 @@ from __future__ import unicode_literals
 from django import forms
 from django.db import models
 from django.utils.html import format_html
-from dsc.models import DeviceServer, DeviceServerAddModel
+from dsc.models import DeviceServer, DeviceServerAddModel, DeviceClassInfo, DeviceServerLicense
 from tango.forms import BaseForm
 from xmi_parser import TangoXmiParser
+import dal.autocomplete
+from django.core.urlresolvers import reverse_lazy
+
 
 class DeviceServerFilterForm(BaseForm):
     def filter(self, model, queryset=None):
@@ -15,8 +18,14 @@ class DeviceServerFilterForm(BaseForm):
         return queryset
     # TODO filter form for DS list if needed
 
-class DeviceServerSearchForm(BaseForm):
+
+class DeviceServerSearchForm(forms.Form):
     pass
+    manufacturer = dal.autocomplete.Select2ListCreateChoiceField(label='Manufacturer',
+                                      widget=dal.autocomplete.ListSelect2(url=reverse_lazy('deviceserver_manufacturers')))
+
+    product = forms.CharField(label='Product',
+                              widget=dal.autocomplete.ListSelect2(url=reverse_lazy('deviceserver_products')))
 
 
 class DeviceServerAddForm(forms.ModelForm):
