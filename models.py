@@ -142,6 +142,8 @@ class DeviceServer(models.Model):
     class Meta:
         permissions = (
             ('admin_deviceserver', 'do various administration tasks on device servers'),
+            ('update_own_deviceserver', 'do changes to device server for creator'),
+            ('delete_own_deviceserver', 'deletion of device server for creator'),
         )
     #     app_label = 'dsc'
     #     verbose_name = 'device server'
