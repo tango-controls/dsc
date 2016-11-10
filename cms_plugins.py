@@ -34,7 +34,7 @@ class DeviceServerPlugin(CMSPluginBase): #LastPublishedObjectPluginBase
         q = DeviceServer.objects.all()
         count = q.count()
         ds_list = []
-        while len(ds_list)<10 and len(ds_list)<=count:
+        while len(ds_list)<10 and len(ds_list)<count:
             ds = random.choice(q)
             if ds not in ds_list:
                 ds_list.append(ds)
