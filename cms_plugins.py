@@ -15,6 +15,8 @@ from django_tables2 import RequestConfig
 
 from django.template import RequestContext
 
+import random
+
 class DeviceServerPlugin(CMSPluginBase): #LastPublishedObjectPluginBase
     # TODO device server plugin filters etc
     model = DeviceServerPluginModel
@@ -28,7 +30,16 @@ class DeviceServerPlugin(CMSPluginBase): #LastPublishedObjectPluginBase
     def render(self, context, instance, placeholder):
         context = super(DeviceServerPlugin, self).render(context, instance, placeholder)
         context['table_class'] = DeviceServerTable
-        table = DeviceServerTable(DeviceServer.objects.all())
+        # getting random 10 device servers
+        q = DeviceServer.objects.all()
+        count = q.count()
+        ds_list = []
+        while len(ds_list)<10 and len(ds_list)<=count:
+            ds = random.choice(q)
+            if ds not in ds_list:
+                ds_list.append(ds)
+
+        table = DeviceServerTable(ds_list)
         RequestConfig(context['request']).configure(table)
         context['table']= table
         #context['table_pagination'] = {
