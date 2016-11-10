@@ -21,11 +21,18 @@ class DeviceServerFilterForm(BaseForm):
 
 class DeviceServerSearchForm(forms.Form):
     pass
-    manufacturer = dal.autocomplete.Select2ListCreateChoiceField(label='Manufacturer',
+    manufacturer = dal.autocomplete.Select2ListCreateChoiceField(label='Manufacturer', required=False,
                                       widget=dal.autocomplete.ListSelect2(url=reverse_lazy('deviceserver_manufacturers')))
 
-    product = forms.CharField(label='Product',
-                              widget=dal.autocomplete.ListSelect2(url=reverse_lazy('deviceserver_products')))
+    product = forms.CharField(label='Product', required=False,
+                              widget=dal.autocomplete.ListSelect2(url=reverse_lazy('deviceserver_products'),
+                                                                  forward=['manufacturer','family']))
+
+    family = forms.CharField(label='Class family', required=False,
+                              widget=dal.autocomplete.ListSelect2(url=reverse_lazy('deviceserver_families')))
+
+    bus = forms.CharField(label='Communication bus', required=False,
+                             widget=dal.autocomplete.ListSelect2(url=reverse_lazy('deviceserver_buses')))
 
 
 class DeviceServerAddForm(forms.ModelForm):

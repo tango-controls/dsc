@@ -1,22 +1,26 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-import models as dsc_models
-from forms import DeviceServerAddForm, DeviceServerSearchForm
-from tables import DeviceServerTable
+
+from django.core.urlresolvers import reverse
+from django.shortcuts import render_to_response, RequestContext
 from django.views.generic import TemplateView, FormView
 from webu.custom_models.views import CustomModelDetailView
-from webu.views import CMSListView, CMSDetailView
-from tango.views import ContentActionViewMixin, FilterGetFormViewMixin, BreadcrumbMixinDetailView
-from django_tables2 import SingleTableView
-from tables import DeviceAttributesTable, DeviceCommandsTable, DevicePipesTable, DevicePropertiesTable
-from xmi_parser import TangoXmiParser
-from django.core.urlresolvers import reverse
-from django.db import models
-import dal.autocomplete
-#import django_filters
+from webu.views import CMSDetailView
+from tango.views import BreadcrumbMixinDetailView
 
-from django.shortcuts import render
 from django_tables2 import RequestConfig
+
+import dal.autocomplete
+
+from xmi_parser import TangoXmiParser
+from tables import DeviceAttributesTable, DeviceCommandsTable, DevicePipesTable, \
+    DevicePropertiesTable, DeviceServerSearchTable
+from forms import DeviceServerAddForm, DeviceServerSearchForm
+import models as dsc_models
+
+
+
+
 
 # Create your views here
 
@@ -52,16 +56,101 @@ class DeviceServerDetailView(BreadcrumbMixinDetailView, CustomModelDetailView, C
         return context
 
 
-class DeviceServerSearchView(FormView):
-    """View that process search """
-    template_name = 'dsc/deviceserver_search.html'
-    form_class = DeviceServerSearchForm
+def search_view(request):
+    """Search is done with function """
+    context = RequestContext(request)
+    table = None
+    if request.method == 'GET':
+        form = DeviceServerSearchForm(request.GET)
+        if form.is_valid():
+            # Do something with the data
+            man = form.cleaned_data.get('manufacturer', None)
+            prod = form.cleaned_data.get('product', None)
+            family = form.cleaned_data.get('family', None)
+            bus = form.cleaned_data.get('bus', None)
 
-    def form_valid(self, form):
-        return super(DeviceServerSearchView, self).form_valid(form)
+            q = dsc_models.DeviceClassInfo.objects
 
-    def get_success_url(self):
-        return reverse('deviceserver_detail', kwargs={'pk': self.device_server.pk})
+            if man:
+                q = q.filter(manufacturer__icontains=man)
+
+            if prod:
+                q = q.filter(product_reference__icontains=prod)
+
+            if family:
+                q = q.filter(class_family__icontains=family)
+
+            if bus:
+                q = q.filter(bus__icontains=bus)
+
+            device_servers = []
+            for cli in q.all():
+                if cli.device_class.device_server not in device_servers:
+                    device_servers.append(cli.device_class.device_server)
+
+            table = DeviceServerSearchTable(device_servers)
+            RequestConfig(request).configure(table)
+    else:
+        form = DeviceServerSearchForm()
+
+
+    return render_to_response('dsc/deviceserver_search.html', {'form': form, 'table':table}, context)
+
+# class DeviceServerSearchView(FormView):
+#     """View that process search """
+#     template_name = 'dsc/deviceserver_search.html'
+#     form_class = DeviceServerSearchForm
+#     table = None
+#
+#
+#     def form_valid(self, form):
+#         assert isinstance(form,DeviceServerSearchForm)
+#         man = form.cleaned_data.get('manufacturer', None)
+#         prod = form.cleaned_data.get('product', None)
+#         family = form.cleaned_data.get('family', None)
+#         bus = form.cleaned_data.get('bus', None)
+#
+#         q = dsc_models.DeviceClassInfo.objects
+#
+#         if man:
+#             q=q.filter(manufacturer__icontains=man)
+#
+#         if prod:
+#             q=q.filter(product_reference__icontains=prod)
+#
+#         if family:
+#             q = q.filter(class_family__icontains=family)
+#
+#         if bus:
+#             q = q.filter(bus__icontains=bus)
+#
+#         print '*********************************'
+#         print '*********************************'
+#         print '*********************************'
+#
+#         form.table = DeviceServerSearchTable(q.select_related('class').select_related('device_server').distinct())
+#
+#         # self.response_form = form
+#
+#         return super(DeviceServerSearchView, self).form_valid(form)
+#
+#     def get_context_data(self, **kwargs):
+#         context = super(DeviceServerSearchView, self).get_context_data(**kwargs)
+#         context['table'] = self.table
+#         if context.get('request', None):
+#             RequestConfig(context['request']).configure(self.table)
+#
+#         print '---------------------------'
+#         print '---------------------------'
+#         print '---------------------------'
+#         print context
+#         print '---------------------------'
+#         print '---------------------------'
+#         print '---------------------------'
+#         return context
+#
+#     def get_success_url(self):
+#         return reverse('deviceserver_search')
 
 
 class DeviceServerManufacturerAutocomplete(dal.autocomplete.Select2ListView):
@@ -88,6 +177,11 @@ class DeviceServerFamilyAutocomplete(dal.autocomplete.Select2ListView):
     def get_list(self):
         return dsc_models.DeviceClassInfo.objects.all().values_list('class_family', flat=True).distinct()
 
+
+class DeviceServerBusAutocomplete(dal.autocomplete.Select2ListView):
+    """Provide autocomplete feature for bus fields"""
+    def get_list(self):
+        return dsc_models.DeviceClassInfo.objects.all().values_list('bus', flat=True).distinct()
 
 class DeviceServerLicenseAutocomplete(dal.autocomplete.Select2ListView):
     """Provide autocomplete feature for product fields"""
@@ -144,8 +238,6 @@ class DeviceServerAddView(FormView):
                     if form.cleaned_data['use_manual_info']:
                         if len(form.cleaned_data['contact_email'])>0:
                             class_info.contact_email = form.cleaned_data['contact_email']
-
-
 
                     class_info.save()
 

@@ -7,27 +7,41 @@
 
 
 {% block content_header %}
-<h1 style="text-transform: none">{{deviceserver.name}}</h1>
+<h1 style="text-transform: none">Device Servers Catalogue Search</h1>
 {% endblock %}
 {% block content %}
         {% url 'deviceserver_add' as add_url %}
 
-        <div>
-            Here you will find a list of device servers available in the community. Device servers provides among others
-            connectivity to equipment. So, if you want to connect your hardware to Tango Controls please check this list.
-        </div>
+
 
         <div>
-            <h4>Did you wrote a new device server?
-            <a href="{{ add_url }}">Please share it.</a></h4>
+            <h4>Please fill the search form:</h4>
+
         </div>
         <div>
-            {{ form.as_p }}
+            <form method="GET" class="get-form" >
+                <table>
+                    {{ form.as_table }}
+                </table>
+                <button type="submit" class="search btn btn-default">Search</button>
+            </form>
         </div>
 
-        {# % render_table table %  #}
+        {% if table %}
+            {% render_table table %}
 
+             <div>
+                <h4>Cannot find any device server you need?</h4>
+                    Don't worry. Please ask on {{ 'tango@esrf.fr'|urlize }} mailing list. There could be some
+                    not yet added to the catalogue.
+                </h4>
 
+            </div>
+        {% else %}
+        <div style="text-align:center;font-weight:bold;">
+            No search submitted, yet.
+        </div>
+        {% endif %}
 
 
 
@@ -39,7 +53,7 @@
 
     <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
 
-{{ form.media }}
+    {{ form.media }}
 
 
 {% endblock %}

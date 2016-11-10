@@ -22,6 +22,19 @@ class DeviceServerTable(tables.Table):
         fields = ('name', 'license')
         sequence = ('name', 'license','family', 'manufacturers', 'products')
 
+class DeviceServerSearchTable(tables.Table):
+
+    name = tables.LinkColumn('deviceserver_detail', args=[A('pk')] )
+    manufacturers = tables.Column(accessor='manufacturers', verbose_name='Manufacturer', orderable=False)
+    products = tables.Column(accessor='products', verbose_name='Products',
+                             orderable=False)
+    family = tables.Column(accessor='family', verbose_name='Family',
+                           orderable=False)
+
+    class Meta:
+        model = DeviceServer
+        fields = ('name',)
+        sequence = ('name', 'family', 'manufacturers', 'products')
 
 class DevicePropertiesTable(tables.Table):
     class Meta:

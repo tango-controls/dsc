@@ -12,8 +12,14 @@
             <a href="{{ add_url }}">Please share it.</a></h4>
         </div>
 
+        <div>Below, please find 10 device servers randomly picked for you. Please use
+            <a href="{% url 'deviceserver_search' %}">
+                <span style="font-weight:bold;font-size:120%;">
+                    search facility</span>
+            </a> to find one you are looking for.</div>
         {% render_table table %}
-    <script language="JavaScript">
+
+<script language="JavaScript">
 function toggle(source) {
     checkboxes = document.getElementsByName('selection');
     for(var i in checkboxes)
