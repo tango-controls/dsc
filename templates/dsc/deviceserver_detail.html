@@ -24,6 +24,17 @@
 <br />
 <hr />
 <br />
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/pl_PL/sdk.js#xfbml=1&version=v2.8";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div><span style="float:right;"><div class="fb-like" data-href="{{ request.build_absolute_uri }}{{ object.get_absolute_url }}" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+</span>.
+</div>
 <div id="dsc-detail-tabs">
     <ul style="background: #35a635;color: rgb(85,85,85);">
         {% for cl_name, spec in specifications.items %}
