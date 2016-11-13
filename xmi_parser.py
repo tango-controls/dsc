@@ -55,6 +55,7 @@ class TangoXmiParser:
                     ds_license = models.DeviceServerLicense.objects.get(name=ds_license_name)
                 except models.DeviceServerLicense.DoesNotExist:
                     ds_license = models.DeviceServerLicense(name=ds_license_name, description='', url='')
+                    ds_license.save()
 
         return models.DeviceServer(name=name, description=description, license=ds_license)
 
@@ -80,6 +81,7 @@ class TangoXmiParser:
                         lic = models.DeviceServerLicense.objects.get(name=license_name)
                     except models.DeviceServerLicense.DoesNotExist:
                         lic = models.DeviceServerLicense(name=license_name, description='', url='')
+                        lic.save()
                 class_copyright = description_element.attrib.get('copyright')
                 language = description_element.attrib.get('language')
             cls.append(models.DeviceClass(name=name, description=description, license=lic, language=language))
