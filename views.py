@@ -217,7 +217,8 @@ class DeviceServerAddView(FormView):
                 # device server object
                 device_server = parser.get_device_server()
                 device_server.add_device_object = add_device
-                device_server.license.save()
+                if device_server.license is not None and device_server.license.pk is None:
+                    device_server.license.save()
 
                 device_server.save()
 
@@ -227,6 +228,8 @@ class DeviceServerAddView(FormView):
                     # save class
                     assert (isinstance(cl,dsc_models.DeviceClass))
                     cl.device_server = device_server
+                    if cl.license is not None and cl.license.pk is None:
+                        cl.license.save()
                     cl.save()
 
                     # create and save class info object
@@ -286,7 +289,8 @@ class DeviceServerAddView(FormView):
                         lic = dsc_models.DeviceServerLicense.objects.get(name=form.cleaned_data['license_name'])
                     except dsc_models.DeviceServerLicense.DoesNotExist:
                         lic = dsc_models.DeviceServerLicense(name=form.cleaned_data['license_name'])
-                        lic.save()
+                        if lic is not None and lic.pk is None:
+                            lic.save()
 
                     device_server.license = lic
                 device_server.save()
