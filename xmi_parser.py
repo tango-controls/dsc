@@ -49,11 +49,12 @@ class TangoXmiParser:
         description_element = self.classes_elements[0].find('description')
         if description_element is not None:
             description = description_element.attrib['description']
-            ds_license_name = description_element.attrib['license']
-            try:
-                ds_license = models.DeviceServerLicense.objects.get(name=ds_license_name)
-            except models.DeviceServerLicense.DoesNotExist:
-                ds_license = models.DeviceServerLicense(name=ds_license_name, description='', url='')
+            ds_license_name = description_element.attrib.get('license', None)
+            if ds_license_name is not None:
+                try:
+                    ds_license = models.DeviceServerLicense.objects.get(name=ds_license_name)
+                except models.DeviceServerLicense.DoesNotExist:
+                    ds_license = models.DeviceServerLicense(name=ds_license_name, description='', url='')
 
         return models.DeviceServer(name=name, description=description, license=ds_license)
 
@@ -68,16 +69,17 @@ class TangoXmiParser:
             name = cl.attrib.get('name')
             description_element = self.classes_elements[0].find('description')
             description = ''
-            lic = ''
+            lic = None
             class_copyright = ''
             language = ''
             if description_element is not None:
                 description = description_element.attrib.get('description')
                 license_name = description_element.attrib.get('license')
-                try:
-                    lic = models.DeviceServerLicense.objects.get(name=license_name)
-                except models.DeviceServerLicense.DoesNotExist:
-                    lic = models.DeviceServerLicense(name=license_name, description='', url='')
+                if license_name is not None:
+                    try:
+                        lic = models.DeviceServerLicense.objects.get(name=license_name)
+                    except models.DeviceServerLicense.DoesNotExist:
+                        lic = models.DeviceServerLicense(name=license_name, description='', url='')
                 class_copyright = description_element.attrib.get('copyright')
                 language = description_element.attrib.get('language')
             cls.append(models.DeviceClass(name=name, description=description, license=lic, language=language))
