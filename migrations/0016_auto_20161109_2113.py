@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import migrations, models
+from django.db import migrations
 from django.conf import settings
+import dsc.models as dsc_models
 
-BASE_MODELS = ['deviceserver', 'deviceclass', 'deviceclassinfo',
-               'deviceserverdocumentation', 'deviceserverlicense', 'deviceserverrepository',
-               'deviceattribute', 'devicecommand', 'devicepipe', 'deviceproperty']
+BASE_MODELS = ['DeviceServer', 'DeviceClass', 'DeviceClassInfo',
+               'DeviceServerDocumentation', 'DeviceServerLicense', 'DeviceServerRepository',
+               'DeviceAttribute', 'DeviceCommand', 'DevicePipe', 'DeviceProperty']
 
-ADMINISTRATION_MODELS = ['deviceserveractivity', 'deviceserveraddmodel', 'deviceserverpluginmodel']
+ADMINISTRATION_MODELS = ['DeviceServerActivity', 'DeviceServerAddModel', 'DeviceServerPluginModel']
 
 
 def add_dsc_permissions(apps, schema_editor):
@@ -16,6 +17,7 @@ def add_dsc_permissions(apps, schema_editor):
     User = apps.get_model("auth", "User")
     Group = apps.get_model("auth", "Group")
     Permission = apps.get_model("auth", "Permission")
+
     ContentType = apps.get_model("contenttypes", "ContentType")
 
     anonymous = User.objects.using(db_alias).get(username='anonymous')
@@ -23,32 +25,72 @@ def add_dsc_permissions(apps, schema_editor):
     managers = Group.objects.using(db_alias).get(name=settings.TANGO_GROUP_CHIEF_EDITOR)
     administrators = Group.objects.using(db_alias).get(name=settings.TANGO_GROUP_ADMIN)
 
+    ct = ContentType.objects.get_for_model(getattr(dsc_models, 'DeviceServer'))
+    # if ct.pk is None:
+    #     ct.save()
+
     members_perms = (
-        Permission.objects.using(db_alias).get(codename='add_deviceserver'),
+        Permission.objects.using(db_alias).get_or_create(codename='add_deviceserver',
+                                                         name='Can add DeviceServer',
+                                                         content_type=ct)[0],
     )
 
     managers_perms = members_perms + (
-        Permission.objects.using(db_alias).get(codename='admin_deviceserver'),
+        Permission.objects.using(db_alias).get_or_create(codename='admin_deviceserver',
+                                                         name='do various administration tasks on device servers',
+                                                         content_type=ct)[0],
     )
 
     for model_code in BASE_MODELS:
+        ct = ContentType.objects.get_for_model(getattr(dsc_models, model_code))
+        # if ct.pk is None:
+        #     ct.save()
+
         managers_perms += (
-            Permission.objects.using(db_alias).get(codename='add_'+model_code),
-            Permission.objects.using(db_alias).get(codename='change_'+model_code),
-            Permission.objects.using(db_alias).get(codename='delete_'+model_code),
+            Permission.objects.using(db_alias).get_or_create(codename='add_'+model_code.lower(),
+                                                             name='Can add '+model_code,
+                                                             content_type=ct)[0],
+
+            Permission.objects.using(db_alias).get_or_create(codename='change_'+model_code.lower(),
+                                                             name='Can change '+model_code,
+                                                             content_type=ct)[0],
+
+            Permission.objects.using(db_alias).get_or_create(codename='delete_'+model_code.lower(),
+                                                             name='Can delete '+model_code,
+                                                             content_type=ct)[0],
         )
 
     administrators_perms = managers_perms
 
     for model_code in ADMINISTRATION_MODELS:
+        ct = ContentType.objects.get_for_model(getattr(dsc_models, model_code))
+        # print ct
+        # if ct.pk is None:
+        #     ct.save()
+
         administrators_perms += (
-            Permission.objects.using(db_alias).get(codename='add_'+model_code),
-            Permission.objects.using(db_alias).get(codename='change_'+model_code),
-            Permission.objects.using(db_alias).get(codename='delete_'+model_code),
+            Permission.objects.using(db_alias).get_or_create(codename='add_' + model_code.lower(),
+                                                             name='Can add ' + model_code,
+                                                             content_type=ct)[0],
+
+            Permission.objects.using(db_alias).get_or_create(codename='change_' + model_code.lower(),
+                                                             name='Can change ' + model_code,
+                                                             content_type=ct)[0],
+
+            Permission.objects.using(db_alias).get_or_create(codename='delete_' + model_code.lower(),
+                                                             name='Can delete ' + model_code,
+                                                             content_type=ct)[0],
         )
+
+
+    # print members_perms
+    # print ''
+    # print managers_perms
+
     members.permissions.add(*members_perms)
     managers.permissions.add(*managers_perms)
     administrators.permissions.add(*administrators_perms)
+
 
 class Migration(migrations.Migration):
 

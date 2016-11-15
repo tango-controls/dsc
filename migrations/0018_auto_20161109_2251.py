@@ -1,14 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import migrations, models
+from django.db import migrations
 from django.conf import settings
+import dsc.models as dsc_models
 
-BASE_MODELS = ['deviceserver', 'deviceclass', 'deviceclassinfo',
-               'deviceserverdocumentation', 'deviceserverlicense', 'deviceserverrepository',
-               'deviceattribute', 'devicecommand', 'devicepipe', 'deviceproperty']
-
-ADMINISTRATION_MODELS = ['deviceserveractivity', 'deviceserveraddmodel', 'deviceserverpluginmodel']
 
 
 def add_dsc_permissions_for_owners(apps, schema_editor):
@@ -17,20 +13,30 @@ def add_dsc_permissions_for_owners(apps, schema_editor):
     Group = apps.get_model("auth", "Group")
     Permission = apps.get_model("auth", "Permission")
 
+    ContentType = apps.get_model("contenttypes", "ContentType")
+
     anonymous = User.objects.using(db_alias).get(username='anonymous')
     members = Group.objects.using(db_alias).get(name=settings.TANGO_GROUP_MEMBER)
     managers = Group.objects.using(db_alias).get(name=settings.TANGO_GROUP_CHIEF_EDITOR)
     administrators = Group.objects.using(db_alias).get(name=settings.TANGO_GROUP_ADMIN)
 
+    ct = ContentType.objects.get_for_model(getattr(dsc_models, 'DeviceServer'))
+    # if ct.pk is None:
+    #     ct.save()
+
     members_perms = (
-        Permission.objects.using(db_alias).get(codename='update_own_deviceserver'),
-        Permission.objects.using(db_alias).get(codename='delete_own_deviceserver'),
+        Permission.objects.using(db_alias).get_or_create(codename='update_own_deviceserver',
+                                               name='do changes to device server for creator',
+                                               content_type=ct)[0],
+
+        Permission.objects.using(db_alias).get_or_create(codename='delete_own_deviceserver',
+                                               name='deletion of device server for creator',
+                                               content_type=ct)[0],
     )
 
     managers_perms = members_perms
 
     administrators_perms = managers_perms
-
 
     members.permissions.add(*members_perms)
     managers.permissions.add(*managers_perms)
