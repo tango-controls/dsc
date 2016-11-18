@@ -212,7 +212,6 @@ class DeviceServerAddView(FormView):
             if form.cleaned_data['use_uploaded_xmi_file']:
                 # use xmi file
                 parser = TangoXmiParser(xml_string=form.cleaned_data['xmi_string'])
-                print "\n----------------\n\nproperly paresed XMI file :)\n\n-----\n"
 
                 # device server object
                 device_server = parser.get_device_server()

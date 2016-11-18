@@ -7,6 +7,7 @@ from django.utils.encoding import python_2_unicode_compatible
 from webu.custom_models.registry import custom_model
 from cms.plugin_base import CMSPluginBase
 from cms.models.pluginmodel import CMSPlugin
+from xmi_parser import TangoXmiParser
 
 AUTH_USER_MODEL = settings.AUTH_USER_MODEL
 
@@ -34,15 +35,17 @@ DS_ACTIVITY_DOWNLOAD = 'download'
 DS_ACTIVITY_DELETE = 'delete'
 DS_ACTIVITY_APPLY_FOR_CERT = 'apply_for_cert'
 DS_ACTIVITY_CERTIFY = 'certify'
-DS_ACTIVITY_VERIFICATION = 'verification'
+DS_ACTIVITY_VERIFICATION = 'verify'
+DS_ACTIVITY_REVERT = 'revert'
 DS_ACTIVITY_CHOICES = (
-    (DS_ACTIVITY_ADD, 'Add'),
-    (DS_ACTIVITY_EDIT, 'Edit'),
+    (DS_ACTIVITY_ADD, 'Create'),
+    (DS_ACTIVITY_EDIT, 'Update'),
     (DS_ACTIVITY_DOWNLOAD, 'Download'),
     (DS_ACTIVITY_DELETE, 'Delete'),
-    (DS_ACTIVITY_APPLY_FOR_CERT, 'Apply for cerification'),
-    (DS_ACTIVITY_CERTIFY, 'Certify'),
-    (DS_ACTIVITY_VERIFICATION, 'Verification'),
+    (DS_ACTIVITY_APPLY_FOR_CERT, 'Apply for certification'),
+    (DS_ACTIVITY_CERTIFY, 'Certificate'),
+    (DS_ACTIVITY_VERIFICATION, 'Verify'),
+    (DS_ACTIVITY_VERIFICATION, 'Revert'),
 )
 
 
@@ -93,8 +96,49 @@ DS_ATTRIBUTE_DATATYPES = {
 ###############################################################################################
 
 
+class DscManagedModel(models.Model):
+
+    # objects in the database are not deleted but invalidated
+    invalidate_activity = models.ForeignKey('DeviceServerActivity',
+                                            related_name='invalidated_%(class)s',
+                                            default=None, null=True)
+
+    # if object is changed it is marked as
+    last_update_activity = models.ForeignKey('DeviceServerActivity',
+                                            related_name='updated_%(class)s',
+                                            default=None, null=True)
+
+    create_activity = models.ForeignKey('DeviceServerActivity',
+                                            related_name='created_%(class)s',
+                                            default=None, null=True)
+
+
+    def is_valid(self):
+        if self.invalidate_activity is None:
+            return True
+        else:
+            return False
+
+    def make_invalid(self, activity):
+        """ Invalidate the object and return invalidate object"""
+        self.invalidate_activity = activity
+        return self
+
+    def is_deleted(self):
+        return not self.is_valid()
+
+    def is_updated(self):
+        if self.last_update_activity is None:
+            return False
+        else:
+            return True
+
+    class Meta:
+        abstract = True
+
+
 @python_2_unicode_compatible
-class DeviceServer(models.Model):
+class DeviceServer(DscManagedModel):
     """Model for a DeviceServer basic entities."""
 
     # TODO: implement interface
@@ -131,13 +175,6 @@ class DeviceServer(models.Model):
     )
 
     readme = models.FileField(verbose_name='Readme', upload_to='dsc_readmes', null=True, blank=True, max_length=100000)
-
-    add_device_object = models.ForeignKey('DeviceServerAddModel',
-                                          related_name='device_server_created',
-                                          on_delete=models.SET_NULL,
-                                          null=True,
-                                          blank=True,
-                                          verbose_name='Created with')
 
     class Meta:
         permissions = (
@@ -198,6 +235,200 @@ class DeviceServer(models.Model):
                 mfs.append(m)
 
         return '; '.join(mfs)
+
+
+    def make_backup(self, activity):
+        # for device server
+        backup_ds = DeviceServer(name=self.name, description=self.description,
+                                      license=self.license,
+                                      created_by=self.created_by,
+                                      created_at=self.created_at,
+                                      status=self.status,
+                                      last_update_activity=self.last_update_activity,
+                                      create_activity=self.create_activity,
+                                      invalidate_activity=activity
+                                      )
+        return backup_ds
+
+    def create_or_update(update_object, activity, device_server=None):
+        """this methods create or update device server based on update/add object.
+            :return (device_server, backup_device_server)
+        """
+        assert isinstance(update_object,DeviceServerAddModel)
+
+        # backup device server if it is update
+        if device_server is not None:
+            backup_device_server = device_server.backup(activity=activity)
+            backup_device_server.save()
+
+        # basic information about device server
+        if update_object.use_uploaded_xmi_file:
+            # use xmi file
+            xmi_string, ok, message = update_object.xmi_string()
+            if ok:
+                parser = TangoXmiParser(xml_string=xmi_string)
+                # device server object
+                new_device_server = parser.get_device_server()
+
+        else:
+            new_device_server = DeviceServer(name='', description='')
+
+        # if data provided manually
+        if  update_object.use_manual_info:
+
+            if len(update_object.name) > 0:
+                new_device_server.name = update_object.name
+
+            if len(update_object.description) > 0:
+                new_device_server.description = update_object.description
+
+            if len(update_object.license_name) > 0:
+                lic = DeviceServerLicense.objects.get_or_create(name=update_object.license_name)
+                new_device_server.license = lic
+
+        # make sure license object is saved
+        if new_device_server.license is not None and new_device_server.license.pk is None:
+            new_device_server.license.save()
+
+        # so, we have base inforamtion
+        if device_server is None:
+            device_server = new_device_server
+            device_server.create_activity=activity
+            device_server.status = STATUS_NEW
+        else:
+            device_server.name = new_device_server.name
+            device_server.description = new_device_server.description
+            device_server.license = new_device_server.license
+            device_server.last_update_activity=activity
+            device_server.status = STATUS_UPDATED
+
+        # make sure device server has pk
+        device_server.save()
+        # mark it in activity
+        activity.device_server = device_server
+        activity.device_server_backup = backup_device_server
+        activity.save()
+
+        # check repository
+        if update_object.available_in_repository:
+            new_repository = DeviceServerRepository(repsitory_type = update_object.repository_type,
+                                                    url = update_object.repository_url,
+                                                    path_in_repository=update_object.repository_path,
+                                                    device_server=device_server
+                                                    )
+            if backup_device_server is not None:
+                # if it is update operation and repository change old repo is redirected to backup device server
+                # and new_repository is marked as update
+                if device_server.repository is not None:
+                    assert isinstance(device_server.repository,DeviceServerRepository)
+                    # check also if there is a real change
+                    if new_repository.repository_type!=device_server.repository.repository_type \
+                        or new_repository.url!=device_server.repository.url \
+                        or new_repository.path_in_repository != device_server.repository.path_in_repository:
+                        # for modified repository move it to backup
+                        old_repo = device_server.repository
+                        old_repo.device_server = backup_device_server
+                        old_repo.invalidate_activity = activity
+                        old_repo.save()
+                        new_repository.last_update_activity = activity
+                        new_device_server.create_activity = old_repo.create_activity
+
+                    else:
+                        # no real change
+                        new_repository = None
+            else:
+                # here, it means we are creating a new device server
+                new_repository.create_activity = activity
+
+
+        # make sure the repository is saved
+        if new_repository is not None:
+            new_repository.save()
+
+        # check documentation
+        # readme is update directly
+        if update_object.upload_readme:
+            new_device_server.readme = update_object.readme_file
+
+        # old documentation is not invalidated automatically but added
+        if update_object.other_documentation1:
+            new_documentation1 = DeviceServerDocumentation(documentation_type=update_object.documentation1_type,
+                                                           url=update_object.documentation1_url,
+                                                           create_activity=activity,
+                                                           device_server=device_server)
+            new_documentation1.save()
+
+        if update_object.other_documentation2:
+            new_documentation2 = DeviceServerDocumentation(documentation_type=update_object.documentation2_type,
+                                                           url=update_object.documentation2_url,
+                                                           create_activity=activity,
+                                                           device_server=device_server)
+            new_documentation2.save()
+
+        # get classes and interface
+        if update_object.use_uploaded_xmi_file and parser is not None:
+            # for xmi file all old device classes and relation are moved to backup and new are created from scratch
+            for cl in device_server.device_classes.all():
+                cl.make_invalid(activity)
+                if backup_device_server is not None:
+                    cl.device_server = backup_device_server
+
+            # read classes from xmi file
+            cls = parser.get_device_classes()
+            for cl in cls:
+                # save class
+                assert (isinstance(cl, DeviceClass))
+                cl.device_server = device_server
+                if cl.license is not None and cl.license.pk is None:
+                    cl.license.save()
+                cl.save()
+
+                # create and save class info object
+                class_info = parser.get_device_class_info(cl)
+                assert (isinstance(class_info, DeviceClassInfo))
+                class_info.device_class = cl
+
+                # if manual info provided override defaults
+                if update_object.use_manual_info:
+                    if len(update_object.contact_email) > 0:
+                        class_info.contact_email = update_object.contact_email
+
+                class_info.save()
+
+                # create and save attributes
+                attributes = parser.get_device_attributes(cl)
+                for attrib in attributes:
+                    assert (isinstance(attrib, DeviceAttribute))
+                    attrib.device_class = cl
+                    attrib.save()
+
+                # create and save commands
+                commands = parser.get_device_commands(cl)
+                for command in commands:
+                    assert (isinstance(command, DeviceCommand))
+                    command.device_class = cl
+                    command.save()
+
+                # create and save pipes
+                pipes = parser.get_device_pipes(cl)
+                for pipe in pipes:
+                    assert (isinstance(pipe, DevicePipe))
+                    pipe.device_class = cl
+                    pipe.save()
+
+                # create and save properties
+                properties = parser.get_device_properties(cl)
+                for prop in properties:
+                    assert (isinstance(prop, DeviceProperty))
+                    prop.device_class = cl
+                    prop.save()
+
+        if
+
+
+
+
+
 ###############################################################################################
 
 
@@ -223,6 +454,8 @@ class DeviceServerActivity(models.Model):
 
     device_server = models.ForeignKey(DeviceServer, related_name='activities')
 
+    device_server_backup = models.ForeignKey(DeviceServer, related_name='backup_for')
+
     def downloads(self):
         """Return number of downloads"""
         down = self.activity_type.DS_ACTIVITY_DOWNLOAD.count()
@@ -232,7 +465,8 @@ class DeviceServerActivity(models.Model):
         return '%s' % self.activity_type
 
 
-class DeviceServerDocumentation(models.Model):
+
+class DeviceServerDocumentation(DscManagedModel):
     """Model for providing reference to device server documentation."""
     documentation_type = models.SlugField(verbose_name='Documentation type',
                                           choices=zip(['README', 'Manual', 'InstGuide',
@@ -247,7 +481,9 @@ class DeviceServerDocumentation(models.Model):
         return '%s' % self.url
 
 
-class DeviceServerRepository(models.Model):
+
+
+class DeviceServerRepository(DscManagedModel):
     """Model for referencing repository where the device serve could be found"""
     repository_type = models.SlugField(
         verbose_name='Repository Type',
@@ -256,7 +492,7 @@ class DeviceServerRepository(models.Model):
     )
     url = models.URLField(verbose_name='URL')
     path_in_repository = models.CharField(max_length=255, verbose_name='Path', blank=True, default='')
-    device_server = models.OneToOneField(DeviceServer, related_name='repository')
+    device_server = models.OneToOneField(DeviceServer, related_name='repository', null=True)
 
     def __str__(self):
         return '%s' % self.url
@@ -273,7 +509,7 @@ class DeviceServerLicense(models.Model):
         return '%s' % self.name
 
 
-class DeviceClass(models.Model):
+class DeviceClass(DscManagedModel):
     """Model to describe device classes implemented by device server"""
     name = models.CharField(max_length=64, verbose_name='Name')
     description = models.TextField(verbose_name='Description', blank=True, null=True)
@@ -291,12 +527,15 @@ class DeviceClass(models.Model):
                                 choices=zip(['Cpp', 'Python', 'PythonHL', 'Java', 'CSharp', 'LabView'],
                                             ['Cpp', 'Python', 'PythonHL', 'Java', 'CSharp', 'LabView']),
                                 verbose_name='Language', default='Cpp')
+    # def make_invalid(self, activity):
+    #    super(DeviceClass,self).make_invalid(activity)
+    #    for attr in
 
     def __str__(self):
         return '%s' % self.name
 
 
-class DeviceClassInfo(models.Model):
+class DeviceClassInfo(DscManagedModel):
     """Model for information about device server."""
     device_class = models.OneToOneField(DeviceClass, related_name='info')
     xmi_file = models.CharField(max_length=128, blank=True, null=True)  # this will store a link to source xmi_file
@@ -316,7 +555,7 @@ class DeviceClassInfo(models.Model):
         return '%s' % self.device_class
 
 
-class DeviceAttribute(models.Model):
+class DeviceAttribute(DscManagedModel):
     """Model for providing basic description of attribute"""
     name = models.CharField(max_length=64, verbose_name='Name')
     description = models.TextField(verbose_name='Description', blank=True, null=True)
@@ -331,7 +570,7 @@ class DeviceAttribute(models.Model):
         return '%s' % self.name
 
 
-class DeviceCommand(models.Model):
+class DeviceCommand(DscManagedModel):
     """Model for providing basic description of attribute"""
     name = models.CharField(max_length=64, verbose_name='Name')
     description = models.TextField(verbose_name='Description', blank=True, null=True)
@@ -349,7 +588,7 @@ class DeviceCommand(models.Model):
         return '%s' % self.name
 
 
-class DevicePipe(models.Model):
+class DevicePipe(DscManagedModel):
     """Model for providing basic description of attribute"""
     name = models.CharField(max_length=64, verbose_name='Name')
     description = models.TextField(verbose_name='Description', blank=True)
@@ -359,7 +598,7 @@ class DevicePipe(models.Model):
         return '%s' % self.name
 
 
-class DeviceProperty(models.Model):
+class DeviceProperty(DscManagedModel):
     """Model for providing basic description of attribute"""
     name = models.CharField(max_length=64, verbose_name='Name')
     description = models.TextField(verbose_name='Description', blank=True)
@@ -373,7 +612,7 @@ class DeviceProperty(models.Model):
         return '%s' % self.name
 
 
-class DeviceAttributeInfo(models.Model):
+class DeviceAttributeInfo(DscManagedModel):
     """Model for providing additional infos about attributes. For future extenstion."""
     device_attribute = models.OneToOneField(DeviceAttribute,related_name='attribute_info')
     # TODO: implement extended interface of DeviceAttributeInfo
@@ -433,6 +672,28 @@ class DeviceServerAddModel(models.Model):
                                 blank=True,
                                 null=True)
 
+    def xmi_string(self):
+        """ :return xmi_string from a file if valid" if not return None"""
+        try:
+            if self.xmi_file.size < 10:
+                raise Exception('The .XMI file seems to be empty.')
+            if self.xmi_file.size > 1000000:
+                raise Exception('The file is to large to be a Tango .XMI file.')
+
+            xmi_string = self.xmi_file.read()
+
+            parser = TangoXmiParser(xml_string=xmi_string)
+
+            is_valid, message = parser.is_valid()
+
+            if not is_valid:
+                raise Exception(message)
+
+        except Exception as e:
+            return '', True, e.message
+
+        return xmi_string, False, ''
+
     # manual info
     use_manual_info = models.BooleanField(verbose_name='Provide data manually', blank=True, default=False)
     class_name = models.CharField(max_length=64, verbose_name='Class name', blank=True, default='')
@@ -457,8 +718,6 @@ class DeviceServerAddModel(models.Model):
     product_reference = models.CharField(max_length=64, verbose_name="Product", default='', blank=True)
     license_name = models.CharField(max_length=64, verbose_name='License type', blank=True, default='GPL')
 
-
-
     # internal information
     created_by = models.ForeignKey(
         AUTH_USER_MODEL,
@@ -474,6 +733,10 @@ class DeviceServerAddModel(models.Model):
     processed_ok = models.BooleanField(default=False)
 
     processed_with_errors = models.BooleanField(default=False)
+
+    activity = models.ForeignKey('DeviceServerActivity',
+                                 related_name='create_object',
+                                 default=None, null=True)
 
 ###################################################################################
 
