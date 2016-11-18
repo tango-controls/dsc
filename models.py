@@ -240,194 +240,15 @@ class DeviceServer(DscManagedModel):
     def make_backup(self, activity):
         # for device server
         backup_ds = DeviceServer(name=self.name, description=self.description,
-                                      license=self.license,
-                                      created_by=self.created_by,
-                                      created_at=self.created_at,
-                                      status=self.status,
-                                      last_update_activity=self.last_update_activity,
-                                      create_activity=self.create_activity,
-                                      invalidate_activity=activity
-                                      )
+                                 license=self.license,
+                                 created_by=self.created_by,
+                                 created_at=self.created_at,
+                                 status=self.status,
+                                 last_update_activity=self.last_update_activity,
+                                 create_activity=self.create_activity,
+                                 invalidate_activity=activity
+                                 )
         return backup_ds
-
-    def create_or_update(update_object, activity, device_server=None):
-        """this methods create or update device server based on update/add object.
-            :return (device_server, backup_device_server)
-        """
-        assert isinstance(update_object,DeviceServerAddModel)
-
-        # backup device server if it is update
-        if device_server is not None:
-            backup_device_server = device_server.backup(activity=activity)
-            backup_device_server.save()
-
-        # basic information about device server
-        if update_object.use_uploaded_xmi_file:
-            # use xmi file
-            xmi_string, ok, message = update_object.xmi_string()
-            if ok:
-                parser = TangoXmiParser(xml_string=xmi_string)
-                # device server object
-                new_device_server = parser.get_device_server()
-
-        else:
-            new_device_server = DeviceServer(name='', description='')
-
-        # if data provided manually
-        if  update_object.use_manual_info:
-
-            if len(update_object.name) > 0:
-                new_device_server.name = update_object.name
-
-            if len(update_object.description) > 0:
-                new_device_server.description = update_object.description
-
-            if len(update_object.license_name) > 0:
-                lic = DeviceServerLicense.objects.get_or_create(name=update_object.license_name)
-                new_device_server.license = lic
-
-        # make sure license object is saved
-        if new_device_server.license is not None and new_device_server.license.pk is None:
-            new_device_server.license.save()
-
-        # so, we have base inforamtion
-        if device_server is None:
-            device_server = new_device_server
-            device_server.create_activity=activity
-            device_server.status = STATUS_NEW
-        else:
-            device_server.name = new_device_server.name
-            device_server.description = new_device_server.description
-            device_server.license = new_device_server.license
-            device_server.last_update_activity=activity
-            device_server.status = STATUS_UPDATED
-
-        # make sure device server has pk
-        device_server.save()
-        # mark it in activity
-        activity.device_server = device_server
-        activity.device_server_backup = backup_device_server
-        activity.save()
-
-        # check repository
-        if update_object.available_in_repository:
-            new_repository = DeviceServerRepository(repsitory_type = update_object.repository_type,
-                                                    url = update_object.repository_url,
-                                                    path_in_repository=update_object.repository_path,
-                                                    device_server=device_server
-                                                    )
-            if backup_device_server is not None:
-                # if it is update operation and repository change old repo is redirected to backup device server
-                # and new_repository is marked as update
-                if device_server.repository is not None:
-                    assert isinstance(device_server.repository,DeviceServerRepository)
-                    # check also if there is a real change
-                    if new_repository.repository_type!=device_server.repository.repository_type \
-                        or new_repository.url!=device_server.repository.url \
-                        or new_repository.path_in_repository != device_server.repository.path_in_repository:
-                        # for modified repository move it to backup
-                        old_repo = device_server.repository
-                        old_repo.device_server = backup_device_server
-                        old_repo.invalidate_activity = activity
-                        old_repo.save()
-                        new_repository.last_update_activity = activity
-                        new_device_server.create_activity = old_repo.create_activity
-
-                    else:
-                        # no real change
-                        new_repository = None
-            else:
-                # here, it means we are creating a new device server
-                new_repository.create_activity = activity
-
-
-        # make sure the repository is saved
-        if new_repository is not None:
-            new_repository.save()
-
-        # check documentation
-        # readme is update directly
-        if update_object.upload_readme:
-            new_device_server.readme = update_object.readme_file
-
-        # old documentation is not invalidated automatically but added
-        if update_object.other_documentation1:
-            new_documentation1 = DeviceServerDocumentation(documentation_type=update_object.documentation1_type,
-                                                           url=update_object.documentation1_url,
-                                                           create_activity=activity,
-                                                           device_server=device_server)
-            new_documentation1.save()
-
-        if update_object.other_documentation2:
-            new_documentation2 = DeviceServerDocumentation(documentation_type=update_object.documentation2_type,
-                                                           url=update_object.documentation2_url,
-                                                           create_activity=activity,
-                                                           device_server=device_server)
-            new_documentation2.save()
-
-        # get classes and interface
-        if update_object.use_uploaded_xmi_file and parser is not None:
-            # for xmi file all old device classes and relation are moved to backup and new are created from scratch
-            for cl in device_server.device_classes.all():
-                cl.make_invalid(activity)
-                if backup_device_server is not None:
-                    cl.device_server = backup_device_server
-
-            # read classes from xmi file
-            cls = parser.get_device_classes()
-            for cl in cls:
-                # save class
-                assert (isinstance(cl, DeviceClass))
-                cl.device_server = device_server
-                if cl.license is not None and cl.license.pk is None:
-                    cl.license.save()
-                cl.save()
-
-                # create and save class info object
-                class_info = parser.get_device_class_info(cl)
-                assert (isinstance(class_info, DeviceClassInfo))
-                class_info.device_class = cl
-
-                # if manual info provided override defaults
-                if update_object.use_manual_info:
-                    if len(update_object.contact_email) > 0:
-                        class_info.contact_email = update_object.contact_email
-
-                class_info.save()
-
-                # create and save attributes
-                attributes = parser.get_device_attributes(cl)
-                for attrib in attributes:
-                    assert (isinstance(attrib, DeviceAttribute))
-                    attrib.device_class = cl
-                    attrib.save()
-
-                # create and save commands
-                commands = parser.get_device_commands(cl)
-                for command in commands:
-                    assert (isinstance(command, DeviceCommand))
-                    command.device_class = cl
-                    command.save()
-
-                # create and save pipes
-                pipes = parser.get_device_pipes(cl)
-                for pipe in pipes:
-                    assert (isinstance(pipe, DevicePipe))
-                    pipe.device_class = cl
-                    pipe.save()
-
-                # create and save properties
-                properties = parser.get_device_properties(cl)
-                for prop in properties:
-                    assert (isinstance(prop, DeviceProperty))
-                    prop.device_class = cl
-                    prop.save()
-
-        if
-
-
-
-
 
 ###############################################################################################
 
@@ -468,6 +289,7 @@ class DeviceServerActivity(models.Model):
 
 class DeviceServerDocumentation(DscManagedModel):
     """Model for providing reference to device server documentation."""
+
     documentation_type = models.SlugField(verbose_name='Documentation type',
                                           choices=zip(['README', 'Manual', 'InstGuide',
                                                        'Generated', 'SourceDoc'],
@@ -481,8 +303,6 @@ class DeviceServerDocumentation(DscManagedModel):
         return '%s' % self.url
 
 
-
-
 class DeviceServerRepository(DscManagedModel):
     """Model for referencing repository where the device serve could be found"""
     repository_type = models.SlugField(
@@ -492,6 +312,8 @@ class DeviceServerRepository(DscManagedModel):
     )
     url = models.URLField(verbose_name='URL')
     path_in_repository = models.CharField(max_length=255, verbose_name='Path', blank=True, default='')
+    contact_email = models.EmailField(verbose_name='Please write to', blank=True, null=True, default='')
+
     device_server = models.OneToOneField(DeviceServer, related_name='repository', null=True)
 
     def __str__(self):
@@ -640,6 +462,8 @@ class DeviceServerAddModel(models.Model):
     )
     repository_url = models.URLField(verbose_name='Repository URL', blank=True, default='')
     repository_path = models.CharField(max_length=255, verbose_name='Path within reposiroty', blank=True, default='')
+    repository_contact = models.EmailField(verbose_name='Please write to', blank=True, null=True, default='')
+    repository_download_url= models.URLField(verbose_name='Dwonload URL', blank=True, default='')
 
     # documentation
     upload_readme = models.BooleanField(verbose_name='Upload README', blank=True, default=False)
@@ -737,6 +561,233 @@ class DeviceServerAddModel(models.Model):
     activity = models.ForeignKey('DeviceServerActivity',
                                  related_name='create_object',
                                  default=None, null=True)
+
+
+def create_or_update(update_object, activity, device_server=None):
+    """this method creates or updates device server based on update/add object.
+        :return (device_server, backup_device_server)
+    """
+    assert isinstance(update_object, DeviceServerAddModel)
+
+    backup_device_server = None
+
+    # backup device server if it is update
+    if device_server is not None:
+        backup_device_server = device_server.backup(activity=activity)
+        backup_device_server.save()
+
+    # basic information about device server
+    if update_object.use_uploaded_xmi_file:
+        # use xmi file
+        xmi_string, ok, message = update_object.xmi_string()
+        if ok:
+            parser = TangoXmiParser(xml_string=xmi_string)
+            # device server object
+            new_device_server = parser.get_device_server()
+
+    else:
+        new_device_server = DeviceServer(name='', description='')
+
+    # if data provided manually
+    if update_object.use_manual_info:
+
+        if len(update_object.name) > 0:
+            new_device_server.name = update_object.name
+
+        if len(update_object.description) > 0:
+            new_device_server.description = update_object.description
+
+        if len(update_object.license_name) > 0:
+            lic = DeviceServerLicense.objects.get_or_create(name=update_object.license_name)
+            new_device_server.license = lic
+
+    # make sure license object is saved
+    if new_device_server.license is not None and new_device_server.license.pk is None:
+        new_device_server.license.save()
+
+    # so, we have base inforamtion
+    if device_server is None:
+        device_server = new_device_server
+        device_server.create_activity = activity
+        device_server.created_by = activity.created_by
+        device_server.status = STATUS_NEW
+    else:
+        device_server.name = new_device_server.name
+        device_server.description = new_device_server.description
+        device_server.license = new_device_server.license
+        device_server.last_update_activity = activity
+        device_server.status = STATUS_UPDATED
+
+    # make sure device server has pk
+    device_server.save()
+    # mark it in activity
+    activity.device_server = device_server
+    activity.device_server_backup = backup_device_server
+    activity.save()
+
+    # check repository
+    if update_object.available_in_repository:
+        new_repository = DeviceServerRepository(repsitory_type=update_object.repository_type,
+                                                url=update_object.repository_url,
+                                                path_in_repository=update_object.repository_path,
+                                                contact_email=update_object.repository_email,
+                                                download_url=update_object.repository_download_url,
+                                                )
+        if backup_device_server is not None:
+            # if it is update operation and repository change old repo is redirected to backup device server
+            # and new_repository is marked as update
+            if device_server.repository is not None:
+                assert isinstance(device_server.repository, DeviceServerRepository)
+                # check also if there is a real change
+                if new_repository.repository_type != device_server.repository.repository_type \
+                        or new_repository.url != device_server.repository.url \
+                        or new_repository.path_in_repository != device_server.repository.path_in_repository \
+                        or new_repository.download_url != device_server.repository.download_url \
+                        or new_repository.contact_email != device_server.repository.contact_email:
+                    # for modified repository move it to backup
+                    old_repo = device_server.repository
+                    old_repo.device_server = backup_device_server
+                    old_repo.invalidate_activity = activity
+                    old_repo.save()
+                    new_repository.last_update_activity = activity
+                    new_repository.device_server = device_server
+                    new_device_server.create_activity = old_repo.create_activity
+
+                else:
+                    # no real change
+                    new_repository = None
+        else:
+            # here, it means we are creating a new device server
+            new_repository.create_activity = activity
+            new_repository.device_server = device_server
+
+    # make sure the repository is saved
+    if new_repository is not None:
+        new_repository.save()
+
+    # check documentation
+    # readme is update directly
+    if update_object.upload_readme:
+        device_server.readme = update_object.readme_file
+
+    # old documentation is not invalidated automatically but added
+    if update_object.other_documentation1:
+        new_documentation1 = DeviceServerDocumentation(documentation_type=update_object.documentation1_type,
+                                                       url=update_object.documentation1_url,
+                                                       create_activity=activity,
+                                                       device_server=device_server)
+        new_documentation1.save()
+
+    if update_object.other_documentation2:
+        new_documentation2 = DeviceServerDocumentation(documentation_type=update_object.documentation2_type,
+                                                       url=update_object.documentation2_url,
+                                                       create_activity=activity,
+                                                       device_server=device_server)
+        new_documentation2.save()
+
+    # get classes and interface
+    if update_object.use_uploaded_xmi_file and parser is not None:
+        # for xmi file all old device classes and relation are moved to backup and new are created from scratch
+        for cl in device_server.device_classes.all():
+            cl.make_invalid(activity)
+            if backup_device_server is not None:
+                cl.device_server = backup_device_server
+
+        # read classes from xmi file
+        cls = parser.get_device_classes()
+        for cl in cls:
+            # save class
+            assert (isinstance(cl, DeviceClass))
+            cl.device_server = device_server
+            cl.create_activity = activity
+            if backup_device_server is not None:
+                cl.last_update_activity = activity
+            if cl.license is not None and cl.license.pk is None:
+                cl.license.save()
+
+            cl.save()
+
+            # create and save class info object
+            class_info = parser.get_device_class_info(cl)
+            assert (isinstance(class_info, DeviceClassInfo))
+            class_info.device_class = cl
+            class_info.create_activity = activity
+            if backup_device_server is not None:
+                class_info.last_update_activity = activity
+
+            # if manual info provided override defaults
+            if update_object.use_manual_info:
+                if len(update_object.contact_email) > 0:
+                    class_info.contact_email = update_object.contact_email
+
+            class_info.save()
+
+            # create and save attributes
+            attributes = parser.get_device_attributes(cl)
+            for attrib in attributes:
+                assert (isinstance(attrib, DeviceAttribute))
+                attrib.device_class = cl
+                attrib.create_activity = activity
+                attrib.save()
+
+            # create and save commands
+            commands = parser.get_device_commands(cl)
+            for command in commands:
+                assert (isinstance(command, DeviceCommand))
+                command.device_class = cl
+                command.create_activity = activity
+                command.save()
+
+            # create and save pipes
+            pipes = parser.get_device_pipes(cl)
+            for pipe in pipes:
+                assert (isinstance(pipe, DevicePipe))
+                pipe.device_class = cl
+                pipe.create_activity = activity
+                pipe.save()
+
+            # create and save properties
+            properties = parser.get_device_properties(cl)
+            for prop in properties:
+                assert (isinstance(prop, DeviceProperty))
+                prop.device_class = cl
+                prop.create_activity = activity
+                prop.save()
+
+    elif update_object.use_manual_info:
+        # manual info provided
+        cl = DeviceClass(name=update_object.name,
+                         description=update_object.description,
+                         class_copyright=update_object.class_copyright,
+                         language=update_object.language,
+                         device_server=device_server
+                         )
+
+        if len(update_object.license_name) > 0:
+            lic = DeviceServerLicense.objects.get_or_create(name=update_object.license_name)
+            if lic.pk is None:
+                lic.save()
+            cl.license = lic
+
+        cl.create_activity = activity
+        cl.save()
+
+        cl_info = DeviceClassInfo(device_class=cl,
+                                  contact_email=update_object.contact_email,
+                                  class_family=update_object.class_family,
+                                  platform=update_object.platform,
+                                  bus=update_object.bus,
+                                  manufacturer=update_object.manufacturer,
+                                  product_reference=update_object.product_reference,
+                                  key_words=update_object.key_words
+                                  )
+
+        cl_info.create_activity = activity
+        cl_info.save()
+
+        # return device_server
+        return device_server, backup_device_server
+
 
 ###################################################################################
 
