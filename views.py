@@ -143,36 +143,38 @@ class DeviceServerAddView(FormView):
 
     def form_valid(self, form):
         """This method is called when form has been filed correctly. It creates model objects and save them."""
-        try:
-            # just let IDE knows the type
-            assert (isinstance(form, DeviceServerAddForm))
 
-            # make sure that database is consisten
-            with transaction.atomic():
-                # remember data passed from the form
-                add_device = form.save()
-                assert (isinstance(add_device, dsc_models.DeviceServerAddModel))
-                add_device.created_by = self.request.user
-                add_device.save()
+        # just let IDE knows the type
+        assert (isinstance(form, DeviceServerAddForm))
 
-                # mark  activity
-                activity = dsc_models.DeviceServerActivity(activity_type=dsc_models.DS_ACTIVITY_ADD,
-                                                           activity_info='The device server has been added to catalogue.',
-                                                           created_by=self.request.user
-                                                           )
-                activity.save()
-
-                self.device_server, old_ds = dsc_models.create_or_update(add_device,activity)
-                self.device_server.save()
-
-                # mark success
-                add_device.processed_ok = True
-                add_device.save()
-
-        except Exception as e:
-            add_device.processed_with_errors = True
+        # make sure that database is consisten
+        with transaction.atomic():
+            # remember data passed from the form
+            add_device = form.save()
+            assert (isinstance(add_device, dsc_models.DeviceServerAddModel))
+            add_device.created_by = self.request.user
             add_device.save()
-            raise e
+
+            # mark  activity
+            activity = dsc_models.DeviceServerActivity(activity_type=dsc_models.DS_ACTIVITY_ADD,
+                                                       activity_info='The device server has been added to catalogue.',
+                                                       created_by=self.request.user
+                                                       )
+            # it is related by other object, so it is good if it has primary key
+            activity.save()
+
+            # create device server
+            self.device_server, old_ds = dsc_models.create_or_update(add_device,activity)
+            #  just to make sure we save device server
+            self.device_server.save()
+
+            activity.device_server = self.device_server
+            activity.save()
+
+            # mark success
+            add_device.activity = activity
+            add_device.processed_ok = True
+            add_device.save()
 
         return super(DeviceServerAddView, self).form_valid(form)
 

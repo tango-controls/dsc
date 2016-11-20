@@ -7,7 +7,7 @@ from django.utils.encoding import python_2_unicode_compatible
 from webu.custom_models.registry import custom_model
 from cms.plugin_base import CMSPluginBase
 from cms.models.pluginmodel import CMSPlugin
-from xmi_parser import TangoXmiParser
+
 
 AUTH_USER_MODEL = settings.AUTH_USER_MODEL
 
@@ -273,9 +273,9 @@ class DeviceServerActivity(models.Model):
         editable=False,
         auto_now_add=True)
 
-    device_server = models.ForeignKey(DeviceServer, related_name='activities')
+    device_server = models.ForeignKey(DeviceServer, related_name='activities', null=True, blank=True)
 
-    device_server_backup = models.ForeignKey(DeviceServer, related_name='backup_for')
+    device_server_backup = models.ForeignKey(DeviceServer, related_name='backup_for', null=True, blank=True)
 
     def downloads(self):
         """Return number of downloads"""
@@ -310,9 +310,10 @@ class DeviceServerRepository(DscManagedModel):
         choices=zip(['GIT', 'SVN', 'Mercurial', 'FTP', 'Other'],
                     ['GIT', 'SVN', 'Mercurial', 'FTP', 'Other'])
     )
-    url = models.URLField(verbose_name='URL')
+    url = models.URLField(verbose_name='URL', null=True)
     path_in_repository = models.CharField(max_length=255, verbose_name='Path', blank=True, default='')
     contact_email = models.EmailField(verbose_name='Please write to', blank=True, null=True, default='')
+    download_url = models.URLField(verbose_name='Download URL', null=True)
 
     device_server = models.OneToOneField(DeviceServer, related_name='repository', null=True)
 
@@ -424,9 +425,7 @@ class DeviceProperty(DscManagedModel):
     """Model for providing basic description of attribute"""
     name = models.CharField(max_length=64, verbose_name='Name')
     description = models.TextField(verbose_name='Description', blank=True)
-    property_type = models.SlugField(choices=zip(DS_ATTRIBUTE_DATATYPES.values(),
-                                                 DS_ATTRIBUTE_DATATYPES.values()),
-                                     verbose_name='Type')
+    property_type = models.SlugField(verbose_name='Type')
     is_class_property = models.BooleanField(verbose_name='Class property', blank=True, default=False)
     device_class = models.ForeignKey(DeviceClass, related_name='properties')
 
@@ -497,7 +496,7 @@ class DeviceServerAddModel(models.Model):
                                 null=True)
 
     def xmi_string(self):
-        """ :return xmi_string from a file if valid" if not return None"""
+        """ :return  (xmi_string, is_ok, error_message)"""
         try:
             if self.xmi_file.size < 10:
                 raise Exception('The .XMI file seems to be empty.')
@@ -514,9 +513,9 @@ class DeviceServerAddModel(models.Model):
                 raise Exception(message)
 
         except Exception as e:
-            return '', True, e.message
+            return '', False, e.message
 
-        return xmi_string, False, ''
+        return xmi_string, True, ''
 
     # manual info
     use_manual_info = models.BooleanField(verbose_name='Provide data manually', blank=True, default=False)
@@ -563,13 +562,17 @@ class DeviceServerAddModel(models.Model):
                                  default=None, null=True)
 
 
+
+from xmi_parser import TangoXmiParser
 def create_or_update(update_object, activity, device_server=None):
-    """this method creates or updates device server based on update/add object.
+    """this method creates or updates device server based on update/add object. It should be used inside atimic
+    transaction to keep database consistent.
         :return (device_server, backup_device_server)
     """
     assert isinstance(update_object, DeviceServerAddModel)
 
     backup_device_server = None
+    new_device_server = None
 
     # backup device server if it is update
     if device_server is not None:
@@ -598,7 +601,7 @@ def create_or_update(update_object, activity, device_server=None):
             new_device_server.description = update_object.description
 
         if len(update_object.license_name) > 0:
-            lic = DeviceServerLicense.objects.get_or_create(name=update_object.license_name)
+            lic = DeviceServerLicense.objects.get_or_create(name=update_object.license_name)[0]
             new_device_server.license = lic
 
     # make sure license object is saved
@@ -620,17 +623,19 @@ def create_or_update(update_object, activity, device_server=None):
 
     # make sure device server has pk
     device_server.save()
-    # mark it in activity
-    activity.device_server = device_server
-    activity.device_server_backup = backup_device_server
-    activity.save()
+
+    # # mark it in activity
+    # activity.device_server = device_server
+    # activity.device_server_backup = backup_device_server
+    # activity.save()
 
     # check repository
+    new_repository = None
     if update_object.available_in_repository:
-        new_repository = DeviceServerRepository(repsitory_type=update_object.repository_type,
+        new_repository = DeviceServerRepository(repository_type=update_object.repository_type,
                                                 url=update_object.repository_url,
                                                 path_in_repository=update_object.repository_path,
-                                                contact_email=update_object.repository_email,
+                                                contact_email=update_object.repository_contact,
                                                 download_url=update_object.repository_download_url,
                                                 )
         if backup_device_server is not None:
@@ -764,7 +769,7 @@ def create_or_update(update_object, activity, device_server=None):
                          )
 
         if len(update_object.license_name) > 0:
-            lic = DeviceServerLicense.objects.get_or_create(name=update_object.license_name)
+            lic = DeviceServerLicense.objects.get_or_create(name=update_object.license_name)[0]
             if lic.pk is None:
                 lic.save()
             cl.license = lic
@@ -785,8 +790,8 @@ def create_or_update(update_object, activity, device_server=None):
         cl_info.create_activity = activity
         cl_info.save()
 
-        # return device_server
-        return device_server, backup_device_server
+    # return device_server
+    return device_server, backup_device_server
 
 
 ###################################################################################

@@ -295,7 +295,7 @@ class TangoXmiParser:
             property_description = property_element.attrib.get('description')
             # data type
             property_xsi_type = property_element.find('type').attrib.get(XSI_TYPE).split(':')[1]
-            property_type = pogoDslDataTypes.get(property_xsi_type)
+            property_type = property_xsi_type
 
             # append property to the list
             properties_list.append(models.DeviceProperty(name=property_name,
