@@ -17,8 +17,13 @@ urlpatterns = patterns(
 
     url(
          r'^ds/(?P<pk>\d+)/update/$',
-         DeviceServerUpdateView.as_view(),
+         permission_required('dsc.update_own_deviceserver')(DeviceServerUpdateView.as_view()),
          name='deviceserver_update'),
+
+    url(
+         r'^ds/(?P<pk>\d+)/delete/$',
+         permission_required('dsc.delete_own_deviceserver')(DeviceServerUpdateView.as_view()),
+         name='deviceserver_delete'),
 
     url(
          r'^ds/(?P<pk>.*)/verify/$',

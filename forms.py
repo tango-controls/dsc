@@ -82,7 +82,7 @@ class DeviceServerAddForm(forms.ModelForm):
         fields = ['use_uploaded_xmi_file', 'xmi_file',
                   'use_manual_info',
                   'name', 'description', 'contact_email', 'platform', 'language', 'license_name',
-                  'available_in_repository', 'repository_type', 'repository_url', 'repository_path',
+                  'repository_type', 'repository_url', 'repository_path',
                   'repository_contact',
                   'upload_readme', 'readme_file',
                   'other_documentation1',

@@ -203,6 +203,23 @@ class DeviceServerUpdateView(UpdateView):
         return reverse('deviceserver_detail', kwargs={'pk': self.device_server.pk})
 
 
+def deviceserver_delete_view(request, pk):
+    context = RequestContext(request)
+    device_server = dsc_models.DeviceServer.objects.get(pk=pk)
+    if request.user != device_server.created_by and request.user.has_perm('dsc.admin_deviceserver'):
+        return render_to_response('dsc/deviceserver_notauthorized.html',
+                                  {'operation': 'delete', 'deviceserver': device_server}, context)
+    if request.method == 'GET':
+        return render_to_response('dsc/deviceserver_delete_question.html',
+                                      {'deviceserver': device_server}, context)
+    else:
+       return render_to_response('dsc/deviceserver_delete_confirmed.html',
+                                      {'deviceserver': device_server}, context)
+
+
+
+
+
 class DeviceServerAddView(FormView):
     """ View that process device server adding to the system. """
 

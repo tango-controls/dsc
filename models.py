@@ -630,7 +630,7 @@ def create_or_update(update_object, activity, device_server=None):
 
     # backup device server if it is update
     if device_server is not None:
-        backup_device_server = device_server.backup(activity=activity)
+        backup_device_server = device_server.make_backup(activity=activity)
         backup_device_server.save()
 
     # basic information about device server
@@ -695,7 +695,7 @@ def create_or_update(update_object, activity, device_server=None):
         if backup_device_server is not None:
             # if it is update operation and repository change old repo is redirected to backup device server
             # and new_repository is marked as update
-            if device_server.repository is not None:
+            if hasattr(device_server, 'repository'):
                 assert isinstance(device_server.repository, DeviceServerRepository)
                 # check also if there is a real change
                 if new_repository.repository_type != device_server.repository.repository_type \
@@ -751,6 +751,7 @@ def create_or_update(update_object, activity, device_server=None):
             cl.make_invalid(activity)
             if backup_device_server is not None:
                 cl.device_server = backup_device_server
+            cl.save()
 
         # read classes from xmi file
         cls = parser.get_device_classes()
