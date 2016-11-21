@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, RequestContext
-from django.views.generic import TemplateView, FormView
+from django.views.generic import TemplateView, FormView, UpdateView
 from django.db import transaction
 from webu.custom_models.views import CustomModelDetailView
 from webu.views import CMSDetailView
@@ -16,7 +16,7 @@ import dal.autocomplete
 from xmi_parser import TangoXmiParser
 from tables import DeviceAttributesTable, DeviceCommandsTable, DevicePipesTable, \
     DevicePropertiesTable, DeviceServerSearchTable
-from forms import DeviceServerAddForm, DeviceServerSearchForm
+from forms import DeviceServerAddForm, DeviceServerSearchForm, DeviceServerUpdateForm
 import models as dsc_models
 
 
@@ -133,12 +133,33 @@ class DeviceServerLicenseAutocomplete(dal.autocomplete.Select2ListView):
         return dsc_models.DeviceServerLicense.objects.all().values_list('name', flat=True).distinct()
 
 
-class DeviceServerUpdateView(FormView):
+def update_class_descritpion(request):
+    pass
+
+class DeviceServerUpdateView(UpdateView):
     """ View that process device server adding to the system. """
 
-    template_name = 'dsc/deviceserver_add.html'
-    form_class = DeviceServerAddForm
+    template_name = 'dsc/deviceserver_update.html'
+    form_class = DeviceServerUpdateForm
+    model = dsc_models.DeviceServer
     device_server = None
+
+    def get_object(self):
+        self.device_server = super(DeviceServerUpdateView, self).get_object()
+        print "******** In get object *******"
+        update_object = dsc_models.DeviceServerUpdateModel().from_device_server(self.device_server)
+        return update_object
+
+    # def get_form(self, form_class):
+    #     """
+    #
+    #     """
+    #     self.device_server = self.get_object()
+    #     print "******** In get form *******"
+    #     update_object = dsc_models.DeviceServerUpdateModel().from_device_server(self.device_server)
+    #     print update_object
+    #     print update_object.name
+    #     return form_class(instance=update_object)
 
     def form_valid(self, form):
         """This method is called when form has been filed correctly. It creates model objects and save them."""
@@ -155,19 +176,20 @@ class DeviceServerUpdateView(FormView):
             update_object.save()
 
             # mark  activity
-            activity = dsc_models.DeviceServerActivity(activity_type=dsc_models.DS_ACTIVITY_ADD,
-                                                       activity_info='The device server has been added to catalogue.',
+            activity = dsc_models.DeviceServerActivity(activity_type=dsc_models.DS_ACTIVITY_EDIT,
+                                                       activity_info='The device server has been updated.',
                                                        created_by=self.request.user
                                                        )
             # it is related by other object, so it is good if it has primary key
             activity.save()
 
             # create device server
-            self.device_server, old_ds = dsc_models.create_or_update(add_device, activity)
+            self.device_server, old_ds = dsc_models.create_or_update(update_object, activity, self.device_server)
             #  just to make sure we save device server
             self.device_server.save()
 
             activity.device_server = self.device_server
+            activity.device_server_backup = old_ds
             activity.save()
 
             # mark success

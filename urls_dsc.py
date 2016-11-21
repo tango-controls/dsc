@@ -2,7 +2,8 @@
 from django.conf.urls import patterns, url, include
 from dsc.views import DeviceServerDetailView, DeviceServerAddView, search_view, \
     DeviceServerManufacturerAutocomplete, DeviceServerProductAutocomplete, \
-    DeviceServerFamilyAutocomplete,DeviceServerLicenseAutocomplete, DeviceServerBusAutocomplete
+    DeviceServerFamilyAutocomplete,DeviceServerLicenseAutocomplete, DeviceServerBusAutocomplete, \
+    DeviceServerUpdateView
 from django.contrib.auth.decorators import login_required, permission_required
 
 from tango.cms_urls import content_action_urls #TODO do przemyślenia i implementacji w DSc potrzebne akcje albo kopia i włąśne
@@ -15,19 +16,19 @@ urlpatterns = patterns(
     #     name='deviceserver_list'),
 
     url(
-         r'^ds/(?P<pk>.*)/$',
-         DeviceServerDetailView.as_view(),
-         name='deviceserver_detail'),
-
-    url(
-         r'^ds/(?P<pk>.*)/update/$',
-         permission_required('dsc.change_own_deviceserver')(DeviceServerDetailView.as_view()),
+         r'^ds/(?P<pk>\d+)/update/$',
+         DeviceServerUpdateView.as_view(),
          name='deviceserver_update'),
 
     url(
          r'^ds/(?P<pk>.*)/verify/$',
          permission_required('dsc.admin_deviceserver')(DeviceServerDetailView.as_view()),
          name='deviceserver_verify'),
+
+    url(
+         r'^ds/(?P<pk>.*)/$',
+         DeviceServerDetailView.as_view(),
+         name='deviceserver_detail'),
 
     url(
          r'^add/$',

@@ -451,7 +451,7 @@ class DeviceServerAddModel(models.Model):
 
     # repository
     process_from_repository = models.BooleanField(verbose_name='Use repository only', blank=True, default=False)
-    available_in_repository = models.BooleanField(verbose_name='Available in repository', blank=True, default=False)
+    available_in_repository = models.BooleanField(verbose_name='Available in repository', default=True)
 
     repository_type = models.SlugField(
         verbose_name='Repository Type',
@@ -560,6 +560,60 @@ class DeviceServerAddModel(models.Model):
     activity = models.ForeignKey('DeviceServerActivity',
                                  related_name='create_object',
                                  default=None, null=True)
+
+
+class DeviceServerUpdateModel(DeviceServerAddModel):
+
+    def from_device_server(self, device_server):
+        """ Fill fields based on device_server object"""
+        assert isinstance(device_server, DeviceServer)
+        self.name = device_server.name
+        self.description = device_server.description
+        self.readme_file = device_server.readme
+
+        if device_server.license is not None:
+            self.license_name=device_server.license.name
+
+        if  hasattr(device_server, 'repository'):
+            assert isinstance(device_server.repository, DeviceServerRepository)
+            self.repository_type = device_server.repository.repository_type
+            self.repository_contact = device_server.repository.contact_email
+            self.repository_url = device_server.repository.url
+            self.repository_download_url = device_server.repository.download_url
+            self.repository_path = device_server.repository.path_in_repository
+
+        docs = device_server.documentation.all()
+        if len(docs)>0:
+            self.other_documentation1 = True
+            self.documentation1_type = docs[0].documentation_type
+            self.documentation1_url = docs[0].url
+
+        if len(docs)>1:
+            self.other_documentation2 = True
+            self.documentation2_type = docs[1].documentation_type
+            self.documentation2_url = docs[1].url
+
+        cls = device_server.device_classes.all()
+
+        if len(cls)>0:
+            cl = cls[0]
+            assert isinstance(cl, DeviceClass)
+            self.class_copyright = cl.class_copyright
+            self.class_description = cl.description
+            self.class_name = cl.name
+            self.language = cl.language
+            if cl.license is not None:
+                self.license_name = cl.license.name
+
+            self.class_family = cl.info.class_family
+            self.manufacturer = cl.info.manufacturer
+            self.product_reference = cl.info.product_reference
+            self.platform = cl.info.platform
+            self.bus = cl.info.bus
+            self.key_words = cl.info.key_words
+
+        return self
+
 
 
 

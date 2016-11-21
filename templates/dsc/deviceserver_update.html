@@ -1,0 +1,105 @@
+{% extends request.is_ajax|yesno:"layout/ajax.html,layout/normal.html" %}
+{% load cms_tags i18n thumbnail webu_utils %}
+{% load render_table from django_tables2 %}
+{% load staticfiles %}
+
+{% block content_header %}
+<h1 style="text-transform: none">Update {{object.name}}</h1>
+{% endblock %}
+{% block content %}
+<h4>Please provide information necessery to catalogue a device server.</h4>
+<form method="POST" class="post-form" enctype="multipart/form-data">{% csrf_token %}
+
+        <table>
+        {{ form.as_table }}
+
+        </table>
+        <button type="submit" class="save btn btn-default">Update</button>
+</form>
+
+{% endblock %}
+
+{% block extra_script %}
+    {{ block.super }}
+    <script language="JavaScript">
+
+        // handling showing/hiding .xmi file field
+        $('#id_use_uploaded_xmi_file').change(function() {
+            // this will contain a reference to the checkbox
+            if (this.checked) {
+                // the checkbox is now checked
+                $('#id_xmi_file').parent().parent().show();
+            } else {
+                // the checkbox is now no longer checked
+                $('#id_xmi_file').parent().parent().hide();
+                $('#id_use_manual_info')[0].checked = true;
+                $('#id_name, #id_description, #id_contact_email, #id_platform, #id_language, #id_license_name').parent().parent().show();
+                $('#id_class_name, #id_class_copyright, #id_class_description, #id_class_family').parent().parent().show();
+                $('#id_manufacturer, #id_product_reference, #id_bus, #id_key_words').parent().parent().show()
+            }
+        });
+
+        // handling showing/hiding repository info
+        //$('#id_repository_type, #id_repository_url, #id_repository_path').parent().parent().hide();
+
+        //$('#id_available_in_repository').change(function() {
+        //    // this will contain a reference to the checkbox
+        //   if (this.checked) {
+        //        // the checkbox is now checked
+        //       $('#id_repository_type, #id_repository_url, #id_repository_path').parent().parent().show();
+        //    } else {
+        //        // the checkbox is now no longer checked
+        //        $('#id_repository_type, #id_repository_url, #id_repository_path').parent().parent().hide();
+        //    }
+        //});
+
+        // handling documentation
+        $('#id_readme_file').parent().parent().hide();
+        $('#id_upload_readme').change(function() {
+            // this will contain a reference to the checkbox
+            if (this.checked) {
+                // the checkbox is now checked
+                $('#id_readme_file').parent().parent().show();
+            } else {
+                // the checkbox is now no longer checked
+                $('#id_readme_file').parent().parent().hide();
+            }
+        });
+
+        $('#id_documentation1_type, #id_documentation1_url').parent().parent().hide();
+        $('#id_other_documentation1').change(function() {
+            // this will contain a reference to the checkbox
+            if (this.checked) {
+                // the checkbox is now checked
+                $('#id_documentation1_type, #id_documentation1_url').parent().parent().show();
+            } else {
+                // the checkbox is now no longer checked
+                $('#id_documentation1_type, #id_documentation1_url').parent().parent().hide();
+            }
+        });
+
+        // handling manual info
+        $('#id_name, #id_description, #id_contact_email, #id_platform, #id_language, #id_license_name').parent().parent().hide();
+        $('#id_class_name, #id_class_copyright, #id_class_description, #id_class_family').parent().parent().hide();
+        $('#id_manufacturer, #id_product_reference, #id_bus, #id_key_words').parent().parent().hide()
+
+        $('#id_use_manual_info').change(function() {
+            // this will contain a reference to the checkbox
+            if (this.checked) {
+                // the checkbox is now checked
+                $('#id_name, #id_description, #id_contact_email, #id_platform, #id_language, #id_license_name').parent().parent().show();
+                $('#id_class_name, #id_class_copyright, #id_class_description, #id_class_family').parent().parent().show();
+                $('#id_manufacturer, #id_product_reference, #id_bus, #id_key_words').parent().parent().show()
+            } else {
+                // the checkbox is now no longer checked
+                $('#id_name, #id_description, #id_contact_email, #id_platform, #id_language, #id_license_name').parent().parent().hide();
+                $('#id_class_name, #id_class_copyright, #id_class_description, #id_class_family').parent().parent().hide();
+                $('#id_manufacturer, #id_product_reference, #id_bus, #id_key_words').parent().parent().hide()
+            }
+        });
+
+
+
+    </script>
+
+{% endblock %}
