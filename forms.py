@@ -71,6 +71,7 @@ class DeviceServerAddForm(forms.ModelForm):
                         or len(cleaned_data['contact_email']) == 0:
                     raise forms.ValidationError('You must provide at least name, description and contact information.')
 
+
         return cleaned_data
 
     class Meta:

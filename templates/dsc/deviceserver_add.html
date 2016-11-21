@@ -40,18 +40,18 @@
         });
 
         // handling showing/hiding repository info
-        $('#id_repository_type, #id_repository_url, #id_repository_path').parent().parent().hide();
+        //$('#id_repository_type, #id_repository_url, #id_repository_path').parent().parent().hide();
 
-        $('#id_available_in_repository').change(function() {
-            // this will contain a reference to the checkbox
-            if (this.checked) {
-                // the checkbox is now checked
-                $('#id_repository_type, #id_repository_url, #id_repository_path').parent().parent().show();
-            } else {
-                // the checkbox is now no longer checked
-                $('#id_repository_type, #id_repository_url, #id_repository_path').parent().parent().hide();
-            }
-        });
+        //$('#id_available_in_repository').change(function() {
+        //    // this will contain a reference to the checkbox
+        //   if (this.checked) {
+        //        // the checkbox is now checked
+        //       $('#id_repository_type, #id_repository_url, #id_repository_path').parent().parent().show();
+        //    } else {
+        //        // the checkbox is now no longer checked
+        //        $('#id_repository_type, #id_repository_url, #id_repository_path').parent().parent().hide();
+        //    }
+        //});
 
         // handling documentation
         $('#id_readme_file').parent().parent().hide();

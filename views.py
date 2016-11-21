@@ -133,13 +133,60 @@ class DeviceServerLicenseAutocomplete(dal.autocomplete.Select2ListView):
         return dsc_models.DeviceServerLicense.objects.all().values_list('name', flat=True).distinct()
 
 
-class DeviceServerAddView(FormView):
+class DeviceServerUpdateView(FormView):
     """ View that process device server adding to the system. """
 
     template_name = 'dsc/deviceserver_add.html'
     form_class = DeviceServerAddForm
     device_server = None
 
+    def form_valid(self, form):
+        """This method is called when form has been filed correctly. It creates model objects and save them."""
+
+        # just let IDE knows the type
+        assert (isinstance(form, DeviceServerAddForm))
+
+        # make sure that database is consisten
+        with transaction.atomic():
+            # remember data passed from the form
+            update_object = form.save()
+            assert (isinstance(update_object, dsc_models.DeviceServerAddModel))
+            update_object.created_by = self.request.user
+            update_object.save()
+
+            # mark  activity
+            activity = dsc_models.DeviceServerActivity(activity_type=dsc_models.DS_ACTIVITY_ADD,
+                                                       activity_info='The device server has been added to catalogue.',
+                                                       created_by=self.request.user
+                                                       )
+            # it is related by other object, so it is good if it has primary key
+            activity.save()
+
+            # create device server
+            self.device_server, old_ds = dsc_models.create_or_update(add_device, activity)
+            #  just to make sure we save device server
+            self.device_server.save()
+
+            activity.device_server = self.device_server
+            activity.save()
+
+            # mark success
+            update_object.activity = activity
+            update_object.processed_ok = True
+            update_object.save()
+
+        return super(DeviceServerUpdateView, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('deviceserver_detail', kwargs={'pk': self.device_server.pk})
+
+
+class DeviceServerAddView(FormView):
+    """ View that process device server adding to the system. """
+
+    template_name = 'dsc/deviceserver_add.html'
+    form_class = DeviceServerAddForm
+    device_server = None
 
     def form_valid(self, form):
         """This method is called when form has been filed correctly. It creates model objects and save them."""
