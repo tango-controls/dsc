@@ -31,7 +31,7 @@ class DeviceServerPlugin(CMSPluginBase): #LastPublishedObjectPluginBase
         context = super(DeviceServerPlugin, self).render(context, instance, placeholder)
         context['table_class'] = DeviceServerTable
         # getting random 10 device servers
-        q = DeviceServer.objects.all()
+        q = DeviceServer.objects.filter(invalidate_activity=None)
         count = q.count()
         ds_list = []
         while len(ds_list)<10 and len(ds_list)<count:

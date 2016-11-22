@@ -6,8 +6,46 @@
 {% block content_header %}
 <h1 style="text-transform: none">{{deviceserver.name}}</h1>
 {% endblock %}
+
 {% block content %}
-{# <div><span style="font-weight:bold;">Downloads:</span> {{ deviceserver.no_downloads }}</div> #}
+
+{% if deviceserver.is_valid %}
+    <div id="fb-root"></div>
+
+            <script>(function(d, s, id) {
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) return;
+              js = d.createElement(s); js.id = id;
+              js.src = "//connect.facebook.net/en_EN/sdk.js#xfbml=1&version=v2.8";
+              fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
+            <div><span style="float:right;"><div class="fb-like" data-href="{{ request.build_absolute_uri }}{{ object.get_absolute_url }}" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+            </span>
+
+        {% if deviceserver.created_by == user %}
+            <span style="margin-right:20px;">
+                <a href="{% url 'deviceserver_update' deviceserver.pk %}" class="icon-edit">Edit</a>
+            </span>
+            <span style="margin:20px;">
+                <a href="{% url 'deviceserver_delete' deviceserver.pk %}" class="icon-delete">Delete</a>
+
+            </span>
+        {% endif %}        .
+    </div>
+    <br />
+    <hr/>
+    <br />
+{% endif %}
+
+
+{% if deviceserver.status == 'deleted' %}
+    <h4>This device server is deleted.<br />Information provided here may be no longer valid.</h4>
+{% endif %}
+{% if deviceserver.status != 'deleted' and not deviceserver.is_valid %}
+    <h4>This is historical information of deviceserver.invalidate_activity.deviceserver.name device server. To
+
+    </h4>
+{% endif %}
 <div><span style="font-weight:bold;">Status:</span> {{ deviceserver.status }}</div>
 <div><span style="font-weight:bold;">Repository:</span>
     <a href="{{deviceserver.repository.url}}" target="_blank">
@@ -24,30 +62,17 @@
 <br />
 <hr />
 <br />
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_EN/sdk.js#xfbml=1&version=v2.8";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-<div><span style="float:right;"><div class="fb-like" data-href="{{ request.build_absolute_uri }}{{ object.get_absolute_url }}" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
-</span>
-<span>
-    {% if deviceserver.created_by == user %}
-        <a href="{% url 'deviceserver_update' deviceserver.pk %}" class="icon-edit">Edit</a>
-        <a href="{% url 'deviceserver_delete' deviceserver.pk %}" class="icon-delete">Delete</a>
-    {% endif %}
-</span>.
-</div>
+
+
+
 <div id="dsc-detail-tabs">
     <ul style="background: #35a635;color: rgb(85,85,85);">
         {% for cl_name, spec in specifications.items %}
-
+            {% if spec.cl.is_valid %}
             <li>
                 <a href="#dsc-{{spec.cl.name}}-class-tab"><span>{{spec.cl.name}}</span></a>
             </li>
+            {% endif %}
         {% endfor %}
         <li style="float:right;">
             <a href="#dsc-documentation-tab"><span>Documentation</span></a>
@@ -55,7 +80,7 @@
     </ul>
 
     {% for cl_name, spec in specifications.items %}
-
+        {% if spec.cl.is_valid %}
         <div id="dsc-{{spec.cl.name}}-class-tab">
             <div><span style="font-weight:bold;">Description:</span> <br />{{ spec.cl.description }}</div>
             {% if spec.cl.info.platform %}
@@ -107,20 +132,23 @@
             </div>
 
         </div>
+        {% endif %}
     {% endfor %}
     <div id="dsc-documentation-tab">
         {% for doc in deviceserver.documentation.all %}
-        <div>
-            <span style="font-weight:bold;">{{doc.documentation_type}}:</span>
-            <a href="{{doc.url}}" target="_blank">{{doc.url}}</a>
-            <hr />
-        </div>
+            {% if doc.is_valid %}
+                <div>
+                    <span style="font-weight:bold;">{{doc.documentation_type}}:</span>
+                    <a href="{{doc.url}}" target="_blank">{{doc.url}}</a>
+                    <hr />
+                </div>
+            {% endif %}
         {% endfor %}
         {% if readme %}
-        <div>
-            <h4>README</h4>
-            {{readme|linebreaks}}
-        </div>
+            <div>
+                <h4>README</h4>
+                {{readme|linebreaks}}
+            </div>
         {% endif %}
 
     </div>

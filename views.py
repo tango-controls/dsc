@@ -5,6 +5,8 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, RequestContext
 from django.views.generic import TemplateView, FormView, UpdateView
 from django.db import transaction
+from django.contrib.auth.decorators import login_required
+
 from webu.custom_models.views import CustomModelDetailView
 from webu.views import CMSDetailView
 from tango.views import BreadcrumbMixinDetailView
@@ -19,10 +21,6 @@ from tables import DeviceAttributesTable, DeviceCommandsTable, DevicePipesTable,
 from forms import DeviceServerAddForm, DeviceServerSearchForm, DeviceServerUpdateForm
 import models as dsc_models
 
-
-
-
-
 # Create your views here
 
 
@@ -36,16 +34,20 @@ class DeviceServerDetailView(BreadcrumbMixinDetailView, CustomModelDetailView, C
         context = super(DeviceServerDetailView, self).get_context_data(**kwargs)
 
         # get all classes
-        context['device_classes'] = context['deviceserver'].device_classes.all()
+        context['device_classes'] = context['deviceserver'].device_classes.filter(invalidate_activity=None)
         # for all classes tables of attributes, properties  and so will be provided
         context['specifications'] = {}
 
         for cl in context['device_classes']:
             context['specifications'][cl.name] = {}
-            context['specifications'][cl.name]['properties_table'] = DevicePropertiesTable(cl.properties.all())
-            context['specifications'][cl.name]['attributes_table'] = DeviceAttributesTable(cl.attributes.all())
-            context['specifications'][cl.name]['commands_table'] = DeviceCommandsTable(cl.commands.all())
-            context['specifications'][cl.name]['pipes_table'] = DevicePipesTable(cl.pipes.all())
+            context['specifications'][cl.name]['properties_table'] = \
+                DevicePropertiesTable(cl.properties.filter(invalidate_activity=None))
+            context['specifications'][cl.name]['attributes_table'] = \
+                DeviceAttributesTable(cl.attributes.filter(invalidate_activity=None))
+            context['specifications'][cl.name]['commands_table'] = \
+                DeviceCommandsTable(cl.commands.filter(invalidate_activity=None))
+            context['specifications'][cl.name]['pipes_table'] = \
+                DevicePipesTable(cl.pipes.filter(invalidate_activity=None))
             context['specifications'][cl.name]['info'] = cl.info
             context['specifications'][cl.name]['cl'] = cl
 
@@ -70,7 +72,7 @@ def search_view(request):
             family = form.cleaned_data.get('family', None)
             bus = form.cleaned_data.get('bus', None)
 
-            q = dsc_models.DeviceClassInfo.objects
+            q = dsc_models.DeviceClassInfo.objects.filter(invalidate_activity=None)
 
             if man:
                 q = q.filter(manufacturer__icontains=man)
@@ -86,7 +88,7 @@ def search_view(request):
 
             device_servers = []
             for cli in q.all():
-                if cli.device_class.device_server not in device_servers:
+                if cli.device_class.device_server not in device_servers and cli.device_class.device_server.is_valid:
                     device_servers.append(cli.device_class.device_server)
 
             table = DeviceServerSearchTable(device_servers)
@@ -127,13 +129,14 @@ class DeviceServerBusAutocomplete(dal.autocomplete.Select2ListView):
     def get_list(self):
         return dsc_models.DeviceClassInfo.objects.all().values_list('bus', flat=True).distinct()
 
+
 class DeviceServerLicenseAutocomplete(dal.autocomplete.Select2ListView):
     """Provide autocomplete feature for product fields"""
     def get_list(self):
         return dsc_models.DeviceServerLicense.objects.all().values_list('name', flat=True).distinct()
 
 
-def update_class_descritpion(request):
+def update_class_description(request):
     pass
 
 class DeviceServerUpdateView(UpdateView):
@@ -202,7 +205,7 @@ class DeviceServerUpdateView(UpdateView):
     def get_success_url(self):
         return reverse('deviceserver_detail', kwargs={'pk': self.device_server.pk})
 
-
+@login_required
 def deviceserver_delete_view(request, pk):
     context = RequestContext(request)
     device_server = dsc_models.DeviceServer.objects.get(pk=pk)
@@ -213,7 +216,21 @@ def deviceserver_delete_view(request, pk):
         return render_to_response('dsc/deviceserver_delete_question.html',
                                       {'deviceserver': device_server}, context)
     else:
-       return render_to_response('dsc/deviceserver_delete_confirmed.html',
+        with transaction.atomic():
+            activity = dsc_models.DeviceServerActivity(activity_type=dsc_models.DS_ACTIVITY_DELETE,
+                                                       activity_info='Devcie server %s has been deleted by %s %s.' % \
+                                                                 (device_server.name,
+                                                                  request.user.first_name,
+                                                                  request.user.last_name),
+                                                       device_server = device_server,
+                                                       device_server_backup = device_server,
+                                                       created_by = request.user)
+            activity.save()
+            device_server.invalidate_activity = activity
+            device_server.status = dsc_models.STATUS_DELETED
+            device_server.save()
+
+        return render_to_response('dsc/deviceserver_delete_confirmed.html',
                                       {'deviceserver': device_server}, context)
 
 

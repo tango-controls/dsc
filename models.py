@@ -101,17 +101,16 @@ class DscManagedModel(models.Model):
     # objects in the database are not deleted but invalidated
     invalidate_activity = models.ForeignKey('DeviceServerActivity',
                                             related_name='invalidated_%(class)s',
-                                            default=None, null=True)
+                                            default=None, null=True, blank=True)
 
     # if object is changed it is marked as
     last_update_activity = models.ForeignKey('DeviceServerActivity',
                                             related_name='updated_%(class)s',
-                                            default=None, null=True)
+                                            default=None, null=True, blank=True)
 
     create_activity = models.ForeignKey('DeviceServerActivity',
                                             related_name='created_%(class)s',
-                                            default=None, null=True)
-
+                                            default=None, null=True, blank=True)
 
     def is_valid(self):
         if self.invalidate_activity is None:
@@ -132,6 +131,18 @@ class DscManagedModel(models.Model):
             return False
         else:
             return True
+
+    def delete(self, activity=None, user=None):
+        if activity is None:
+            activity = DeviceServerActivity(
+                activity_type=DS_ACTIVITY_DELETE,
+                activity_info='%s has been deleted.' % self.__str__(),
+                created_by=user
+            )
+        activity.device_server = self.device_server
+        activity.save()
+        self.make_invalid(activity)
+        self.save()
 
     class Meta:
         abstract = True
@@ -236,7 +247,6 @@ class DeviceServer(DscManagedModel):
 
         return '; '.join(mfs)
 
-
     def make_backup(self, activity):
         # for device server
         backup_ds = DeviceServer(name=self.name, description=self.description,
@@ -283,8 +293,10 @@ class DeviceServerActivity(models.Model):
         return down
 
     def __str__(self):
-        return '%s' % self.activity_type
-
+        if self.device_server is None:
+            return '%s ' % self.activity_type
+        else:
+            return '%s %s' % (self.activity_type, self.device_server.name)
 
 
 class DeviceServerDocumentation(DscManagedModel):
@@ -374,6 +386,10 @@ class DeviceClassInfo(DscManagedModel):
     key_words = models.CharField(max_length=255, verbose_name="Key words", blank=True, null=True)
     product_reference = models.CharField(max_length=64, verbose_name="Product", default='')
 
+    @property
+    def device_server(self):
+        return self.device_class.device_server
+
     def __str__(self):
         return '%s' % self.device_class
 
@@ -388,6 +404,10 @@ class DeviceAttribute(DscManagedModel):
     data_type = models.SlugField(choices=zip(DS_ATTRIBUTE_DATATYPES.values(), DS_ATTRIBUTE_DATATYPES.values()),
                                  verbose_name='Data Type', default='DevString')
     device_class = models.ForeignKey(DeviceClass, related_name='attributes')
+
+    @property
+    def device_server(self):
+        return self.device_class.device_server
 
     def __str__(self):
         return '%s' % self.name
@@ -407,6 +427,10 @@ class DeviceCommand(DscManagedModel):
     output_description = models.TextField(verbose_name='Argout description', blank=True, null=True)
     device_class = models.ForeignKey(DeviceClass, related_name='commands')
 
+    @property
+    def device_server(self):
+        return self.device_class.device_server
+
     def __str__(self):
         return '%s' % self.name
 
@@ -416,6 +440,10 @@ class DevicePipe(DscManagedModel):
     name = models.CharField(max_length=64, verbose_name='Name')
     description = models.TextField(verbose_name='Description', blank=True)
     device_class = models.ForeignKey(DeviceClass, related_name='pipes')
+
+    @property
+    def device_server(self):
+        return self.device_class.device_server
 
     def __str__(self):
         return '%s' % self.name
@@ -428,6 +456,10 @@ class DeviceProperty(DscManagedModel):
     property_type = models.SlugField(verbose_name='Type')
     is_class_property = models.BooleanField(verbose_name='Class property', blank=True, default=False)
     device_class = models.ForeignKey(DeviceClass, related_name='properties')
+
+    @property
+    def device_server(self):
+        return self.device_class.device_server
 
     def __str__(self):
         return '%s' % self.name
@@ -815,6 +847,11 @@ def create_or_update(update_object, activity, device_server=None):
                 prop.save()
 
     elif update_object.use_manual_info:
+        for cl in device_server.device_classes.all():
+            cl.make_invalid(activity)
+            if backup_device_server is not None:
+                cl.device_server = backup_device_server
+            cl.save()
         # manual info provided
         cl = DeviceClass(name=update_object.name,
                          description=update_object.description,

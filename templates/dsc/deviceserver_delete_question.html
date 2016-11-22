@@ -1,10 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends request.is_ajax|yesno:"layout/ajax.html,layout/normal.html" %}
+{% load cms_tags i18n thumbnail webu_utils %}
+{% load render_table from django_tables2 %}
+{% load staticfiles %}
 
-</body>
-</html>
+{% block content_header %}
+<h1 style="text-transform: none">Deleting {{deviceserver.name}}</h1>
+{% endblock %}
+{% block content %}
+<form action="" method="post">{% csrf_token %}
+    <h4>Are you sure you want to delete "{{ deviceserver.name }}" device server?</h4>
+    <input type="submit" value="Confirm" />
+    <a href="{% url 'deviceserver_detail' deviceserver.pk %}">Cancel</a>
+</form>
+
+
+{% endblock %}

@@ -4,10 +4,10 @@
 {% load staticfiles %}
 
 {% block content_header %}
-<h1 style="text-transform: none">{{deviceserver.name}} Deleted</h1>
+<h1 style="text-transform: none">{{deviceserver.name}}</h1>
 {% endblock %}
 {% block content %}
-<h4>The device server "{{ deviceserver.name }}" has been deleted.</h4>
-<h4><a href="{% url 'deviceserver_search' %}">Back</a></h4>
+<p>Sorry, you ara not authorized to {{ operartion }} {{ deviceserver.name }}.</p>
+<h4><a href="{% url 'deviceserver_detatil' deviceserver.pk %}">Back</a></h4>
 
 {% endblock %}
