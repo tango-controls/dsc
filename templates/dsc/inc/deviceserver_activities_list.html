@@ -1,0 +1,20 @@
+{% for activity in deviceserver.activities.all|dictsortreversed:'created_at' %}
+    {{ activity.created_at|date }}, {{ activity.created_by.get_full_name }}
+    <br />
+    <span style="font-weight:bold">{{activity.activity_type|title}}:</span>
+    <br />
+    {{activity.activity_info}}
+    <br />
+    {% if activity.device_server_backup %}
+        You can see previous version
+        <a href="{% url 'deviceserver_detail' activity.device_server_backup.pk  %}" style="font-weight:bold">
+            here
+        </a>.
+    {% endif %}
+    {% if not forloop.last %}
+        <br />
+        <br />
+        <hr />
+        <br />
+    {% endif %}
+{% endfor %}
