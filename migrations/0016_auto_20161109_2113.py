@@ -31,13 +31,14 @@ def add_dsc_permissions(apps, schema_editor):
 
     members_perms = (
         Permission.objects.using(db_alias).get_or_create(codename='add_deviceserver',
-                                                         name='Can add DeviceServer',
+                                                         defaults={'name': 'Can add DeviceServer'},
                                                          content_type=ct)[0],
     )
 
     managers_perms = members_perms + (
         Permission.objects.using(db_alias).get_or_create(codename='admin_deviceserver',
-                                                         name='do various administration tasks on device servers',
+                                                         defaults={'name':
+                                                                'do various administration tasks on device servers'},
                                                          content_type=ct)[0],
     )
 
@@ -48,15 +49,15 @@ def add_dsc_permissions(apps, schema_editor):
 
         managers_perms += (
             Permission.objects.using(db_alias).get_or_create(codename='add_'+model_code.lower(),
-                                                             name='Can add '+model_code,
+                                                             defaults={'name': 'Can add ' + model_code},
                                                              content_type=ct)[0],
 
             Permission.objects.using(db_alias).get_or_create(codename='change_'+model_code.lower(),
-                                                             name='Can change '+model_code,
+                                                             defaults={'name': 'Can change ' + model_code},
                                                              content_type=ct)[0],
 
             Permission.objects.using(db_alias).get_or_create(codename='delete_'+model_code.lower(),
-                                                             name='Can delete '+model_code,
+                                                             defaults={'name': 'Can delete ' + model_code},
                                                              content_type=ct)[0],
         )
 
@@ -70,15 +71,15 @@ def add_dsc_permissions(apps, schema_editor):
 
         administrators_perms += (
             Permission.objects.using(db_alias).get_or_create(codename='add_' + model_code.lower(),
-                                                             name='Can add ' + model_code,
+                                                             defaults={'name': 'Can add ' + model_code},
                                                              content_type=ct)[0],
 
             Permission.objects.using(db_alias).get_or_create(codename='change_' + model_code.lower(),
-                                                             name='Can change ' + model_code,
+                                                             defaults={'name': 'Can change ' + model_code},
                                                              content_type=ct)[0],
 
             Permission.objects.using(db_alias).get_or_create(codename='delete_' + model_code.lower(),
-                                                             name='Can delete ' + model_code,
+                                                             defaults={'name': 'Can delete ' + model_code},
                                                              content_type=ct)[0],
         )
 

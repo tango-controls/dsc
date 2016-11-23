@@ -1,0 +1,16 @@
+{% extends "layout/one_column.html" %}
+{% load cms_tags menu_tags sekizai_tags static %}
+{% block bodyclasses %}layout_sidebar{% endblock %}
+
+{% block principal %}
+    {{ block.super }}
+    <aside id="sidebar">
+        {% block sidebar %}
+            <h1>Recent activities</h1>
+
+
+                {% static_placeholder "dsc_activity" %}
+
+        {% endblock %}
+    </aside>
+{% endblock %}

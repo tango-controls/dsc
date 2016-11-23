@@ -26,11 +26,11 @@ def add_dsc_permissions_for_owners(apps, schema_editor):
 
     members_perms = (
         Permission.objects.using(db_alias).get_or_create(codename='update_own_deviceserver',
-                                               name='do changes to device server for creator',
+                                               defaults={'name': 'do changes to device server for creator'},
                                                content_type=ct)[0],
 
         Permission.objects.using(db_alias).get_or_create(codename='delete_own_deviceserver',
-                                               name='deletion of device server for creator',
+                                               defaults={'name': 'deletion of device server for creator'},
                                                content_type=ct)[0],
     )
 

@@ -218,7 +218,7 @@ def deviceserver_delete_view(request, pk):
     else:
         with transaction.atomic():
             activity = dsc_models.DeviceServerActivity(activity_type=dsc_models.DS_ACTIVITY_DELETE,
-                                                       activity_info='Devcie server %s has been deleted by %s %s.' % \
+                                                       activity_info='Device server %s has been deleted by %s %s.' % \
                                                                  (device_server.name,
                                                                   request.user.first_name,
                                                                   request.user.last_name),

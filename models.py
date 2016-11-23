@@ -890,9 +890,21 @@ def create_or_update(update_object, activity, device_server=None):
 
 
 class DeviceServerPluginModel(CMSPlugin):
-    model = DeviceServer
+    model = DeviceServerActivity
 
     # TODO prepare plugin for administration CMS
     class Meta:
         app_label = 'dsc'
         verbose_name = 'Device Servers Catalogue plugin'
+
+
+class DeviceServersActivityPluginModel(CMSPlugin):
+    model = DeviceServer
+
+    items_number = models.PositiveSmallIntegerField(verbose_name="Number of items", default=5)
+
+    # TODO prepare plugin for administration CMS
+    class Meta:
+        app_label = 'dsc'
+        verbose_name = 'Device Servers Catalogue Activity plugin'
+
