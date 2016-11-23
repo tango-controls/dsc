@@ -71,7 +71,7 @@ class DeviceServerAddForm(forms.ModelForm):
                         or len(cleaned_data['contact_email']) == 0:
                     raise forms.ValidationError('You must provide at least name, description and contact information.')
 
-        if cleaned_data['repository_url']=='' and cleaned_data['repository_contact']=='':
+        if cleaned_data.get('repository_url','')=='' and cleaned_data.get('repository_contact','')=='':
             raise forms.ValidationError('You must provide either repostiry URL or contact email to let someone  '
                                         'access your device server.')
 
