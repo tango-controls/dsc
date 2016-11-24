@@ -149,20 +149,21 @@ class DeviceServerUpdateView(UpdateView):
 
     def get_object(self):
         self.device_server = super(DeviceServerUpdateView, self).get_object()
-        print "******** In get object *******"
+        if self.device_server.created_by!=self.request.user \
+            and not self.request.user.has_perm('dsc.admin_deviceserver'):
+            self.template_name = 'dsc/deviceserver_notauthorized.html'
+            return None
         update_object = dsc_models.DeviceServerUpdateModel().from_device_server(self.device_server)
         return update_object
 
-    # def get_form(self, form_class):
-    #     """
-    #
-    #     """
-    #     self.device_server = self.get_object()
-    #     print "******** In get form *******"
-    #     update_object = dsc_models.DeviceServerUpdateModel().from_device_server(self.device_server)
-    #     print update_object
-    #     print update_object.name
-    #     return form_class(instance=update_object)
+    def get_context_data(self, **kwargs):
+        context = super(DeviceServerUpdateView,self).get_context_data(**kwargs)
+        if self.device_server.created_by!=self.request.user \
+            and not self.request.user.has_perm('dsc.admin_deviceserver'):
+            self.template_name = 'dsc/deviceserver_notauthorized.html'
+            context['deviceserver'] = self.device_server
+            context['operation'] = 'update'
+        return context
 
     def form_valid(self, form):
         """This method is called when form has been filed correctly. It creates model objects and save them."""
@@ -209,7 +210,7 @@ class DeviceServerUpdateView(UpdateView):
 def deviceserver_delete_view(request, pk):
     context = RequestContext(request)
     device_server = dsc_models.DeviceServer.objects.get(pk=pk)
-    if request.user != device_server.created_by and request.user.has_perm('dsc.admin_deviceserver'):
+    if request.user != device_server.created_by and not request.user.has_perm('dsc.admin_deviceserver'):
         return render_to_response('dsc/deviceserver_notauthorized.html',
                                   {'operation': 'delete', 'deviceserver': device_server}, context)
     if request.method == 'GET':

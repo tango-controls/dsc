@@ -7,7 +7,7 @@
 <h1 style="text-transform: none">{{deviceserver.name}}</h1>
 {% endblock %}
 {% block content %}
-<p>Sorry, you ara not authorized to {{ operartion }} {{ deviceserver.name }}.</p>
-<h4><a href="{% url 'deviceserver_detatil' deviceserver.pk %}">Back</a></h4>
+<p>Sorry, you ara not authorized to {{ operation }} {{ deviceserver.name }}.</p>
+<h4><a href="{% url 'deviceserver_detail' deviceserver.pk %}">Back</a></h4>
 
 {% endblock %}
