@@ -3,6 +3,6 @@
         ({{count_all}} device servers)
     </span>
 {% for family, count in families_count %}
-    <span style="margin:5px;"><b><a href="{% page_url request.current_page %}?family={{family}}">{{family}}</a></b>({{count}}){% if not forloop.last %},{% endif %}
+    <span style="margin-right:5px;"><b><a href="{% page_url request.current_page %}?family={{family}}">{{family}}</a></b>({{count}}){% if not forloop.last %},{% endif %}
     </span>
 {% endfor %}
