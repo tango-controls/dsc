@@ -7,7 +7,8 @@ from webu.cms_plugins import LastPublishedObjectPluginBase
 
 from cms.plugin_base import CMSPluginBase
 
-from dsc.models import DeviceServerPluginModel, DeviceServer, DeviceServerActivity, DeviceServersActivityPluginModel
+from dsc.models import DeviceServerPluginModel, DeviceServer, DeviceServerActivity, DeviceServersActivityPluginModel, \
+    DeviceClassInfo, filtered_device_servers
 
 from dsc.tables import DeviceServerTable
 
@@ -17,48 +18,47 @@ from django.template import RequestContext
 
 import random
 
+
 class DeviceServerPlugin(CMSPluginBase): #LastPublishedObjectPluginBase
-    # TODO device server plugin filters etc
+
     model = DeviceServerPluginModel
     name = 'Device Servers Catalogue'
-    render_template = "dsc/deviceserver_list.html"
-
-    def get_instance_queryset(self, instance, request):
-        queryset = super(DeviceServerPlugin, self).get_instance_queryset(instance, request)
-        return queryset     #.order_by('name')
+    render_template = "dsc/catalogue_frontpage.html"
+    cache = False
 
     def render(self, context, instance, placeholder):
-        context = super(DeviceServerPlugin, self).render(context, instance, placeholder)
-        context['table_class'] = DeviceServerTable
-        # getting random 10 device servers
-        q = DeviceServer.objects.filter(invalidate_activity=None)
-        count = q.count()
-        ds_list = []
-        while len(ds_list)<10 and len(ds_list)<count:
-            ds = random.choice(q)
-            if ds not in ds_list:
-                ds_list.append(ds)
 
-        table = DeviceServerTable(ds_list)
-        RequestConfig(context['request']).configure(table)
-        context['table']= table
-        #context['table_pagination'] = {
-        #    'per_page': 20
-        #}
+        # prepare list of families
+        families = DeviceClassInfo.objects.filter(invalidate_activity=None).order_by('class_family').\
+            values_list('class_family', flat=True).distinct()
+
+        families_count = {}
+        for f in families:
+            families_count[f] = filtered_device_servers(family=f).distinct().count()
+
+        context['families_count'] = sorted(families_count.iteritems())
+        context['families'] = families
+
+        print families_count
+        context['count_all'] = DeviceServer.objects.filter(invalidate_activity=None).count()
+
+        # table of device servers
+        request = context['request']
+        family = request.GET.get('family', None)
+        table = DeviceServerTable(filtered_device_servers(family=family).distinct())
+        RequestConfig(request).configure(table)
+        context['device_servers'] = table
+        context['family'] = family
 
         # clean context from nested context to get around of bug in context.flatten (django tracker #24765)
-
         context_inside = True
-        # print type(context.dicts)
 
         while context_inside:
-            # print '*******************************'
+
             new_context_dicts = []
             context_inside = False
             for d in context.dicts:
-                # print type(d)
-                # print '-----------------------------------'
-                # print d
+
                 if isinstance(d, RequestContext):
                     new_context_dicts.extend(d.dicts)
                     context_inside = True
@@ -72,15 +72,95 @@ class DeviceServerPlugin(CMSPluginBase): #LastPublishedObjectPluginBase
 plugin_pool.register_plugin(DeviceServerPlugin)
 
 
+class DeviceServersListPlugin(CMSPluginBase):
+    """ Presents table with randomly picked-up device servers"""
+    name = 'Device Servers random list'
+    render_template = "dsc/inc/deviceserver_list.html"
+
+    def render(self, context, instance, placeholder):
+        context = super(DeviceServersListPlugin, self).render(context, instance, placeholder)
+        context['table_class'] = DeviceServerTable
+        request = context['request']
+
+        man = request.GET.get('manufacturer', None)
+        prod = request.GET.get('product', None)
+        family = request.GET.get('family', None)
+        bus = request.GET.get('bus', None)
+
+        q = filtered_device_servers(manufacturer=man, product=prod, family=family, bus=bus)
+
+        table = DeviceServerTable(q)
+        RequestConfig(request).configure(table)
+        context['device_servers'] = table
+
+        # clean context from nested context to get around of bug in context.flatten (django tracker #24765)
+        context_inside = True
+
+        while context_inside:
+            new_context_dicts = []
+            context_inside = False
+            for d in context.dicts:
+
+                if isinstance(d, RequestContext):
+                    new_context_dicts.extend(d.dicts)
+                    context_inside = True
+                else:
+                    new_context_dicts.append(d)
+            context.dicts = new_context_dicts
+
+        return context
+
+
+plugin_pool.register_plugin(DeviceServersListPlugin)
+
+
+class DeviceServersRandomListPlugin(CMSPluginBase):
+    """ Presents table with randomly picked-up device servers"""
+    name = 'Device Servers random list'
+    render_template = "dsc/inc/deviceserver_randomlist.html"
+
+    def render(self, context, instance, placeholder):
+        context = super(DeviceServersRandomListPlugin, self).render(context, instance, placeholder)
+        context['table_class'] = DeviceServerTable
+        # getting random 10 device servers
+        q = DeviceServer.objects.filter(invalidate_activity=None)
+        count = q.count()
+        ds_list = []
+        while len(ds_list) < 10 and len(ds_list) < count:
+            ds = random.choice(q)
+            if ds not in ds_list:
+                ds_list.append(ds)
+
+        table = DeviceServerTable(ds_list)
+        RequestConfig(context['request']).configure(table)
+        context['device_servers'] = table
+
+        # clean context from nested context to get around of bug in context.flatten (django tracker #24765)
+        context_inside = True
+
+        while context_inside:
+            new_context_dicts = []
+            context_inside = False
+            for d in context.dicts:
+
+                if isinstance(d, RequestContext):
+                    new_context_dicts.extend(d.dicts)
+                    context_inside = True
+                else:
+                    new_context_dicts.append(d)
+            context.dicts = new_context_dicts
+
+        return context
+
+
+plugin_pool.register_plugin(DeviceServersRandomListPlugin)
+
 class DeviceServersActivityPlugin(CMSPluginBase): #LastPublishedObjectPluginBase
     # TODO device server plugin filters etc
     model = DeviceServersActivityPluginModel
     name = 'Device Servers Catalogue Activity'
     render_template = "dsc/inc/catalogue_activities.html"
 
-    def get_instance_queryset(self, instance, request):
-        queryset = super(DeviceServersActivityPlugin, self).get_instance_queryset(instance, request)
-        return queryset     #.order_by('name')
 
     def render(self, context, instance, placeholder):
         context = super(DeviceServersActivityPlugin, self).render(context, instance, placeholder)

@@ -647,6 +647,27 @@ class DeviceServerUpdateModel(DeviceServerAddModel):
         return self
 
 
+def filtered_device_servers(family=None, manufacturer=None, product=None, bus=None, key_words=None):
+    """ Provides a filtered queryset of device servers"""
+    q = DeviceServer.objects.filter(invalidate_activity=None)
+
+    if manufacturer is not None:
+        q = q.filter(device_classes__info__manufacturer__icontains=manufacturer)
+
+    if product is not None:
+        q = q.filter(device_classes__info__product_reference__icontains=product)
+
+    if family is not None:
+        q = q.filter(device_classes__info__class_family__icontains=family)
+
+    if bus is not None:
+        q = q.filter(device_classes__info__bus__icontains=bus)
+
+    if key_words is not None:
+        q = q.filter(device_classes__info__key_words__icontains=key_words)
+
+    return q.filter(invalidate_activity=None)
+
 
 
 from xmi_parser import TangoXmiParser
