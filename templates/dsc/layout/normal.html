@@ -1,9 +1,12 @@
 {% extends "layout/one_column.html" %}
 {% load cms_tags menu_tags sekizai_tags static %}
+{% load staticfiles %}
+
 {% block bodyclasses %}layout_sidebar{% endblock %}
 
 {% block principal %}
     {{ block.super }}
+    {% addtoblock "css" %}<link rel="stylesheet" href="{% static "dsc/css/dsc.css" %}" media="all"  />{% endaddtoblock %}
     <aside id="sidebar">
         {% block sidebar %}
             <h1>Recent activities</h1>
