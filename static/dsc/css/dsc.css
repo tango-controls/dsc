@@ -3,7 +3,7 @@
     border: none;
 }
 #dsc-detail-tabs .ui-widget-header {
-    background: transparent;
+    background: white;
     border: none;
     border-bottom: 1px solid #c0c0c0;
     -moz-border-radius: 0px;
@@ -11,16 +11,26 @@
     border-radius: 0px;
 }
 #dsc-detail-tabs .ui-tabs-nav .ui-state-default {
-    background: transparent;
+    background: #fafafa;
     border: none;
 }
 #dsc-detail-tabs .ui-tabs-nav .ui-state-active {
-    background: transparent url(img/uiTabsArrow.png) no-repeat bottom center;
+    background: #eaeaea;
     border: none;
 }
 #dsc-detail-tabs .ui-tabs-nav .ui-state-default a {
-    color: #c0c0c0;
+    color: #a0a0a0;
 }
+
 #dsc-detail-tabs .ui-tabs-nav .ui-state-active a {
     color: #459e00;
+}
+
+#dsc-detail-tabs p {
+    margin-top: 5pt;
+    margin-bottom: 1pt;
+}
+
+#dsc-detail-tabs h4 {
+    margin-top: 7pt;
 }
