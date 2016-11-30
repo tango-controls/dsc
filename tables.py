@@ -3,19 +3,55 @@ from models import DeviceServer, DeviceServerActivity, DeviceAttribute, DevicePr
 from django_tables2.utils import A
 
 class DeviceServerTable(tables.Table):
-    # repository = tables.Column(accessor='repository.url', verbose_name='Repository')
-    # TODO add activitytype = download and here should be the sum
-    # downloads = tables.Column(accessor='activities.activity_type', verbose_name= 'Downloads')
-    # TODO NO category in the model - must be add
+
     name = tables.LinkColumn('deviceserver_detail', args=[A('pk')] )
-    # selection = tables.CheckBoxColumn(accessor="pk", attrs = { "th__input":
-    #                                    {"onclick": "toggle(this)"}},
-    #                                     orderable=False)
-    manufacturers = tables.Column(accessor='manufacturers', verbose_name='Manufacturer', orderable=False)
-    products = tables.Column(accessor='products', verbose_name='Products',
-                             orderable=False)
-    family = tables.Column(accessor='family', verbose_name='Family',
-                           orderable=False)
+
+    manufacturers = tables.Column(accessor='device_classes', verbose_name='Manufacturer',
+                                  order_by='device_classes__info__manufacturer')
+
+    def render_manufacturers(self, value, table):
+        rednered_value = ""
+        vFirst = True
+        vList = list(value.filter(invalidate_activity=None))
+        for u in vList:
+            if not vFirst:
+                rednered_value += ", "
+            else:
+                vFirst = False
+            rednered_value += u.info.manufacturer
+        return rednered_value
+
+
+    products = tables.Column(accessor='device_classes', verbose_name='Products',
+                             order_by="device_classes__info__product_reference")
+
+    def render_products(self, value, table):
+        rednered_value = ""
+        vFirst = True
+        vList = list(value.filter(invalidate_activity=None))
+        for u in vList:
+            if not vFirst:
+                rednered_value += ", "
+            else:
+                vFirst = False
+            rednered_value += u.info.product_reference
+        return rednered_value
+
+
+    family = tables.Column(accessor='device_classes', verbose_name='Family',
+                           order_by="device_classes__info__class_family")
+
+    def render_family(self, value, table):
+        rednered_value = ""
+        vFirst = True
+        vList = list(value.filter(invalidate_activity=None))
+        for u in vList:
+            if not vFirst:
+                rednered_value += ", "
+            else:
+                vFirst = False
+            rednered_value += u.info.class_family
+        return rednered_value
 
     class Meta:
         model = DeviceServer
@@ -23,19 +59,13 @@ class DeviceServerTable(tables.Table):
         sequence = ('name', 'license','family', 'manufacturers', 'products')
 
 
-class DeviceServerSearchTable(tables.Table):
-
-    name = tables.LinkColumn('deviceserver_detail', args=[A('pk')] )
-    manufacturers = tables.Column(accessor='manufacturers', verbose_name='Manufacturer', orderable=False)
-    products = tables.Column(accessor='products', verbose_name='Products',
-                             orderable=False)
-    family = tables.Column(accessor='family', verbose_name='Family',
-                           orderable=False)
+class DeviceServerSearchTable(DeviceServerTable):
 
     class Meta:
         model = DeviceServer
-        fields = ('name',)
+        fields = ('name', 'family', 'manufacturers', 'products')
         sequence = ('name', 'family', 'manufacturers', 'products')
+        exclude = ('license',)
 
 
 class DevicePropertiesTable(tables.Table):

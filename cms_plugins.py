@@ -45,7 +45,9 @@ class DeviceServerPlugin(CMSPluginBase): #LastPublishedObjectPluginBase
         # table of device servers
         request = context['request']
         family = request.GET.get('family', None)
-        table = DeviceServerTable(filtered_device_servers(family=family).distinct())
+        query = filtered_device_servers(family=family)
+
+        table = DeviceServerTable(query.distinct())
         RequestConfig(request).configure(table)
         context['device_servers'] = table
         context['family'] = family

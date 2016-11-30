@@ -62,6 +62,7 @@ class DeviceServerDetailView(BreadcrumbMixinDetailView, CustomModelDetailView, C
 def search_view(request):
     """Search is done with function """
     context = RequestContext(request)
+    table_config = RequestConfig(request)
     table = None
     if request.method == 'GET':
         form = DeviceServerSearchForm(request.GET)
@@ -71,32 +72,23 @@ def search_view(request):
             prod = form.cleaned_data.get('product', None)
             family = form.cleaned_data.get('family', None)
             bus = form.cleaned_data.get('bus', None)
+            key_words = form.cleaned_data.get('key_words', None)
 
-            q = dsc_models.DeviceClassInfo.objects.filter(invalidate_activity=None)
+            q = dsc_models.filtered_device_servers(manufacturer=man,
+                                                   product=prod,
+                                                   family=family,
+                                                   bus=bus,
+                                                   key_words=key_words)
 
-            if man:
-                q = q.filter(manufacturer__icontains=man)
-
-            if prod:
-                q = q.filter(product_reference__icontains=prod)
-
-            if family:
-                q = q.filter(class_family__icontains=family)
-
-            if bus:
-                q = q.filter(bus__icontains=bus)
-
-            device_servers = []
-            for cli in q.all():
-                if cli.device_class.device_server not in device_servers and cli.device_class.device_server.is_valid:
-                    device_servers.append(cli.device_class.device_server)
+            device_servers = q.distinct()
 
             table = DeviceServerSearchTable(device_servers)
-            RequestConfig(request).configure(table)
-    else:
-        form = DeviceServerSearchForm()
+        if table is not None:
+            table_config.configure(table)
 
-    return render_to_response('dsc/deviceserver_search.html', {'form': form, 'table':table}, context)
+    form = DeviceServerSearchForm(initial=request.GET)
+
+    return render_to_response('dsc/deviceserver_search.html', {'form': form, 'table': table}, context)
 
 
 class DeviceServerManufacturerAutocomplete(dal.autocomplete.Select2ListView):
