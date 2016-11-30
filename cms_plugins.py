@@ -1,22 +1,15 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from django.utils.translation import ugettext_lazy as _
-
 from cms.plugin_pool import plugin_pool
-from webu.cms_plugins import LastPublishedObjectPluginBase
-
 from cms.plugin_base import CMSPluginBase
+from django_tables2 import RequestConfig
+from django.template import RequestContext
+import random
 
 from dsc.models import DeviceServerPluginModel, DeviceServer, DeviceServerActivity, DeviceServersActivityPluginModel, \
-    DeviceClassInfo, filtered_device_servers
+    DeviceClassInfo, filtered_device_servers, search_device_servers
 
 from dsc.tables import DeviceServerTable
-
-from django_tables2 import RequestConfig
-
-from django.template import RequestContext
-
-import random
 
 
 class DeviceServerPlugin(CMSPluginBase): #LastPublishedObjectPluginBase
@@ -45,7 +38,12 @@ class DeviceServerPlugin(CMSPluginBase): #LastPublishedObjectPluginBase
         # table of device servers
         request = context['request']
         family = request.GET.get('family', None)
-        query = filtered_device_servers(family=family)
+        search_text = request.GET.get('search', None)
+        if search_text is not None:
+            query = search_device_servers(search_text)
+            context['search'] = search_text
+        else:
+            query = filtered_device_servers(family=family)
 
         table = DeviceServerTable(query.distinct())
         RequestConfig(request).configure(table)

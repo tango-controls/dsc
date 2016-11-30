@@ -7,22 +7,30 @@
     Here you will find a list of device servers available in the community. Device servers provides among others
     connectivity to equipment. So, if you want to connect your hardware to Tango Controls please check this list.
 </div>
-<h4>
-    There are device servers for the following <i>families:</i>
-</h4>
-{% include 'dsc/inc/families_list.html' %}
 <p>
-
     <span style="font-size:120%;font-weight:bold;">
         Did you write a new device server?
         <a href="{{ add_url }}">Please share it.</a>
     </span>
 </p>
+
+<h4>
+    There are device servers for the following <i>families:</i>
+</h4>
 <p>
+{% include 'dsc/inc/families_list.html' %}
+</p>
+{% include 'dsc/inc/deviceserver_fulltextsearch.html' %}
+<p style="margin-bottom:10pt; margin-top:5pt;">
     {% if family %}
-    Below you will find device servers for {{family}} family.
+        Below you will find device servers for <span style="font-weight:bold;">{{family}}</span> family.
     {% else %}
-    Below you will find a table with all device servers. Please click a family name above or use search to narrow the list.
+        {% if search %}
+            Below you will find device servers for <span style="font-weight:bold;">{{search}}</span> search string.
+        {% else %}
+            Below you will find a table with all device servers.
+            Please click a family name above or use search to narrow the list.
+        {% endif %}
     {% endif %}
     You may also use <a href="{% url 'deviceserver_search' %}">
         <span style="font-weight:bold;font-size:120%;">advanced search</span>

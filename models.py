@@ -669,6 +669,28 @@ def filtered_device_servers(family=None, manufacturer=None, product=None, bus=No
     return q.filter(invalidate_activity=None)
 
 
+def search_device_servers(search_text):
+    """ Provides a filtered queryset of device servers"""
+    q = DeviceServer.objects.filter(invalidate_activity=None).filter(device_classes__invalidate_activity=None)
+
+    qn = q.filter(name__icontains=search_text) | q.filter(device_classes__name__icontains=search_text)
+
+    qd = q.filter(description__icontains=search_text) | q.filter(device_classes__description__icontains=search_text)
+
+    qm = q.filter(device_classes__info__manufacturer__icontains=search_text)
+
+    qp = q.filter(device_classes__info__product_reference__icontains=search_text)
+
+    qf = q.filter(device_classes__info__class_family__icontains=search_text)
+
+    qb = q.filter(device_classes__info__bus__icontains=search_text)
+
+    qk = q.filter(device_classes__info__key_words__icontains=search_text)
+
+    qall = qn | qd | qm | qp | qf | qb | qk
+
+    return qall.filter(invalidate_activity=None).distinct()
+
 
 from xmi_parser import TangoXmiParser
 def create_or_update(update_object, activity, device_server=None):
