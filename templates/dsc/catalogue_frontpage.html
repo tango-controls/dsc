@@ -3,6 +3,13 @@
 
 {% url 'deviceserver_add' as add_url %}
 
+<h4>
+    There are device servers for the following <i>families:</i>
+</h4>
+<p>
+{% include 'dsc/inc/families_list.html' %}
+</p>
+
 <div>
     Here you will find a list of device servers available in the community. Device servers provides among others
     connectivity to equipment. So, if you want to connect your hardware to Tango Controls please check this list.
@@ -14,12 +21,6 @@
     </span>
 </p>
 
-<h4>
-    There are device servers for the following <i>families:</i>
-</h4>
-<p>
-{% include 'dsc/inc/families_list.html' %}
-</p>
 {% include 'dsc/inc/deviceserver_fulltextsearch.html' %}
 <p style="margin-bottom:10pt; margin-top:5pt;">
     {% if family %}

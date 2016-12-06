@@ -48,9 +48,19 @@
 {% endif %}
 <p style="margin-top:5pt; margin-bottom:5pt;"><span style="font-weight:bold;">Status:</span> {{ deviceserver.status }}<br />
     <span style="font-weight:bold;">Repository:</span>
+    {% if deviceserver.repository.url %}
     <a href="{{deviceserver.repository.url}}" target="_blank">
         {{deviceserver.repository.url}}
     </a>
+    {% else %}
+    This device server is not available in a public repository. Please contact the
+    author{% if deviceserver.repository.contact_email %} {{ deviceserver.repository.contact_email|urlize }}{% endif %}.
+    {% endif  %}
+    {% if deviceserver.repository.download_url %}<br />
+    <a href="{{deviceserver.repository.download_url}}" target="_blank">
+        <span style="font-weight:bold;">Download</span>
+    </a>
+    {% endif %}
 <br />
     <span style="font-weight:bold;">Contact:</span>
     {% for cl in deviceserver.device_classes.all %}
@@ -118,7 +128,7 @@
             {% endif %}
 
 
-            <h4>Interface</h4>
+            <h4>Class interface</h4>
             <hr />
             <p>
                 <span style="font-weight:bold;">Attributes:</span>
