@@ -1,0 +1,93 @@
+{% load cms_tags menu_tags sekizai_tags static %}
+<table>
+    <tr>
+        <th>Available in a public repository?</th><td><input type="checkbox" id="dsc_repo_public_check" /></td>
+    </tr>
+</table>
+
+</table>
+<table id="dsc_repo_public">
+    <tr>
+        <th>{{ form.repository_type.label_tag }}</th><td>{{ form.repository_type }}</td>
+    </tr> <tr>
+        <th>{{ form.repository_url.label_tag }}</th><td>{{ form.repository_url }}</td>
+    </tr>
+</table>
+<table id="dsc_repo_contact">
+    <tr>
+        <th>{{ form.repository_contact.label_tag }}</th><td>{{ form.repository_contact }}</td>
+    </tr>
+</table>
+<table>
+    <tr>
+        <th>Available for download?</th><td><input type="checkbox" id="dsc_repo_download_check" /></td>
+    </tr>
+</table>
+<table id="dsc_repo_download">
+     <tr>
+        <th>{{ form.repository_download_url.label_tag }}</th><td>{{ form.repository_download_url }}</td>
+    </tr>
+
+</table>
+
+
+{% addtoblock 'js' %}
+
+    <script language="JavaScript">
+
+        {% if form.repository_url.value %}
+        $("#dsc_repo_public").show();
+        {% if not form.repository_contact.value %}
+        $("#dsc_repo_contact").hide();
+        {% endif %}
+        $('#dsc_repo_public_check')[0].checked = true;
+        {% else %}
+        $("#dsc_repo_public").hide();
+        $("#dsc_repo_contact").show();
+        $('#dsc_repo_public_check')[0].checked = false;
+        {% endif %}
+
+
+        {% if form.repository_download_url.value %}
+        $("#dsc_repo_download").show();
+        $('#dsc_repo_download_check')[0].checked = true;
+        {% else %}
+        $("#dsc_repo_download").hide();
+        $('#dsc_repo_download_check')[0].checked = false;
+        {% endif %}
+
+        // handling showing/hiding public repo
+        $('#dsc_repo_public_check').change(function() {
+            // this will contain a reference to the checkbox
+            if (this.checked) {
+                // the checkbox is now checked
+                $('#dsc_repo_public').show();
+                $("#dsc_repo_contact").hide();
+            } else {
+                // the checkbox is now no longer checked
+                $('#dsc_repo_public').hide();
+                $("#dsc_repo_contact").show();
+
+            }
+        });
+
+        // handling showing/hiding download
+        $('#dsc_repo_download_check').change(function() {
+            // this will contain a reference to the checkbox
+            if (this.checked) {
+                // the checkbox is now checked
+                $('#dsc_repo_download').show();
+
+            } else {
+                // the checkbox is now no longer checked
+                $('#dsc_repo_download').hide();
+            }
+        });
+
+
+
+
+
+    </script>
+
+{% endaddtoblock %}

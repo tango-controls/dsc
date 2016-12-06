@@ -1,0 +1,106 @@
+{% load cms_tags menu_tags sekizai_tags static %}
+<table id="dsc_selelct_xmi_manual">
+    <tr>
+        <th>{{ form.use_uploaded_xmi_file.label_tag }}</th><td>{{ form.use_uploaded_xmi_file }}</td>
+    </tr>
+    <tr>
+        <th>{{ form.use_manual_info.label_tag }}</th><td>{{ form.use_manual_info }}</td>
+    </tr>
+</table>
+<table id="dsc_xmi">
+    <tr>
+        <th>{{ form.xmi_file.label_tag }}</th><td>{{ form.xmi_file }}</td>
+    </tr>
+</table>
+<table id="dsc_manual">
+     <tr>
+        <th>{{ form.name.label_tag }}</th><td>{{ form.name }}</td>
+    </tr> <tr>
+        <th>{{ form.description.label_tag }}</th><td>{{ form.description }}</td>
+    </tr> <tr>
+        <th>{{ form.contact_email.label_tag }}</th><td>{{ form.contact_email }}</td>
+    </tr> <tr>
+        <th>{{ form.platform.label_tag }}</th><td>{{ form.platform }}</td>
+    </tr><tr>
+        <th>{{ form.language.label_tag }}</th><td>{{ form.language }}</td>
+    </tr><tr>
+        <th>{{ form.license_name.label_tag }}</th><td>{{ form.license_name }}</td>
+    </tr><tr>
+        <th>{{ form.class_copyright.label_tag }}</th><td>{{ form.class_copyright }}</td>
+    </tr> <tr>
+        <th>{{ form.class_family.label_tag }}</th><td>{{ form.class_family }}</td>
+    </tr> <tr>
+        <th>{{ form.manufacturer.label_tag }}</th><td>{{ form.manufacturer }}</td>
+    </tr> <tr>
+        <th>{{ form.product_reference.label_tag }}</th><td>{{ form.product_reference }}</td>
+    </tr> <tr>
+        <th>{{ form.bus.label_tag }}</th><td>{{ form.bus }}</td>
+    </tr> <tr>
+        <th>{{ form.key_words.label_tag }}</th><td>{{ form.key_words }}</td>
+    </tr>
+
+</table>
+
+
+{% addtoblock 'js' %}
+
+    <script language="JavaScript">
+
+        {% if form.use_uploaded_xmi_file.value %}
+        $("#dsc_xmi").show();
+        $('#id_use_uploaded_xmi_file')[0].checked = true;
+        {% else %}
+        $("#dsc_xmi").hide();
+        $('#id_use_uploaded_xmi_file')[0].checked = false;
+        {% endif %}
+
+        {% if form.use_manual_info.value %}
+        $("#dsc_manual").show();
+        $('#id_use_manual_info')[0].checked = true;
+        {% else %}
+        $("#dsc_manual").hide();
+        $('#id_use_manual_info')[0].checked = false;
+        {% endif %}
+
+        // handling showing/hiding .xmi file field
+        $('#id_use_uploaded_xmi_file').change(function() {
+            // this will contain a reference to the checkbox
+            if (this.checked) {
+                // the checkbox is now checked
+                $('#dsc_xmi').show();
+                $('#dsc_manual').hide();
+                $('#id_use_manual_info')[0].checked = false;
+
+
+            } else {
+                // the checkbox is now no longer checked
+                $('#dsc_xmi').hide();
+                $('#dsc_manual').show();
+                $('#id_use_manual_info')[0].checked = true;
+                $('#dsc_manual').show();
+            }
+        });
+
+        $('#id_use_manual_info').change(function() {
+            // this will contain a reference to the checkbox
+            if (this.checked) {
+                // the checkbox is now checked
+                $('#dsc_xmi').hide();
+                $('#dsc_manual').show();
+                $('#id_use_uploaded_xmi_file')[0].checked = false;
+
+
+            } else {
+                // the checkbox is now no longer checked
+                $('#dsc_xmi').show();
+                $('#dsc_manual').hide();
+                $('#id_use_uploaded_xmi_file')[0].checked = true;
+            }
+        });
+
+
+
+
+    </script>
+
+{% endaddtoblock %}

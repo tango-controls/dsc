@@ -79,10 +79,11 @@ class DeviceServerAddForm(forms.ModelForm):
 
     class Meta:
         model = DeviceServerAddModel
-        fields = ['use_uploaded_xmi_file', 'xmi_file',
+        fields = ['use_uploaded_xmi_file',
                   'use_manual_info',
+                  'xmi_file',
                   'name', 'description', 'contact_email', 'platform', 'language', 'license_name',
-                  'repository_type', 'repository_url', 'repository_path',
+                  'repository_type', 'repository_url', 'repository_download_url',
                   'repository_contact',
                   'upload_readme', 'readme_file',
                   'other_documentation1',
@@ -96,10 +97,12 @@ class DeviceServerUpdateForm(DeviceServerAddForm):
 
     class Meta:
         model = DeviceServerUpdateModel
-        fields = ['use_uploaded_xmi_file', 'xmi_file',
+        fields = ['use_uploaded_xmi_file',
                   'use_manual_info',
+                  'xmi_file',
                   'name', 'description', 'contact_email', 'platform', 'language', 'license_name',
-                  'repository_type', 'repository_url', 'repository_path', 'repository_contact',
+                  'repository_type', 'repository_url', 'repository_download_url',
+                  'repository_contact',
                   'upload_readme', 'readme_file',
                   'other_documentation1',
                   'documentation1_type', 'documentation1_url',
