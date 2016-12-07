@@ -1,34 +1,46 @@
 {% load cms_tags menu_tags sekizai_tags static %}
-<table>
+<tbody>
     <tr>
-        <th>Available in a public repository?</th><td><input type="checkbox" id="dsc_repo_public_check" /></td>
+        <th><label>Available in a public repository?</label></th><td><input type="checkbox" id="dsc_repo_public_check" /></td>
     </tr>
-</table>
+</tbody>
 
-</table>
-<table id="dsc_repo_public">
+<tbody id="dsc_repo_public">
+    {% if form.repository_type.errors %}
+    <tr><td colspan="2">{{ form.repository_type.errors }}</td></tr>
+    {% endif %}
     <tr>
         <th>{{ form.repository_type.label_tag }}</th><td>{{ form.repository_type }}</td>
-    </tr> <tr>
+    </tr>
+    {% if form.repository_url.errors %}
+    <tr><td colspan="2">{{ form.repository_url.errors }}</td></tr>
+    {% endif %}
+    <tr>
         <th>{{ form.repository_url.label_tag }}</th><td>{{ form.repository_url }}</td>
     </tr>
-</table>
-<table id="dsc_repo_contact">
+</tbody>
+<tbody id="dsc_repo_contact">
+    {% if form.repository_contact.errors %}
+    <tr><td colspan="2">{{ form.repository_contact.errors }}</td></tr>
+    {% endif %}
     <tr>
-        <th>{{ form.repository_contact.label_tag }}</th><td>{{ form.repository_contact }}</td>
+        <th><label>Contact e-mail to get the device server:</label></th><td>{{ form.repository_contact }}</td>
     </tr>
-</table>
-<table>
+</tbody>
+<tbody>
     <tr>
-        <th>Available for download?</th><td><input type="checkbox" id="dsc_repo_download_check" /></td>
+        <th><label>Available for download?</label></th><td><input type="checkbox" id="dsc_repo_download_check" /></td>
     </tr>
-</table>
-<table id="dsc_repo_download">
+</tbody>
+<tbody id="dsc_repo_download">
+    {% if form.repository_download_url.errors %}
+    <tr><td colspan="2">{{ form.repository_download_url.errors }}</td></tr>
+    {% endif %}
      <tr>
         <th>{{ form.repository_download_url.label_tag }}</th><td>{{ form.repository_download_url }}</td>
     </tr>
 
-</table>
+</tbody>
 
 
 {% addtoblock 'js' %}
@@ -83,10 +95,6 @@
                 $('#dsc_repo_download').hide();
             }
         });
-
-
-
-
 
     </script>
 

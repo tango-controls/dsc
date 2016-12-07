@@ -1,45 +1,106 @@
 {% load cms_tags menu_tags sekizai_tags static %}
-<table id="dsc_selelct_xmi_manual">
+<tbody id="dsc_selelct_xmi_manual">
     <tr>
         <th>{{ form.use_uploaded_xmi_file.label_tag }}</th><td>{{ form.use_uploaded_xmi_file }}</td>
     </tr>
     <tr>
         <th>{{ form.use_manual_info.label_tag }}</th><td>{{ form.use_manual_info }}</td>
     </tr>
-</table>
-<table id="dsc_xmi">
+</tbody>
+<tbody id="dsc_xmi">
+    {% if form.xmi_file.errors %}
+    <tr><td colspan="2">{{ form.xmi_file.errors }}</td></tr>
+    {% endif %}
     <tr>
         <th>{{ form.xmi_file.label_tag }}</th><td>{{ form.xmi_file }}</td>
     </tr>
-</table>
-<table id="dsc_manual">
+</tbody>
+<tbody id="dsc_manual">
+    {% if form.name.errors %}
+        <tr><td colspan="2">{{ form.name.errors }}</td></tr>
+    {% endif %}
      <tr>
         <th>{{ form.name.label_tag }}</th><td>{{ form.name }}</td>
-    </tr> <tr>
+    </tr>
+
+    {% if form.description.errors %}
+        <tr><td colspan="2">{{ form.description.errors }}</td></tr>
+    {% endif %}
+    <tr>
         <th>{{ form.description.label_tag }}</th><td>{{ form.description }}</td>
-    </tr> <tr>
+    </tr>
+
+    {% if form.contact_email.errors %}
+        <tr><td colspan="2">{{ form.contact_email.errors }}</td></tr>
+    {% endif %}
+    <tr>
         <th>{{ form.contact_email.label_tag }}</th><td>{{ form.contact_email }}</td>
-    </tr> <tr>
+    </tr>
+
+    {% if form.platform.errors %}
+        <tr><td colspan="2">{{ form.platform.errors }}</td></tr>
+    {% endif %}
+    <tr>
         <th>{{ form.platform.label_tag }}</th><td>{{ form.platform }}</td>
-    </tr><tr>
+    </tr>
+
+    {% if form.language.errors %}
+        <tr><td colspan="2">{{ form.language.errors }}</td></tr>
+    {% endif %}
+    <tr>
         <th>{{ form.language.label_tag }}</th><td>{{ form.language }}</td>
-    </tr><tr>
+    </tr>
+
+    {% if form.license_name.errors %}
+        <tr><td colspan="2">{{ form.license_name.errors }}</td></tr>
+    {% endif %}
+    <tr>
         <th>{{ form.license_name.label_tag }}</th><td>{{ form.license_name }}</td>
-    </tr><tr>
+    </tr>
+
+    {% if form.class_copyright.errors %}
+        <tr><td colspan="2">{{ form.class_copyright.errors }}</td></tr>
+    {% endif %}
+    <tr>
         <th>{{ form.class_copyright.label_tag }}</th><td>{{ form.class_copyright }}</td>
-    </tr> <tr>
+    </tr>
+
+    {% if form.class_family.errors %}
+        <tr><td colspan="2">{{ form.class_family.errors }}</td></tr>
+    {% endif %}
+    <tr>
         <th>{{ form.class_family.label_tag }}</th><td>{{ form.class_family }}</td>
-    </tr> <tr>
+    </tr>
+
+    {% if form.manufacturer.errors %}
+        <tr><td colspan="2">{{ form.manufacturer.errors }}</td></tr>
+    {% endif %}
+    <tr>
         <th>{{ form.manufacturer.label_tag }}</th><td>{{ form.manufacturer }}</td>
-    </tr> <tr>
+    </tr>
+
+    {% if form.product_reference.errors %}
+        <tr><td colspan="2">{{ form.product_reference.errors }}</td></tr>
+    {% endif %}
+    <tr>
         <th>{{ form.product_reference.label_tag }}</th><td>{{ form.product_reference }}</td>
-    </tr> <tr>
+    </tr>
+
+    {% if form.bus.errors %}
+        <tr><td colspan="2">{{ form.bus.errors }}</td></tr>
+    {% endif %}
+    <tr>
         <th>{{ form.bus.label_tag }}</th><td>{{ form.bus }}</td>
-    </tr> <tr>
+    </tr>
+
+    {% if form.key_words.errors %}
+        <tr><td colspan="2">{{ form.key_words.errors }}</td></tr>
+    {% endif %}
+    <tr>
         <th>{{ form.key_words.label_tag }}</th><td>{{ form.key_words }}</td>
     </tr>
 
-</table>
+</tbody>
 
 
 {% addtoblock 'js' %}

@@ -131,7 +131,7 @@ class DeviceServerLicenseAutocomplete(dal.autocomplete.Select2ListView):
 def update_class_description(request):
     pass
 
-class DeviceServerUpdateView(UpdateView):
+class DeviceServerUpdateView(BreadcrumbMixinDetailView, UpdateView):
     """ View that process device server adding to the system. """
 
     template_name = 'dsc/deviceserver_update.html'
@@ -230,12 +230,15 @@ def deviceserver_delete_view(request, pk):
 
 
 
-class DeviceServerAddView(FormView):
+class DeviceServerAddView(BreadcrumbMixinDetailView, FormView):
     """ View that process device server adding to the system. """
 
     template_name = 'dsc/deviceserver_add.html'
     form_class = DeviceServerAddForm
     device_server = None
+
+    def get_object(self):
+        return None
 
     def form_valid(self, form):
         """This method is called when form has been filed correctly. It creates model objects and save them."""

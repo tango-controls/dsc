@@ -10,11 +10,18 @@
 
 <h4>Please provide information necessery to catalogue a device server.</h4>
 <form method="POST" class="post-form" enctype="multipart/form-data">{% csrf_token %}
-
+    <table>
+        <tbody><tr><td colspan="2">
+            {{ form.non_field_errors }}
+        </td></tr></tbody>
         {% include 'dsc/inc/deviceserver_form_basic_info.html' %}
 
         {% include 'dsc/inc/deviceserver_form_repository.html' %}
-        <button type="submit" class="save btn btn-default">Create</button>
+
+        {% include 'dsc/inc/deviceserver_form_documentation.html' %}
+    </table>
+
+    <button type="submit" class="save btn btn-default">Create</button>
 </form>
 
 {% endblock %}

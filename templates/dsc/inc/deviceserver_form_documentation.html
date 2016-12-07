@@ -1,0 +1,138 @@
+{% load cms_tags menu_tags sekizai_tags static %}
+<tbody>
+    <tr>
+        <th>{{ form.upload_readme.label_tag }}</th><td>{{ form.upload_readme }}</td>
+    </tr>
+</tbody>
+
+<tbody id="dsc_upload_readme">
+    {% if form.readme_file.errors %}
+    <tr><td colspan="2">{{ form.readme_file.errors }}</td></tr>
+    {% endif %}
+    <tr>
+        <th>{{ form.readme_file.label_tag }}</th><td>{{ form.readme_file }}</td>
+    </tr>
+</tbody>
+
+<tbody id="dsc_doc1_check">
+    <tr>
+        <th><label>Other documentation?</label></th><td>{{ form.other_documentation1}}</td>
+    </tr>
+</tbody>
+<tbody id="dsc_doc1">
+    {% if form.documentation1_type.errors %}
+    <tr><td colspan="2">{{ form.documentation1_type.errors }}</td></tr>
+    {% endif %}
+    <tr>
+        <th>{{ form.documentation1_type.label_tag }}</th><td>{{ form.documentation1_type }}</td>
+    </tr>
+    {% if form.documentation1_type.errors %}
+    <tr><td colspan="2">{{ form.documentation1_type.errors }}</td></tr>
+    {% endif %}
+    <tr>
+        <th>{{ form.documentation1_url.label_tag }}</th><td>{{ form.documentation1_url }}</td>
+    </tr>
+</tbody>
+<tbody id="dsc_doc2_check">
+    <tr>
+        <th><label>Another documentation?</label></th><td>{{ form.other_documentation2}}</td>
+    </tr>
+</tbody>
+<tbody id="dsc_doc2">
+    {% if form.documentation2_type.errors %}
+    <tr><td colspan="2">{{ form.documentation2_type.errors }}</td></tr>
+    {% endif %}
+    <tr>
+        <th>{{ form.documentation2_type.label_tag }}</th><td>{{ form.documentation2_type }}</td>
+    </tr>
+    {% if form.documentation2_url.errors %}
+    <tr><td colspan="2">{{ form.documentation2_url.errors }}</td></tr>
+    {% endif %}
+    <tr>
+        <th>{{ form.documentation2_url.label_tag }}</th><td>{{ form.documentation2_url }}</td>
+    </tr>
+</tbody>
+
+
+
+{% addtoblock 'js' %}
+
+    <script language="JavaScript">
+
+        {% if form.upload_readme.value %}
+        $("#dsc_upload_readme").show();
+        $("#id_upload_readme")[0].checked = true;
+        {% else %}
+        $("#dsc_upload_readme").hide();
+        $("#id_upload_readme")[0].checked = false;
+        {% endif %}
+
+        {% if form.other_documentation2.value %}
+        $("#dsc_doc2").show();
+        $("#id_other_documentation2")[0].checked = true;
+        {% else %}
+        $("#dsc_doc2").hide();
+        $("#id_other_documentation2")[0].checked = false;
+        {% endif %}
+
+        {% if form.other_documentation1.value %}
+        $("#dsc_doc1").show();
+        $("#id_other_documentation1")[0].checked = true;
+        $("#dsc_doc2_check").show()
+        {% else %}
+        $("#dsc_doc1").hide();
+        $("#id_other_documentation1")[0].checked = false;
+        $("#id_other_documentation2")[0].checked = false;
+        $("#dsc_doc2").hide();
+        $("#dsc_doc2_check").hide()
+        {% endif %}
+
+
+
+        // handling showing/hiding readme file
+        $('#id_upload_readme').change(function() {
+            // this will contain a reference to the checkbox
+            if (this.checked) {
+                // the checkbox is now checked
+                $('#dsc_upload_readme').show();
+
+            } else {
+                // the checkbox is now no longer checked
+                $('#dsc_upload_readme').hide();
+
+            }
+        });
+
+        // handling showing/hiding other doc1
+        $('#id_other_documentation1').change(function() {
+            // this will contain a reference to the checkbox
+            if (this.checked) {
+                // the checkbox is now checked
+                $('#dsc_doc1').show();
+                $("#dsc_doc2_check").show()
+            } else {
+                // the checkbox is now no longer checked
+                $('#dsc_doc1').hide();
+                $("#id_other_documentation2")[0].checked = false;
+                $("#dsc_doc2_check").hide()
+                $('#dsc_doc2').hide();
+            }
+        });
+
+        // handling showing/hiding other doc2
+        $('#id_other_documentation2').change(function() {
+            // this will contain a reference to the checkbox
+            if (this.checked) {
+                // the checkbox is now checked
+                $('#dsc_doc2').show();
+
+            } else {
+                // the checkbox is now no longer checked
+                $('#dsc_doc2').hide();
+            }
+        });
+
+
+    </script>
+
+{% endaddtoblock %}

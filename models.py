@@ -643,6 +643,7 @@ class DeviceServerUpdateModel(DeviceServerAddModel):
             self.platform = cl.info.platform
             self.bus = cl.info.bus
             self.key_words = cl.info.key_words
+            self.contact_email = cl.info.contact_email
 
         return self
 

@@ -88,6 +88,8 @@ class DeviceServerAddForm(forms.ModelForm):
                   'upload_readme', 'readme_file',
                   'other_documentation1',
                   'documentation1_type', 'documentation1_url',
+                  'other_documentation2',
+                  'documentation2_type', 'documentation2_url',
                   'class_copyright', 'class_family',
                   'manufacturer', 'product_reference', 'bus', 'key_words'
                   ]
@@ -106,6 +108,8 @@ class DeviceServerUpdateForm(DeviceServerAddForm):
                   'upload_readme', 'readme_file',
                   'other_documentation1',
                   'documentation1_type', 'documentation1_url',
+                  'other_documentation2',
+                  'documentation2_type', 'documentation2_url',
                   'class_copyright', 'class_family',
                   'manufacturer', 'product_reference', 'bus', 'key_words'
                   ]
