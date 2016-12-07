@@ -320,12 +320,14 @@ class DeviceServerRepository(DscManagedModel):
     repository_type = models.SlugField(
         verbose_name='Repository Type',
         choices=zip(['GIT', 'SVN', 'Mercurial', 'FTP', 'Other'],
-                    ['GIT', 'SVN', 'Mercurial', 'FTP', 'Other'])
+                    ['GIT', 'SVN', 'Mercurial', 'FTP', 'Other']),
+        null=True,
+        blank=True
     )
-    url = models.URLField(verbose_name='URL', null=True)
+    url = models.URLField(verbose_name='URL', null=True, blank=True)
     path_in_repository = models.CharField(max_length=255, verbose_name='Path', blank=True, default='')
     contact_email = models.EmailField(verbose_name='Please write to', blank=True, null=True, default='')
-    download_url = models.URLField(verbose_name='Download URL', null=True)
+    download_url = models.URLField(verbose_name='Download URL', null=True, blank=True)
 
     device_server = models.OneToOneField(DeviceServer, related_name='repository', null=True)
 
@@ -761,7 +763,13 @@ def create_or_update(update_object, activity, device_server=None):
 
     # check repository
     new_repository = None
-    if update_object.available_in_repository:
+    if update_object.available_in_repository or update_object.repository_contact is not None \
+            or update_object.repository_download_url is not None:
+        if not update_object.available_in_repository:
+            update_object.repository_type = None
+            update_object.repository_url = None
+            update_object.repository_path = None
+            update_object.repository_download_url = None
         new_repository = DeviceServerRepository(repository_type=update_object.repository_type,
                                                 url=update_object.repository_url,
                                                 path_in_repository=update_object.repository_path,
@@ -786,7 +794,7 @@ def create_or_update(update_object, activity, device_server=None):
                     old_repo.save()
                     new_repository.last_update_activity = activity
                     new_repository.device_server = device_server
-                    new_device_server.create_activity = old_repo.create_activity
+                    new_repository.create_activity = old_repo.create_activity
 
                 else:
                     # no real change
@@ -798,6 +806,9 @@ def create_or_update(update_object, activity, device_server=None):
 
     # make sure the repository is saved
     if new_repository is not None:
+        new_repository.last_update_activity = activity
+        new_repository.device_server = device_server
+        new_repository.create_activity = old_repo.create_activity
         new_repository.save()
 
     # check documentation
@@ -896,6 +907,7 @@ def create_or_update(update_object, activity, device_server=None):
             if backup_device_server is not None:
                 cl.device_server = backup_device_server
             cl.save()
+
         # manual info provided
         cl = DeviceClass(name=update_object.name,
                          description=update_object.description,

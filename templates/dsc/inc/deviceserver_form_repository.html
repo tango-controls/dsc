@@ -18,20 +18,11 @@
     <tr>
         <th>{{ form.repository_url.label_tag }}</th><td>{{ form.repository_url }}</td>
     </tr>
-</tbody>
-<tbody id="dsc_repo_contact">
-    {% if form.repository_contact.errors %}
-    <tr><td colspan="2">{{ form.repository_contact.errors }}</td></tr>
-    {% endif %}
-    <tr>
-        <th><label>Contact e-mail to get the device server:</label></th><td>{{ form.repository_contact }}</td>
-    </tr>
-</tbody>
-<tbody>
     <tr>
         <th><label>Available for download?</label></th><td><input type="checkbox" id="dsc_repo_download_check" /></td>
     </tr>
 </tbody>
+
 <tbody id="dsc_repo_download">
     {% if form.repository_download_url.errors %}
     <tr><td colspan="2">{{ form.repository_download_url.errors }}</td></tr>
@@ -41,11 +32,29 @@
     </tr>
 
 </tbody>
+<tbody id="dsc_repo_contact">
+    {% if form.repository_contact.errors %}
+    <tr><td colspan="2">{{ form.repository_contact.errors }}</td></tr>
+    {% endif %}
+    <tr>
+        <th><label>Contact e-mail to get the device server:</label></th><td>{{ form.repository_contact }}</td>
+    </tr>
+</tbody>
+
+
 
 
 {% addtoblock 'js' %}
 
     <script language="JavaScript">
+
+        {% if form.repository_download_url.value %}
+        $("#dsc_repo_download").show();
+        $('#dsc_repo_download_check')[0].checked = true;
+        {% else %}
+        $("#dsc_repo_download").hide();
+        $('#dsc_repo_download_check')[0].checked = false;
+        {% endif %}
 
         {% if form.repository_url.value %}
         $("#dsc_repo_public").show();
@@ -60,13 +69,7 @@
         {% endif %}
 
 
-        {% if form.repository_download_url.value %}
-        $("#dsc_repo_download").show();
-        $('#dsc_repo_download_check')[0].checked = true;
-        {% else %}
-        $("#dsc_repo_download").hide();
-        $('#dsc_repo_download_check')[0].checked = false;
-        {% endif %}
+
 
         // handling showing/hiding public repo
         $('#dsc_repo_public_check').change(function() {
@@ -78,7 +81,9 @@
             } else {
                 // the checkbox is now no longer checked
                 $('#dsc_repo_public').hide();
+                $('#dsc_repo_download').hide();
                 $("#dsc_repo_contact").show();
+                $('#dsc_repo_download_check')[0].checked = false;
 
             }
         });
