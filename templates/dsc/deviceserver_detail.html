@@ -50,8 +50,8 @@
     </h4>
 {% endif %}
 <p style="margin-top:5pt; margin-bottom:5pt;">
-    <span style="font-weight:bold;">Development status:</span> {{ deviceserver.development_status }} <br />
-    <span style="font-weight:bold;">Information status:</span> {{ deviceserver.status }}<br />
+    <span style="font-weight:bold;">Development status:</span> {{ deviceserver.get_development_status_display }} <br />
+    <span style="font-weight:bold;">Information status:</span> {{ deviceserver.get_status_display }}<br />
     <span style="font-weight:bold;">Repository:</span>
     {% if deviceserver.repository.url %}
     <a href="{{deviceserver.repository.url}}" target="_blank">
