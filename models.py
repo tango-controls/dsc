@@ -27,6 +27,18 @@ STATUS_CHOICES = (
     (STATUS_DELETED, 'Deleted'),
 )
 
+# Device Server statuses
+DEV_STATUS_NEW = 'new'
+DEV_STATUS_RELEASED = 'released'
+DEV_STATUS_MAINTENANCE = 'maintenance'
+DEV_STATUS_BROKEN = 'broken'
+DEV_STATUS_CHOICES = (
+    (DEV_STATUS_NEW, 'New development'),
+    (DEV_STATUS_RELEASED, 'Released'),
+    (DEV_STATUS_MAINTENANCE, 'In maintenance'),
+    (DEV_STATUS_BROKEN, 'Broken'),
+)
+
 # List of Device Servers activities
 # TODO fill list, do we add subactivites of edit like import form, add attribute etc
 DS_ACTIVITY_ADD = 'add'
@@ -179,10 +191,24 @@ class DeviceServer(DscManagedModel):
         verbose_name='License')
 
     status = models.CharField(
-        verbose_name='Status',
+        verbose_name='Information status',
         max_length=10,
-        # choices=STATUS_CHOICES,
+        choices=STATUS_CHOICES,
         default=STATUS_NEW,
+    )
+
+    development_status = models.CharField(
+        verbose_name='Development status',
+        max_length=10,
+        choices=DEV_STATUS_CHOICES,
+        default=DEV_STATUS_NEW,
+        blank=True
+    )
+
+    certified = models.BooleanField(
+        verbose_name='Certified',
+        default=False,
+        blank=True
     )
 
     readme = models.FileField(verbose_name='Readme', upload_to='dsc_readmes', null=True, blank=True, max_length=100000)
@@ -256,7 +282,9 @@ class DeviceServer(DscManagedModel):
                                  status=self.status,
                                  last_update_activity=self.last_update_activity,
                                  create_activity=self.create_activity,
-                                 invalidate_activity=activity
+                                 invalidate_activity=activity,
+                                 development_status=self.development_status,
+                                 certified=self.certified
                                  )
         return backup_ds
 
@@ -483,6 +511,27 @@ class DeviceServerAddModel(models.Model):
     name = models.CharField(max_length=64, verbose_name='Device server name', blank=True, default='')
     description = models.TextField(verbose_name='Description', blank=True, default='')
 
+    development_status = models.CharField(
+        verbose_name='Development status',
+        max_length=10,
+        choices=DEV_STATUS_CHOICES,
+        default=DEV_STATUS_NEW,
+        blank=True
+    )
+
+    certified = models.BooleanField(
+        verbose_name='Certified',
+        default=False,
+        blank=True,
+    )
+
+    ds_status = models.CharField(
+        verbose_name='Information status',
+        max_length=10,
+        choices=STATUS_CHOICES,
+        default=STATUS_NEW,
+    )
+
     # repository
     process_from_repository = models.BooleanField(verbose_name='Use repository only', blank=True, default=False)
     available_in_repository = models.BooleanField(verbose_name='Available in repository', default=True)
@@ -604,6 +653,9 @@ class DeviceServerUpdateModel(DeviceServerAddModel):
         self.name = device_server.name
         self.description = device_server.description
         self.readme_file = device_server.readme
+        self.certified = device_server.certified
+        self.ds_status = device_server.status
+        self.development_status = device_server.development_status
 
         if device_server.license is not None:
             self.license_name=device_server.license.name
@@ -723,6 +775,15 @@ def create_or_update(update_object, activity, device_server=None):
     else:
         new_device_server = DeviceServer(name='', description='')
 
+    if update_object.certified is not None:
+        new_device_server.certified = update_object.certified
+
+    if update_object.development_status is not None:
+        new_device_server.development_status = update_object.development_status
+
+    if update_object.ds_status is not None:
+        new_device_server.status = update_object.ds_status
+
     # if data provided manually
     if update_object.use_manual_info:
 
@@ -751,6 +812,8 @@ def create_or_update(update_object, activity, device_server=None):
         device_server.description = new_device_server.description
         device_server.license = new_device_server.license
         device_server.last_update_activity = activity
+        device_server.development_status = new_device_server.development_status
+        device_server.certified = new_device_server.certified
         device_server.status = STATUS_UPDATED
 
     # make sure device server has pk

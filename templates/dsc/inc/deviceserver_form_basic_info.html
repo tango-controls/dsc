@@ -1,4 +1,15 @@
 {% load cms_tags menu_tags sekizai_tags static %}
+
+<tbody id="dsc_status">
+    <tr>
+        <th>{{ form.development_status.label_tag }}</th><td>{{ form.development_status }}</td>
+    </tr>
+    {% if perms.dsc.admin_deviceserver %}
+    <tr>
+        <th>{{ form.certified.label_tag }}</th><td>{{ form.certified }}</td>
+    </tr>
+    {% endif %}
+</tbody>
 <tbody id="dsc_selelct_xmi_manual">
     <tr>
         <th>{{ form.use_uploaded_xmi_file.label_tag }}</th><td>{{ form.use_uploaded_xmi_file }}</td>

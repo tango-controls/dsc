@@ -220,7 +220,7 @@ def deviceserver_delete_view(request, pk):
                                                        created_by = request.user)
             activity.save()
             device_server.invalidate_activity = activity
-            device_server.status = dsc_models.STATUS_DELETEDl
+            device_server.status = dsc_models.STATUS_DELETED
             device_server.save()
 
         return render_to_response('dsc/deviceserver_delete_confirmed.html',

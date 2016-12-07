@@ -36,6 +36,9 @@
 
 {% endif %}
 
+{% if deviceserver.certified %}
+    <h4>This device server is certified as a reference implementation.</h4>
+{% endif %}
 
 {% if deviceserver.status == 'deleted' %}
     <h4>This device server is deleted.<br />Information provided here may be no longer valid.</h4>
@@ -46,7 +49,9 @@
         <a href="{% url 'deviceserver_detail' deviceserver.invalidate_activity.device_server.pk %}"> here.</a>
     </h4>
 {% endif %}
-<p style="margin-top:5pt; margin-bottom:5pt;"><span style="font-weight:bold;">Status:</span> {{ deviceserver.status }}<br />
+<p style="margin-top:5pt; margin-bottom:5pt;">
+    <span style="font-weight:bold;">Development status:</span> {{ deviceserver.development_status }} <br />
+    <span style="font-weight:bold;">Information status:</span> {{ deviceserver.status }}<br />
     <span style="font-weight:bold;">Repository:</span>
     {% if deviceserver.repository.url %}
     <a href="{{deviceserver.repository.url}}" target="_blank">
