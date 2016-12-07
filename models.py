@@ -808,7 +808,7 @@ def create_or_update(update_object, activity, device_server=None):
     if new_repository is not None:
         new_repository.last_update_activity = activity
         new_repository.device_server = device_server
-        new_repository.create_activity = old_repo.create_activity
+
         new_repository.save()
 
     # check documentation
