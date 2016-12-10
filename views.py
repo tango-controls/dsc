@@ -59,6 +59,37 @@ class DeviceServerDetailView(BreadcrumbMixinDetailView, CustomModelDetailView, C
         return context
 
 
+class DeviceServerVerifyView(DeviceServerDetailView):
+
+    def get_context_data(self, **kwargs):
+        """Detail view context will provide device server which has to be updated with verified state"""
+        context = super(DeviceServerVerifyView, self).get_context_data(**kwargs)
+        device_server = context['deviceserver']
+        assert isinstance(device_server, dsc_models.DeviceServer)
+        if device_server.status==dsc_models.STATUS_NEW or device_server.status==dsc_models.STATUS_UPDATED:
+            with transaction.atomic():
+                verify_activity = dsc_models.DeviceServerActivity(
+                    device_server=device_server,
+                    activity_type=dsc_models.DS_ACTIVITY_VERIFICATION,
+                    activity_info='Last update of the device server has been verified by %s.' %
+                                  self.request.user.get_full_name(),
+                    created_by=self.request.user
+                )
+                device_server.status=dsc_models.STATUS_VERIFIED
+                verify_activity.save()
+                device_server.save()
+            context['message'] = 'This device server is verified.'
+        else:
+            if device_server.status!=dsc_models.STATUS_VERIFIED:
+                context['message']='Only add or update operations can be verified.'
+            if device_server.status==dsc_models.STATUS_VERIFIED:
+                context['message']='This device server is already verified.'
+
+        return context
+
+
+
+
 def search_view(request):
     """Search is done with function """
     context = RequestContext(request)
@@ -225,9 +256,6 @@ def deviceserver_delete_view(request, pk):
 
         return render_to_response('dsc/deviceserver_delete_confirmed.html',
                                       {'deviceserver': device_server}, context)
-
-
-
 
 
 class DeviceServerAddView(BreadcrumbMixinDetailView, FormView):

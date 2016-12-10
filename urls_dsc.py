@@ -3,7 +3,7 @@ from django.conf.urls import patterns, url, include
 from dsc.views import DeviceServerDetailView, DeviceServerAddView, search_view, \
     DeviceServerManufacturerAutocomplete, DeviceServerProductAutocomplete, \
     DeviceServerFamilyAutocomplete,DeviceServerLicenseAutocomplete, DeviceServerBusAutocomplete, \
-    DeviceServerUpdateView, deviceserver_delete_view
+    DeviceServerUpdateView, deviceserver_delete_view, DeviceServerVerifyView
 from django.contrib.auth.decorators import login_required, permission_required
 
 from tango.cms_urls import content_action_urls #TODO do przemyślenia i implementacji w DSc potrzebne akcje albo kopia i włąśne
@@ -26,8 +26,8 @@ urlpatterns = patterns(
          name='deviceserver_delete'),
 
     url(
-         r'^ds/(?P<pk>.*)/verify/$',
-         permission_required('dsc.admin_deviceserver')(DeviceServerDetailView.as_view()),
+         r'^ds/(?P<pk>.*)/verify$',
+         permission_required('dsc.admin_deviceserver')(DeviceServerVerifyView.as_view()),
          name='deviceserver_verify'),
 
     url(

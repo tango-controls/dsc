@@ -76,6 +76,7 @@ class DeviceServersListPlugin(CMSPluginBase):
     """ Presents table with randomly picked-up device servers"""
     name = 'Device Servers random list'
     render_template = "dsc/inc/deviceserver_list.html"
+    cache = False
 
     def render(self, context, instance, placeholder):
         context = super(DeviceServersListPlugin, self).render(context, instance, placeholder)
@@ -118,6 +119,7 @@ class DeviceServersRandomListPlugin(CMSPluginBase):
     """ Presents table with randomly picked-up device servers"""
     name = 'Device Servers random list'
     render_template = "dsc/inc/deviceserver_randomlist.html"
+    cache = False
 
     def render(self, context, instance, placeholder):
         context = super(DeviceServersRandomListPlugin, self).render(context, instance, placeholder)
@@ -160,7 +162,7 @@ class DeviceServersActivityPlugin(CMSPluginBase): #LastPublishedObjectPluginBase
     model = DeviceServersActivityPluginModel
     name = 'Device Servers Catalogue Activity'
     render_template = "dsc/inc/catalogue_activities.html"
-
+    cache = False
 
     def render(self, context, instance, placeholder):
         context = super(DeviceServersActivityPlugin, self).render(context, instance, placeholder)

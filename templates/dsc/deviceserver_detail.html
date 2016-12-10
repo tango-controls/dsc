@@ -9,6 +9,10 @@
 
 {% block content %}
 
+{% if message %}
+    <h4>{{message}}</h4>
+{% endif %}
+
 {% if deviceserver.is_valid %}
     <div id="fb-root"></div>
 
@@ -51,7 +55,17 @@
 {% endif %}
 <p style="margin-top:5pt; margin-bottom:5pt;">
     <span style="font-weight:bold;">Development status:</span> {{ deviceserver.get_development_status_display }} <br />
-    <span style="font-weight:bold;">Information status:</span> {{ deviceserver.get_status_display }}<br />
+    <span style="font-weight:bold;">Information status:</span> {{ deviceserver.get_status_display }}
+    {% if deviceserver.status == 'new' or deviceserver.status == 'updated' %}
+        {% if perms.dsc.admin_deviceserver %} <br />
+            <span style="font-size:90%; margin-top:2pt;">As an administrator, you may
+            <a href="{% url 'deviceserver_verify' deviceserver.pk %}"> <b>confirm</b></a>
+            that information is valid.</span>
+        {% endif %}
+    {% endif %}
+
+
+    <br />
     <span style="font-weight:bold;">Repository:</span>
     {% if deviceserver.repository.url %}
     <a href="{{deviceserver.repository.url}}" target="_blank">
