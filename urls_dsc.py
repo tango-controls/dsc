@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls import patterns, url, include
+from django.core.urlresolvers import reverse_lazy
 from dsc.views import DeviceServerDetailView, DeviceServerAddView, search_view, \
     DeviceServerManufacturerAutocomplete, DeviceServerProductAutocomplete, \
     DeviceServerFamilyAutocomplete,DeviceServerLicenseAutocomplete, DeviceServerBusAutocomplete, \
-    DeviceServerUpdateView, deviceserver_delete_view, DeviceServerVerifyView
+    DeviceServerUpdateView, deviceserver_delete_view, DeviceServerVerifyView, deviceserver_verify_view
 from django.contrib.auth.decorators import login_required, permission_required
 
 from tango.cms_urls import content_action_urls #TODO do przemyślenia i implementacji w DSc potrzebne akcje albo kopia i włąśne
@@ -27,7 +28,7 @@ urlpatterns = patterns(
 
     url(
          r'^ds/(?P<pk>.*)/verify$',
-         permission_required('dsc.admin_deviceserver')(DeviceServerVerifyView.as_view()),
+         deviceserver_verify_view,
          name='deviceserver_verify'),
 
     url(
