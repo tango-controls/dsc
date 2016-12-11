@@ -582,7 +582,7 @@ class DeviceServerAddModel(models.Model):
 
     use_url_xmi_file = models.BooleanField(verbose_name='Provide .xmi file URL populate database.',
                                                 blank=True,
-                                                default=True)
+                                                default=False)
 
     xmi_file_url = models.URLField(verbose_name='XMI source URL', blank=True, null=True, default='')
 
@@ -593,18 +593,18 @@ class DeviceServerAddModel(models.Model):
             if self.use_uploaded_xmi_file:
                 if self.xmi_file.size < 10:
                     raise Exception('The .XMI file seems to be empty.')
-                if self.xmi_file.size > 1000000:
+                if self.xmi_file.size > 200000:
                     raise Exception('The file is to large to be a Tango .XMI file.')
 
                 xmi_string = self.xmi_file.read()
 
             elif self.use_url_xmi_file:
-                response = urllib2.urlopen(xmi_url)
-                xmi_size = response.get('Content-Length', 0)
+                response = urllib2.urlopen(self.xmi_file_url)
+                xmi_size = int(response.info().get('Content-Length', 0))
                 if xmi_size < 10:
-                    raise forms.ValidationError('The .XMI file pointed by the url seems to be empty.')
+                    raise Exception('The .XMI file pointed by the url seems to be empty.')
                 if xmi_size > 200000:
-                    raise forms.ValidationError('The .XMI file pointed by the url is to large to be a Tango .XMI file.')
+                    raise Exception('The .XMI file pointed by the url is to large to be a Tango .XMI file.')
 
                 xmi_string = response.read()
 
@@ -613,10 +613,12 @@ class DeviceServerAddModel(models.Model):
             is_valid, message = parser.is_valid()
 
             if not is_valid:
+                print "Parsing problem: %s" % message
                 raise Exception(message)
 
         except Exception as e:
-            return '', False, e.message
+            raise e
+            #return '', False, e.message
 
         return xmi_string, True, ''
 
@@ -784,9 +786,11 @@ def create_or_update(update_object, activity, device_server=None):
         backup_device_server.save()
 
     # basic information about device server
-    if update_object.use_uploaded_xmi_file:
+    if update_object.use_uploaded_xmi_file or update_object.use_url_xmi_file:
         # use xmi file
         xmi_string, ok, message = update_object.xmi_string()
+        print '-------------'
+        print message
         if ok:
             parser = TangoXmiParser(xml_string=xmi_string)
             # device server object

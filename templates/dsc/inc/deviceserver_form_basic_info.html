@@ -21,10 +21,10 @@
 </tbody>
 <tbody id="dsc_xmi">
     {% if form.xmi_file.errors %}
-    <tr><td colspan="2">{{ form.xmi_file.errors }}</td></tr>
+    <tr><td colspan="3">{{ form.xmi_file.errors }}</td></tr>
     {% endif %}
     <tr>
-        <th>{{ form.xmi_file.label_tag }}</th><td>{{ form.xmi_file }}</td>
+        <th>{{ form.xmi_file.label_tag }}</th><td colspan="2">{{ form.xmi_file }}</td>
     </tr>
 </tbody>
 <tbody id="dsc_xmi_url">
@@ -32,15 +32,15 @@
     <tr><td colspan="2">{{ form.xmi_file_url.errors }}</td></tr>
     {% endif %}
     <tr>
-        <th>{{ form.xmi_file_url.label_tag }}</th><td>{{ form.xmi_file_url }}</td>
+        <th>{{ form.xmi_file_url.label_tag }}</th><td colspan="2">{{ form.xmi_file_url }}</td>
     </tr>
 </tbody>
 <tbody id="dsc_manual">
-    <tr><th colspan="2">
+    <tr><th colspan="3">
         {% if operation == 'update' %}
-            You are about to update inforamation manually.
+            You are about to update information manually.
         {% else %}
-            You are about to enter inforamation manually.
+            You are about to enter information manually.
         {% endif %}
         However, this way you cannot provide nor change detail information on class interface
         (attributes, commands, pipes and properties). These can only be entered via an .XMI file.
@@ -49,84 +49,84 @@
         <tr><td colspan="2">{{ form.name.errors }}</td></tr>
     {% endif %}
      <tr>
-        <th>{{ form.name.label_tag }}</th><td>{{ form.name }}</td>
+        <th>{{ form.name.label_tag }}</th><td colspan="2">{{ form.name }}</td>
     </tr>
 
     {% if form.description.errors %}
         <tr><td colspan="2">{{ form.description.errors }}</td></tr>
     {% endif %}
     <tr>
-        <th>{{ form.description.label_tag }}</th><td>{{ form.description }}</td>
+        <th>{{ form.description.label_tag }}</th><td colspan="2">{{ form.description }}</td>
     </tr>
 
     {% if form.contact_email.errors %}
         <tr><td colspan="2">{{ form.contact_email.errors }}</td></tr>
     {% endif %}
     <tr>
-        <th>{{ form.contact_email.label_tag }}</th><td>{{ form.contact_email }}</td>
+        <th>{{ form.contact_email.label_tag }}</th><td colspan="2">{{ form.contact_email }}</td>
     </tr>
 
     {% if form.platform.errors %}
         <tr><td colspan="2">{{ form.platform.errors }}</td></tr>
     {% endif %}
     <tr>
-        <th>{{ form.platform.label_tag }}</th><td>{{ form.platform }}</td>
+        <th>{{ form.platform.label_tag }}</th><td colspan="2">{{ form.platform }}</td>
     </tr>
 
     {% if form.language.errors %}
         <tr><td colspan="2">{{ form.language.errors }}</td></tr>
     {% endif %}
     <tr>
-        <th>{{ form.language.label_tag }}</th><td>{{ form.language }}</td>
+        <th>{{ form.language.label_tag }}</th><td colspan="2">{{ form.language }}</td>
     </tr>
 
     {% if form.license_name.errors %}
         <tr><td colspan="2">{{ form.license_name.errors }}</td></tr>
     {% endif %}
     <tr>
-        <th>{{ form.license_name.label_tag }}</th><td>{{ form.license_name }}</td>
+        <th>{{ form.license_name.label_tag }}</th><td  colspan="2">{{ form.license_name }}</td>
     </tr>
 
     {% if form.class_copyright.errors %}
         <tr><td colspan="2">{{ form.class_copyright.errors }}</td></tr>
     {% endif %}
     <tr>
-        <th>{{ form.class_copyright.label_tag }}</th><td>{{ form.class_copyright }}</td>
+        <th>{{ form.class_copyright.label_tag }}</th><td  colspan="2">{{ form.class_copyright }}</td>
     </tr>
 
     {% if form.class_family.errors %}
         <tr><td colspan="2">{{ form.class_family.errors }}</td></tr>
     {% endif %}
     <tr>
-        <th>{{ form.class_family.label_tag }}</th><td>{{ form.class_family }}</td>
+        <th>{{ form.class_family.label_tag }}</th><td colspan="2">{{ form.class_family }}</td>
     </tr>
 
     {% if form.manufacturer.errors %}
         <tr><td colspan="2">{{ form.manufacturer.errors }}</td></tr>
     {% endif %}
     <tr>
-        <th>{{ form.manufacturer.label_tag }}</th><td>{{ form.manufacturer }}</td>
+        <th>{{ form.manufacturer.label_tag }}</th><td  colspan="2">{{ form.manufacturer }}</td>
     </tr>
 
     {% if form.product_reference.errors %}
         <tr><td colspan="2">{{ form.product_reference.errors }}</td></tr>
     {% endif %}
     <tr>
-        <th>{{ form.product_reference.label_tag }}</th><td>{{ form.product_reference }}</td>
+        <th>{{ form.product_reference.label_tag }}</th><td  colspan="2">{{ form.product_reference }}</td>
     </tr>
 
     {% if form.bus.errors %}
         <tr><td colspan="2">{{ form.bus.errors }}</td></tr>
     {% endif %}
     <tr>
-        <th>{{ form.bus.label_tag }}</th><td>{{ form.bus }}</td>
+        <th>{{ form.bus.label_tag }}</th><td colspan="2">{{ form.bus }}</td>
     </tr>
 
     {% if form.key_words.errors %}
         <tr><td colspan="2">{{ form.key_words.errors }}</td></tr>
     {% endif %}
     <tr>
-        <th>{{ form.key_words.label_tag }}</th><td>{{ form.key_words }}</td>
+        <th>{{ form.key_words.label_tag }}</th><td  colspan="2">{{ form.key_words }}</td>
     </tr>
 
 </tbody>
@@ -190,8 +190,7 @@
                 $('#dsc_xmi_url').show();
                 $('#dsc_manual').hide();
                 $('#id_use_manual_info')[0].checked = false;
-                $('#id_use_upladed_xmi_file')[0].checked = false;
-
+                $('#id_use_uploaded_xmi_file')[0].checked = false;
 
             } else {
                 // the checkbox is now no longer checked

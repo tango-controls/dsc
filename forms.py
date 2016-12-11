@@ -57,7 +57,7 @@ class DeviceServerAddForm(forms.ModelForm):
 
             try:
                 response = urllib2.urlopen(xmi_url)
-                xmi_size = response.get('Content-Length', 0)
+                xmi_size = int(response.info().get('Content-Length', 0))
                 if xmi_size < 10:
                     raise forms.ValidationError('The .XMI file pointed by the url seems to be empty.')
                 if xmi_size > 200000:
@@ -71,6 +71,9 @@ class DeviceServerAddForm(forms.ModelForm):
 
                 if not is_valid:
                     raise forms.ValidationError(message)
+
+            except urllib2.UnknownHandler as error:
+                raise forms.ValidationError(error.message)
 
             except Exception as e:
                 raise forms.ValidationError('Error during .xmi file validation. %s' % e.message)
