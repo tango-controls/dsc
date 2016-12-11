@@ -186,7 +186,8 @@ class DeviceServerUpdateView(BreadcrumbMixinDetailView, UpdateView):
             and not self.request.user.has_perm('dsc.admin_deviceserver'):
             self.template_name = 'dsc/deviceserver_notauthorized.html'
             context['deviceserver'] = self.device_server
-            context['operation'] = 'update'
+        context['operation'] = 'update'
+
         return context
 
     def form_valid(self, form):

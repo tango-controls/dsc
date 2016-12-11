@@ -1,3 +1,4 @@
+import urllib2
 from django.db import models
 from django.conf import settings
 from django.core.urlresolvers import reverse
@@ -356,6 +357,7 @@ class DeviceServerRepository(DscManagedModel):
     path_in_repository = models.CharField(max_length=255, verbose_name='Path', blank=True, default='')
     contact_email = models.EmailField(verbose_name='Please write to', blank=True, null=True, default='')
     download_url = models.URLField(verbose_name='Download URL', null=True, blank=True)
+    tag = models.CharField(verbose_name='Tag', max_length=128, blank=True, null=True, default='')
 
     device_server = models.OneToOneField(DeviceServer, related_name='repository', null=True)
 
@@ -578,15 +580,33 @@ class DeviceServerAddModel(models.Model):
                                 blank=True,
                                 null=True)
 
+    use_url_xmi_file = models.BooleanField(verbose_name='Provide .xmi file URL populate database.',
+                                                blank=True,
+                                                default=True)
+
+    xmi_file_url = models.URLField(verbose_name='XMI source URL', blank=True, null=True, default='')
+
     def xmi_string(self):
         """ :return  (xmi_string, is_ok, error_message)"""
         try:
-            if self.xmi_file.size < 10:
-                raise Exception('The .XMI file seems to be empty.')
-            if self.xmi_file.size > 1000000:
-                raise Exception('The file is to large to be a Tango .XMI file.')
 
-            xmi_string = self.xmi_file.read()
+            if self.use_uploaded_xmi_file:
+                if self.xmi_file.size < 10:
+                    raise Exception('The .XMI file seems to be empty.')
+                if self.xmi_file.size > 1000000:
+                    raise Exception('The file is to large to be a Tango .XMI file.')
+
+                xmi_string = self.xmi_file.read()
+
+            elif self.use_url_xmi_file:
+                response = urllib2.urlopen(xmi_url)
+                xmi_size = response.get('Content-Length', 0)
+                if xmi_size < 10:
+                    raise forms.ValidationError('The .XMI file pointed by the url seems to be empty.')
+                if xmi_size > 200000:
+                    raise forms.ValidationError('The .XMI file pointed by the url is to large to be a Tango .XMI file.')
+
+                xmi_string = response.read()
 
             parser = TangoXmiParser(xml_string=xmi_string)
 
@@ -895,7 +915,7 @@ def create_or_update(update_object, activity, device_server=None):
         new_documentation2.save()
 
     # get classes and interface
-    if update_object.use_uploaded_xmi_file and parser is not None:
+    if ( update_object.use_uploaded_xmi_file or update_object.use_url_xmi_file ) and parser is not None:
         # for xmi file all old device classes and relation are moved to backup and new are created from scratch
         for cl in device_server.device_classes.all():
             cl.make_invalid(activity)
@@ -965,19 +985,29 @@ def create_or_update(update_object, activity, device_server=None):
                 prop.save()
 
     elif update_object.use_manual_info:
-        for cl in device_server.device_classes.all():
-            cl.make_invalid(activity)
-            if backup_device_server is not None:
-                cl.device_server = backup_device_server
-            cl.save()
+        # for clo in device_server.device_classes.all():
+        #     clo.make_invalid(activity)
+        #     if backup_device_server is not None:
+        #         clo.device_server = backup_device_server
+        #     clo.save()
 
         # manual info provided
-        cl = DeviceClass(name=update_object.name,
-                         description=update_object.description,
-                         class_copyright=update_object.class_copyright,
-                         language=update_object.language,
-                         device_server=device_server
-                         )
+        if len(device_server.device_classes.all()) > 0:
+            cl = device_server.device_classes.all()[0]
+            cl.last_update_activity = activity
+            cl_info = cl.info
+            cl_info.last_update_activity = activity
+        else:
+            cl = DeviceClass()
+            cl.create_activity = activity
+            cl_info = DeviceClassInfo()
+            cl_info.create_activity = activity
+
+        cl.name = update_object.name
+        cl.description = update_object.description
+        cl.class_copyright = update_object.class_copyright
+        cl.language = update_object.language
+        cl.device_server = device_server
 
         if len(update_object.license_name) > 0:
             lic = DeviceServerLicense.objects.get_or_create(name=update_object.license_name)[0]
@@ -985,20 +1015,17 @@ def create_or_update(update_object, activity, device_server=None):
                 lic.save()
             cl.license = lic
 
-        cl.create_activity = activity
         cl.save()
 
-        cl_info = DeviceClassInfo(device_class=cl,
-                                  contact_email=update_object.contact_email,
-                                  class_family=update_object.class_family,
-                                  platform=update_object.platform,
-                                  bus=update_object.bus,
-                                  manufacturer=update_object.manufacturer,
-                                  product_reference=update_object.product_reference,
-                                  key_words=update_object.key_words
-                                  )
+        cl_info.device_class = cl
+        cl_info.contact_email = update_object.contact_email
+        cl_info.class_family = update_object.class_family
+        cl_info.platform = update_object.platform
+        cl_info.bus = update_object.bus
+        cl_info.manufacturer = update_object.manufacturer
+        cl_info.product_reference = update_object.product_reference
+        cl_info.key_words = update_object.key_words
 
-        cl_info.create_activity = activity
         cl_info.save()
 
     # return device_server

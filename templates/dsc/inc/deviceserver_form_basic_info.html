@@ -11,11 +11,12 @@
     {% endif %}
 </tbody>
 <tbody id="dsc_selelct_xmi_manual">
+    <tr><th colspan="3"><label>Info source:</label></th></tr>
+    <tr><th><label>.XMI upload</label></th><th><label>.XMI URL</label></th><th><label>Manual</label></th></tr>
     <tr>
-        <th>{{ form.use_uploaded_xmi_file.label_tag }}</th><td>{{ form.use_uploaded_xmi_file }}</td>
-    </tr>
-    <tr>
-        <th>{{ form.use_manual_info.label_tag }}</th><td>{{ form.use_manual_info }}</td>
+        <td>{{ form.use_uploaded_xmi_file }}</td>
+        <td>{{ form.use_url_xmi_file }}</td>
+        <td>{{ form.use_manual_info }}</td>
     </tr>
 </tbody>
 <tbody id="dsc_xmi">
@@ -26,7 +27,24 @@
         <th>{{ form.xmi_file.label_tag }}</th><td>{{ form.xmi_file }}</td>
     </tr>
 </tbody>
+<tbody id="dsc_xmi_url">
+    {% if form.xmi_file.errors %}
+    <tr><td colspan="2">{{ form.xmi_file_url.errors }}</td></tr>
+    {% endif %}
+    <tr>
+        <th>{{ form.xmi_file_url.label_tag }}</th><td>{{ form.xmi_file_url }}</td>
+    </tr>
+</tbody>
 <tbody id="dsc_manual">
+    <tr><th colspan="2">
+        {% if operation == 'update' %}
+            You are about to update inforamation manually.
+        {% else %}
+            You are about to enter inforamation manually.
+        {% endif %}
+        However, this way you cannot provide nor change detail information on class interface
+        (attributes, commands, pipes and properties). These can only be entered via an .XMI file.
+    </th></tr>
     {% if form.name.errors %}
         <tr><td colspan="2">{{ form.name.errors }}</td></tr>
     {% endif %}
@@ -126,6 +144,14 @@
         $('#id_use_uploaded_xmi_file')[0].checked = false;
         {% endif %}
 
+        {% if form.use_url_xmi_file.value %}
+        $("#dsc_xmi_url").show();
+        $('#id_use_url_xmi_file')[0].checked = true;
+        {% else %}
+        $("#dsc_xmi_url").hide();
+        $('#id_use_url_xmi_file')[0].checked = false;
+        {% endif %}
+
         {% if form.use_manual_info.value %}
         $("#dsc_manual").show();
         $('#id_use_manual_info')[0].checked = true;
@@ -140,16 +166,39 @@
             if (this.checked) {
                 // the checkbox is now checked
                 $('#dsc_xmi').show();
+                $('#dsc_xmi_url').hide();
                 $('#dsc_manual').hide();
                 $('#id_use_manual_info')[0].checked = false;
+                $('#id_use_url_xmi_file')[0].checked = false;
 
 
             } else {
                 // the checkbox is now no longer checked
                 $('#dsc_xmi').hide();
-                $('#dsc_manual').show();
-                $('#id_use_manual_info')[0].checked = true;
-                $('#dsc_manual').show();
+                $('#dsc_xmi_url').show();
+                $('#id_use_url_xmi_file')[0].checked = true;
+                $('#id_use_manual_info')[0].checked = false;
+            }
+        });
+
+        // handling showing/hiding .xmi url field
+        $('#id_use_url_xmi_file').change(function() {
+            // this will contain a reference to the checkbox
+            if (this.checked) {
+                // the checkbox is now checked
+                $('#dsc_xmi').hide();
+                $('#dsc_xmi_url').show();
+                $('#dsc_manual').hide();
+                $('#id_use_manual_info')[0].checked = false;
+                $('#id_use_upladed_xmi_file')[0].checked = false;
+
+
+            } else {
+                // the checkbox is now no longer checked
+                $('#dsc_xmi').show();
+                $('#dsc_xmi_url').hide();
+                $('#id_use_uploaded_xmi_file')[0].checked = true;
+                $('#id_use_manual_info')[0].checked = false;
             }
         });
 
@@ -158,10 +207,10 @@
             if (this.checked) {
                 // the checkbox is now checked
                 $('#dsc_xmi').hide();
+                $('#dsc_xmi_url').hide();
                 $('#dsc_manual').show();
                 $('#id_use_uploaded_xmi_file')[0].checked = false;
-
-
+                $('#id_use_url_xmi_file')[0].checked = false;
             } else {
                 // the checkbox is now no longer checked
                 $('#dsc_xmi').show();
