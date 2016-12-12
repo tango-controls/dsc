@@ -92,7 +92,7 @@
 <div id="dsc-detail-tabs">
     <ul>
         {% for cl_name, spec in specifications.items %}
-            {% if spec.cl.is_valid %}
+            {% if spec.cl.is_valid or not deviceserver.is_valid %}
             <li>
                 <a href="#dsc-{{spec.cl.name}}-class-tab"><span>{{spec.cl.name}}</span></a>
             </li>
@@ -107,7 +107,7 @@
     </ul>
 
     {% for cl_name, spec in specifications.items %}
-        {% if spec.cl.is_valid %}
+        {% if True or spec.cl.is_valid or not deviceserver.is_valid %}
         <div id="dsc-{{spec.cl.name}}-class-tab">
             <h4>Description</h4>
             <hr />

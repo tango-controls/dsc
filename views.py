@@ -35,7 +35,10 @@ class DeviceServerDetailView(BreadcrumbMixinDetailView, CustomModelDetailView, C
         context = super(DeviceServerDetailView, self).get_context_data(**kwargs)
 
         # get all classes
-        context['device_classes'] = context['deviceserver'].device_classes.filter(invalidate_activity=None)
+        if context['deviceserver'].is_valid():
+            context['device_classes'] = context['deviceserver'].device_classes.filter(invalidate_activity=None)
+        else:
+            context['device_classes'] = context['deviceserver'].device_classes.all()
         # for all classes tables of attributes, properties  and so will be provided
         context['specifications'] = {}
 
@@ -202,6 +205,7 @@ class DeviceServerUpdateView(BreadcrumbMixinDetailView, UpdateView):
             update_object = form.save()
             assert (isinstance(update_object, dsc_models.DeviceServerAddModel))
             update_object.created_by = self.request.user
+            update_object.valid_xmi_string = form.cleaned_data.get('xmi_string', None)
             update_object.save()
 
             # mark  activity

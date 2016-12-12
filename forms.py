@@ -73,7 +73,8 @@ class DeviceServerAddForm(forms.ModelForm):
                     raise forms.ValidationError(message)
 
             except urllib2.UnknownHandler as error:
-                raise forms.ValidationError(error.message)
+                raise forms.ValidationError("Error during .xmi file download from the URL. "
+                                            "Please check if it is valid or try again later.")
 
             except Exception as e:
                 raise forms.ValidationError('Error during .xmi file validation. %s' % e.message)

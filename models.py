@@ -401,6 +401,19 @@ class DeviceClass(DscManagedModel):
     def __str__(self):
         return '%s' % self.name
 
+    def make_backup(self, activity):
+        clo = DeviceClass()
+        clo.name = self.name
+        clo.description = self.description
+        clo.class_copyright = self.class_copyright
+        clo.language = self.language
+        clo.create_activity = self.create_activity
+        clo.last_update_activity = self.last_update_activity
+        clo.make_invalid(activity)
+        clo.device_server = self.device_server
+
+        return  clo
+
 
 class DeviceClassInfo(DscManagedModel):
     """Model for information about device server."""
@@ -417,6 +430,23 @@ class DeviceClassInfo(DscManagedModel):
     # at the beginning there will not be any manufacturer table
     key_words = models.CharField(max_length=255, verbose_name="Key words", blank=True, null=True)
     product_reference = models.CharField(max_length=64, verbose_name="Product", default='')
+
+    def make_backup(self,activity):
+        cli = DeviceClassInfo()
+        cli.device_class = self.device_class
+        cli.contact_email = self.contact_email
+        cli.class_family = self.class_family
+        cli.platform = self.platform
+        cli.bus = self.bus
+        cli.manufacturer = self.manufacturer
+        cli.product_reference = self.product_reference
+        cli.key_words = self.key_words
+        cli.create_activity = self.create_activity
+        cli.last_update_activity = self.last_update_activity
+        cli.invalidate_activity = activity
+
+        return cli
+
 
     @property
     def device_server(self):
@@ -588,6 +618,9 @@ class DeviceServerAddModel(models.Model):
 
     def xmi_string(self):
         """ :return  (xmi_string, is_ok, error_message)"""
+        if hasattr(self,'valid_xmi_string'):
+            if self.valid_xmi_string is not None:
+                return self.valid_xmi_string, True, ''
         try:
 
             if self.use_uploaded_xmi_file:
@@ -989,11 +1022,17 @@ def create_or_update(update_object, activity, device_server=None):
                 prop.save()
 
     elif update_object.use_manual_info:
-        # for clo in device_server.device_classes.all():
-        #     clo.make_invalid(activity)
-        #     if backup_device_server is not None:
-        #         clo.device_server = backup_device_server
-        #     clo.save()
+        if backup_device_server is not None:
+            for cl in device_server.device_classes.all():
+                clo = cl.make_backup(activity)
+                clo.device_server = backup_device_server
+                clo.save()
+                if hasattr(cl,'info'):
+                    cloi = cl.info.make_backup(activity)
+                    cloi.device_class = clo
+                    cloi.save()
+
+
 
         # manual info provided
         if len(device_server.device_classes.all()) > 0:
