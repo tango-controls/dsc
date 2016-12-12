@@ -11,7 +11,7 @@ FORCE_UPDATE = True # when True no time stamp are checked and updates are perfor
 
 REMOTE_REPO_URL = 'http://svn.code.sf.net/p/tango-ds/code'
 LOCAL_REPO_URL = 'file:///home/piotr/tmp/tango-ds-repo/'
-REPO_START_PATH = 'DeviceClasses/Vacuum'
+REPO_START_PATH = 'DeviceClasses'
 
 SERVER_BASE_URL = 'https://dsc-test.modelowanie.pl/'
 
