@@ -6,7 +6,7 @@ from django.shortcuts import render_to_response, RequestContext
 from django.views.generic import TemplateView, FormView, UpdateView
 from django.db import transaction
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 
 from webu.custom_models.views import CustomModelDetailView
 from webu.views import CMSDetailView
@@ -92,12 +92,39 @@ class DeviceServerVerifyView(DeviceServerDetailView):
         return context
 
 
+def device_servers_list(request):
+    ds_list = {}
+    if request.method == 'GET':
+        repository_url = request.GET.get('repository_url')
+        repository_contact_email = request.GET.get('repository_contact_email')
+
+    if request.method == 'POST':
+        repository_url = request.POST.get('repository_url')
+        repository_contact_email = request.POST.get('repository_contact_email')
+
+    repositories = dsc_models.DeviceServerRepository.objects.filter(invalidate_activity=None)
+    if repository_url is not None:
+        repositories = repositories.filter(url=repository_url)
+
+    if repository_contact_email is not None:
+        repositories = repositories.filter(contact_email=repository_contact_email)
+
+    for repo in repositories:
+        ds = repo.device_server
+        if ds is not None and not ds_list.has_key(ds.pk) and ds.is_valid():
+            ds_list[ds.pk] = {
+                'name': ds.name,
+                'detail_url': request.build_absolute_uri(reverse('deviceserver_detail', kwargs={'pk': ds.pk})),
+                'update_url': request.build_absolute_uri(reverse('deviceserver_update', kwargs={'pk': ds.pk}))
+            }
+
+    return JsonResponse(ds_list)
 
 
 def search_view(request):
     """Search is done with function """
     context = RequestContext(request)
-    table_config = RequestConfig(request)
+    table_config = RequestConfig(request, paginate={'per_page': 10})
     table = None
     if request.method == 'GET':
         form = DeviceServerSearchForm(request.GET)
@@ -181,6 +208,9 @@ class DeviceServerUpdateView(BreadcrumbMixinDetailView, UpdateView):
             self.template_name = 'dsc/deviceserver_notauthorized.html'
             return None
         update_object = dsc_models.DeviceServerUpdateModel().from_device_server(self.device_server)
+        update_object.use_manual_info = False
+        update_object.use_uploaded_xmi_file = False
+        update_object.use_url_xmi_file = False
         return update_object
 
     def get_context_data(self, **kwargs):

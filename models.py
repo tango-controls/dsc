@@ -605,6 +605,11 @@ class DeviceServerAddModel(models.Model):
     use_uploaded_xmi_file = models.BooleanField(verbose_name='Upload .xmi file to populate database.',
                                                 blank=True,
                                                 default=True)
+
+    add_class = models.BooleanField(verbose_name='Add new class to the device server instead of updating existing ones?',
+                                                blank=True,
+                                                default=False)
+
     xmi_file = models.FileField(verbose_name='.XMI file',
                                 upload_to='dsc_xmi_files',
                                 blank=True,
@@ -954,11 +959,12 @@ def create_or_update(update_object, activity, device_server=None):
     # get classes and interface
     if ( update_object.use_uploaded_xmi_file or update_object.use_url_xmi_file ) and parser is not None:
         # for xmi file all old device classes and relation are moved to backup and new are created from scratch
-        for cl in device_server.device_classes.all():
-            cl.make_invalid(activity)
-            if backup_device_server is not None:
-                cl.device_server = backup_device_server
-            cl.save()
+        if not update_object.add_class:
+            for cl in device_server.device_classes.all():
+                cl.make_invalid(activity)
+                if backup_device_server is not None:
+                    cl.device_server = backup_device_server
+                cl.save()
 
         # read classes from xmi file
         cls = parser.get_device_classes()
@@ -1022,7 +1028,7 @@ def create_or_update(update_object, activity, device_server=None):
                 prop.save()
 
     elif update_object.use_manual_info:
-        if backup_device_server is not None:
+        if backup_device_server is not None and not update_object.add_class:
             for cl in device_server.device_classes.all():
                 clo = cl.make_backup(activity)
                 clo.device_server = backup_device_server

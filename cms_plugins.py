@@ -46,7 +46,7 @@ class DeviceServerPlugin(CMSPluginBase): #LastPublishedObjectPluginBase
             query = filtered_device_servers(family=family)
 
         table = DeviceServerTable(query.distinct())
-        RequestConfig(request).configure(table)
+        RequestConfig(request, paginate={'per_page': 10}).configure(table)
         context['device_servers'] = table
         context['family'] = family
 
@@ -91,7 +91,7 @@ class DeviceServersListPlugin(CMSPluginBase):
         q = filtered_device_servers(manufacturer=man, product=prod, family=family, bus=bus)
 
         table = DeviceServerTable(q)
-        RequestConfig(request).configure(table)
+        RequestConfig(request, paginate={'per_page': 10}).configure(table)
         context['device_servers'] = table
 
         # clean context from nested context to get around of bug in context.flatten (django tracker #24765)
@@ -134,7 +134,7 @@ class DeviceServersRandomListPlugin(CMSPluginBase):
                 ds_list.append(ds)
 
         table = DeviceServerTable(ds_list)
-        RequestConfig(context['request']).configure(table)
+        RequestConfig(context['request'], paginate={'per_page': 10}).configure(table)
         context['device_servers'] = table
 
         # clean context from nested context to get around of bug in context.flatten (django tracker #24765)

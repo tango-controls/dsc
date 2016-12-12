@@ -19,6 +19,13 @@
         <td>{{ form.use_manual_info }}</td>
     </tr>
 </tbody>
+<tbody id="dsc_add_class">
+    {% if form.add_class %}
+    <tr>
+        <th colspan="2">{{ form.add_class.label_tag }}</th><td>{{ form.add_class }}</td>
+    </tr>
+    {% endif %}
+</tbody>
 <tbody id="dsc_xmi">
     {% if form.xmi_file.errors %}
     <tr><td colspan="3">{{ form.xmi_file.errors }}</td></tr>
@@ -136,7 +143,10 @@
 
     <script language="JavaScript">
 
+        $("#dsc_add_class").hide();
+
         {% if form.use_uploaded_xmi_file.value %}
+        $("#dsc_add_class").show();
         $("#dsc_xmi").show();
         $('#id_use_uploaded_xmi_file')[0].checked = true;
         {% else %}
@@ -145,6 +155,7 @@
         {% endif %}
 
         {% if form.use_url_xmi_file.value %}
+        $("#dsc_add_class").show();
         $("#dsc_xmi_url").show();
         $('#id_use_url_xmi_file')[0].checked = true;
         {% else %}
@@ -153,6 +164,7 @@
         {% endif %}
 
         {% if form.use_manual_info.value %}
+        $("#dsc_add_class").show();
         $("#dsc_manual").show();
         $('#id_use_manual_info')[0].checked = true;
         {% else %}
@@ -166,6 +178,7 @@
             if (this.checked) {
                 // the checkbox is now checked
                 $('#dsc_xmi').show();
+                $("#dsc_add_class").show();
                 $('#dsc_xmi_url').hide();
                 $('#dsc_manual').hide();
                 $('#id_use_manual_info')[0].checked = false;
@@ -175,9 +188,14 @@
             } else {
                 // the checkbox is now no longer checked
                 $('#dsc_xmi').hide();
+                $("#dsc_add_class").hide();
+                {% if not form.add_class %}
                 $('#dsc_xmi_url').show();
+                $("#dsc_add_class").show();
                 $('#id_use_url_xmi_file')[0].checked = true;
+                {% endif %}
                 $('#id_use_manual_info')[0].checked = false;
+
             }
         });
 
@@ -187,6 +205,7 @@
             if (this.checked) {
                 // the checkbox is now checked
                 $('#dsc_xmi').hide();
+                $("#dsc_add_class").show();
                 $('#dsc_xmi_url').show();
                 $('#dsc_manual').hide();
                 $('#id_use_manual_info')[0].checked = false;
@@ -194,10 +213,16 @@
 
             } else {
                 // the checkbox is now no longer checked
-                $('#dsc_xmi').show();
+
                 $('#dsc_xmi_url').hide();
+                $("#dsc_add_class").hide();
+                {% if not form.add_class %}
                 $('#id_use_uploaded_xmi_file')[0].checked = true;
+                $("#dsc_add_class").show();
+                $('#dsc_xmi').show();
+                {% endif %}
                 $('#id_use_manual_info')[0].checked = false;
+
             }
         });
 
@@ -206,15 +231,21 @@
             if (this.checked) {
                 // the checkbox is now checked
                 $('#dsc_xmi').hide();
+                $("#dsc_add_class").show();
                 $('#dsc_xmi_url').hide();
                 $('#dsc_manual').show();
                 $('#id_use_uploaded_xmi_file')[0].checked = false;
                 $('#id_use_url_xmi_file')[0].checked = false;
             } else {
                 // the checkbox is now no longer checked
-                $('#dsc_xmi').show();
-                $('#dsc_manual').hide();
+                $("#dsc_add_class").hide();
+                {% if not form.add_class %}
+                $("#dsc_add_class").show();
                 $('#id_use_uploaded_xmi_file')[0].checked = true;
+                $('#dsc_xmi').show();
+                {% endif %}
+                $('#dsc_manual').hide();
+
             }
         });
 

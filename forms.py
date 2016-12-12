@@ -44,7 +44,7 @@ class DeviceServerAddForm(forms.ModelForm):
         cleaned_data = super(DeviceServerAddForm, self).clean()
 
         if not cleaned_data['use_uploaded_xmi_file'] and not cleaned_data['use_manual_info'] \
-                and not cleaned_data['use_url_xmi_file']:
+                and not cleaned_data['use_url_xmi_file'] and cleaned_data.get('add_class') is None:
             raise forms.ValidationError('You must provide either .XMI file or enter information manually.')
 
         if cleaned_data['use_url_xmi_file']:
@@ -143,6 +143,7 @@ class DeviceServerUpdateForm(DeviceServerAddForm):
                   'use_uploaded_xmi_file',
                   'use_url_xmi_file',
                   'use_manual_info',
+                  'add_class',
                   'xmi_file',
                   'xmi_file_url',
                   'name', 'description', 'contact_email', 'platform', 'language', 'license_name',

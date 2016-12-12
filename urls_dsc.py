@@ -4,7 +4,8 @@ from django.core.urlresolvers import reverse_lazy
 from dsc.views import DeviceServerDetailView, DeviceServerAddView, search_view, \
     DeviceServerManufacturerAutocomplete, DeviceServerProductAutocomplete, \
     DeviceServerFamilyAutocomplete,DeviceServerLicenseAutocomplete, DeviceServerBusAutocomplete, \
-    DeviceServerUpdateView, deviceserver_delete_view, DeviceServerVerifyView, deviceserver_verify_view
+    DeviceServerUpdateView, deviceserver_delete_view, DeviceServerVerifyView, deviceserver_verify_view, \
+    device_servers_list
 from django.contrib.auth.decorators import login_required, permission_required
 
 from tango.cms_urls import content_action_urls #TODO do przemyślenia i implementacji w DSc potrzebne akcje albo kopia i włąśne
@@ -45,6 +46,11 @@ urlpatterns = patterns(
          r'^search/$',
          search_view,
          name='deviceserver_search'),
+
+    url(
+         r'^list/$',
+         device_servers_list,
+         name='deviceservers_list'),
 
     url(
          r'^autocomplete/manufacturers/$',
