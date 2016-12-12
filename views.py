@@ -112,10 +112,15 @@ def device_servers_list(request):
     for repo in repositories:
         ds = repo.device_server
         if ds is not None and not ds_list.has_key(ds.pk) and ds.is_valid():
+            if ds.last_update_activity is not None:
+                last_update = ds.last_update_activity.created_at
+            else:
+                last_update = ds.created_at
             ds_list[ds.pk] = {
                 'name': ds.name,
                 'detail_url': request.build_absolute_uri(reverse('deviceserver_detail', kwargs={'pk': ds.pk})),
-                'update_url': request.build_absolute_uri(reverse('deviceserver_update', kwargs={'pk': ds.pk}))
+                'update_url': request.build_absolute_uri(reverse('deviceserver_update', kwargs={'pk': ds.pk})),
+                'last_update': last_update
             }
 
     return JsonResponse(ds_list)

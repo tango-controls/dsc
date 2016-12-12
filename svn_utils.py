@@ -86,9 +86,9 @@ def get_device_servers_list(repo, path_base, max_depth):
         candidate_for_ds = False
         # iterate through the list
         for element in objects_list:
-            # print '----------------------'
-            # print 'Element:'
-            # print element
+
+            if element is None:
+                continue
             # if it is a directory
             if element['is_directory']:
 
@@ -109,10 +109,11 @@ def get_device_servers_list(repo, path_base, max_depth):
                                 if t['is_directory'] and (newest_tag is None or t['date']>newest_date):
                                     newest_tag = t['name']
                                     newest_date = t['date']
-                            except:
-                                pass
-                    except:
-                        pass
+                            except Exception as e:
+                                print 'Exception message: %s' %e.message
+                    except Exception as e:
+                        print 'Exception message: %s' %e.message
+
 
                     if newest_tag is None:
                         # there ara none sub-folders so let's assume this is the tag
@@ -122,8 +123,7 @@ def get_device_servers_list(repo, path_base, max_depth):
                     tag_xmi_files = find_xmi(repo=repo, path_base=path_base+'/tags/'+newest_tag, max_depth=max_depth-1)
                     tag_readme_files = find_readme(repo=repo, path_base=path_base + '/tags/' + newest_tag,
                                              max_depth=max_depth - 1)
-                    print 'Xmi files in tag %s:' % newest_tag
-                    print tag_xmi_files
+                    print 'Xmi files in tag %s:' % len(newest_tag)
 
 
                 elif element['name']=='trunk':
@@ -170,13 +170,13 @@ def get_device_servers_list(repo, path_base, max_depth):
         elif len(trunk_xmi_files)>0:
             ds_list.append({'path': path_base,
                             'xmi_files': trunk_xmi_files,
-                            'readme_fiels':trunk_readme_files
+                            'readme_files':trunk_readme_files
                             })
 
         elif len(src_xmi_files)>0:
             ds_list.append({'path': path_base,
                             'xmi_files': src_xmi_files,
-                            'readme_fiels': src_readme_files
+                            'readme_files': src_readme_files
                             })
 
         elif len(local_xmi_files)>0:
@@ -187,8 +187,9 @@ def get_device_servers_list(repo, path_base, max_depth):
 
         elif candidate_for_ds:
             ds_list.append({'path':path_base, 'xmi_files':[] })
-    except:
-        pass
+    except Exception as e:
+        print 'Exception message outer: %s' %e.message
+        # raise e
 
     return ds_list
 

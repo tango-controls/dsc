@@ -101,7 +101,7 @@ class DeviceServerAddForm(forms.ModelForm):
                 raise forms.ValidationError('Error during .xmi file validation. %s' % e.message)
 
         if cleaned_data['use_manual_info']:
-            if not cleaned_data['use_uploaded_xmi_file']:
+            if not cleaned_data['use_uploaded_xmi_file'] and not cleaned_data['use_url_xmi_file']:
                 if len(cleaned_data['name']) == 0 or len(cleaned_data['description']) == '' \
                         or len(cleaned_data['contact_email']) == 0:
                     raise forms.ValidationError('You must provide at least name, description and contact information.')
