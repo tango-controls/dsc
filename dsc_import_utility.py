@@ -10,10 +10,10 @@ from time import sleep
 FORCE_UPDATE = True # when True no time stamp are checked and updates are performed
 
 REMOTE_REPO_URL = 'http://svn.code.sf.net/p/tango-ds/code'
-LOCAL_REPO_URL = 'file:///home/piotr/tmp/test-svn/'
-REPO_START_PATH = 'DeviceClasses/MagneticDevices/TwickenhamSMC'
+LOCAL_REPO_URL = 'file:///home/piotr/tmp/tango-ds-repo/'
+REPO_START_PATH = 'DeviceClasses/Vacuum'
 
-SERVER_BASE_URL = 'http://localhost:8080/'
+SERVER_BASE_URL = 'https://dsc-test.modelowanie.pl/'
 
 SERVER_DSC_URL = SERVER_BASE_URL+'resources/dsc/'
 
@@ -25,22 +25,37 @@ SERVER_LOGIN_URL = SERVER_BASE_URL+'account/sign-in/?next=/resources/dsc/'
 
 LOG_PATH = '/home/piotr/tmp'
 
+VERIFY_CERT = False
+
+CERTS = ( '/home/piotr/tmp/cert.pem', '/home/piotr/tmp/key.pem')
+
 print "You are going to update a devcie servers catalogue info on the server: %s" % SERVER_BASE_URL
 
-login = raw_input('Login:')
+login = raw_input('Login: ')
 password = getpass()
 
 client = requests.session()
+client.verify = VERIFY_CERT
+client.max_redirects = 5
+client.headers = {'User-Agent': 'DSC-Importer'}
+
+# client.cert = CERTS
+
+if not VERIFY_CERT:
+   requests.packages.urllib3.disable_warnings()
 
 client.get(SERVER_LOGIN_URL)  # sets the cookie
 csrftoken = client.cookies['csrftoken']
 print csrftoken
 
 login_data = dict(login=login, password=password, csrfmiddlewaretoken=csrftoken)
-r = client.post(SERVER_LOGIN_URL, data=login_data)
+r = client.post(SERVER_LOGIN_URL, data=login_data, headers={'Referer':SERVER_LOGIN_URL})
+referrer=SERVER_LOGIN_URL
 
 if r.status_code!=200:
     print "wrong password or sever connection error."
+    print r.headers
+    print r.status_code
     exit()
 else:
     print 'Successfully logged in to catalogue server.'
@@ -68,7 +83,8 @@ for ds in ds_list:
 
         print 'Check if device server already exists in the catalogue...'
 
-        r = client.get(SERVER_LIST_URL+REMOTE_REPO_URL+'/'+ds['path'])
+        r = client.get(SERVER_LIST_URL+REMOTE_REPO_URL+'/'+ds['path'], headers={'Referer':referrer})
+        referrer = SERVER_LIST_URL+REMOTE_REPO_URL+'/'+ds['path']
         ds_on_server = r.json()
         print "Devcie servers in the catalogu: "
         print  ds_on_server
@@ -128,7 +144,8 @@ for ds in ds_list:
 
             if first_xmi:
                 if ds_adding:
-                    client.get(SERVER_ADD_URL)  # sets the cookie
+                    client.get(SERVER_ADD_URL, headers={'Referer':referrer})  # sets the cookie
+                    referrer = SERVER_ADD_URL
                     csrftoken = client.cookies['csrftoken']
                     r = client.post(SERVER_ADD_URL,
                                 data={
@@ -143,12 +160,13 @@ for ds in ds_list:
                                     'submit': 'create',
                                     'available_in_repository': True
                                 },
-                                files=files)
+                                files=files,  headers={'Referer':referrer})
                     first_xmi = False
                     print 'Adding result: %d' % r.status_code
 
                     sleep(1)
-                    r = client.get(SERVER_LIST_URL + REMOTE_REPO_URL + '/' + ds['path'])
+                    r = client.get(SERVER_LIST_URL + REMOTE_REPO_URL + '/' + ds['path'],  headers={'Referer':referrer})
+                    referrer = SERVER_LIST_URL + REMOTE_REPO_URL + '/' + ds['path']
                     ds_on_server = r.json()
                     if len(ds_on_server) == 1:
 
@@ -158,7 +176,8 @@ for ds in ds_list:
                         ds_problems.append(ds)
                         continue
                 else:
-                    client.get(SERVER_DSC_URL+'ds/'+str(server_ds_pk)+'/update')  # sets the cookie
+                    client.get(SERVER_DSC_URL+'ds/'+str(server_ds_pk)+'/update', headers={'Referer':referrer})
+                    referrer = SERVER_DSC_URL+'ds/'+str(server_ds_pk)+'/update'
                     csrftoken = client.cookies['csrftoken']
                     r = client.post(SERVER_DSC_URL+'ds/'+str(server_ds_pk)+'/update',
                                 data={
@@ -174,13 +193,14 @@ for ds in ds_list:
                                     'submit': 'update',
                                     'available_in_repository': True
                                 },
-                                files=files)
+                                files=files, headers={'Referer':referrer})
                     print 'Update result: %d' % r.status_code
                     first_xmi = False
                     sleep(1)
 
             else:
-                client.get(SERVER_DSC_URL + 'ds/' + str(server_ds_pk) + '/update')  # sets the cookie
+                client.get(SERVER_DSC_URL + 'ds/' + str(server_ds_pk) + '/update', headers={'Referer':referrer})
+                referrer = SERVER_DSC_URL + 'ds/' + str(server_ds_pk) + '/update'
                 csrftoken = client.cookies['csrftoken']
                 r = client.post(SERVER_DSC_URL+'ds/'+str(server_ds_pk)+'/update',
                             data={
@@ -195,7 +215,7 @@ for ds in ds_list:
                                     'upload_readme': False,
                                     'submit': 'update',
                                 'available_in_repository': True
-                            })
+                            }, headers={'Referer':referrer})
                 print 'Update result: %d' % r.status_code
                 sleep(1)
 
