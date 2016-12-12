@@ -167,7 +167,7 @@ class DeviceServer(DscManagedModel):
 
     # TODO: implement interface
     name = models.CharField(
-        max_length=64,
+        max_length=128,
         verbose_name='Device Server')
 
     description = models.TextField(verbose_name='Description')
@@ -193,14 +193,14 @@ class DeviceServer(DscManagedModel):
 
     status = models.CharField(
         verbose_name='Information status',
-        max_length=10,
+        max_length=20,
         choices=STATUS_CHOICES,
         default=STATUS_NEW,
     )
 
     development_status = models.CharField(
         verbose_name='Development status',
-        max_length=10,
+        max_length=20,
         choices=DEV_STATUS_CHOICES,
         default=DEV_STATUS_NEW,
         blank=True
@@ -378,7 +378,7 @@ class DeviceServerLicense(models.Model):
 
 class DeviceClass(DscManagedModel):
     """Model to describe device classes implemented by device server"""
-    name = models.CharField(max_length=64, verbose_name='Name')
+    name = models.CharField(max_length=128, verbose_name='Name')
     description = models.TextField(verbose_name='Description', blank=True, null=True)
     device_server = models.ForeignKey(DeviceServer, related_name='device_classes')
     license = models.ForeignKey(
@@ -420,16 +420,16 @@ class DeviceClassInfo(DscManagedModel):
     device_class = models.OneToOneField(DeviceClass, related_name='info')
     xmi_file = models.CharField(max_length=128, blank=True, null=True)  # this will store a link to source xmi_file
     contact_email = models.EmailField(verbose_name='Contact')
-    class_family = models.CharField(max_length=64, blank=True, null=True, default='')  # TODO: implement choices
+    class_family = models.CharField(max_length=128, blank=True, null=True, default='')  # TODO: implement choices
     platform = models.CharField(max_length=64,
                                 choices=zip(['Windows', 'Unix Like', 'All Platforms'],
                                             ['Windows', 'Unix Like', 'All Platforms']),
                                 verbose_name='Platform', default='All Platforms')
-    bus = models.CharField(max_length=64, verbose_name='Bus', blank=True, null=True)  # TODO: implement bus choices
-    manufacturer = models.CharField(max_length=64, verbose_name='Manufacturer', default='', null=True)
+    bus = models.CharField(max_length=128, verbose_name='Bus', blank=True, null=True)  # TODO: implement bus choices
+    manufacturer = models.CharField(max_length=128, verbose_name='Manufacturer', default='', null=True)
     # at the beginning there will not be any manufacturer table
     key_words = models.CharField(max_length=255, verbose_name="Key words", blank=True, null=True)
-    product_reference = models.CharField(max_length=64, verbose_name="Product", default='')
+    product_reference = models.CharField(max_length=255, verbose_name="Product", default='')
 
     def make_backup(self,activity):
         cli = DeviceClassInfo()
