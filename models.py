@@ -670,13 +670,13 @@ class DeviceServerAddModel(models.Model):
     language = models.CharField(max_length=32,
                                 choices=zip(['Cpp', 'Python', 'PythonHL', 'Java', 'CSharp', 'LabView'],
                                             ['Cpp', 'Python', 'PythonHL', 'Java', 'CSharp', 'LabView']),
-                                verbose_name='Language', default='Cpp')
+                                verbose_name='Language', default='Cpp', blank=True)
 
     class_family = models.CharField(max_length=64, blank=True, null=True, default='')  # TODO: implement choices
     platform = models.CharField(max_length=64,
                                 choices=zip(['Windows', 'Unix Like', 'All Platforms'],
                                             ['Windows', 'Unix Like', 'All Platforms']),
-                                verbose_name='Platform', default='All Platforms')
+                                verbose_name='Platform', default='All Platforms', blank=True)
     bus = models.CharField(max_length=64, verbose_name='Bus', blank=True, null=True)  # TODO: implement bus choices
     manufacturer = models.CharField(max_length=64, verbose_name='Manufacturer', default='', null=True, blank=True)
     # at the beginning there will not be any manufacturer table

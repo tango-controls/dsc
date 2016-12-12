@@ -85,7 +85,7 @@ for ds in ds_list:
     ds_repo_url = REMOTE_REPO_URL + '/' + ds['path']
 
     # readme file
-    upload_readme = 0
+    upload_readme = False
     if len(ds['readme_files'])>0:
         readme_file = ds['readme_files'][0]
         readme_name = readme_file['name']
@@ -118,7 +118,7 @@ for ds in ds_list:
     first_xmi=True
     for xmi in ds['xmi_files']:
         print "XMI file: %s" % xmi['name']
-        xmi_url = REMOTE_REPO_URL + '/' + xmi['path']
+        xmi_url = REMOTE_REPO_URL + '/' + xmi['path'] + '/' + xmi['name']
 
         if first_xmi:
             if len(ds_on_server)==0:
@@ -135,9 +135,7 @@ for ds in ds_list:
                                 'repository_type': 'SVN',
                                 'upload_readme': upload_readme,
                                 'submit': 'create',
-                                'platform': 'Windows',
-                                'language': 'CPP'
-
+                                'available_in_repository': True
                             },
                             files=files)
                 print r
@@ -171,7 +169,8 @@ for ds in ds_list:
                                 'repository_url': ds_repo_url,
                                 'repository_type': 'SVN',
                                 'upload_readme': upload_readme,
-                                'submit': 'update'
+                                'submit': 'update',
+                                'available_in_repository': True
                             },
                             files=files)
                 first_xmi = False
@@ -189,8 +188,9 @@ for ds in ds_list:
                                 'use_uploaded_xmi_file': False,
                                 'repository_url': ds_repo_url,
                                 'repository_type': 'SVN',
-                                'upload_readme': upload_readme,
-                                'submit': 'update'
+                                'upload_readme': False,
+                                'submit': 'update',
+                            'available_in_repository': True
                         })
 
 
