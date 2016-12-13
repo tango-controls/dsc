@@ -138,6 +138,12 @@ for ds in ds_list:
 
         # xmis
         first_xmi=True
+        ds_name = os.path.basename(ds['path'])
+        if len(ds_name)>0:
+            auto_ds_name = False
+        else:
+            auto_ds_name = True
+
         for xmi in ds['xmi_files']:
             print "XMI file: %s" % xmi['name']
             xmi_url = REMOTE_REPO_URL + '/' + xmi['path'] + '/' + xmi['name']
@@ -150,6 +156,9 @@ for ds in ds_list:
                     r = client.post(SERVER_ADD_URL,
                                 data={
                                     'csrfmiddlewaretoken': csrftoken,
+                                    'ds_info_copy': auto_ds_name,
+                                    'name': ds_name,
+                                    'description': '',
                                     'xmi_file_url':xmi_url,
                                     'use_url_xmi_file': 1,
                                     'use_manual_info': False,
@@ -182,6 +191,9 @@ for ds in ds_list:
                     r = client.post(SERVER_DSC_URL+'ds/'+str(server_ds_pk)+'/update',
                                 data={
                                     'csrfmiddlewaretoken': csrftoken,
+                                    'ds_info_copy': auto_ds_name,
+                                    'name': ds_name,
+                                    'description': '',
                                     'add_class': False,
                                     'xmi_file_url':xmi_url,
                                     'use_url_xmi_file': 1,
@@ -205,6 +217,9 @@ for ds in ds_list:
                 r = client.post(SERVER_DSC_URL+'ds/'+str(server_ds_pk)+'/update',
                             data={
                                 'csrfmiddlewaretoken': csrftoken,
+                                'ds_info_copy': False,
+                                'name': ds_name,
+                                'description': '',
                                 'add_class': True,
                                 'xmi_file_url':xmi_url,
                                     'use_url_xmi_file': True,

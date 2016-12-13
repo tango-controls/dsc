@@ -10,8 +10,28 @@
     </tr>
     {% endif %}
 </tbody>
+<tbody >
+    <tr><th colspan="2"><label>Use device server name and description from class?</label></th>
+        <td>{{ form.ds_info_copy }}</td>
+    </tr>
+</tbody>
+<tbody id="dsc_device_server_info">
+    {% if form.name.errors %}
+            <tr><td colspan="2">{{ form.name.errors }}</td></tr>
+    {% endif %}
+     <tr>
+        <th>{{ form.name.label_tag }}</th><td colspan="2">{{ form.name }}</td>
+    </tr>
+
+    {% if form.description.errors %}
+        <tr><td colspan="2">{{ form.description.errors }}</td></tr>
+    {% endif %}
+    <tr>
+        <th>{{ form.description.label_tag }}</th><td colspan="2">{{ form.description }}</td>
+    </tr>
+</tbody>
 <tbody id="dsc_selelct_xmi_manual">
-    <tr><th colspan="3"><label>Info source:</label></th></tr>
+    <tr><th colspan="3"><label>Class info source:</label></th></tr>
     <tr><th><label>.XMI upload</label></th><th><label>.XMI URL</label></th><th><label>Manual</label></th></tr>
     <tr>
         <td>{{ form.use_uploaded_xmi_file }}</td>
@@ -42,6 +62,7 @@
         <th>{{ form.xmi_file_url.label_tag }}</th><td colspan="2">{{ form.xmi_file_url }}</td>
     </tr>
 </tbody>
+
 <tbody id="dsc_manual">
     <tr><th colspan="3">
         {% if operation == 'update' %}
@@ -52,18 +73,19 @@
         However, this way you cannot provide nor change detail information on class interface
         (attributes, commands, pipes and properties). These can only be entered via an .XMI file.
     </th></tr>
-    {% if form.name.errors %}
-        <tr><td colspan="2">{{ form.name.errors }}</td></tr>
+
+    {% if form.class_name.errors %}
+        <tr id="dsc_class_name_e"> <td colspan="2">{{ form.class_name.errors }}</td></tr>
     {% endif %}
-     <tr>
-        <th>{{ form.name.label_tag }}</th><td colspan="2">{{ form.name }}</td>
+     <tr id="dsc_class_name">
+        <th>{{ form.class_name.label_tag }}</th><td colspan="2">{{ form.class_name }}</td>
     </tr>
 
-    {% if form.description.errors %}
-        <tr><td colspan="2">{{ form.description.errors }}</td></tr>
+    {% if form.class_description.errors %}
+        <tr id="dsc_class_description_e"><td colspan="2">{{ form.class_description.errors }}</td></tr>
     {% endif %}
-    <tr>
-        <th>{{ form.description.label_tag }}</th><td colspan="2">{{ form.description }}</td>
+    <tr id="dsc_class_description">
+        <th>{{ form.class_description.label_tag }}</th><td colspan="2">{{ form.class_description }}</td>
     </tr>
 
     {% if form.contact_email.errors %}
@@ -144,6 +166,24 @@
     <script language="JavaScript">
 
         $("#dsc_add_class").hide();
+
+        {% if form.ds_info_copy.value %}
+        $("#dsc_device_server_info").hide();
+        {% else %}
+        $("#dsc_device_server_info").show();
+        {% endif %}
+
+        $('#id_ds_info_copy').change(function() {
+            // this will contain a reference to the checkbox
+            if (this.checked) {
+                // the checkbox is now checked
+                 $("#dsc_device_server_info").hide();
+
+            } else {
+                // the checkbox is now no longer checked
+                $("#dsc_device_server_info").show();
+            }
+        });
 
         {% if form.use_uploaded_xmi_file.value %}
         $("#dsc_add_class").show();

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+import os.path
 
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, RequestContext
@@ -56,10 +57,23 @@ class DeviceServerDetailView(BreadcrumbMixinDetailView, CustomModelDetailView, C
             context['specifications'][cl.name]['cl'] = cl
 
         readme_file = context['deviceserver'].readme
-        try:
-            context['readme'] = readme_file.read()
-        except:
-            pass
+        if hasattr(readme_file,'url'):
+            readme_name, readme_ext = os.path.splitext(readme_file.name)
+            readme_link = readme_file.url
+            context['readme_link'] = readme_link
+            context['readme_name'] = readme_file.name
+            if readme_ext in ['', '.md', '.MD', '.txt', '.TXT', '.rst', '.RST']:
+                try:
+                    context['readme'] = readme_file.read()
+                    if context['readme'].startswith('<html>'):
+                        context['readme'] = False
+                except:
+                    pass
+                return context
+
+            if readme_ext in ['.rst', '.RST']:
+                context['rst'] = True
+
         return context
 
 
@@ -131,6 +145,11 @@ def search_view(request):
     context = RequestContext(request)
     table_config = RequestConfig(request, paginate={'per_page': 10})
     table = None
+    man = ''
+    prod = ''
+    family = ''
+    bus = ''
+    key_words = ''
     if request.method == 'GET':
         form = DeviceServerSearchForm(request.GET)
         if form.is_valid():
@@ -155,13 +174,23 @@ def search_view(request):
 
     form = DeviceServerSearchForm(initial=request.GET)
 
-    return render_to_response('dsc/deviceserver_search.html', {'form': form, 'table': table}, context)
+    return render_to_response('dsc/deviceserver_search.html', {'form': form, 'table': table,
+                                                               'manufacturer': man,
+                                                               'product': prod,
+                                                               'family': family,
+                                                               'bus': bus,
+                                                               'key_words': key_words
+                                                               }, context)
 
 
 class DeviceServerManufacturerAutocomplete(dal.autocomplete.Select2ListView):
     """Provide autocomplete feature for manufacturer fields"""
     def get_list(self):
-        return dsc_models.DeviceClassInfo.objects.all().values_list('manufacturer',flat=True).distinct()
+        m = list(dsc_models.DeviceClassInfo.objects.all().values_list('manufacturer',flat=True).distinct())
+        if self.request.GET.get('q',None) is not None:
+            m.append(self.request.GET.get('q',None))
+
+        return m
 
 
 class DeviceServerProductAutocomplete(dal.autocomplete.Select2ListView):
@@ -170,29 +199,44 @@ class DeviceServerProductAutocomplete(dal.autocomplete.Select2ListView):
 
         manufacturer = self.forwarded.get('manufacturer', None)
         if manufacturer:
-            return dsc_models.DeviceClassInfo.objects.filter(manufacturer=manufacturer).\
-                values_list('product_reference',flat=True).distinct()
+            p=list(dsc_models.DeviceClassInfo.objects.filter(manufacturer=manufacturer).\
+                values_list('product_reference',flat=True).distinct())
+        else:
+            p=list(dsc_models.DeviceClassInfo.objects.\
+                values_list('product_reference', flat=True).distinct())
 
-        return dsc_models.DeviceClassInfo.objects.\
-            values_list('product_reference', flat=True).distinct()
+        if self.request.GET.get('q',None) is not None:
+            p.append(self.request.GET.get('q',None))
+
+        return p
 
 
 class DeviceServerFamilyAutocomplete(dal.autocomplete.Select2ListView):
     """Provide autocomplete feature for product fields"""
     def get_list(self):
-        return dsc_models.DeviceClassInfo.objects.all().values_list('class_family', flat=True).distinct()
+        f = list(dsc_models.DeviceClassInfo.objects.all().values_list('class_family', flat=True).distinct())
+        if self.request.GET.get('q',None) is not None:
+            f.append(self.request.GET.get('q',None))
+        return f
 
 
 class DeviceServerBusAutocomplete(dal.autocomplete.Select2ListView):
     """Provide autocomplete feature for bus fields"""
     def get_list(self):
-        return dsc_models.DeviceClassInfo.objects.all().values_list('bus', flat=True).distinct()
+        b=list(dsc_models.DeviceClassInfo.objects.all().values_list('bus', flat=True).distinct())
+        if self.request.GET.get('q',None) is not None:
+            b.append(self.request.GET.get('q',None))
+        return b
 
 
 class DeviceServerLicenseAutocomplete(dal.autocomplete.Select2ListView):
     """Provide autocomplete feature for product fields"""
     def get_list(self):
-        return dsc_models.DeviceServerLicense.objects.all().values_list('name', flat=True).distinct()
+        k=list(dsc_models.DeviceServerLicense.objects.all().values_list('name', flat=True).distinct())
+        if self.request.GET.get('q',None) is not None:
+            k.append(self.request.GET.get('q',None))
+        return k
+
 
 
 def update_class_description(request):

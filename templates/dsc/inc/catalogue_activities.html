@@ -1,5 +1,5 @@
 {% for activity in activities|dictsortreversed:'created_at' %}
-<p style="margin:16px;">
+<p style="margin:16px;font-size:110%;">
     {{ activity.created_at|date }}, {{ activity.created_by.get_full_name }}
     <br />
     <span style="font-weight:bold">{{activity.activity_type|title}}

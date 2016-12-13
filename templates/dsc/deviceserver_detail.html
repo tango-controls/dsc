@@ -2,6 +2,7 @@
 {% load cms_tags i18n thumbnail webu_utils %}
 {% load render_table from django_tables2 %}
 {% load staticfiles %}
+{% load markup %}
 
 {% block content_header %}
 <h1 style="text-transform: none">{{deviceserver.name}}</h1>
@@ -86,8 +87,13 @@
         {{ cl.info.contact_email|urlize }};
     {% endfor %}
 </p>
-
+{% if deviceserver.description %}
+<h4>Description</h4>
+<hr />
+<p>{{ deviceserver.description|restructuredtext}}</p>
+{% endif %}
 <hr /> <br />
+
 
 <div id="dsc-detail-tabs">
     <ul>
@@ -109,9 +115,9 @@
     {% for cl_name, spec in specifications.items %}
         {% if True or spec.cl.is_valid or not deviceserver.is_valid %}
         <div id="dsc-{{spec.cl.name}}-class-tab">
-            <h4>Description</h4>
+            <h4>Class Description</h4>
             <hr />
-            <p>{{ spec.cl.description }}</p>
+            <p>{{ spec.cl.description|restructuredtext}}</p>
             <p><span style="font-weight:bold;">Family:</span>
                 {{ spec.cl.info.class_family }}
             </p>
@@ -169,7 +175,7 @@
         </div>
         {% endif %}
     {% endfor %}
-    <div id="dsc-documentation-tab">
+    <div id="dsc-documentation-tab" style="word-break: break-all;">
         {% for doc in deviceserver.documentation.all %}
             {% if doc.is_valid %}
                 <div>
@@ -179,10 +185,20 @@
                 </div>
             {% endif %}
         {% endfor %}
-        {% if readme %}
+        {% if readme or readme_link %}
             <div>
                 <h4>README</h4>
-                {{readme|linebreaks}}
+                {% if rst %}
+                    {{ readme|restructuredtext }}
+                { % elif md %}
+                    {{readme}}
+                {% else %}
+                    {% if not readme %}
+                        <a href="{{readme_link}}" target="_blank"> {{readme_name}} </a>
+                    {% else %}
+                        {{readme|linebreaks}}
+                    {% endif %}
+                {% endif %}
             </div>
         {% endif %}
 
