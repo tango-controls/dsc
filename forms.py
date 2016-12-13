@@ -26,14 +26,14 @@ class DeviceServerSearchForm(forms.Form):
     manufacturer = dal.autocomplete.Select2ListCreateChoiceField(label='Manufacturer', required=False,
                                       widget=dal.autocomplete.ListSelect2(url=reverse_lazy('deviceserver_manufacturers')))
 
-    product = forms.CharField(label='Product', required=False,
+    product = dal.autocomplete.Select2ListCreateChoiceField(label='Product', required=False,
                               widget=dal.autocomplete.ListSelect2(url=reverse_lazy('deviceserver_products'),
                                                                   forward=['manufacturer','family']))
 
-    family = forms.CharField(label='Class family', required=False,
+    family = dal.autocomplete.Select2ListCreateChoiceField(label='Class family', required=False,
                               widget=dal.autocomplete.ListSelect2(url=reverse_lazy('deviceserver_families')))
 
-    bus = forms.CharField(label='Communication bus', required=False,
+    bus = dal.autocomplete.Select2ListCreateChoiceField(label='Communication bus', required=False,
                              widget=dal.autocomplete.ListSelect2(url=reverse_lazy('deviceserver_buses')))
 
 
