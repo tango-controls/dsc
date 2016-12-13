@@ -100,11 +100,17 @@ class DeviceServerAddForm(forms.ModelForm):
             except Exception as e:
                 raise forms.ValidationError('Error during .xmi file validation. %s' % e.message)
 
-        if cleaned_data['use_manual_info']:
+        if cleaned_data['use_manual_info'] or cleaned_data.get('ds_info_copy', True):
             if not cleaned_data['use_uploaded_xmi_file'] and not cleaned_data['use_url_xmi_file']:
-                if len(cleaned_data['name']) == 0 or len(cleaned_data['description']) == '' \
+                if len(cleaned_data['class_name']) == 0 or len(cleaned_data['class_description']) == 0 \
                         or len(cleaned_data['contact_email']) == 0:
-                    raise forms.ValidationError('You must provide at least name, description and contact information.')
+                    raise forms.ValidationError('You must provide at least class name, '
+                                                'description and contact information.')
+
+        if not cleaned_data.get('ds_info_copy', True):
+            if len(cleaned_data['name']) == 0:
+                    raise forms.ValidationError('You must provide at least a device server name '
+                                                'if you want it to be other than the class name.')
 
         if cleaned_data.get('repository_url','')=='' and cleaned_data.get('repository_contact','')=='':
             raise forms.ValidationError('You must provide either repostiry URL or contact email to let someone  '
@@ -115,6 +121,7 @@ class DeviceServerAddForm(forms.ModelForm):
     class Meta:
         model = DeviceServerAddModel
         fields = ['development_status',
+                  'ds_info_copy',
                   'certified',
                   'use_uploaded_xmi_file',
                   'use_url_xmi_file',
@@ -129,6 +136,7 @@ class DeviceServerAddForm(forms.ModelForm):
                   'documentation1_type', 'documentation1_url',
                   'other_documentation2',
                   'documentation2_type', 'documentation2_url',
+                  'class_name', 'class_description',
                   'class_copyright', 'class_family',
                   'manufacturer', 'product_reference', 'bus', 'key_words'
                   ]
@@ -139,6 +147,7 @@ class DeviceServerUpdateForm(DeviceServerAddForm):
     class Meta:
         model = DeviceServerUpdateModel
         fields = ['development_status',
+                  'ds_info_copy',
                   'certified',
                   'use_uploaded_xmi_file',
                   'use_url_xmi_file',
@@ -154,6 +163,7 @@ class DeviceServerUpdateForm(DeviceServerAddForm):
                   'documentation1_type', 'documentation1_url',
                   'other_documentation2',
                   'documentation2_type', 'documentation2_url',
+                  'class_name', 'class_description',
                   'class_copyright', 'class_family',
                   'manufacturer', 'product_reference', 'bus', 'key_words'
                   ]

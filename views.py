@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+import os.path
 
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, RequestContext
@@ -56,10 +57,23 @@ class DeviceServerDetailView(BreadcrumbMixinDetailView, CustomModelDetailView, C
             context['specifications'][cl.name]['cl'] = cl
 
         readme_file = context['deviceserver'].readme
-        try:
-            context['readme'] = readme_file.read()
-        except:
-            pass
+        if hasattr(readme_file,'url'):
+            readme_name, readme_ext = os.path.splitext(readme_file.name)
+            readme_link = readme_file.url
+            context['readme_link'] = readme_link
+            context['readme_name'] = readme_file.name
+            if readme_ext in ['', '.md', '.MD', '.txt', '.TXT', '.rst', '.RST']:
+                try:
+                    context['readme'] = readme_file.read()
+                    if context['readme'].startswith('<html>'):
+                        context['readme'] = False
+                except:
+                    pass
+                return context
+
+            if readme_ext in ['.rst', '.RST']:
+                context['rst'] = True
+
         return context
 
 

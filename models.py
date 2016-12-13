@@ -540,6 +540,9 @@ class DeviceAttributeInfo(DscManagedModel):
 
 class DeviceServerAddModel(models.Model):
     """This model is used to provide form and optionally do background processing"""
+    ds_info_copy = models.BooleanField(verbose_name='Guess device server name and description from class info?',
+                                       blank=True, default=True)
+
     name = models.CharField(max_length=64, verbose_name='Device server name', blank=True, default='')
     description = models.TextField(verbose_name='Description', blank=True, default='')
 
@@ -720,7 +723,7 @@ class DeviceServerUpdateModel(DeviceServerAddModel):
         if device_server.license is not None:
             self.license_name=device_server.license.name
 
-        if  hasattr(device_server, 'repository'):
+        if hasattr(device_server, 'repository'):
             assert isinstance(device_server.repository, DeviceServerRepository)
             self.repository_type = device_server.repository.repository_type
             self.repository_contact = device_server.repository.contact_email
@@ -741,6 +744,8 @@ class DeviceServerUpdateModel(DeviceServerAddModel):
 
         cls = device_server.device_classes.all()
 
+        self.ds_info_copy = False
+
         if len(cls)>0:
             cl = cls[0]
             assert isinstance(cl, DeviceClass)
@@ -750,6 +755,9 @@ class DeviceServerUpdateModel(DeviceServerAddModel):
             self.language = cl.language
             if cl.license is not None:
                 self.license_name = cl.license.name
+
+            if self.name == self.class_name and ( self.description == self.class_description or self.description == ''):
+                self.ds_info_copy = True
 
             self.class_family = cl.info.class_family
             self.manufacturer = cl.info.manufacturer
@@ -846,18 +854,23 @@ def create_or_update(update_object, activity, device_server=None):
     if update_object.ds_status is not None:
         new_device_server.status = update_object.ds_status
 
-    # if data provided manually
-    if update_object.use_manual_info:
-
-        if len(update_object.name) > 0:
-            new_device_server.name = update_object.name
-
-        if len(update_object.description) > 0:
-            new_device_server.description = update_object.description
+    if update_object.ds_info_copy:
+        print '----------------------------------'
+        print '----------------------------------'
+        print update_object.class_name
+        new_device_server.description = ''
+        new_device_server.name = update_object.class_name
 
         if len(update_object.license_name) > 0:
             lic = DeviceServerLicense.objects.get_or_create(name=update_object.license_name)[0]
+            if lic.pk is None:
+                lic.save()
             new_device_server.license = lic
+
+    # if data provided manually
+    if not update_object.ds_info_copy:
+        new_device_server.name = update_object.name
+        new_device_server.description = update_object.description
 
     # make sure license object is saved
     if new_device_server.license is not None and new_device_server.license.pk is None:
@@ -870,9 +883,13 @@ def create_or_update(update_object, activity, device_server=None):
         device_server.created_by = activity.created_by
         device_server.status = STATUS_NEW
     else:
-        device_server.name = new_device_server.name
-        device_server.description = new_device_server.description
-        device_server.license = new_device_server.license
+        if not update_object.ds_info_copy or update_object.use_manual_info or update_object.use_url_xmi_file or \
+                update_object.use_uploaded_xmi_file or \
+                (update_object.ds_info_copy and new_device_server.name != device_server.name):
+            # the if above is to avoid update when not asked for
+            device_server.name = new_device_server.name
+            device_server.description = new_device_server.description
+            device_server.license = new_device_server.license
         device_server.last_update_activity = activity
         device_server.development_status = new_device_server.development_status
         device_server.certified = new_device_server.certified
@@ -1052,8 +1069,8 @@ def create_or_update(update_object, activity, device_server=None):
             cl_info = DeviceClassInfo()
             cl_info.create_activity = activity
 
-        cl.name = update_object.name
-        cl.description = update_object.description
+        cl.name = update_object.class_name
+        cl.description = update_object.class_description
         cl.class_copyright = update_object.class_copyright
         cl.language = update_object.language
         cl.device_server = device_server
