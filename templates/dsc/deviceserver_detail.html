@@ -56,7 +56,14 @@
         <a href="{% url 'deviceserver_detail' deviceserver.invalidate_activity.device_server.pk %}"> here.</a>
     </h4>
 {% endif %}
-<p style="margin-top:5pt; margin-bottom:5pt;">
+
+<div style="display: flex; flex-direction: row;">
+{% if deviceserver.is_valid %}
+<div style="margin-top:5pt; margin-bottom:5pt; padding: 10px; ">
+    {% ratings deviceserver %}
+</div>
+{% endif %}
+<p style="margin-top:5pt; margin-bottom:5pt; padding: 10px;">
     <span style="font-weight:bold;">Development status:</span> {{ deviceserver.get_development_status_display }} <br />
     <span style="font-weight:bold;">Information status:</span> {{ deviceserver.get_status_display }}
     {% if deviceserver.status == 'new' or deviceserver.status == 'updated' %}
@@ -72,7 +79,7 @@
     <span style="font-weight:bold;">Repository:</span>
     {% if deviceserver.repository.url %}
     <a href="{{deviceserver.repository.url}}" target="_blank">
-        {{deviceserver.repository.url}}
+        {{deviceserver.repository.repository_type}}
     </a>
     {% else %}
     This device server is not available in a public repository. Please contact the
@@ -86,18 +93,16 @@
 <br />
     <span style="font-weight:bold;">Contact:</span>
     {% for cl in deviceserver.device_classes.all %}
-        {{ cl.info.contact_email|urlize }};
+        {% if cl.is_valid or not deviceserver.is_valid %} {{ cl.info.contact_email|urlize }}; {% endif %}
     {% endfor %}
 </p>
-{% if deviceserver.is_valid %}
-<p>
-                {% ratings deviceserver %}
-            </p>
-{% endif %}
+</div>
 {% if deviceserver.description %}
+<div><
 <h4>Description</h4>
 <hr />
 <p>{{ deviceserver.description|restructuredtext}}</p>
+</div>
 {% endif %}
 <hr /> <br />
 
