@@ -186,7 +186,7 @@
             {% endif %}
         {% endfor %}
         {% if readme or readme_link %}
-            <div>
+            <div style="word-wrap: break-word;">
                 <h4>README</h4>
                 {% if rst %}
                     {{ readme|restructuredtext }}

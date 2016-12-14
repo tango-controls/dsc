@@ -9,8 +9,10 @@
 {% block content %}
 <form action="" method="post">{% csrf_token %}
     <h4>Are you sure you want to delete "{{ deviceserver.name }}" device server?</h4>
-    <input type="submit" value="Confirm" />
-    <a href="{% url 'deviceserver_detail' deviceserver.pk %}">Cancel</a>
+    <p>
+    <button type="submit" value="Confirm" class="cancel btn btn-default">Delete</button>
+    <a href="{% url 'deviceserver_detail' deviceserver.pk %}" class="dsc-back">Cancel</a>
+    </p>
 </form>
 
 

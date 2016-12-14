@@ -103,6 +103,7 @@ class DeviceServerVerifyView(DeviceServerDetailView):
             if device_server.status==dsc_models.STATUS_VERIFIED:
                 context['message']='This device server is already verified.'
 
+
         return context
 
 
@@ -173,6 +174,10 @@ def search_view(request):
             table_config.configure(table)
 
     form = DeviceServerSearchForm(initial=request.GET)
+
+    if 'breadcrumb_extra_ancestors' not in context:
+        context['breadcrumb_extra_ancestors'] = []
+    context['breadcrumb_extra_ancestors'].append((request.get_full_path(),'Advanced Search'))
 
     return render_to_response('dsc/deviceserver_search.html', {'form': form, 'table': table,
                                                                'manufacturer': man,
@@ -268,6 +273,7 @@ class DeviceServerUpdateView(BreadcrumbMixinDetailView, UpdateView):
             and not self.request.user.has_perm('dsc.admin_deviceserver'):
             self.template_name = 'dsc/deviceserver_notauthorized.html'
             context['deviceserver'] = self.device_server
+        context['deviceserver'] = self.device_server
         context['operation'] = 'update'
 
         return context
@@ -317,6 +323,10 @@ class DeviceServerUpdateView(BreadcrumbMixinDetailView, UpdateView):
 @login_required
 def deviceserver_delete_view(request, pk):
     context = RequestContext(request)
+    if 'breadcrumb_extra_ancestors' not in context:
+        context['breadcrumb_extra_ancestors'] = []
+    context['breadcrumb_extra_ancestors'].append((request.get_full_path(),'Advanced Search'))
+
     device_server = dsc_models.DeviceServer.objects.get(pk=pk)
     if request.user != device_server.created_by and not request.user.has_perm('dsc.admin_deviceserver'):
         return render_to_response('dsc/deviceserver_notauthorized.html',
@@ -345,6 +355,9 @@ def deviceserver_delete_view(request, pk):
 
 def deviceserver_verify_view(request, pk):
     context = RequestContext(request)
+    if 'breadcrumb_extra_ancestors' not in context:
+        context['breadcrumb_extra_ancestors'] = []
+    context['breadcrumb_extra_ancestors'].append((request.get_full_path(),'Advanced Search'))
     device_server = dsc_models.DeviceServer.objects.get(pk=pk)
     if request.user.has_perm('dsc.admin_deviceserver'):
         if device_server.status == dsc_models.STATUS_NEW or device_server.status == dsc_models.STATUS_UPDATED:

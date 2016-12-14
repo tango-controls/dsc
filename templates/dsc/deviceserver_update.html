@@ -22,8 +22,11 @@
 
         {% include 'dsc/inc/deviceserver_form_documentation.html' %}
     </table>
-
+    <p>
     <button type="submit" class="save btn btn-default">Update</button>
+    <a href="{% url 'deviceserver_detail' deviceserver.pk %}" class="dsc-back">Cancel</a>
+
+    </p>
 </form>
 
 {% endblock %}

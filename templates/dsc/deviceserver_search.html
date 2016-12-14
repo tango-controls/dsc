@@ -5,7 +5,7 @@
 
 
 {% block content_header %}
-<h1 style="text-transform: none">Catalogue Search</h1>
+<h1 style="text-transform: none">Advanced Search</h1>
 {% endblock %}
 {% block content %}
         {% url 'deviceserver_add' as add_url %}
@@ -26,6 +26,7 @@
         </div>
 
         {% if table %}
+
             {% render_table table %}
 
              <div>

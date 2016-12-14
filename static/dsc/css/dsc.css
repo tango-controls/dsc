@@ -31,6 +31,125 @@
     margin-bottom: 1pt;
 }
 
+
+
+tr.odd {
+    background:#fafafa;
+
+}
+
+th.manufacturers {
+    font-size:98%;
+    padding-left:7px;
+}
+
+td.manufacturers {
+    word-wrap: break-word;
+    font-size:98%;
+    padding:7px;
+}
+
+th.products {
+    font-size:98%;
+    padding-left:7px;
+}
+
+td.products {
+    word-wrap: break-word;
+    font-size:98%;
+    padding:7px;
+
+}
+
+th.family {
+    font-size:98%;
+    padding-left:7px;
+}
+
+td.family {
+    word-wrap: break-word;
+    font-size:98%;
+    padding:7px;
+
+}
+
+th.license {
+    font-size:98%;
+    padding-left:5px;
+}
+
+td.license {
+    font-size:98%;
+    padding:7px;
+
+}
+
+th.name {
+    font-size:98%;
+    padding-left:7px;
+}
+
+td.name {
+    font-size:98%;
+    padding:7px;
+}
+
+th.description {
+    font-size:98%;
+    padding-left:7px;
+}
+
+td.description {
+    word-wrap: break-word;
+    font-size:98%;
+    padding:7px;
+}
+
 #dsc-detail-tabs h4 {
     margin-top: 7pt;
+}
+
+a.dsc-back  {
+    float:right;
+    height:40px;
+    font-size:1em;
+    display:inline-block;
+    text-align:center;
+    vertical-align:center;
+    margin-left:10px;
+    margin-right:20px;
+    text-decoration:none;
+    text-transform: uppercase;
+    border:none;
+    padding:10px;
+}
+
+a.hover.dsc-back  {
+    float:right;
+    height:40px;
+    font-size:1em;
+    display:inline-block;
+    text-align:center;
+    vertical-align:center;
+    margin-left:10px;
+    margin-right:20px;
+    text-decoration:none;
+    text-transform: uppercase;
+    border:none;
+    padding:10px;
+}
+
+a.visited.dsc-back  {
+    float:right;
+    height:40px;
+    font-size:1em;
+    display:inline-block;
+    text-align:center;
+    vertical-align:center;
+    margin-left:10px;
+    margin-right:20px;
+    text-decoration:none;
+    text-transform: uppercase;
+    border:none;
+    padding:10px;
 }

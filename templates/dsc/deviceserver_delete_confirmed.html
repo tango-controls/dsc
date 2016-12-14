@@ -8,6 +8,6 @@
 {% endblock %}
 {% block content %}
 <h4>The device server "{{ deviceserver.name }}" has been deleted.</h4>
-<h4><a href="{% url 'deviceserver_search' %}">Back</a></h4>
+<a href="{% url 'deviceserver_search' %}" class="dsc-back">Back</a>
 
 {% endblock %}
