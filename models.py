@@ -103,6 +103,7 @@ DS_ATTRIBUTE_DATATYPES = {
     'UShortType': 'DevUShort',
     'UCharType': 'DevUChar',
     'CharType': 'DevChar',
+    'EncodedType': 'DevEncoded',
 }
 
 # TODO extend class Content from tango if needed

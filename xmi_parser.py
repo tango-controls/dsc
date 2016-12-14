@@ -192,7 +192,7 @@ class TangoXmiParser:
                 attribute_data_type = 'unknown'
             else:
                 attribute_xsi_type =   attribute_data_type_element.attrib.get(XSI_TYPE).split(':')[1]
-                attribute_data_type = pogoDslDataTypes.get(attribute_xsi_type)
+                attribute_data_type = pogoDslDataTypes.get(attribute_xsi_type, "pogoDsl:"+attribute_xsi_type)
 
             attribute_description = ''
             attribute_properties_element = attribute_element.find('properties')
@@ -242,13 +242,13 @@ class TangoXmiParser:
             argin_element = command_element.find('argin')
             if argin_element is not None:
                 input_xsi_type = argin_element.find('type').attrib.get(XSI_TYPE).split(':')[1]
-                input_type = pogoDslDataTypes.get(input_xsi_type)
+                input_type = pogoDslDataTypes.get(input_xsi_type, "pogoDsl:"+input_xsi_type)
                 input_description = argin_element.attrib.get('description')
 
             argout_element = command_element.find('argout')
             if argout_element is not None:
                 argout_xsi_type = argout_element.find('type').attrib.get(XSI_TYPE).split(':')[1]
-                output_type = pogoDslDataTypes.get(input_xsi_type)
+                output_type = pogoDslDataTypes.get(argout_xsi_type, "pogoDsl:"+argout_xsi_type)
                 output_description = argout_element.attrib.get('description')
 
             # append attribute to the list
