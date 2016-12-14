@@ -77,5 +77,7 @@ urlpatterns = patterns(
          DeviceServerLicenseAutocomplete.as_view(),
          name='deviceserver_licenses'),
 
+    url(r'^ratings/', include('star_ratings.urls', namespace='ratings', app_name='ratings')),
+
 )
 

@@ -6,7 +6,12 @@
 
 {% block principal %}
     {{ block.super }}
-    {% addtoblock "css" %}<link rel="stylesheet" href="{% static "dsc/css/dsc.css" %}" media="all"  />{% endaddtoblock %}
+    {% addtoblock "css" %}
+        <link rel="stylesheet" href="{% static "dsc/css/dsc.css" %}" media="all"  />
+        <link rel="stylesheet" href="{% static "star-ratings/css/star-ratings.css" %}">
+    {% endaddtoblock %}
+    {% addtoblock "js" %}<script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
+    {% endaddtoblock %}
     <aside id="sidebar">
         {% block sidebar %}
             <h1>Recent activities</h1>
