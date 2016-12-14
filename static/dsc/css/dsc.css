@@ -56,6 +56,7 @@ th.products {
 
 td.products {
     word-wrap: break-word;
+    word-break: break-all;
     font-size:98%;
     padding:6px;
 
