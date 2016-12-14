@@ -55,8 +55,8 @@ class DeviceServerTable(tables.Table):
 
     class Meta:
         model = DeviceServer
-        fields = ('name', 'license')
-        sequence = ('name', 'license','family', 'manufacturers', 'products')
+        fields = ('name',)
+        sequence = ('name', 'family', 'manufacturers', 'products')
 
 
 class DeviceServerSearchTable(DeviceServerTable):
