@@ -158,3 +158,15 @@ a.visited.dsc-back  {
     border:none;
     padding:10px;
 }
+
+.pagination, .next, .previous, .current, .cardinality {
+   display: flex;
+   flex-direction: row;
+   /* Below sets up your display method: flex-start|flex-end|space-between|space-around */
+   justify-content: flex-start;
+   /* Below removes bullets and cleans white-space */
+   list-style: none;
+   padding-right: 10px;
+
+
+}
