@@ -90,7 +90,7 @@
 {% if deviceserver.description %}
 <h4>Description</h4>
 <hr />
-<p>{{ deviceserver.description|apply_markup:"restructuredtext"}}</p>
+<p>{{ deviceserver.description|apply_markup:"markdown"}}</p>
 {% endif %}
 <hr /> <br />
 
@@ -117,7 +117,7 @@
         <div id="dsc-{{spec.cl.name}}-class-tab">
             <h4>Class Description</h4>
             <hr />
-            <p>{{ spec.cl.description|apply_markup:"restructuredtext"|safe}}</p>
+            <p>{{ spec.cl.description|apply_markup:"markdown"}}</p>
             <p><span style="font-weight:bold;">Family:</span>
                 {{ spec.cl.info.class_family }}
             </p>
@@ -189,7 +189,7 @@
             <div style="word-wrap: break-word;">
                 <h4>README</h4>
                 {% if rst %}
-                    {{ readme|apply_markup:"restructuredtext" }}
+                    {{ readme|apply_markup:"markdown" }}
                 { % elif md %}
                     {{readme|apply_markup:"markdown"}}
                 {% else %}
