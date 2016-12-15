@@ -50,7 +50,8 @@ class DeviceServerPlugin(CMSPluginBase): #LastPublishedObjectPluginBase
                 query =  DeviceServer.objects.filter(invalidate_activity=None).\
                     filter(device_classes__info__class_family=family)
             else:
-                query = DeviceServer.objects.filter(invalidate_activity=None)
+                query = DeviceServer.objects.filter(invalidate_activity=None).\
+                    order_by('-created_at')
 
         table = DeviceServerTable(query.distinct())
         RequestConfig(request, paginate={'per_page': 10}).configure(table)
