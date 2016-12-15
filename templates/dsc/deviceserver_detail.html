@@ -189,7 +189,7 @@
             <div style="word-wrap: break-word;">
                 <h4>README</h4>
                 {% if rst %}
-                    {{ readme|apply_markup:"markdown" }}
+                    {{ readme|apply_markup:"restructuredtext" }}
                 { % elif md %}
                     {{readme|apply_markup:"markdown"}}
                 {% else %}
