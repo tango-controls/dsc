@@ -1,0 +1,60 @@
+{% extends request.is_ajax|yesno:"layout/ajax.html,dsc/layout/normal.html" %}
+{% load staticfiles %}
+{% load cms_tags i18n thumbnail webu_utils %}
+{% load render_table from django_tables2 %}
+
+
+{% block content_header %}
+<h1 style="text-transform: none">Advanced Search</h1>
+{% endblock %}
+{% block content %}
+        {% url 'deviceserver_add' as add_url %}
+
+
+
+        <div>
+            <h4>Please fill the search form:</h4>
+
+        </div>
+        <div>
+            <form method="GET" class="get-form" >
+                <table>
+                    {{ form.as_table }}
+                </table>
+                <button type="submit" class="search btn btn-default">Search</button>
+            </form>
+        </div>
+
+        {% if table %}
+
+            {% render_table table %}
+
+             <div>
+                <h4>Cannot find any device server you need?</h4>
+                    Don't worry. Please ask on
+                        <span style="font-weight:bold;font-size:120%;">
+                            {{ 'tango@esrf.fr'|urlize }}</span>
+                     mailing list. There could be some not yet added to the catalogue.
+                </h4>
+
+            </div>
+        {% else %}
+        <div style="text-align:center;font-weight:bold;">
+            No search submitted, yet.
+        </div>
+        {% endif %}
+
+
+
+{% endblock %}
+
+{% block extra_script %}
+
+    {{ block.super }}
+
+    <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+
+    {{ form.media }}
+
+
+{% endblock %}

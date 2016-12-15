@@ -19,7 +19,7 @@ import dal.autocomplete
 
 from xmi_parser import TangoXmiParser
 from tables import DeviceAttributesTable, DeviceCommandsTable, DevicePipesTable, \
-    DevicePropertiesTable, DeviceServerSearchTable
+    DevicePropertiesTable, DeviceServerSearchTable, DeviceServerTable
 from forms import DeviceServerAddForm, DeviceServerSearchForm, DeviceServerUpdateForm
 import models as dsc_models
 
@@ -144,6 +144,30 @@ def device_servers_list(request):
 def search_view(request):
     """Search is done with function """
     context = RequestContext(request)
+
+    search_text = request.GET.get('search', None)
+    family = request.GET.get('family', None)
+    if search_text is not None:
+        query = dsc_models.search_device_servers(search_text)
+        context['search'] = search_text
+    else:
+        query = dsc_models.DeviceServer.objects.filter(invalidate_activity=None)
+        # dsc_models.filtered_device_servers(family=family)
+
+    table = DeviceServerTable(query.distinct())
+    RequestConfig(request, paginate={'per_page': 10}).configure(table)
+
+
+    if 'breadcrumb_extra_ancestors' not in context:
+        context['breadcrumb_extra_ancestors'] = []
+    context['breadcrumb_extra_ancestors'].append((request.get_full_path(),'Search'))
+
+    return render_to_response('dsc/deviceserver_search.html', {'device_servers': table,
+                                                               'search': search_text,
+                                                               }, context)
+def advanced_search_view(request):
+    """Search is done with function """
+    context = RequestContext(request)
     table_config = RequestConfig(request, paginate={'per_page': 10})
     table = None
     man = ''
@@ -177,9 +201,9 @@ def search_view(request):
 
     if 'breadcrumb_extra_ancestors' not in context:
         context['breadcrumb_extra_ancestors'] = []
-    context['breadcrumb_extra_ancestors'].append((request.get_full_path(),'Advanced Search'))
+    context['breadcrumb_extra_ancestors'].append((request.get_full_path(),'Search'))
 
-    return render_to_response('dsc/deviceserver_search.html', {'form': form, 'table': table,
+    return render_to_response('dsc/deviceserver_advanced_search.html', {'form': form, 'table': table,
                                                                'manufacturer': man,
                                                                'product': prod,
                                                                'family': family,

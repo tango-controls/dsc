@@ -5,56 +5,38 @@
 
 
 {% block content_header %}
-<h1 style="text-transform: none">Advanced Search</h1>
+<h1 style="text-transform: none">Search</h1>
 {% endblock %}
 {% block content %}
-        {% url 'deviceserver_add' as add_url %}
-
-
-
-        <div>
-            <h4>Please fill the search form:</h4>
-
-        </div>
-        <div>
-            <form method="GET" class="get-form" >
-                <table>
-                    {{ form.as_table }}
-                </table>
-                <button type="submit" class="search btn btn-default">Search</button>
-            </form>
-        </div>
-
-        {% if table %}
-
-            {% render_table table %}
-
-             <div>
-                <h4>Cannot find any device server you need?</h4>
-                    Don't worry. Please ask on
-                        <span style="font-weight:bold;font-size:120%;">
-                            {{ 'tango@esrf.fr'|urlize }}</span>
-                     mailing list. There could be some not yet added to the catalogue.
-                </h4>
-
-            </div>
+        {% include 'dsc/inc/deviceserver_fulltextsearch.html' %}
+<p style="margin-bottom:10pt; margin-top:5pt;">
+    {% if family %}
+        Below you will find device servers for <span style="font-weight:bold;">{{family}}</span> family.
+    {% else %}
+        {% if search %}
+            Below you will find device servers for <span style="font-weight:bold;">{{search}}</span> search string.
         {% else %}
-        <div style="text-align:center;font-weight:bold;">
-            No search submitted, yet.
-        </div>
+            Below you will find a table with all device servers.
+            Please click a family name above or use search to narrow the list.
         {% endif %}
+    {% endif %}
+    You may also use <a href="{% url 'deviceserver_advanced_search' %}">
+        <span style="font-weight:bold;font-size:120%;">advanced search</span>
+    </a>
+    to find a device server you are looking for.</p>
+</p>
+<p>
+{% include 'dsc/inc/deviceserver_list.html' %}
+</p>
 
 
+<h4>Cannot find any device server you need?</h4>
+    Don't worry. Please ask on
+        <span style="font-weight:bold;font-size:120%;">
+            {{ 'tango@esrf.fr'|urlize }}</span>
+     mailing list. There could be some not yet added to the catalogue.
+</h4>
 
-{% endblock %}
-
-{% block extra_script %}
-
-    {{ block.super }}
-
-    <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
-
-    {{ form.media }}
 
 
 {% endblock %}
