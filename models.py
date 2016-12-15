@@ -390,7 +390,7 @@ class DeviceClass(DscManagedModel):
         blank=True,
         null=True,
         verbose_name='License')
-    class_copyright = models.CharField(max_length=128, verbose_name="Copyright", default='', blank=True)
+    class_copyright = models.CharField(max_length=255, verbose_name="Copyright", default='', blank=True)
     language = models.CharField(max_length=32,
                                 choices=zip(['Cpp', 'Python', 'PythonHL', 'Java', 'CSharp', 'LabView'],
                                             ['Cpp', 'Python', 'PythonHL', 'Java', 'CSharp', 'LabView']),
@@ -670,22 +670,22 @@ class DeviceServerAddModel(models.Model):
     class_description = models.TextField(verbose_name='Class description', blank=True, default='')
     contact_email = models.EmailField(verbose_name='Contact email', blank=True,default='')
 
-    class_copyright = models.CharField(max_length=128, verbose_name="Copyright", default='', blank=True)
+    class_copyright = models.CharField(max_length=255, verbose_name="Copyright", default='', blank=True)
     language = models.CharField(max_length=32,
                                 choices=zip(['Cpp', 'Python', 'PythonHL', 'Java', 'CSharp', 'LabView'],
                                             ['Cpp', 'Python', 'PythonHL', 'Java', 'CSharp', 'LabView']),
                                 verbose_name='Language', default='Cpp', blank=True)
 
-    class_family = models.CharField(max_length=64, blank=True, null=True, default='')  # TODO: implement choices
+    class_family = models.CharField(max_length=128, blank=True, null=True, default='')  # TODO: implement choices
     platform = models.CharField(max_length=64,
                                 choices=zip(['Windows', 'Unix Like', 'All Platforms'],
                                             ['Windows', 'Unix Like', 'All Platforms']),
                                 verbose_name='Platform', default='All Platforms', blank=True)
-    bus = models.CharField(max_length=64, verbose_name='Bus', blank=True, null=True)  # TODO: implement bus choices
-    manufacturer = models.CharField(max_length=64, verbose_name='Manufacturer', default='', null=True, blank=True)
+    bus = models.CharField(max_length=128, verbose_name='Bus', blank=True, null=True)  # TODO: implement bus choices
+    manufacturer = models.CharField(max_length=128, verbose_name='Manufacturer', default='', null=True, blank=True)
     # at the beginning there will not be any manufacturer table
     key_words = models.CharField(max_length=255, verbose_name="Key words", blank=True, null=True, default='')
-    product_reference = models.CharField(max_length=64, verbose_name="Product", default='', blank=True)
+    product_reference = models.CharField(max_length=255, verbose_name="Product", default='', blank=True)
     license_name = models.CharField(max_length=64, verbose_name='License type', blank=True, default='GPL')
 
     # internal information
