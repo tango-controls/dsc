@@ -856,17 +856,15 @@ def create_or_update(update_object, activity, device_server=None):
         new_device_server.status = update_object.ds_status
 
     if update_object.ds_info_copy:
-        print '----------------------------------'
-        print '----------------------------------'
-        print update_object.class_name
         new_device_server.description = ''
-        new_device_server.name = update_object.class_name
-
-        if len(update_object.license_name) > 0:
-            lic = DeviceServerLicense.objects.get_or_create(name=update_object.license_name)[0]
-            if lic.pk is None:
-                lic.save()
-            new_device_server.license = lic
+        if not update_object.use_url_xmi_file and not update_object.use_uploaded_xmi_file \
+                and len(update_object.class_name)>0:
+            new_device_server.name = update_object.class_name
+            if len(update_object.license_name) > 0:
+                lic = DeviceServerLicense.objects.get_or_create(name=update_object.license_name)[0]
+                if lic.pk is None:
+                    lic.save()
+                new_device_server.license = lic
 
     # if data provided manually
     if not update_object.ds_info_copy:
