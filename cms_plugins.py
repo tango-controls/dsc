@@ -27,7 +27,10 @@ class DeviceServerPlugin(CMSPluginBase): #LastPublishedObjectPluginBase
 
         families_count = {}
         for f in families:
-            families_count[f] = filtered_device_servers(family=f).distinct().count()
+            if f=='':
+                f = 'Other'
+            families_count[f] = families_count.get(f,0)+DeviceServer.objects.filter(invalidate_activity=None).\
+                filter(device_classes__info__class_family=f).distinct().count()
 
         context['families_count'] = sorted(families_count.iteritems())
         context['families'] = families
@@ -43,7 +46,11 @@ class DeviceServerPlugin(CMSPluginBase): #LastPublishedObjectPluginBase
             query = search_device_servers(search_text)
             context['search'] = search_text
         else:
-            query = filtered_device_servers(family=family)
+            if family is not None:
+                query =  DeviceServer.objects.filter(invalidate_activity=None).\
+                    filter(device_classes__info__class_family=family)
+            else:
+                query = DeviceServer.objects.filter(invalidate_activity=None)
 
         table = DeviceServerTable(query.distinct())
         RequestConfig(request, paginate={'per_page': 10}).configure(table)

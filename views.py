@@ -145,9 +145,9 @@ def search_view(request):
     """Search is done with function """
     context = RequestContext(request)
 
-    search_text = request.GET.get('search', None)
+    search_text = request.GET.get('search', '')
     family = request.GET.get('family', None)
-    if search_text is not None:
+    if search_text != '':
         query = dsc_models.search_device_servers(search_text)
         context['search'] = search_text
     else:
