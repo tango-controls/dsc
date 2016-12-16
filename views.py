@@ -42,8 +42,9 @@ class DeviceServerDetailView(BreadcrumbMixinDetailView, CustomModelDetailView, C
             context['device_classes'] = context['deviceserver'].device_classes.all()
         # for all classes tables of attributes, properties  and so will be provided
         context['specifications'] = {}
-
+        context['contacts'] = []
         for cl in context['device_classes']:
+            assert isinstance(cl, dsc_models.DeviceClass)
             context['specifications'][cl.name] = {}
             context['specifications'][cl.name]['properties_table'] = \
                 DevicePropertiesTable(cl.properties.filter(invalidate_activity=None))
@@ -55,6 +56,12 @@ class DeviceServerDetailView(BreadcrumbMixinDetailView, CustomModelDetailView, C
                 DevicePipesTable(cl.pipes.filter(invalidate_activity=None))
             context['specifications'][cl.name]['info'] = cl.info
             context['specifications'][cl.name]['cl'] = cl
+            info = cl.info
+            if info is not None:
+                assert isinstance(info,dsc_models.DeviceClassInfo)
+                if info.contact_email is not None and len(info.contact_email)>0 \
+                        and info.contact_email not in context['contacts']:
+                    context['contacts'].append(info.contact_email)
 
         readme_file = context['deviceserver'].readme
         if hasattr(readme_file,'url'):

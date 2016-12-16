@@ -83,8 +83,8 @@
     {% endif %}
 <br />
     <span style="font-weight:bold;">Contact:</span>
-    {% for cl in deviceserver.device_classes.all %}
-        {{ cl.info.contact_email|urlize }};
+    {% for contact in contacts %}
+        {{ contact|urlize }};
     {% endfor %}
 </p>
 {% if deviceserver.description %}
