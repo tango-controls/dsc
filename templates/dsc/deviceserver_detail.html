@@ -4,6 +4,14 @@
 {% load staticfiles %}
 {% load markup_tags %}
 
+{% block extrahead %}
+    <meta property="og:url"           content="{{ request.build_absolute_uri }}{{ object.get_absolute_url }}" />
+	<meta property="og:type"          content="article" />
+	<meta property="og:title"         content="{{deviceserver.name}} device server" />
+
+{% endblock %}
+
+
 {% block content_header %}
 <h1 style="text-transform: none">{{deviceserver.name}}</h1>
 {% endblock %}
