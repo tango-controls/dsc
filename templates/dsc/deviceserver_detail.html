@@ -4,7 +4,8 @@
 {% load staticfiles %}
 {% load markup_tags %}
 
-{% block extrahead %}
+{% block extra_head %}
+    {{ block.super }}
     <meta property="og:url"           content="{{ request.build_absolute_uri }}{{ object.get_absolute_url }}" />
 	<meta property="og:type"          content="article" />
 	<meta property="og:title"         content="{{deviceserver.name}} device server" />
