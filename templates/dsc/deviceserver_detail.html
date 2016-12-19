@@ -6,10 +6,15 @@
 
 {% block extra_head %}
     {{ block.super }}
-    <meta property="og:url"           content="{{ request.build_absolute_uri }}{{ object.get_absolute_url }}" />
-	<meta property="og:type"          content="article" />
-	<meta property="og:title"         content="{{deviceserver.name}} device server" />
+    <meta property="og:url" content="{{ request.build_absolute_uri }}{{ object.get_absolute_url }}" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title"  content="{{deviceserver.name}} Device Server" />
+    <meta property="og:description" content="{{og_description}}" />
 
+{% endblock %}
+
+{% block meta_title %}
+{{deviceserver.name}} - {{block.super}}
 {% endblock %}
 
 
