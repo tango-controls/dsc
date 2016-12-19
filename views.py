@@ -57,17 +57,17 @@ class DeviceServerDetailView(BreadcrumbMixinDetailView, CustomModelDetailView, C
             context['specifications'][cl.name]['info'] = cl.info
             context['specifications'][cl.name]['cl'] = cl
             info = cl.info
-            context['og_description'] = "This is a "
+            context['og_description'] = "This is a device server of "
             if info is not None:
                 assert isinstance(info,dsc_models.DeviceClassInfo)
                 if info.contact_email is not None and len(info.contact_email)>0 \
                         and info.contact_email not in context['contacts']:
                     context['contacts'].append(info.contact_email)
-                if context['og_description'] == "This is a ":
+                if context['og_description'] == "This is a device server of ":
                     context['og_description'] += info.class_family
                 else:
                     context['og_description'] += 'and '+ info.class_family
-            context['og_description'] += " device server."
+            context['og_description'] += " family."
         readme_file = context['deviceserver'].readme
         if hasattr(readme_file,'url'):
             readme_name, readme_ext = os.path.splitext(readme_file.name)
