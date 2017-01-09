@@ -4,7 +4,7 @@
 {% url 'deviceserver_add' as add_url %}
 
 <h4>
-    There are device servers for the following <i>families:</i>
+    There are device classes for the following <i>families:</i>
 </h4>
 <p style="font-size:110%;">
 {% include 'dsc/inc/families_list.html' %}
@@ -13,6 +13,9 @@
 <p style="font-size:120%;">
     Here you will find a list of device servers available in the community. Device servers provides among others
     connectivity to equipment. So, if you want to connect your hardware to Tango Controls please check this list.
+    One or more device classes can be wrapped as a device server to connect one or more devices to your Tango control
+    system. Tango imposes no limit on the number of devices or classes in a device server it depends on the
+    implementation of the device class.
 </p>
 <p>
     <span style="font-size:120%;font-weight:bold;">
