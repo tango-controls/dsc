@@ -276,7 +276,7 @@ def families_view(request):
 class DeviceServerManufacturerAutocomplete(dal.autocomplete.Select2ListView):
     """Provide autocomplete feature for manufacturer fields"""
     def get_list(self):
-        m = list(dsc_models.DeviceClassInfo.objects.all().values_list('manufacturer',flat=True).distinct())
+        m = list(dsc_models.DeviceClassInfo.objects.all().order_by('manufacturer').values_list('manufacturer',flat=True).distinct())
         if self.request.GET.get('q',None) is not None:
             m.append(self.request.GET.get('q',None))
 
@@ -289,11 +289,11 @@ class DeviceServerProductAutocomplete(dal.autocomplete.Select2ListView):
 
         manufacturer = self.forwarded.get('manufacturer', None)
         if manufacturer:
-            p=list(dsc_models.DeviceClassInfo.objects.filter(manufacturer=manufacturer).\
-                values_list('product_reference',flat=True).distinct())
+            p=list(dsc_models.DeviceClassInfo.objects.filter(manufacturer=manufacturer). \
+                   order_by('product_reference').values_list('product_reference',flat=True).distinct())
         else:
-            p=list(dsc_models.DeviceClassInfo.objects.\
-                values_list('product_reference', flat=True).distinct())
+            p=list(dsc_models.DeviceClassInfo.objects. \
+                   order_by('product_reference').values_list('product_reference', flat=True).distinct())
 
         if self.request.GET.get('q',None) is not None:
             p.append(self.request.GET.get('q',None))
@@ -304,7 +304,7 @@ class DeviceServerProductAutocomplete(dal.autocomplete.Select2ListView):
 class DeviceServerFamilyAutocomplete(dal.autocomplete.Select2ListView):
     """Provide autocomplete feature for product fields"""
     def get_list(self):
-        f = list(dsc_models.DeviceClassInfo.objects.all().values_list('class_family', flat=True).distinct())
+        f = list(dsc_models.DeviceClassInfo.objects.all().order_by('class_family').values_list('class_family', flat=True).distinct())
         if self.request.GET.get('q',None) is not None:
             f.append(self.request.GET.get('q',None))
         return f
@@ -313,7 +313,7 @@ class DeviceServerFamilyAutocomplete(dal.autocomplete.Select2ListView):
 class DeviceServerBusAutocomplete(dal.autocomplete.Select2ListView):
     """Provide autocomplete feature for bus fields"""
     def get_list(self):
-        b=list(dsc_models.DeviceClassInfo.objects.all().values_list('bus', flat=True).distinct())
+        b=list(dsc_models.DeviceClassInfo.objects.all().order_by('bus').values_list('bus', flat=True).distinct())
         if self.request.GET.get('q',None) is not None:
             b.append(self.request.GET.get('q',None))
         return b
