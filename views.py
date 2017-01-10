@@ -166,6 +166,8 @@ def search_view(request):
         query = dsc_models.DeviceServer.objects.filter(invalidate_activity=None)
         # dsc_models.filtered_device_servers(family=family)
 
+    query = query.order_by('name')
+
     table = DeviceServerTable(query.distinct())
     RequestConfig(request, paginate={'per_page': 10}).configure(table)
 
@@ -177,6 +179,8 @@ def search_view(request):
     return render_to_response('dsc/deviceserver_search.html', {'device_servers': table,
                                                                'search': search_text,
                                                                }, context)
+
+
 def advanced_search_view(request):
     """Search is done with function """
     context = RequestContext(request)
@@ -203,9 +207,9 @@ def advanced_search_view(request):
                                                    bus=bus,
                                                    key_words=key_words)
 
-            device_servers = q.distinct()
-
+            device_servers = q.distinct().order_by('name')
             table = DeviceServerSearchTable(device_servers)
+
         if table is not None:
             table_config.configure(table)
 
@@ -222,6 +226,51 @@ def advanced_search_view(request):
                                                                'bus': bus,
                                                                'key_words': key_words
                                                                }, context)
+
+
+def families_view(request):
+    """Families is done with function """
+    context = RequestContext(request)
+
+    # prepare list of families
+    families = dsc_models.DeviceClassInfo.objects.filter(invalidate_activity=None).order_by('class_family'). \
+        values_list('class_family', flat=True).distinct()
+
+    families_count = {}
+    for f in families:
+        if f == '':
+            f = 'Other'
+        families_count[f] = families_count.get(f, 0) + dsc_models.DeviceServer.objects.filter(invalidate_activity=None). \
+            filter(device_classes__info__class_family=f).distinct().count()
+
+    families_count = sorted(families_count.iteritems())
+
+    count_all = dsc_models.DeviceServer.objects.filter(invalidate_activity=None).count()
+
+
+    search_text = request.GET.get('search', '')
+    family = request.GET.get('family', '')
+    if family != '':
+        query = dsc_models.filtered_device_servers(family=family)
+    else:
+        query = dsc_models.DeviceServer.objects.filter(invalidate_activity=None)
+
+    query = query.order_by('name')
+
+    table = DeviceServerTable(query.distinct())
+    RequestConfig(request, paginate={'per_page': 10}).configure(table)
+
+    if 'breadcrumb_extra_ancestors' not in context:
+        context['breadcrumb_extra_ancestors'] = []
+    context['breadcrumb_extra_ancestors'].append((request.get_full_path(),'Families'))
+
+    return render_to_response('dsc/deviceserver_families.html', {'device_servers': table,
+                                                                 'search': search_text,
+                                                                 'family': family,
+                                                                 'families': families,
+                                                                 'families_count': families_count,
+                                                                 'count_all': count_all
+                                                                }, context)
 
 
 class DeviceServerManufacturerAutocomplete(dal.autocomplete.Select2ListView):

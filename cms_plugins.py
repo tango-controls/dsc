@@ -35,7 +35,6 @@ class DeviceServerPlugin(CMSPluginBase): #LastPublishedObjectPluginBase
         context['families_count'] = sorted(families_count.iteritems())
         context['families'] = families
 
-        print families_count
         context['count_all'] = DeviceServer.objects.filter(invalidate_activity=None).count()
 
         # table of device servers

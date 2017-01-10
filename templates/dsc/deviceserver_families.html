@@ -1,0 +1,45 @@
+{% extends request.is_ajax|yesno:"layout/ajax.html,dsc/layout/normal.html" %}
+{% load staticfiles %}
+{% load cms_tags i18n thumbnail webu_utils %}
+{% load render_table from django_tables2 %}
+
+
+{% block content_header %}
+<h1 style="text-transform: none">Families</h1>
+{% endblock %}
+{% block content %}
+
+<h4>
+    There are device classes for the following <i>families:</i>
+</h4>
+<p style="font-size:110%;">
+{% include 'dsc/inc/families_list.html' %}
+</p>
+
+<p style="margin-bottom:10pt; margin-top:5pt;">
+    {% if family %}
+        Below you will find device servers for <span style="font-weight:bold;">{{family}}</span> family.
+    {% else %}
+        {% if search %}
+            Below you will find device servers for <span style="font-weight:bold;">{{search}}</span> search string.
+        {% else %}
+            Below you will find a table with all device servers.
+            Please click a family name above or use search to narrow the list.
+        {% endif %}
+    {% endif %}
+</p>
+<p>
+{% include 'dsc/inc/deviceserver_list.html' %}
+</p>
+
+
+<h4>Cannot find any device server you need?</h4>
+    Don't worry. Please ask on
+        <span style="font-weight:bold;font-size:120%;">
+            {{ 'info@tango-controls.org'|urlize }}</span>
+     mailing list. There could be some not yet added to the catalogue.
+</h4>
+
+
+
+{% endblock %}
