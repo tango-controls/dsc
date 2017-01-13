@@ -173,3 +173,31 @@ a.visited.dsc-back  {
 .system-message {
     display: none;
 }
+
+/* Tooltip container */
+.dsc-tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.dsc-tooltip .tooltiptext {
+    visibility: hidden;
+    width: 280px;
+    background-color: grey;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    opacity: 0.9;
+
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.dsc-tooltip:hover .tooltiptext {
+    visibility: visible;
+}

@@ -1,6 +1,7 @@
 import django_tables2 as tables
 from models import DeviceServer, DeviceServerActivity, DeviceAttribute, DeviceProperty, DevicePipe, DeviceCommand
 from django_tables2.utils import A
+from django.utils.safestring import mark_safe
 
 class DeviceServerTable(tables.Table):
 
@@ -68,13 +69,30 @@ class DeviceServerSearchTable(DeviceServerTable):
         exclude = ('license',)
 
 
-class DevicePropertiesTable(tables.Table):
+class DSCTooltipTable(tables.Table):
+
+    def tooltip(self, record):
+        return record.pk
+
+    def render_name(self, record, value):
+        return mark_safe('<span class="dsc-tooltip">'+str(value)+'<span class="tooltiptext">'+str(self.tooltip(record))\
+               +"</span></span>")
+
+class DevicePropertiesTable(DSCTooltipTable):
+
+    def tooltip(self, record):
+        return record.property_type
+
     class Meta:
         model = DeviceProperty
         fields = ('name', 'description')
 
 
-class DeviceAttributesTable(tables.Table):
+class DeviceAttributesTable(DSCTooltipTable):
+
+    def tooltip(self, record):
+        return str(record.attribute_type )+ ': '+str(record.data_type)
+
     class Meta:
         model = DeviceAttribute
         fields = ('name','description')
@@ -86,7 +104,13 @@ class DevicePipesTable(tables.Table):
         fields = ('name', 'description')
 
 
-class DeviceCommandsTable(tables.Table):
+class DeviceCommandsTable(DSCTooltipTable):
+
+    def tooltip(self, record):
+
+        return 'ArgIn: '+ str(record.input_type) + ', ' + str(record.input_description) + \
+               '<br />ArgOut: ' + str(record.output_type) + ', ' + str(record.output_description)
+
     class Meta:
         model = DeviceCommand
         fields = ('name','description')
