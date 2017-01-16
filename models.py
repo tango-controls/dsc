@@ -86,7 +86,10 @@ DS_COMMAND_DATATYPES = {
     'StringArrayType': 'DevVarStringArray',
     'ULongArrayType': 'DevVarULong64Array',
     'UIntArrayType': 'DevVarULongArray',
-    'UShortArrayType': 'DevVarUShortArray'
+    'UShortArrayType': 'DevVarUShortArray',
+    'VoidType': 'DevVoid',
+    'ConstStringType': 'ConstDevString',
+    'StateType': 'State'
 }
 
 
@@ -104,6 +107,35 @@ DS_ATTRIBUTE_DATATYPES = {
     'UCharType': 'DevUChar',
     'CharType': 'DevChar',
     'EncodedType': 'DevEncoded',
+    'StateType': 'DevState'
+}
+
+DS_PROPERTIES_DATATYPES = {
+    'BooleanType': 'DevBoolean',
+    'FloatType': 'DevFloat',
+    'DoubleType': 'DevDouble',
+    'IntType': 'DevLong',
+    'LongType': 'DevLong64',
+    'ShortType': 'DevShort',
+    'StringType': 'DevString',
+    'UIntType': 'DevULong',
+    'ULongType': 'DevULong64',
+    'UShortType': 'DevUShort',
+    'UCharType': 'DevUChar',
+    'CharType': 'DevChar',
+    'BooleanVectorType': 'Array of DevBoolean',
+    'FloatVectorType': 'Array of DevFloat',
+    'DoubleVectorType': 'Array of DevDouble',
+    'IntVectorType': 'Array of DevLong',
+    'LongVectorType': 'Array of DevLong64',
+    'ShortVectorType': 'Array of DevShort',
+    'StringVectorType': 'Array of DevString',
+    'UIntVectorType': 'Array of DevULong',
+    'ULongVectorType': 'Array of DevULong64',
+    'UShortVectorType': 'Array of DevUShort',
+    'UCharVectorType': 'Array of DevUChar',
+    'CharVectorType': 'Array of DevChar',
+
 }
 
 # TODO extend class Content from tango if needed

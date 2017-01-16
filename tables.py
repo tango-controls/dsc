@@ -1,5 +1,6 @@
 import django_tables2 as tables
-from models import DeviceServer, DeviceServerActivity, DeviceAttribute, DeviceProperty, DevicePipe, DeviceCommand
+from models import DeviceServer, DeviceServerActivity, DeviceAttribute, DeviceProperty, DevicePipe, DeviceCommand, \
+    DS_COMMAND_DATATYPES, DS_ATTRIBUTE_DATATYPES, DS_PROPERTIES_DATATYPES
 from django_tables2.utils import A
 from django.utils.safestring import mark_safe
 
@@ -81,6 +82,8 @@ class DSCTooltipTable(tables.Table):
 class DevicePropertiesTable(DSCTooltipTable):
 
     def tooltip(self, record):
+        if DS_PROPERTIES_DATATYPES.has_key(str(record.property_type)):
+            return DS_PROPERTIES_DATATYPES.get(str(record.property_type))
         return record.property_type
 
     class Meta:
@@ -91,7 +94,14 @@ class DevicePropertiesTable(DSCTooltipTable):
 class DeviceAttributesTable(DSCTooltipTable):
 
     def tooltip(self, record):
-        return str(record.attribute_type )+ ': '+str(record.data_type)
+        # workaround for missed data types
+        try:
+            if 'Type' in str(record.data_type) and DS_ATTRIBUTE_DATATYPES.has_key(str(record.data_type).split(':')[1]):
+                record.data_type = DS_ATTRIBUTE_DATATYPES.get(str(record.data_type).split(':')[1])
+        except Exception:
+            pass
+
+        return '<span style="font-weight:bold;">' + str(record.attribute_type) + '</span>:&nbsp;'+str(record.data_type)
 
     class Meta:
         model = DeviceAttribute
@@ -107,9 +117,27 @@ class DevicePipesTable(tables.Table):
 class DeviceCommandsTable(DSCTooltipTable):
 
     def tooltip(self, record):
+        # workaround for missed data types
+        try:
+            if 'Type' in str(record.input_type) and DS_COMMAND_DATATYPES.has_key(str(record.input_type).split(':')[1]):
+                record.input_type = DS_COMMAND_DATATYPES.get(str(record.input_type).split(':')[1])
+        except:
+            pass
 
-        return 'ArgIn: '+ str(record.input_type) + ', ' + str(record.input_description) + \
-               '<br />ArgOut: ' + str(record.output_type) + ', ' + str(record.output_description)
+        try:
+            if 'Type' in str(record.output_type) and DS_COMMAND_DATATYPES.has_key(str(record.output_type).split(':')[1]):
+                record.output_type = DS_COMMAND_DATATYPES.get(str(record.output_type).split(':')[1])
+        except:
+            pass
+
+        ret = '<span style="font-weight:bold;">Input:</span>&nbsp;'+ str(record.input_type)
+        if str(record.input_description).lower() not in ['none', '', 'null', 'nil', 'n/a', 'none.']:
+            ret += '<br /><span style="text-align:left;">' + str(record.input_description) + '</span>'
+        ret += '<br /><span style="font-weight:bold;">Output:</span>&nbsp;' + str(record.output_type)
+        if str(record.output_description).lower() not in ['none', '', 'null', 'nil', 'n/a', 'none.']:
+            ret += '<br /><span style="text-align:left;">' + str(record.output_description) + '</span>'
+
+        return ret
 
     class Meta:
         model = DeviceCommand
