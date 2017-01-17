@@ -184,7 +184,8 @@ a.visited.dsc-back  {
 /* Tooltip text */
 .dsc-tooltip .tooltiptext {
     visibility: hidden;
-    max-width: 300px;
+    max-width: 450px;
+    white-space:pre-line;
     background-color: grey;
     color: #fff;
     text-align: left;
@@ -201,5 +202,28 @@ a.visited.dsc-back  {
 
 /* Show the tooltip text when you mouse over the tooltip container */
 .dsc-tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.dsc-cmd-tooltip .tooltiptext {
+    visibility: hidden;
+    width: 400px;
+    white-space:pre-line;
+    background-color: grey;
+    color: #fff;
+    text-align: left;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 6px;
+    opacity: 0.9;
+    font-weight: normal;
+
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.dsc-cmd-tooltip:hover .tooltiptext {
     visibility: visible;
 }

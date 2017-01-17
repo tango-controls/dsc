@@ -75,9 +75,15 @@ class DSCTooltipTable(tables.Table):
     def tooltip(self, record):
         return record.pk
 
+    def tooltip_style(self, record):
+        return ''
+
+    def tooltip_class(self, record):
+        return 'dsc-tooltip'
+
     def render_name(self, record, value):
-        return mark_safe('<span class="dsc-tooltip">'+str(value)+'<span class="tooltiptext">'+str(self.tooltip(record))\
-               +"</span></span>")
+        return mark_safe('<span class="'+self.tooltip_class(record)+'">'+str(value)+'<span class="tooltiptext "'+\
+                         self.tooltip_style(record) + ' >' + str(self.tooltip(record)) + "</span></span>")
 
 class DevicePropertiesTable(DSCTooltipTable):
 
@@ -116,6 +122,10 @@ class DevicePipesTable(tables.Table):
 
 class DeviceCommandsTable(DSCTooltipTable):
 
+    def tooltip_style(self, record):
+        return 'style="width:%dpx;"' % (10*max(30, len(str(record.input_description)),
+                                               len(str(record.output_description))))
+
     def tooltip(self, record):
         # workaround for missed data types
         try:
@@ -132,10 +142,10 @@ class DeviceCommandsTable(DSCTooltipTable):
 
         ret = '<span style="font-weight:bold;">Input:</span>&nbsp;'+ str(record.input_type)
         if str(record.input_description).lower() not in ['none', '', 'null', 'nil', 'n/a', 'none.']:
-            ret += '<br /><span style="text-align:left;">' + str(record.input_description) + '</span>'
+            ret += '<br /><span style="text-align:left;">%s</span>' % str(record.input_description)
         ret += '<br /><span style="font-weight:bold;">Output:</span>&nbsp;' + str(record.output_type)
         if str(record.output_description).lower() not in ['none', '', 'null', 'nil', 'n/a', 'none.']:
-            ret += '<br /><span style="text-align:left;">' + str(record.output_description) + '</span>'
+            ret += '<br /><span style="text-align:left;">%s</span>' % str(record.output_description)
 
         return ret
 
