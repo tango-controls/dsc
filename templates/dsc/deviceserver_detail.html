@@ -99,7 +99,8 @@
 <br />
     <span style="font-weight:bold;">Contact:</span>
     {% for contact in contacts %}
-        {{ contact|urlize|safe_for_robots }};
+        {{ contact|urlize|safe_for_robots }}
+
     {% endfor %}
 </p>
 {% if deviceserver.description %}
