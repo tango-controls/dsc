@@ -147,8 +147,10 @@ def device_servers_list(request):
                 'name': ds.name,
                 'detail_url': request.build_absolute_uri(reverse('deviceserver_detail', kwargs={'pk': ds.pk})),
                 'update_url': request.build_absolute_uri(reverse('deviceserver_update', kwargs={'pk': ds.pk})),
-                'last_update': last_update
+                'last_update': last_update,
+                'tag': repo.tag
             }
+
 
     return JsonResponse(ds_list)
 

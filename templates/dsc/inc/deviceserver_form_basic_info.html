@@ -4,6 +4,12 @@
     <tr>
         <th>{{ form.development_status.label_tag }}</th><td>{{ form.development_status }}</td>
     </tr>
+    {% if form.repository_tag.errors %}
+    <tr><td colspan="2">{{ form.repository_tag.errors }}</td></tr>
+    {% endif %}
+    <tr>
+        <th><label>Release:</label></th><td>{{ form.repository_tag }}</td>
+    </tr>
     {% if perms.dsc.admin_deviceserver %}
     <tr>
         <th>{{ form.certified.label_tag }}</th><td>{{ form.certified }}</td>

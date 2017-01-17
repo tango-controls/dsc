@@ -581,7 +581,7 @@ class DeviceServerAddModel(models.Model):
 
     development_status = models.CharField(
         verbose_name='Development status',
-        max_length=10,
+        max_length=20,
         choices=DEV_STATUS_CHOICES,
         default=DEV_STATUS_NEW,
         blank=True
@@ -595,7 +595,7 @@ class DeviceServerAddModel(models.Model):
 
     ds_status = models.CharField(
         verbose_name='Information status',
-        max_length=10,
+        max_length=20,
         choices=STATUS_CHOICES,
         default=STATUS_NEW,
     )
@@ -614,6 +614,7 @@ class DeviceServerAddModel(models.Model):
     repository_path = models.CharField(max_length=255, verbose_name='Path within reposiroty', blank=True, default='')
     repository_contact = models.EmailField(verbose_name='Please write to', blank=True, null=True, default='')
     repository_download_url= models.URLField(verbose_name='Dwonload URL', blank=True, default='')
+    repository_tag = models.CharField(verbose_name='Tag', max_length=128, blank=True, null=True, default='')
 
     # documentation
     upload_readme = models.BooleanField(verbose_name='Upload README', blank=True, default=False)
@@ -763,6 +764,7 @@ class DeviceServerUpdateModel(DeviceServerAddModel):
             self.repository_url = device_server.repository.url
             self.repository_download_url = device_server.repository.download_url
             self.repository_path = device_server.repository.path_in_repository
+            self.repository_tag = device_server.repository.tag
 
         docs = device_server.documentation.all()
         if len(docs)>0:
@@ -943,11 +945,13 @@ def create_or_update(update_object, activity, device_server=None):
             update_object.repository_url = None
             update_object.repository_path = None
             update_object.repository_download_url = None
+            update_object.repository_tag = None
         new_repository = DeviceServerRepository(repository_type=update_object.repository_type,
                                                 url=update_object.repository_url,
                                                 path_in_repository=update_object.repository_path,
                                                 contact_email=update_object.repository_contact,
                                                 download_url=update_object.repository_download_url,
+                                                tag=update_object.repository_tag
                                                 )
         if backup_device_server is not None:
             # if it is update operation and repository change old repo is redirected to backup device server
@@ -959,6 +963,7 @@ def create_or_update(update_object, activity, device_server=None):
                         or new_repository.url != device_server.repository.url \
                         or new_repository.path_in_repository != device_server.repository.path_in_repository \
                         or new_repository.download_url != device_server.repository.download_url \
+                        or new_repository.tag != device_server.repository.tag \
                         or new_repository.contact_email != device_server.repository.contact_email:
                     # for modified repository move it to backup
                     old_repo = device_server.repository

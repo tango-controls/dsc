@@ -120,6 +120,7 @@ class DeviceServerAddForm(forms.ModelForm):
 
     class Meta:
         model = DeviceServerAddModel
+        updating = False
         fields = ['development_status',
                   'ds_info_copy',
                   'certified',
@@ -130,7 +131,7 @@ class DeviceServerAddForm(forms.ModelForm):
                   'xmi_file_url',
                   'name', 'description', 'contact_email', 'platform', 'language', 'license_name',
                   'repository_type', 'repository_url', 'repository_download_url',
-                  'repository_contact',
+                  'repository_contact', 'repository_tag',
                   'upload_readme', 'readme_file',
                   'other_documentation1',
                   'documentation1_type', 'documentation1_url',
@@ -146,6 +147,7 @@ class DeviceServerUpdateForm(DeviceServerAddForm):
 
     class Meta:
         model = DeviceServerUpdateModel
+        updating = True
         fields = ['development_status',
                   'ds_info_copy',
                   'certified',
@@ -157,7 +159,7 @@ class DeviceServerUpdateForm(DeviceServerAddForm):
                   'xmi_file_url',
                   'name', 'description', 'contact_email', 'platform', 'language', 'license_name',
                   'repository_type', 'repository_url', 'repository_download_url',
-                  'repository_contact',
+                  'repository_contact', 'repository_tag',
                   'upload_readme', 'readme_file',
                   'other_documentation1',
                   'documentation1_type', 'documentation1_url',

@@ -70,7 +70,11 @@
     </h4>
 {% endif %}
 <p style="margin-top:5pt; margin-bottom:5pt;">
-    <span style="font-weight:bold;">Development status:</span> {{ deviceserver.get_development_status_display }} <br />
+    <span style="font-weight:bold;">Development status:</span>
+    {{ deviceserver.get_development_status_display }}{% if deviceserver.repository.tag %},
+            <span style="font-weight:bold;">Release:</span> {{deviceserver.repository.tag}}
+        {% endif %}
+    <br />
     <span style="font-weight:bold;">Information status:</span> {{ deviceserver.get_status_display }}
     {% if deviceserver.status == 'new' or deviceserver.status == 'updated' %}
         {% if perms.dsc.admin_deviceserver %} <br />
@@ -87,6 +91,7 @@
     <a href="{{deviceserver.repository.url}}" target="_blank">
         {{deviceserver.repository.url}}
     </a>
+
     {% else %}
     This device server is not available in a public repository. Please contact the
     author{% if deviceserver.repository.contact_email %} {{ deviceserver.repository.contact_email|urlize }}{% endif %}.
@@ -133,7 +138,9 @@
         <div id="dsc-{{spec.cl.name}}-class-tab">
             <h4>Class Description</h4>
             <hr />
-            <p>{{ spec.cl.description|apply_markup:"restructuredtext"}}</p>
+            <p>
+                {{ spec.cl.description|apply_markup:"restructuredtext"}}
+            </p>
             <p><span style="font-weight:bold;">Family:</span>
                 {{ spec.cl.info.class_family }}
             </p>
@@ -141,6 +148,10 @@
             <p><span style="font-weight:bold;">Key words:</span> {{spec.cl.info.key_words}}</p>
             {% if spec.cl.info.platform %}
                 <p><span style="font-weight:bold;">Platform:</span> {{spec.cl.info.platform}}</p>
+            {% endif %}
+
+            {% if spec.cl.language %}
+                <p><span style="font-weight:bold;">Language:</span> {{spec.cl.language}}</p>
             {% endif %}
 
             <p><span style="font-weight:bold;">License:</span>
