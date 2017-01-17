@@ -2,6 +2,7 @@
 {% load staticfiles %}
 {% load cms_tags i18n thumbnail webu_utils %}
 {% load render_table from django_tables2 %}
+{% load dsc_tags %}
 
 
 {% block content_header %}
@@ -36,7 +37,7 @@
 <h4>Cannot find any device server you need?</h4>
     Don't worry. Please ask on
         <span style="font-weight:bold;font-size:120%;">
-            {{ 'info@tango-controls.org'|urlize }}</span>
+            {{ 'info@tango-controls.org'|urlize|safe_for_robots }}</span>
      mailing list. There could be some not yet added to the catalogue.
 </h4>
 

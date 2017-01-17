@@ -3,6 +3,7 @@
 {% load render_table from django_tables2 %}
 {% load staticfiles %}
 {% load markup_tags %}
+{% load dsc_tags %}
 
 {% block extra_head %}
     {{ block.super }}
@@ -98,7 +99,7 @@
 <br />
     <span style="font-weight:bold;">Contact:</span>
     {% for contact in contacts %}
-        {{ contact|urlize }};
+        {{ contact|urlize|safe_for_robots }};
     {% endfor %}
 </p>
 {% if deviceserver.description %}
@@ -145,7 +146,7 @@
                 <a href="{{spec.cl.license.url}}" target="_blank">{{spec.cl.license.name}}</a>
             </p>
             <p><span style="font-weight:bold;">Contact:</span>
-                {{ spec.cl.info.contact_email|urlize }}
+                {{ spec.cl.info.contact_email|urlize|safe_for_robots }}
             </p>
             {% if spec.cl.info.manufacturer or spec.cl.info.bus %}
                 <h4>Hardware</h4>
