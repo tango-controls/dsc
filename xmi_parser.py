@@ -130,7 +130,10 @@ class TangoXmiParser:
             contact_email = "%s@%s" % (author, email_domain)
         else:
             email_re = re.search(r'at (.*) - (.*)', contact_email_attrib)
-            contact_email = "%s@%s" % (email_re.group(2), email_re.group(1))
+            if email_re is not None:
+                contact_email = "%s@%s" % (email_re.group(2), email_re.group(1))
+            else:
+                contact_email = contact_email_attrib
 
         # get other info frm the element
         class_family = identification_element.attrib.get('classFamily')
