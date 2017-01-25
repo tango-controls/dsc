@@ -6,9 +6,10 @@
 
 
 {% block content_header %}
-<h1 style="text-transform: none">Search</h1>
+<h1 style="text-transform: none" >Search</h1>
 {% endblock %}
 {% block content %}
+<span id="ds-table"></span>
         {% include 'dsc/inc/deviceserver_fulltextsearch.html' %}
 <p style="margin-bottom:10pt; margin-top:0px; ">
     {% if family %}

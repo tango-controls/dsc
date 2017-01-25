@@ -171,7 +171,7 @@ def search_view(request):
     query = query.order_by('name')
 
     table = DeviceServerTable(query.distinct())
-    RequestConfig(request, paginate={'per_page': 10}).configure(table)
+    RequestConfig(request, paginate={'per_page': 30}).configure(table)
 
 
     if 'breadcrumb_extra_ancestors' not in context:
@@ -186,7 +186,7 @@ def search_view(request):
 def advanced_search_view(request):
     """Search is done with function """
     context = RequestContext(request)
-    table_config = RequestConfig(request, paginate={'per_page': 10})
+    table_config = RequestConfig(request, paginate={'per_page': 30})
     table = None
     man = ''
     prod = ''
@@ -260,7 +260,7 @@ def families_view(request):
     query = query.order_by('name')
 
     table = DeviceServerTable(query.distinct())
-    RequestConfig(request, paginate={'per_page': 10}).configure(table)
+    RequestConfig(request, paginate={'per_page': 30}).configure(table)
 
     if 'breadcrumb_extra_ancestors' not in context:
         context['breadcrumb_extra_ancestors'] = []
