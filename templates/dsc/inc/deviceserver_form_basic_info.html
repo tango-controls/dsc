@@ -44,6 +44,14 @@
         <td>{{ form.use_url_xmi_file }}</td>
         <td>{{ form.use_manual_info }}</td>
     </tr>
+
+{% if from.last_update_method == 'manual' %}
+<tr><th colspan="3">
+
+</th></tr>
+
+{% endif %}
+
 </tbody>
 <tbody id="dsc_add_class">
     {% if form.add_class %}

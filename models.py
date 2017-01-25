@@ -178,6 +178,22 @@ class DscManagedModel(models.Model):
         else:
             return True
 
+    def last_update_method(self):
+        create_object = None
+        if self.last_update_activity is not None and hasattr(self.last_update_activity,'create_object'):
+            create_object = self.last_update_activity.create_object
+        elif self.create_activity is not None and hasattr(self.create_activity,'create_object'):
+            create_object = self.create_activity.create_object
+
+        if create_object is not None:
+            assert isinstance(create_object, DeviceServerAddModel)
+            if create_object.use_uploaded_xmi_file:
+                return 'file'
+            elif create_object.use_url_xmi_file:
+                return 'url'
+        return 'manual'
+
+
     def delete(self, activity=None, user=None):
         if activity is None:
             activity = DeviceServerActivity(
@@ -600,6 +616,7 @@ class DeviceServerAddModel(models.Model):
         default=STATUS_NEW,
     )
 
+
     # repository
     process_from_repository = models.BooleanField(verbose_name='Use repository only', blank=True, default=False)
     available_in_repository = models.BooleanField(verbose_name='Available in repository', default=True)
@@ -637,6 +654,7 @@ class DeviceServerAddModel(models.Model):
                                                         'Generated', 'Source Documentation']
                                                        ), null=True, blank=True)
     documentation2_url = models.URLField(verbose_name='URL', blank=True, null=True, default='')
+
 
     # xmi file
     use_uploaded_xmi_file = models.BooleanField(verbose_name='Upload .xmi file to populate database.',
@@ -744,6 +762,16 @@ class DeviceServerAddModel(models.Model):
 
 class DeviceServerUpdateModel(DeviceServerAddModel):
 
+
+    change_update_method = models.BooleanField(verbose_name='Change update method.',
+                                               blank=True,
+                                               default=False)
+
+    last_update_method = models.CharField(max_length=32,
+                                          choices=zip(['manual', 'file', 'url'],
+                                                      ['manual', 'file', 'url']),
+                                          verbose_name='Previous update method: ', default='url', blank=True)
+
     def from_device_server(self, device_server):
         """ Fill fields based on device_server object"""
         assert isinstance(device_server, DeviceServer)
@@ -753,6 +781,8 @@ class DeviceServerUpdateModel(DeviceServerAddModel):
         self.certified = device_server.certified
         self.ds_status = device_server.status
         self.development_status = device_server.development_status
+
+        self.last_update_method = device_server.last_update_method()
 
         if device_server.license is not None:
             self.license_name=device_server.license.name
@@ -801,6 +831,8 @@ class DeviceServerUpdateModel(DeviceServerAddModel):
             self.bus = cl.info.bus
             self.key_words = cl.info.key_words
             self.contact_email = cl.info.contact_email
+
+
 
         return self
 

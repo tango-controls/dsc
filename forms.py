@@ -145,12 +145,36 @@ class DeviceServerAddForm(forms.ModelForm):
 
 class DeviceServerUpdateForm(DeviceServerAddForm):
 
+    def clean(self):
+        """Will check if fields are provided according to checkboxes"""
+        cleaned_data = super(DeviceServerUpdateForm, self).clean()
+        if cleaned_data.get('use_uploaded_xmi_file', False) and \
+                        cleaned_data.get('last_update_method','manual') != 'file':
+            if cleaned_data.get('change_update_method',False):
+                raise forms.ValidationError('To use other than previously selected update method you have to mark'
+                                            'this explicitly. It is to avoid accidental information overwrite.')
+
+        if cleaned_data.get('use_url_xmi_file', False) and \
+                        cleaned_data.get('last_update_method','manual') != 'url':
+            if cleaned_data.get('change_update_method',False):
+                raise forms.ValidationError('To use other than previously selected update method you have to mark'
+                                            'this explicitly. It is to avoid accidental information overwrite.')
+
+        if cleaned_data.get('use_manual_info', False) and \
+                        cleaned_data.get('last_update_method','file') != 'manual':
+            if cleaned_data.get('change_update_method',False):
+                raise forms.ValidationError('To use other than previously selected update method you have to mark'
+                                            'this explicitly. It is to avoid accidental information overwrite.')
+        return cleaned_data
+
     class Meta:
         model = DeviceServerUpdateModel
         updating = True
         fields = ['development_status',
                   'ds_info_copy',
                   'certified',
+                  'change_update_method',
+                  'last_update_method',
                   'use_uploaded_xmi_file',
                   'use_url_xmi_file',
                   'use_manual_info',
