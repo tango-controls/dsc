@@ -19,13 +19,13 @@
 
 <p style="margin-bottom:10pt; margin-top:5pt;">
     {% if family %}
-        Below you will find device servers for <span style="font-weight:bold;">{{family}}</span> family.
+        Below you will find device servers implementing classes of <span style="font-weight:bold;">{{family}}</span> family.
     {% else %}
         {% if search %}
             Below you will find device servers for <span style="font-weight:bold;">{{search}}</span> search string.
         {% else %}
-            Below you will find a table with all device servers.
-            Please click a family name above or use search to narrow the list.
+            Below you will find a table with device servers implementing classes of all families.
+            Please click a family name above or use <a href="{ url 'deviceserver_search' }">search</a> to narrow the list.
         {% endif %}
     {% endif %}
 </p>
