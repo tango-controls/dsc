@@ -186,10 +186,9 @@ class DscManagedModel(models.Model):
             create_object = self.create_activity.create_object
 
         if create_object is not None:
-            assert isinstance(create_object, DeviceServerAddModel)
-            if create_object.use_uploaded_xmi_file:
+            if create_object.first().use_uploaded_xmi_file:
                 return 'file'
-            elif create_object.use_url_xmi_file:
+            elif create_object.first().use_url_xmi_file:
                 return 'url'
         return 'manual'
 
@@ -763,7 +762,7 @@ class DeviceServerAddModel(models.Model):
 class DeviceServerUpdateModel(DeviceServerAddModel):
 
 
-    change_update_method = models.BooleanField(verbose_name='Change update method.',
+    change_update_method = models.BooleanField(verbose_name='Change update method',
                                                blank=True,
                                                default=False)
 

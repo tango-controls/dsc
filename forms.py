@@ -11,6 +11,7 @@ from tango.forms import BaseForm
 from xmi_parser import TangoXmiParser
 import dal.autocomplete
 from django.core.urlresolvers import reverse_lazy
+from django.core.validators import validate_email
 
 
 class DeviceServerFilterForm(BaseForm):
@@ -39,6 +40,7 @@ class DeviceServerSearchForm(forms.Form):
 
 class DeviceServerAddForm(forms.ModelForm):
 
+
     def clean(self):
         """Will check if fields are provided according to checkboxes"""
         cleaned_data = super(DeviceServerAddForm, self).clean()
@@ -48,6 +50,7 @@ class DeviceServerAddForm(forms.ModelForm):
             raise forms.ValidationError('You must provide either .XMI file or enter information manually.')
 
         if cleaned_data['use_url_xmi_file']:
+            cleaned_data['contact_email'] = ''
             xmi_url = cleaned_data.get('xmi_file_url', None)
             if xmi_url is None or xmi_url=='':
                 raise forms.ValidationError("You have to provide a valid URL.")
@@ -93,6 +96,8 @@ class DeviceServerAddForm(forms.ModelForm):
                 parser = TangoXmiParser(xml_string=xmi_string)
 
                 is_valid, message = parser.is_valid()
+
+                cleaned_data['contact_email']=''
 
                 if not is_valid:
                     raise forms.ValidationError(message)
@@ -145,27 +150,33 @@ class DeviceServerAddForm(forms.ModelForm):
 
 class DeviceServerUpdateForm(DeviceServerAddForm):
 
+
     def clean(self):
         """Will check if fields are provided according to checkboxes"""
         cleaned_data = super(DeviceServerUpdateForm, self).clean()
-        if cleaned_data.get('use_uploaded_xmi_file', False) and \
+        if cleaned_data.get('use_uploaded_xmi_file', True) and \
                         cleaned_data.get('last_update_method','manual') != 'file':
-            if cleaned_data.get('change_update_method',False):
+            if not cleaned_data.get('change_update_method',False):
                 raise forms.ValidationError('To use other than previously selected update method you have to mark'
                                             'this explicitly. It is to avoid accidental information overwrite.')
 
-        if cleaned_data.get('use_url_xmi_file', False) and \
+        if cleaned_data.get('use_url_xmi_file', True) and \
                         cleaned_data.get('last_update_method','manual') != 'url':
-            if cleaned_data.get('change_update_method',False):
+            if not cleaned_data.get('change_update_method',False):
                 raise forms.ValidationError('To use other than previously selected update method you have to mark'
                                             'this explicitly. It is to avoid accidental information overwrite.')
 
-        if cleaned_data.get('use_manual_info', False) and \
+        if cleaned_data.get('use_manual_info', True) and \
                         cleaned_data.get('last_update_method','file') != 'manual':
-            if cleaned_data.get('change_update_method',False):
+            if not cleaned_data.get('change_update_method',False):
                 raise forms.ValidationError('To use other than previously selected update method you have to mark'
                                             'this explicitly. It is to avoid accidental information overwrite.')
+            validate_email(cleaned_data.get('contact_email'))
+
         return cleaned_data
+
+    last_update_method = forms.CharField(widget=forms.HiddenInput(), required=False)
+    contact_email = forms.CharField()
 
     class Meta:
         model = DeviceServerUpdateModel
