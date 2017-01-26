@@ -59,6 +59,7 @@ class DeviceServerTable(tables.Table):
         model = DeviceServer
         fields = ('name',)
         sequence = ('name', 'family', 'manufacturers', 'products')
+        template = 'dsc/inc/ds_table.html'
 
 
 class DeviceServerSearchTable(DeviceServerTable):
@@ -68,6 +69,7 @@ class DeviceServerSearchTable(DeviceServerTable):
         fields = ('name', 'family', 'manufacturers', 'products')
         sequence = ('name', 'family', 'manufacturers', 'products')
         exclude = ('license',)
+        template = 'dsc/inc/ds_table.html'
 
 
 class DSCTooltipTable(tables.Table):

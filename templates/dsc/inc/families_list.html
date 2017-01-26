@@ -1,10 +1,10 @@
 {% load cms_tags %}
-<span style="margin-right:5pt;"><b><a href="{% url 'deviceserver_class_families' %}">All</a></b>
+<span style="margin-right:5pt;"><b><a href="{% url 'deviceserver_class_families' %}#ds-table">All</a></b>
         ({{count_all}} device servers)
     </span>
 {% for f, count in families_count %}
     {% if count != 0 %}
-    <span style="margin-right:5pt;"><b><a href="{% url 'deviceserver_class_families' %}?family={{f}}">{{f}}</a></b>({{count}}){% if not forloop.last %},{% endif %}
+    <span style="margin-right:5pt;"><b><a href="{% url 'deviceserver_class_families' %}?family={{f}}#ds-table">{{f}}</a></b>({{count}}){% if not forloop.last %},{% endif %}
     </span>
     {% endif %}
 {% endfor %}
