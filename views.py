@@ -139,6 +139,7 @@ def device_servers_list(request):
     for repo in repositories:
         ds = repo.device_server
         if ds is not None and not ds_list.has_key(ds.pk) and ds.is_valid():
+            assert isinstance(ds,dsc_models.DeviceServer)
             if ds.last_update_activity is not None:
                 last_update = ds.last_update_activity.created_at
             else:
@@ -148,8 +149,35 @@ def device_servers_list(request):
                 'detail_url': request.build_absolute_uri(reverse('deviceserver_detail', kwargs={'pk': ds.pk})),
                 'update_url': request.build_absolute_uri(reverse('deviceserver_update', kwargs={'pk': ds.pk})),
                 'last_update': last_update,
+                'last_update_method': ds.last_update_method(),
+                'repository_url': str(repo.url),
+                'repository_contact_email': str(repo.contact_email),
+                'development_status': ds.development_status,
+                'status': ds.status,
+                'certified': str(ds.certified),
+                'license': str(ds.license),
                 'tag': repo.tag
             }
+            families = []
+            manufacturers = []
+            products = []
+            buses = []
+            cl_names = []
+            for cl in ds.device_classes.filter(invalidate_activity=None):
+                families.append(cl.info.class_family)
+                manufacturers.append(cl.info.manufacturer)
+                products.append(cl.info.product_reference)
+                buses.append(cl.info.bus)
+                cl_names.append(cl.name)
+
+            ds_list[ds.pk]['families'] = families
+            ds_list[ds.pk]['manufacturers'] = manufacturers
+            ds_list[ds.pk]['products'] = products
+            ds_list[ds.pk]['buses'] = buses
+            ds_list[ds.pk]['class_names'] = cl_names
+
+
+
 
 
     return JsonResponse(ds_list)
