@@ -847,7 +847,7 @@ def filtered_device_servers(family=None, manufacturer=None, product=None, bus=No
         q = q.filter(device_classes__info__product_reference__icontains=product)
 
     if family is not None:
-        q = q.filter(device_classes__info__class_family__icontains=family)
+        q = q.filter(device_classes__info__class_family=family)
 
     if bus is not None:
         q = q.filter(device_classes__info__bus__icontains=bus)
