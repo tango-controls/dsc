@@ -176,7 +176,7 @@ class DeviceServerUpdateForm(DeviceServerAddForm):
         return cleaned_data
 
     last_update_method = forms.CharField(widget=forms.HiddenInput(), required=False)
-    contact_email = forms.CharField()
+    contact_email = forms.CharField(required=False)
 
     class Meta:
         model = DeviceServerUpdateModel
