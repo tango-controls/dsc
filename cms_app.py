@@ -6,7 +6,7 @@ from cms.app_base import CMSApp
 from cms.apphook_pool import apphook_pool
 
 class DSCApphook(CMSApp):
-    name = _("Device Servers Catalogue")
+    name = _("Device Classes Catalogue")
     urls = ["dsc.urls_dsc"]
 
 apphook_pool.register(DSCApphook)

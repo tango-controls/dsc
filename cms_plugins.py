@@ -15,7 +15,7 @@ from dsc.tables import DeviceServerTable
 class DeviceServerPlugin(CMSPluginBase): #LastPublishedObjectPluginBase
 
     model = DeviceServerPluginModel
-    name = 'Device Servers Catalogue'
+    name = 'Device Classes Catalogue'
     render_template = "dsc/catalogue_frontpage.html"
     cache = False
 
@@ -81,7 +81,7 @@ plugin_pool.register_plugin(DeviceServerPlugin)
 
 class DeviceServersListPlugin(CMSPluginBase):
     """ Presents table with randomly picked-up device servers"""
-    name = 'Device Servers random list'
+    name = 'Device Classes random list'
     render_template = "dsc/inc/deviceserver_list.html"
     cache = False
 
@@ -124,7 +124,7 @@ plugin_pool.register_plugin(DeviceServersListPlugin)
 
 class DeviceServersRandomListPlugin(CMSPluginBase):
     """ Presents table with randomly picked-up device servers"""
-    name = 'Device Servers random list'
+    name = 'Device Classes random list'
     render_template = "dsc/inc/deviceserver_randomlist.html"
     cache = False
 
@@ -167,7 +167,7 @@ plugin_pool.register_plugin(DeviceServersRandomListPlugin)
 class DeviceServersActivityPlugin(CMSPluginBase): #LastPublishedObjectPluginBase
     # TODO device server plugin filters etc
     model = DeviceServersActivityPluginModel
-    name = 'Device Servers Catalogue Activity'
+    name = 'Device Classes Catalogue Activity'
     render_template = "dsc/inc/catalogue_activities.html"
     cache = False
 

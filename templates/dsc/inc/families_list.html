@@ -1,6 +1,6 @@
 {% load cms_tags %}
 <span style="margin-right:5pt;"><b><a href="{% url 'deviceserver_class_families' %}#ds-table">All</a></b>
-        ({{count_all}} device servers)
+        ({{count_all}} device classes)
     </span>
 {% for f, count in families_count %}
     {% if count != 0 %}

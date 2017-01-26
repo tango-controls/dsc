@@ -64,7 +64,8 @@
     <h4>This device server is deleted.<br />Information provided here may be no longer valid.</h4>
 {% endif %}
 {% if deviceserver.status != 'deleted' and not deviceserver.is_valid %}
-    <h4>This is historical information of {{deviceserver.invalidate_activity.device_server.name}} device server.
+    <h4>This is historical information of device classes implemented in
+        {{deviceserver.invalidate_activity.device_server.name}} device server.
         You may find valid information
         <a href="{% url 'deviceserver_detail' deviceserver.invalidate_activity.device_server.pk %}"> here.</a>
     </h4>
@@ -93,7 +94,13 @@
     </a>
 
     {% else %}
-    This device server is not available in a public repository. Please contact the
+    {% if deviceserver.device_classes.all.count > 1 %}
+    These device classes are
+    {% else %}
+    This device class is
+    {% endif %}
+
+    not available in a public repository. Please contact the
     author{% if deviceserver.repository.contact_email %} {{ deviceserver.repository.contact_email|urlize }}{% endif %}.
     {% endif  %}
     {% if deviceserver.repository.download_url %}<br />

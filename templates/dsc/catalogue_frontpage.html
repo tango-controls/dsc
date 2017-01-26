@@ -12,33 +12,33 @@
 </p>
 {% include 'dsc/inc/deviceserver_fulltextsearch.html' %}
 <p style="font-size:120%;margin-top:0px;">
-    Here you will find a list of device servers available in the community. Device servers provides among others
-    connectivity to equipment. So, if you want to connect your hardware to Tango Controls please check this list.
+    Here you will find device classes available in the community. Device classes provide among others
+    connectivity to equipment. So, if you want to connect your hardware to Tango Controls please check this catalogue.
     One or more device classes can be wrapped as a device server to connect one or more devices to your Tango control
     system. Tango imposes no limit on the number of devices or classes in a device server. It depends on the
-    implementation of the device server.
+    implementation of the device class.
 </p>
 <p>
     <span style="font-size:120%;font-weight:bold;">
-        Did you write a new device server?
+        Did you write a new device class?
         <a href="{{ add_url }}">Please share it.</a>
     </span>
 </p>
 <p style="margin-bottom:10pt; margin-top:5pt;" id="ds-table">
     {% if family %}
-        Below you will find device servers implementing classes of <span style="font-weight:bold;">{{family}}</span> family.
+        Below you will find device classes of <span style="font-weight:bold;">{{family}}</span> family.
     {% else %}
         {% if search %}
-            Below you will find device servers for <span style="font-weight:bold;">{{search}}</span> search string.
+            Below you will find device classes for <span style="font-weight:bold;">{{search}}</span> search string.
         {% else %}
-            Below you will find a table with all device servers.
+            Below you will find a table with all device classes.
             Please click a family name above or use search to narrow the list.
         {% endif %}
     {% endif %}
     You may also use <a href="{% url 'deviceserver_advanced_search' %}">
         <span style="font-weight:bold;font-size:120%;">advanced search</span>
     </a>
-    to find a device server you are looking for.</p>
+    to find a device class you are looking for.</p>
 </p>
 <p>
 {% include 'dsc/inc/deviceserver_list.html' %}

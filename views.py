@@ -57,13 +57,13 @@ class DeviceServerDetailView(BreadcrumbMixinDetailView, CustomModelDetailView, C
             context['specifications'][cl.name]['info'] = cl.info
             context['specifications'][cl.name]['cl'] = cl
             info = cl.info
-            context['og_description'] = "This is a device server of "
+            context['og_description'] = "This is a device server providing classes of "
             if info is not None:
                 assert isinstance(info,dsc_models.DeviceClassInfo)
                 if info.contact_email is not None and len(info.contact_email)>0 \
                         and info.contact_email not in context['contacts']:
                     context['contacts'].append(info.contact_email)
-                if context['og_description'] == "This is a device server of ":
+                if context['og_description'] == "This is a device server providing classes of ":
                     context['og_description'] += info.class_family
                 else:
                     context['og_description'] += 'and '+ info.class_family
@@ -101,19 +101,25 @@ class DeviceServerVerifyView(DeviceServerDetailView):
                 verify_activity = dsc_models.DeviceServerActivity(
                     device_server=device_server,
                     activity_type=dsc_models.DS_ACTIVITY_VERIFICATION,
-                    activity_info='Last update of the device server has been verified by %s.' %
+                    activity_info='Last update to device class(es) have been verified by %s.' %
                                   self.request.user.get_full_name(),
                     created_by=self.request.user
                 )
                 device_server.status=dsc_models.STATUS_VERIFIED
                 verify_activity.save()
                 device_server.save()
-            context['message'] = 'This device server is verified.'
+            if device_server.device_classes.all().count()>1:
+                context['message'] = 'Classes provided by device server are verified.'
+            else:
+                context['message'] = 'Class provided by this device server is verified.'
         else:
             if device_server.status!=dsc_models.STATUS_VERIFIED:
                 context['message']='Only add or update operations can be verified.'
             if device_server.status==dsc_models.STATUS_VERIFIED:
-                context['message']='This device server is already verified.'
+                if device_server.device_classes.all().count() == 1:
+                    context['message']='This device class is already verified.'
+                else:
+                    context['message'] = 'These device classes are already verified.'
 
 
         return context
@@ -335,8 +341,7 @@ class DeviceServerFamilyAutocomplete(dal.autocomplete.Select2ListView):
     """Provide autocomplete feature for product fields"""
     def get_list(self):
         f = list(dsc_models.DeviceClassInfo.objects.all().order_by('class_family').values_list('class_family', flat=True).distinct())
-        if self.request.GET.get('q',None) is not None:
-            f.append(self.request.GET.get('q',None))
+
         return f
 
 
@@ -410,7 +415,7 @@ class DeviceServerUpdateView(BreadcrumbMixinDetailView, UpdateView):
 
             # mark  activity
             activity = dsc_models.DeviceServerActivity(activity_type=dsc_models.DS_ACTIVITY_EDIT,
-                                                       activity_info='The device server has been updated.',
+                                                       activity_info='The device class has been updated.',
                                                        created_by=self.request.user
                                                        )
             # it is related by other object, so it is good if it has primary key
@@ -452,7 +457,7 @@ def deviceserver_delete_view(request, pk):
     else:
         with transaction.atomic():
             activity = dsc_models.DeviceServerActivity(activity_type=dsc_models.DS_ACTIVITY_DELETE,
-                                                       activity_info='Device server %s has been deleted by %s %s.' % \
+                                                       activity_info='The device class %s has been deleted by %s %s.' % \
                                                                  (device_server.name,
                                                                   request.user.first_name,
                                                                   request.user.last_name),
@@ -480,19 +485,22 @@ def deviceserver_verify_view(request, pk):
                 verify_activity = dsc_models.DeviceServerActivity(
                     device_server=device_server,
                     activity_type=dsc_models.DS_ACTIVITY_VERIFICATION,
-                    activity_info='Last update of the device server has been verified by %s.' %
+                    activity_info='Recent update of device classes in this device server has been verified by %s.' %
                                   request.user.get_full_name(),
                     created_by=request.user
                 )
                 device_server.status=dsc_models.STATUS_VERIFIED
                 verify_activity.save()
                 device_server.save()
-            context['message'] = 'This device server is verified.'
+            if device_server.device_classes.all().count()>1:
+                context['message'] = 'Device classes are verified.'
+            else:
+                context['message'] = 'The device class is verified.'
         else:
             if device_server.status!=dsc_models.STATUS_VERIFIED:
                 context['message']='Only add or update operations can be verified.'
             if device_server.status==dsc_models.STATUS_VERIFIED:
-                context['message']='This device server is already verified.'
+                context['message']='This device server and classes it provides are already verified.'
 
     return HttpResponseRedirect(reverse('deviceserver_detail', kwargs={'pk' : device_server.pk}))
 
@@ -522,7 +530,7 @@ class DeviceServerAddView(BreadcrumbMixinDetailView, FormView):
 
             # mark  activity
             activity = dsc_models.DeviceServerActivity(activity_type=dsc_models.DS_ACTIVITY_ADD,
-                                                       activity_info='The device server has been added to catalogue.',
+                                                       activity_info='The device class has been added to catalogue.',
                                                        created_by=self.request.user
                                                        )
             # it is related by other object, so it is good if it has primary key

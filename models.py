@@ -846,7 +846,7 @@ def filtered_device_servers(family=None, manufacturer=None, product=None, bus=No
     if product is not None:
         q = q.filter(device_classes__info__product_reference__icontains=product)
 
-    if family is not None:
+    if family is not None and len(family)>0:
         q = q.filter(device_classes__info__class_family=family)
 
     if bus is not None:
@@ -1174,7 +1174,7 @@ class DeviceServerPluginModel(CMSPlugin):
     # TODO prepare plugin for administration CMS
     class Meta:
         app_label = 'dsc'
-        verbose_name = 'Device Servers Catalogue plugin'
+        verbose_name = 'Device Classes Catalogue plugin'
 
 
 class DeviceServersActivityPluginModel(CMSPlugin):
@@ -1185,5 +1185,5 @@ class DeviceServersActivityPluginModel(CMSPlugin):
     # TODO prepare plugin for administration CMS
     class Meta:
         app_label = 'dsc'
-        verbose_name = 'Device Servers Catalogue Activity plugin'
+        verbose_name = 'Device Classes Catalogue Activity plugin'
 

@@ -119,7 +119,7 @@ class DeviceServerAddForm(forms.ModelForm):
 
         if cleaned_data.get('repository_url','')=='' and cleaned_data.get('repository_contact','')=='':
             raise forms.ValidationError('You must provide either repostiry URL or contact email to let someone  '
-                                        'access your device server.')
+                                        'access your device classes.')
 
         return cleaned_data
 

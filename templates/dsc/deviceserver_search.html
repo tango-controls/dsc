@@ -16,23 +16,23 @@
         Below you will find device servers implementing classes of <span style="font-weight:bold;">{{family}}</span> family.
     {% else %}
         {% if search %}
-            Below you will find device servers/classes for <span style="font-weight:bold;">{{search}}</span> search string.
+            Below you will find device classes for <span style="font-weight:bold;">{{search}}</span> search string.
         {% else %}
-            Below you will find a table with all device servers.
+            Below you will find a table with device servers for all device classes.
             Please click a family name above or use search to narrow the list.
         {% endif %}
     {% endif %}
     You may also use <a href="{% url 'deviceserver_advanced_search' %}">
         <span style="font-weight:bold;font-size:120%;">advanced search</span>
     </a>
-    to find a device server you are looking for.</p>
+    to find a device class you are looking for.</p>
 </p>
 <p>
 {% include 'dsc/inc/deviceserver_list.html' %}
 </p>
 
 
-<h4>Cannot find any device server you need?</h4>
+<h4>Cannot find any device class you need?</h4>
     Don't worry. Please ask on
         <span style="font-weight:bold;font-size:120%;">
             {{ 'info@tango-controls.org'|urlize|safe_for_robots }}</span>
