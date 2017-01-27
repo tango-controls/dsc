@@ -385,8 +385,28 @@ class DeviceServerDocumentation(DscManagedModel):
                                                       ['README', 'Manual', 'Installation Guide',
                                                        'Generated', 'Source Documentation']
                                                       ))
-    url = models.URLField(verbose_name='URL')
+    title = models.CharField(max_length=255,
+                             blank=True,
+                             null=True,
+                             default='',
+                             verbose_name='Title')
+
+    documentation_file = models.FileField(verbose_name='Document',
+                                          upload_to='dsc_readmes',
+                                          null=True,
+                                          blank=True,
+                                          max_length=2000000
+                                          )
+
+    url = models.URLField(verbose_name='URL', null=True, blank=True, default='')
+
     device_server = models.ForeignKey(DeviceServer, related_name='documentation')
+
+    def get_documentation_url(self):
+        if self.documentation_file is not None and hasattr(self.documentation_file,'url'):
+            return self.documentation_file.url
+        else:
+            return self.url
 
     def __str__(self):
         return '%s' % self.url
@@ -591,6 +611,9 @@ class DeviceServerAddModel(models.Model):
     ds_info_copy = models.BooleanField(verbose_name='Guess device server name and description from class info?',
                                        blank=True, default=True)
 
+    script_operation = models.BooleanField(verbose_name='Updated with script?',
+                                           blank=True, default=False)
+
     name = models.CharField(max_length=64, verbose_name='Device server name', blank=True, default='')
     description = models.TextField(verbose_name='Description', blank=True, default='')
 
@@ -636,23 +659,77 @@ class DeviceServerAddModel(models.Model):
     upload_readme = models.BooleanField(verbose_name='Upload README', blank=True, default=False)
     readme_file = models.FileField(verbose_name='README file', upload_to='dsc_readmes',
                                    blank=True, null=True, max_length=100000)
-    other_documentation1 = models.BooleanField(verbose_name='Link to other documentation', blank=True, default=False)
+    other_documentation1 = models.BooleanField(verbose_name='Other documentation - 1', blank=True, default=False)
+
     documentation1_type = models.SlugField(verbose_name='Documentation type',
                                            choices=zip(['README', 'Manual', 'InstGuide',
                                                        'Generated', 'SourceDoc'],
                                                       ['README', 'Manual', 'Installation Guide',
                                                        'Generated', 'Source Documentation']
                                                       ), null=True, blank=True)
+
     documentation1_url = models.URLField(verbose_name='URL', blank=True, null=True, default='')
 
-    other_documentation2 = models.BooleanField(verbose_name='Link to other documentation', blank=True, default=False)
+    documentation1_title = models.CharField(max_length=255,
+                                            blank=True,
+                                            null=True,
+                                            default='',
+                                            verbose_name='Title')
+
+    documentation1_file = models.FileField(verbose_name='Document',
+                                          upload_to='dsc_readmes',
+                                          null=True,
+                                          blank=True,
+                                          max_length=2000000
+                                          )
+
+    other_documentation2 = models.BooleanField(verbose_name='Other documentation - 2', blank=True, default=False)
+
     documentation2_type = models.SlugField(verbose_name='Documentation type',
                                            choices=zip(['README', 'Manual', 'InstGuide',
                                                         'Generated', 'SourceDoc'],
                                                        ['README', 'Manual', 'Installation Guide',
                                                         'Generated', 'Source Documentation']
                                                        ), null=True, blank=True)
+
     documentation2_url = models.URLField(verbose_name='URL', blank=True, null=True, default='')
+
+    documentation2_title = models.CharField(max_length=255,
+                                            blank=True,
+                                            null=True,
+                                            default='',
+                                            verbose_name='Title')
+
+    documentation2_file = models.FileField(verbose_name='Document',
+                                           upload_to='dsc_readmes',
+                                           null=True,
+                                           blank=True,
+                                           max_length=2000000
+                                           )
+
+    other_documentation3 = models.BooleanField(verbose_name='Other documentation - 3', blank=True, default=False)
+
+    documentation3_type = models.SlugField(verbose_name='Documentation type',
+                                           choices=zip(['README', 'Manual', 'InstGuide',
+                                                        'Generated', 'SourceDoc'],
+                                                       ['README', 'Manual', 'Installation Guide',
+                                                        'Generated', 'Source Documentation']
+                                                       ), null=True, blank=True)
+
+    documentation3_url = models.URLField(verbose_name='URL', blank=True, null=True, default='')
+
+    documentation3_title = models.CharField(max_length=255,
+                                            blank=True,
+                                            null=True,
+                                            default='',
+                                            verbose_name='Title')
+
+    documentation3_file = models.FileField(verbose_name='Document',
+                                           upload_to='dsc_readmes',
+                                           null=True,
+                                           blank=True,
+                                           max_length=2000000
+                                           )
 
 
     # xmi file
@@ -795,16 +872,27 @@ class DeviceServerUpdateModel(DeviceServerAddModel):
             self.repository_path = device_server.repository.path_in_repository
             self.repository_tag = device_server.repository.tag
 
-        docs = device_server.documentation.all()
+        docs = device_server.documentation.filter(invalidate_activity=None)
         if len(docs)>0:
             self.other_documentation1 = True
             self.documentation1_type = docs[0].documentation_type
+            self.documentation1_title = docs[0].title
+            self.documentation1_file = docs[0].documentation_file
             self.documentation1_url = docs[0].url
 
         if len(docs)>1:
             self.other_documentation2 = True
             self.documentation2_type = docs[1].documentation_type
+            self.documentation2_title = docs[1].title
+            self.documentation2_file = docs[1].documentation_file
             self.documentation2_url = docs[1].url
+
+        if len(docs)>2:
+            self.other_documentation3 = True
+            self.documentation3_type = docs[3].documentation_type
+            self.documentation3_title = docs[3].title
+            self.documentation3_file = docs[3].documentation_file
+            self.documentation3_url = docs[3].url
 
         cls = device_server.device_classes.all()
 
@@ -1025,22 +1113,110 @@ def create_or_update(update_object, activity, device_server=None):
     if update_object.upload_readme:
         device_server.readme = update_object.readme_file
 
-    # old documentation is not invalidated automatically but added
+    # old documentation will be
+    current_docs = device_server.documentation.filter(invalidate_activity=None)
     if update_object.other_documentation1:
-        new_documentation1 = DeviceServerDocumentation(documentation_type=update_object.documentation1_type,
-                                                       url=update_object.documentation1_url,
-                                                       create_activity=activity,
-                                                       device_server=device_server)
-        new_documentation1.save()
+        new_documentation = DeviceServerDocumentation(documentation_type=update_object.documentation1_type,
+                                                      url=update_object.documentation1_url,
+                                                      title=update_object.documentation1_title,
+                                                      documentation_file=update_object.documentation1_file,
+                                                      create_activity=activity,
+                                                      device_server=device_server)
 
+        if current_docs.count()>0:
+            doc = current_docs[0]
+            assert isinstance(doc, DeviceServerDocumentation)
+            if doc.documentation_type != update_object.documentation1_type \
+                    or update_object.documentation1_file is not None \
+                    or update_object.documentation1_url != doc.url \
+                    or update_object.documentation1_title != doc.title:
+
+                new_documentation.save()
+
+                if backup_device_server is not None:
+                    doc.device_server = backup_device_server
+                    doc.make_invalid(activity=activity)
+                    doc.save()
+                else:
+                    doc.make_invalid(activity=activity)
+                    doc.save()
+
+        else:
+            new_documentation.save()
+
+    elif current_docs.count()>0:
+        doc = current_docs[0]
+        doc.make_invalid(activity=activity)
+        doc.save()
+
+    # doc 2
     if update_object.other_documentation2:
-        new_documentation2 = DeviceServerDocumentation(documentation_type=update_object.documentation2_type,
-                                                       url=update_object.documentation2_url,
-                                                       create_activity=activity,
-                                                       device_server=device_server)
-        new_documentation2.save()
+        new_documentation = DeviceServerDocumentation(documentation_type=update_object.documentation2_type,
+                                                      url=update_object.documentation2_url,
+                                                      title=update_object.documentation2_title,
+                                                      documentation_file=update_object.documentation2_file,
+                                                      create_activity=activity,
+                                                      device_server=device_server)
+        if current_docs.count() > 1:
+            doc = current_docs[1]
+            assert isinstance(doc, DeviceServerDocumentation)
+            if doc.documentation_type != update_object.documentation2_type \
+                    or update_object.documentation2_file is not None \
+                    or update_object.documentation2_url != doc.url \
+                    or update_object.documentation2_title != doc.title:
 
-    # get classes and interface
+                new_documentation.save()
+
+                if backup_device_server is not None:
+                    doc.device_server = backup_device_server
+                    doc.make_invalid(activity=activity)
+                    doc.save()
+                else:
+                    doc.make_invalid(activity=activity)
+                    doc.save()
+        else:
+            new_device_server.save()
+
+    elif current_docs.count() > 1:
+        doc = current_docs[1]
+        doc.make_invalid(activity=activity)
+        doc.save()
+
+    # doc 3
+    if update_object.other_documentation3:
+        new_documentation = DeviceServerDocumentation(documentation_type=update_object.documentation3_type,
+                                                      url=update_object.documentation3_url,
+                                                      title=update_object.documentation3_title,
+                                                      documentation_file=update_object.documentation3_file,
+                                                      create_activity=activity,
+                                                      device_server=device_server)
+        if current_docs.count() > 2:
+            doc = current_docs[2]
+            assert isinstance(doc, DeviceServerDocumentation)
+            if doc.documentation_type != update_object.documentation3_type \
+                    or update_object.documentation3_file is not None \
+                    or update_object.documentation3_url != doc.url \
+                    or update_object.documentation3_title != doc.title:
+
+                new_documentation.save()
+
+                if backup_device_server is not None:
+                    doc.device_server = backup_device_server
+                    doc.make_invalid(activity=activity)
+                    doc.save()
+                else:
+                    doc.make_invalid(activity=activity)
+                    doc.save()
+        else:
+            new_device_server.save()
+
+    elif current_docs.count() > 2:
+        doc = current_docs[2]
+        doc.make_invalid(activity=activity)
+        doc.save()
+
+
+            # get classes and interface
     if ( update_object.use_uploaded_xmi_file or update_object.use_url_xmi_file ) and parser is not None:
         # for xmi file all old device classes and relation are moved to backup and new are created from scratch
         if not update_object.add_class:
