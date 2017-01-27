@@ -162,7 +162,8 @@ def device_servers_list(request):
                 'status': ds.status,
                 'certified': str(ds.certified),
                 'license': str(ds.license),
-                'tag': repo.tag
+                'tag': repo.tag,
+                'updated_by_script': ds.updated_by_script()
             }
 
             families = []
@@ -189,11 +190,9 @@ def device_servers_list(request):
                     'title': str(doc.title),
                     'documentation_type': doc.documentation_type,
                     'url': doc.get_documentation_url(),
-                    'updated_by_script': False
+                    'updated_by_script': doc.updated_by_script()
                 }
 
-                if doc.create_activity is not None and doc.create_activity.create_object.all().count()>0:
-                    doc_dict['updated_by_script'] = doc.create_activity.create_object.all()[0].script_operation
                 docs.append(doc_dict)
             ds_list[ds.pk]['documentation'] = docs
 

@@ -185,12 +185,23 @@ class DscManagedModel(models.Model):
         elif self.create_activity is not None and hasattr(self.create_activity,'create_object'):
             create_object = self.create_activity.create_object
 
-        if create_object is not None:
-            if create_object.first().use_uploaded_xmi_file:
+        if create_object is not None and create_object.all().count()>0:
+            if  create_object.first().use_uploaded_xmi_file:
                 return 'file'
             elif create_object.first().use_url_xmi_file:
                 return 'url'
         return 'manual'
+
+    def updated_by_script(self):
+        create_object = None
+        if self.last_update_activity is not None and hasattr(self.last_update_activity, 'create_object'):
+            create_object = self.last_update_activity.create_object
+        elif self.create_activity is not None and hasattr(self.create_activity, 'create_object'):
+            create_object = self.create_activity.create_object
+
+        if create_object is not None and create_object.all().count()>0:
+            return create_object.first().script_operation
+        return False
 
 
     def delete(self, activity=None, user=None):
@@ -1115,6 +1126,7 @@ def create_or_update(update_object, activity, device_server=None):
 
     # old documentation will be
     current_docs = device_server.documentation.filter(invalidate_activity=None)
+
     if update_object.other_documentation1:
         new_documentation = DeviceServerDocumentation(documentation_type=update_object.documentation1_type,
                                                       url=update_object.documentation1_url,
@@ -1123,9 +1135,10 @@ def create_or_update(update_object, activity, device_server=None):
                                                       create_activity=activity,
                                                       device_server=device_server)
 
-        if current_docs.count()>0:
+        if current_docs.count() > 0 and (not update_object.script_operation or current_docs[0].updated_by_script()):
             doc = current_docs[0]
             assert isinstance(doc, DeviceServerDocumentation)
+
             if doc.documentation_type != update_object.documentation1_type \
                     or update_object.documentation1_file is not None \
                     or update_object.documentation1_url != doc.url \
@@ -1144,7 +1157,7 @@ def create_or_update(update_object, activity, device_server=None):
         else:
             new_documentation.save()
 
-    elif current_docs.count()>0:
+    elif current_docs.count()>0 and (not update_object.script_operation or current_docs[0].updated_by_script()):
         doc = current_docs[0]
         doc.make_invalid(activity=activity)
         doc.save()
@@ -1157,7 +1170,7 @@ def create_or_update(update_object, activity, device_server=None):
                                                       documentation_file=update_object.documentation2_file,
                                                       create_activity=activity,
                                                       device_server=device_server)
-        if current_docs.count() > 1:
+        if current_docs.count() > 1 and (not update_object.script_operation or current_docs[1].updated_by_script()):
             doc = current_docs[1]
             assert isinstance(doc, DeviceServerDocumentation)
             if doc.documentation_type != update_object.documentation2_type \
@@ -1177,7 +1190,7 @@ def create_or_update(update_object, activity, device_server=None):
         else:
             new_device_server.save()
 
-    elif current_docs.count() > 1:
+    elif current_docs.count() > 1  and (not update_object.script_operation or current_docs[1].updated_by_script()):
         doc = current_docs[1]
         doc.make_invalid(activity=activity)
         doc.save()
@@ -1190,7 +1203,7 @@ def create_or_update(update_object, activity, device_server=None):
                                                       documentation_file=update_object.documentation3_file,
                                                       create_activity=activity,
                                                       device_server=device_server)
-        if current_docs.count() > 2:
+        if current_docs.count() > 2 and (not update_object.script_operation or current_docs[2].updated_by_script()):
             doc = current_docs[2]
             assert isinstance(doc, DeviceServerDocumentation)
             if doc.documentation_type != update_object.documentation3_type \
@@ -1210,14 +1223,14 @@ def create_or_update(update_object, activity, device_server=None):
         else:
             new_device_server.save()
 
-    elif current_docs.count() > 2:
+    elif current_docs.count() > 2 and (not update_object.script_operation or current_docs[2].updated_by_script()):
         doc = current_docs[2]
         doc.make_invalid(activity=activity)
         doc.save()
 
 
             # get classes and interface
-    if ( update_object.use_uploaded_xmi_file or update_object.use_url_xmi_file ) and parser is not None:
+    if (update_object.use_uploaded_xmi_file or update_object.use_url_xmi_file ) and parser is not None:
         # for xmi file all old device classes and relation are moved to backup and new are created from scratch
         if not update_object.add_class:
             for cl in device_server.device_classes.all():
