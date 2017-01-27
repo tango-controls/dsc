@@ -164,6 +164,7 @@ def device_servers_list(request):
                 'license': str(ds.license),
                 'tag': repo.tag
             }
+
             families = []
             manufacturers = []
             products = []
@@ -181,10 +182,20 @@ def device_servers_list(request):
             ds_list[ds.pk]['products'] = products
             ds_list[ds.pk]['buses'] = buses
             ds_list[ds.pk]['class_names'] = cl_names
+            docs = []
+            for doc in ds.device_classes.documentation(invalidate_activity=None):
+                assert isinstance(doc, dsc_models.DeviceServerDocumentation)
+                doc_dict = {
+                    'title': str(doc.title),
+                    'documentation_type': doc.documentation_type,
+                    'url': doc.get_documentation_url(),
+                    'updated_by_script': False
+                }
 
-
-
-
+                if doc.create_activity is not None and doc.create_activity.create_object.all().count()>0:
+                    doc_dict['updated_by_script'] = doc.create_activity.create_object.all()[0].script_operation
+                docs.append(doc_dict)
+            ds_list[ds.pk]['documentation'] = docs
 
     return JsonResponse(ds_list)
 
