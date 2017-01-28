@@ -66,9 +66,11 @@
 {% if deviceserver.status != 'deleted' and not deviceserver.is_valid %}
     <h4>This is historical information of device classes implemented in
         {{deviceserver.invalidate_activity.device_server.name}} device server.
-        You may find valid information
-        <a href="{% url 'deviceserver_detail' deviceserver.invalidate_activity.device_server.pk %}"> here.</a>
+
     </h4>
+        <a href="{% url 'deviceserver_detail' deviceserver.invalidate_activity.device_server.pk %}" style="font-weight:bold;">
+            Use this link to find the valid information.
+        </a>
 {% endif %}
 <p style="margin-top:5pt; margin-bottom:5pt;">
     <span style="font-weight:bold;">Development status:</span>

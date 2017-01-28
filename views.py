@@ -204,7 +204,8 @@ def device_servers_list(request):
                     'title': str(doc.title),
                     'documentation_type': doc.documentation_type,
                     'url': doc.get_documentation_url(),
-                    'updated_by_script': doc.updated_by_script()
+                    'updated_by_script': doc.updated_by_script(),
+                    'pk': doc.pk
                 }
 
                 docs.append(doc_dict)
