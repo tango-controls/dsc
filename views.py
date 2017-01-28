@@ -198,7 +198,7 @@ def device_servers_list(request):
             ds_list[ds.pk]['buses'] = buses
             ds_list[ds.pk]['class_names'] = cl_names
             docs = []
-            for doc in ds.documentation(invalidate_activity=None):
+            for doc in ds.documentation.filter(invalidate_activity=None):
                 assert isinstance(doc, dsc_models.DeviceServerDocumentation)
                 doc_dict = {
                     'title': str(doc.title),
