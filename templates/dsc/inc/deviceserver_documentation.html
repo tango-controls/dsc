@@ -8,13 +8,15 @@
         <p>
             <a href="{{doc.url}}" target="_blank">
                 {% if doc.title %}
-                <span style="font-weight:bold;">{{doc.title}}:</span>
-                {% endif %}
+                <span style="font-weight:bold;">{{doc.title}}</span>
+                {% else %}
                 {{doc.url}}
+                {% endif %}
             </a>
 
         </p>
         {% if not forloop.last or readme or readme_link %}
+            <br />
             <hr />
         {% endif %}
     {% endif %}
@@ -27,9 +29,10 @@
         <p>
             <a href="{{doc.url}}" target="_blank">
                 {% if doc.title %}
-                <span style="font-weight:bold;">{{doc.title}}:</span>
-                {% endif %}
+                <span style="font-weight:bold;">{{doc.title}}</span>
+                {% else %}
                 {{doc.url}}
+                {% endif %}
             </a>
 
         </p>
