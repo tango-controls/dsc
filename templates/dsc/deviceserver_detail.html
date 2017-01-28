@@ -211,32 +211,7 @@
         {% endif %}
     {% endfor %}
     <div id="dsc-documentation-tab" style="word-break: break-all;">
-        {% for doc in deviceserver.documentation.all %}
-            {% if doc.is_valid %}
-                <div>
-                    <span style="font-weight:bold;">{{doc.documentation_type}}:</span>
-                    <a href="{{doc.url}}" target="_blank">{{doc.url}}</a>
-                    <hr />
-                </div>
-            {% endif %}
-        {% endfor %}
-        {% if readme or readme_link %}
-            <div style="word-wrap: break-word;">
-                <h4>README</h4>
-                {% if rst %}
-                    {{ readme|apply_markup:"restructuredtext" }}
-                { % elif md %}
-                    {{readme|apply_markup:"markdown"}}
-                {% else %}
-                    {% if not readme %}
-                        <a href="{{readme_link}}" target="_blank"> Download </a>
-                    {% else %}
-                        {{readme|linebreaks}}
-                    {% endif %}
-                {% endif %}
-            </div>
-        {% endif %}
-
+        {% include 'dsc/inc/deviceserver_documentation.html' %}
     </div>
 
     <div id="dsc-history-tab">

@@ -247,7 +247,7 @@
         {% endif %}
 
         {% if form.use_manual_info.value %}
-        $("#dsc_add_class").show();
+        $("#id_add_class")[0].checked = false
         $("#dsc_manual").show();
         $('#id_use_manual_info')[0].checked = true;
         {% if form.last_update_method %}
@@ -340,6 +340,7 @@
                 // the checkbox is now checked
                 $('#dsc_xmi').hide();
                 $("#dsc_add_class").show();
+                // $("#id_add_class")[0].checked = false;
                 $('#dsc_xmi_url').hide();
                 $('#dsc_manual').show();
                 $('#id_use_uploaded_xmi_file')[0].checked = false;

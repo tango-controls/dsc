@@ -39,7 +39,21 @@ class DeviceServerDetailView(BreadcrumbMixinDetailView, CustomModelDetailView, C
         if context['deviceserver'].is_valid():
             context['device_classes'] = context['deviceserver'].device_classes.filter(invalidate_activity=None)
         else:
+            activity = context['deviceserver'].invalidate_activity
             context['device_classes'] = context['deviceserver'].device_classes.all()
+            context['device_classes'] = context['device_classes']| dsc_models.DeviceClass.objects. \
+                                         filter(device_server__pk=activity.device_server.pk). \
+                                         filter(invalidate_activity=None). \
+                                         filter(create_activity__created_at__lt=activity.created_at). \
+                                         filter(last_update_activity__created_at__lt=activity.created_at)
+
+            context['device_classes'] = context['device_classes'] | dsc_models.DeviceClass.objects. \
+                                         filter(invalidate_activity__device_server__pk=activity.device_server.pk). \
+                                         filter(create_activity__created_at__lte=activity.created_at) . \
+                                         filter(invalidate_activity__created_at__gte=activity.created_at)
+
+            context['device_classes'] = context['device_classes'].distinct()
+
         # for all classes tables of attributes, properties  and so will be provided
         context['specifications'] = {}
         context['contacts'] = []
@@ -391,7 +405,9 @@ class DeviceServerUpdateView(BreadcrumbMixinDetailView, UpdateView):
             and not self.request.user.has_perm('dsc.admin_deviceserver'):
             self.template_name = 'dsc/deviceserver_notauthorized.html'
             return None
-        update_object = dsc_models.DeviceServerUpdateModel().from_device_server(self.device_server)
+
+        update_object = dsc_models.DeviceServerUpdateModel().from_device_server(self.device_server,
+                                                            device_class=self.request.GET.get('device_class', None))
         update_object.use_manual_info = False
         update_object.use_uploaded_xmi_file = False
         update_object.use_url_xmi_file = False
@@ -405,6 +421,9 @@ class DeviceServerUpdateView(BreadcrumbMixinDetailView, UpdateView):
             context['deviceserver'] = self.device_server
         context['deviceserver'] = self.device_server
         context['operation'] = 'update'
+        device_class_pk = self.request.GET.get('device_class', None)
+        if device_class_pk is not None:
+            context['device_class'] = self.device_server.device_classes.filter(pk=device_class_pk).first()
 
         return context
 
@@ -423,16 +442,22 @@ class DeviceServerUpdateView(BreadcrumbMixinDetailView, UpdateView):
             update_object.valid_xmi_string = form.cleaned_data.get('xmi_string', None)
             update_object.save()
 
+            if update_object.add_class:
+                ainfo = 'A device class has been added.'
+            else:
+                ainfo = 'The device class has been updated.'
+
             # mark  activity
             activity = dsc_models.DeviceServerActivity(activity_type=dsc_models.DS_ACTIVITY_EDIT,
-                                                       activity_info='The device class has been updated.',
+                                                       activity_info=ainfo,
                                                        created_by=self.request.user
                                                        )
             # it is related by other object, so it is good if it has primary key
             activity.save()
 
             # create device server
-            self.device_server, old_ds = dsc_models.create_or_update(update_object, activity, self.device_server)
+            self.device_server, old_ds = dsc_models.create_or_update(update_object, activity, self.device_server,
+                                                                device_class=self.request.GET.get('device_class', None))
             #  just to make sure we save device server
             self.device_server.save()
 
@@ -458,6 +483,12 @@ def deviceserver_delete_view(request, pk):
     context['breadcrumb_extra_ancestors'].append((request.get_full_path(),'Advanced Search'))
 
     device_server = dsc_models.DeviceServer.objects.get(pk=pk)
+    device_class = request.GET.get('device_class')
+    if device_class is not None:
+        clqf = device_server.device_classes.filter(pk=device_class)
+        if clqf.count()==1:
+            context['device_class']=clqf.first()
+
     if request.user != device_server.created_by and not request.user.has_perm('dsc.admin_deviceserver'):
         return render_to_response('dsc/deviceserver_notauthorized.html',
                                   {'operation': 'delete', 'deviceserver': device_server}, context)
@@ -466,18 +497,45 @@ def deviceserver_delete_view(request, pk):
                                       {'deviceserver': device_server}, context)
     else:
         with transaction.atomic():
-            activity = dsc_models.DeviceServerActivity(activity_type=dsc_models.DS_ACTIVITY_DELETE,
-                                                       activity_info='The device class %s has been deleted by %s %s.' % \
-                                                                 (device_server.name,
-                                                                  request.user.first_name,
-                                                                  request.user.last_name),
-                                                       device_server = device_server,
-                                                       device_server_backup = device_server,
-                                                       created_by = request.user)
-            activity.save()
-            device_server.invalidate_activity = activity
-            device_server.status = dsc_models.STATUS_DELETED
-            device_server.save()
+            if device_class is None:
+                clq = device_server.device_classes.all()
+            else:
+                clq = clqf
+            if clq.count() == 1:
+                if device_server.device_classes.all().count() == 1:
+                    activity = dsc_models.DeviceServerActivity(activity_type=dsc_models.DS_ACTIVITY_DELETE,
+                                                               activity_info='The device class %s has been deleted by %s %s.' % \
+                                                                         (clq.first().name,
+                                                                          request.user.first_name,
+                                                                          request.user.last_name),
+                                                               device_server = device_server,
+                                                               device_server_backup = device_server,
+                                                               created_by = request.user)
+                    activity.save()
+                    device_server.invalidate_activity = activity
+                    device_server.status = dsc_models.STATUS_DELETED
+                    device_server.save()
+                elif device_server.device_classes.all().count() > 1:
+                    activity = dsc_models.DeviceServerActivity(activity_type=dsc_models.DS_ACTIVITY_DELETE,
+                                                               activity_info='The device class %s has been deleted by %s %s.' % \
+                                                                             (clq.first().name,
+                                                                              request.user.first_name,
+                                                                              request.user.last_name),
+                                                               device_server=device_server,
+                                                               created_by=request.user)
+                    activity.save()
+                    backup_device_server = device_server.make_backup(activity=activity)
+                    backup_device_server.save()
+                    activity.device_server_backup = backup_device_server
+                    activity.save()
+                    cl = clq.first()
+                    cl.device_server = backup_device_server
+                    cl.invalidate_activity = activity
+                    cl.save()
+                else:
+                    return render_to_response('dsc/deviceserver_delete_question.html',
+                                              {'deviceserver': device_server}, context)
+
 
         return render_to_response('dsc/deviceserver_delete_confirmed.html',
                                       {'deviceserver': device_server}, context)

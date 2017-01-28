@@ -121,6 +121,21 @@ class DeviceServerAddForm(forms.ModelForm):
             raise forms.ValidationError('You must provide either repostiry URL or contact email to let someone  '
                                         'access your device classes.')
 
+        if cleaned_data.get('other_documentation1', False):
+            if len(cleaned_data.get('documentation1_url', ''))==0 \
+                    and cleaned_data.get('documentation1_file', None) is None:
+                raise forms.ValidationError('To add or update documentation you must provide its URL.')
+
+        if cleaned_data.get('other_documentation2', False):
+            if len(cleaned_data.get('documentation2_url', ''))==0 \
+                    and cleaned_data.get('documentation2_file', None) is None:
+                raise forms.ValidationError('To add or update documentation you must provide its URL.')
+
+        if cleaned_data.get('other_documentation3', False):
+            if len(cleaned_data.get('documentation3_url', ''))==0 \
+                    and cleaned_data.get('documentation3_file', None) is None:
+                raise forms.ValidationError('To add or update documentation you must provide its URL.')
+
         return cleaned_data
 
     class Meta:
@@ -130,6 +145,7 @@ class DeviceServerAddForm(forms.ModelForm):
                   'ds_info_copy',
                   'certified',
                   'use_uploaded_xmi_file',
+                  'script_operation',
                   'use_url_xmi_file',
                   'use_manual_info',
                   'xmi_file',
@@ -139,9 +155,14 @@ class DeviceServerAddForm(forms.ModelForm):
                   'repository_contact', 'repository_tag',
                   'upload_readme', 'readme_file',
                   'other_documentation1',
-                  'documentation1_type', 'documentation1_url',
+                  'documentation1_pk',
+                  'documentation1_type', 'documentation1_url', 'documentation1_title', 'documentation1_file',
                   'other_documentation2',
-                  'documentation2_type', 'documentation2_url',
+                  'documentation2_pk',
+                  'documentation2_type', 'documentation2_url', 'documentation2_title', 'documentation2_file',
+                  'other_documentation3',
+                  'documentation3_pk',
+                  'documentation3_type', 'documentation3_url', 'documentation3_title', 'documentation3_file',
                   'class_name', 'class_description',
                   'class_copyright', 'class_family',
                   'manufacturer', 'product_reference', 'bus', 'key_words'
@@ -177,6 +198,9 @@ class DeviceServerUpdateForm(DeviceServerAddForm):
 
     last_update_method = forms.CharField(widget=forms.HiddenInput(), required=False)
     contact_email = forms.CharField(required=False)
+    documentation1_pk = forms.IntegerField(widget=forms.HiddenInput(), required=False)
+    documentation2_pk = forms.IntegerField(widget=forms.HiddenInput(), required=False)
+    documentation3_pk = forms.IntegerField(widget=forms.HiddenInput(), required=False)
 
     class Meta:
         model = DeviceServerUpdateModel
@@ -185,6 +209,7 @@ class DeviceServerUpdateForm(DeviceServerAddForm):
                   'ds_info_copy',
                   'certified',
                   'change_update_method',
+                  'script_operation',
                   'last_update_method',
                   'use_uploaded_xmi_file',
                   'use_url_xmi_file',
@@ -197,9 +222,14 @@ class DeviceServerUpdateForm(DeviceServerAddForm):
                   'repository_contact', 'repository_tag',
                   'upload_readme', 'readme_file',
                   'other_documentation1',
-                  'documentation1_type', 'documentation1_url',
+                  'documentation1_pk',
+                  'documentation1_type', 'documentation1_url', 'documentation1_title', 'documentation1_file',
                   'other_documentation2',
-                  'documentation2_type', 'documentation2_url',
+                  'documentation2_pk',
+                  'documentation2_type', 'documentation2_url', 'documentation2_title', 'documentation2_file',
+                  'other_documentation3',
+                  'documentation3_pk',
+                  'documentation3_type', 'documentation3_url', 'documentation3_title', 'documentation3_file',
                   'class_name', 'class_description',
                   'class_copyright', 'class_family',
                   'manufacturer', 'product_reference', 'bus', 'key_words'

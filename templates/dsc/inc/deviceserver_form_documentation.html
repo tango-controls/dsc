@@ -16,7 +16,11 @@
 
 <tbody id="dsc_doc1_check">
     <tr>
-        <th><label>Other documentation?</label></th><td>{{ form.other_documentation1}}</td>
+        <th><label>
+            Another documentation 1
+        </label>
+            {% if operation == 'update' %} {{form.documentation1_pk}} {% endif %}
+        </th><td>{{ form.other_documentation1}}</td>
     </tr>
 </tbody>
 <tbody id="dsc_doc1">
@@ -26,8 +30,14 @@
     <tr>
         <th>{{ form.documentation1_type.label_tag }}</th><td>{{ form.documentation1_type }}</td>
     </tr>
-    {% if form.documentation1_type.errors %}
-    <tr><td colspan="2">{{ form.documentation1_type.errors }}</td></tr>
+    {% if form.documentation1_title.errors %}
+    <tr><td colspan="2">{{ form.documentation1_title.errors }}</td></tr>
+    {% endif %}
+    <tr>
+        <th>{{ form.documentation1_title.label_tag }}</th><td>{{ form.documentation1_title }}</td>
+    </tr>
+    {% if form.documentation1_url.errors %}
+    <tr><td colspan="2">{{ form.documentation1_url.errors }}</td></tr>
     {% endif %}
     <tr>
         <th>{{ form.documentation1_url.label_tag }}</th><td>{{ form.documentation1_url }}</td>
@@ -35,7 +45,10 @@
 </tbody>
 <tbody id="dsc_doc2_check">
     <tr>
-        <th><label>Another documentation?</label></th><td>{{ form.other_documentation2}}</td>
+        <th><label>Another documentation 2
+        </label>
+            {% if operation == 'update' %} {{form.documentation2_pk}} {% endif %}
+        </th><td>{{ form.other_documentation2}}</td>
     </tr>
 </tbody>
 <tbody id="dsc_doc2">
@@ -45,6 +58,12 @@
     <tr>
         <th>{{ form.documentation2_type.label_tag }}</th><td>{{ form.documentation2_type }}</td>
     </tr>
+    {% if form.documentation2_title.errors %}
+    <tr><td colspan="2">{{ form.documentation2_title.errors }}</td></tr>
+    {% endif %}
+    <tr>
+        <th>{{ form.documentation2_title.label_tag }}</th><td>{{ form.documentation2_title }}</td>
+    </tr>
     {% if form.documentation2_url.errors %}
     <tr><td colspan="2">{{ form.documentation2_url.errors }}</td></tr>
     {% endif %}
@@ -52,6 +71,35 @@
         <th>{{ form.documentation2_url.label_tag }}</th><td>{{ form.documentation2_url }}</td>
     </tr>
 </tbody>
+
+<tbody id="dsc_doc3_check">
+    <tr>
+        <th><label>Another documentation 3</label>
+        {% if operation == 'update' %} {{form.documentation3_pk}} {% endif %}
+        </th><td>{{ form.other_documentation3}}</td>
+    </tr>
+</tbody>
+<tbody id="dsc_doc3">
+    {% if form.documentation3_type.errors %}
+    <tr><td colspan="2">{{ form.documentation3_type.errors }}</td></tr>
+    {% endif %}
+    <tr>
+        <th>{{ form.documentation3_type.label_tag }}</th><td>{{ form.documentation3_type }}</td>
+    </tr>
+    {% if form.documentation3_title.errors %}
+    <tr><td colspan="2">{{ form.documentation3_title.errors }}</td></tr>
+    {% endif %}
+    <tr>
+        <th>{{ form.documentation3_title.label_tag }}</th><td>{{ form.documentation3_title }}</td>
+    </tr>
+    {% if form.documentation3_url.errors %}
+    <tr><td colspan="2">{{ form.documentation3_url.errors }}</td></tr>
+    {% endif %}
+    <tr>
+        <th>{{ form.documentation3_url.label_tag }}</th><td>{{ form.documentation3_url }}</td>
+    </tr>
+</tbody>
+
 
 
 
@@ -67,6 +115,15 @@
         $("#id_upload_readme")[0].checked = false;
         {% endif %}
 
+
+        {% if form.other_documentation1.value %}
+        $("#dsc_doc1").show();
+        $("#id_other_documentation1")[0].checked = true;
+        {% else %}
+        $("#dsc_doc1").hide();
+        $("#id_other_documentation1")[0].checked = false;
+        {% endif %}
+
         {% if form.other_documentation2.value %}
         $("#dsc_doc2").show();
         $("#id_other_documentation2")[0].checked = true;
@@ -75,16 +132,13 @@
         $("#id_other_documentation2")[0].checked = false;
         {% endif %}
 
-        {% if form.other_documentation1.value %}
-        $("#dsc_doc1").show();
-        $("#id_other_documentation1")[0].checked = true;
-        $("#dsc_doc2_check").show()
+
+        {% if form.other_documentation3.value %}
+        $("#dsc_doc3").show();
+        $("#id_other_documentation3")[0].checked = true;
         {% else %}
-        $("#dsc_doc1").hide();
-        $("#id_other_documentation1")[0].checked = false;
-        $("#id_other_documentation2")[0].checked = false;
-        $("#dsc_doc2").hide();
-        $("#dsc_doc2_check").hide()
+        $("#dsc_doc3").hide();
+        $("#id_other_documentation3")[0].checked = false;
         {% endif %}
 
 
@@ -109,13 +163,9 @@
             if (this.checked) {
                 // the checkbox is now checked
                 $('#dsc_doc1').show();
-                $("#dsc_doc2_check").show()
             } else {
                 // the checkbox is now no longer checked
                 $('#dsc_doc1').hide();
-                $("#id_other_documentation2")[0].checked = false;
-                $("#dsc_doc2_check").hide()
-                $('#dsc_doc2').hide();
             }
         });
 
@@ -129,6 +179,19 @@
             } else {
                 // the checkbox is now no longer checked
                 $('#dsc_doc2').hide();
+            }
+        });
+
+         // handling showing/hiding other doc3
+        $('#id_other_documentation3').change(function() {
+            // this will contain a reference to the checkbox
+            if (this.checked) {
+                // the checkbox is now checked
+                $('#dsc_doc3').show();
+
+            } else {
+                // the checkbox is now no longer checked
+                $('#dsc_doc3').hide();
             }
         });
 

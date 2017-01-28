@@ -1,0 +1,58 @@
+{% load markup_tags %}
+{% load dsc_tags %}
+
+{% for doc in deviceserver.documentation.all %}
+    {% if doc.is_valid or doc.invalidate_activity.pk == deviceserver.invalidate_activity.pk %}
+
+        <h4>{{doc.get_documentation_type_display}}</h4>
+        <p>
+            <a href="{{doc.url}}" target="_blank">
+                {% if doc.title %}
+                <span style="font-weight:bold;">{{doc.title}}:</span>
+                {% endif %}
+                {{doc.url}}
+            </a>
+
+        </p>
+        {% if not forloop.last or readme or readme_link %}
+            <hr />
+        {% endif %}
+    {% endif %}
+{% endfor %}
+{% if not deviceserver.is_valid %}
+{% for act in deviceserver.invalidate_activity.device_server.activities.all %}
+{% for doc in act.device_server.documentation.all %}
+    {% if deviceserver.invalidate_activity.created_at > doc.create_activity.created_at and deviceserver.invalidate_activity.created_at <= doc.invalidate_activity.created_at and doc.invalidate_activity.pk != deviceserver.invalidate_activity.pk %}
+        <h4>{{doc.get_documentation_type_display}}</h4>
+        <p>
+            <a href="{{doc.url}}" target="_blank">
+                {% if doc.title %}
+                <span style="font-weight:bold;">{{doc.title}}:</span>
+                {% endif %}
+                {{doc.url}}
+            </a>
+
+        </p>
+        {% if not forloop.last or readme or readme_link %}
+            <hr />
+        {% endif %}
+    {% endif %}
+{% endfor %}
+{% endfor %}
+{% endif %}
+{% if readme or readme_link %}
+    <div style="word-wrap: break-word;">
+        <h4>README</h4>
+        {% if rst %}
+            {{ readme|apply_markup:"restructuredtext" }}
+        { % elif md %}
+            {{readme|apply_markup:"markdown"}}
+        {% else %}
+            {% if not readme %}
+                <a href="{{readme_link}}" target="_blank"> Download </a>
+            {% else %}
+                {{readme|linebreaks}}
+            {% endif %}
+        {% endif %}
+    </div>
+{% endif %}

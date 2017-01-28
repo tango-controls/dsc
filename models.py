@@ -298,7 +298,10 @@ class DeviceServer(DscManagedModel):
     # }
 
     def __str__(self):
-        return '%s' % self.name
+        if self.is_valid():
+            return '%s' % self.name
+        else:
+            return 'invalidated-%s' % self.name
 
     def get_absolute_url(self, pk):
         return reverse('deviceserver_detail', kwargs={'pk': self.pk})
@@ -344,7 +347,8 @@ class DeviceServer(DscManagedModel):
                                  create_activity=self.create_activity,
                                  invalidate_activity=activity,
                                  development_status=self.development_status,
-                                 certified=self.certified
+                                 certified=self.certified,
+                                 readme=self.readme
                                  )
         return backup_ds
 
@@ -420,7 +424,7 @@ class DeviceServerDocumentation(DscManagedModel):
             return self.url
 
     def __str__(self):
-        return '%s' % self.url
+        return '%s: %s' % (self.title, self.get_documentation_url)
 
 
 class DeviceServerRepository(DscManagedModel):
@@ -672,6 +676,8 @@ class DeviceServerAddModel(models.Model):
                                    blank=True, null=True, max_length=100000)
     other_documentation1 = models.BooleanField(verbose_name='Other documentation - 1', blank=True, default=False)
 
+    documentation1_pk = models.IntegerField(blank=True, null=True)
+
     documentation1_type = models.SlugField(verbose_name='Documentation type',
                                            choices=zip(['README', 'Manual', 'InstGuide',
                                                        'Generated', 'SourceDoc'],
@@ -696,6 +702,8 @@ class DeviceServerAddModel(models.Model):
 
     other_documentation2 = models.BooleanField(verbose_name='Other documentation - 2', blank=True, default=False)
 
+    documentation2_pk = models.IntegerField(blank=True, null=True)
+
     documentation2_type = models.SlugField(verbose_name='Documentation type',
                                            choices=zip(['README', 'Manual', 'InstGuide',
                                                         'Generated', 'SourceDoc'],
@@ -719,6 +727,8 @@ class DeviceServerAddModel(models.Model):
                                            )
 
     other_documentation3 = models.BooleanField(verbose_name='Other documentation - 3', blank=True, default=False)
+
+    documentation3_pk = models.IntegerField(blank=True, null=True)
 
     documentation3_type = models.SlugField(verbose_name='Documentation type',
                                            choices=zip(['README', 'Manual', 'InstGuide',
@@ -859,7 +869,7 @@ class DeviceServerUpdateModel(DeviceServerAddModel):
                                                       ['manual', 'file', 'url']),
                                           verbose_name='Previous update method: ', default='url', blank=True)
 
-    def from_device_server(self, device_server):
+    def from_device_server(self, device_server, device_class=None):
         """ Fill fields based on device_server object"""
         assert isinstance(device_server, DeviceServer)
         self.name = device_server.name
@@ -883,29 +893,35 @@ class DeviceServerUpdateModel(DeviceServerAddModel):
             self.repository_path = device_server.repository.path_in_repository
             self.repository_tag = device_server.repository.tag
 
-        docs = device_server.documentation.filter(invalidate_activity=None)
-        if len(docs)>0:
+        docs = device_server.documentation.filter(invalidate_activity=None).all().distinct()
+        if docs.count()>0:
             self.other_documentation1 = True
             self.documentation1_type = docs[0].documentation_type
             self.documentation1_title = docs[0].title
             self.documentation1_file = docs[0].documentation_file
             self.documentation1_url = docs[0].url
+            self.documentation1_pk = docs[0].pk
 
-        if len(docs)>1:
+        if docs.count()>1:
             self.other_documentation2 = True
             self.documentation2_type = docs[1].documentation_type
             self.documentation2_title = docs[1].title
             self.documentation2_file = docs[1].documentation_file
             self.documentation2_url = docs[1].url
+            self.documentation2_pk = docs[1].pk
 
-        if len(docs)>2:
+        if docs.count()>2:
             self.other_documentation3 = True
-            self.documentation3_type = docs[3].documentation_type
-            self.documentation3_title = docs[3].title
-            self.documentation3_file = docs[3].documentation_file
-            self.documentation3_url = docs[3].url
+            self.documentation3_type = docs[2].documentation_type
+            self.documentation3_title = docs[2].title
+            self.documentation3_file = docs[2].documentation_file
+            self.documentation3_url = docs[2].url
+            self.documentation3_pk = docs[2].pk
 
-        cls = device_server.device_classes.all()
+        if device_class is None:
+            cls = device_server.device_classes.all()
+        else:
+            cls = device_server.device_classes.filter(pk=device_class)
 
         self.ds_info_copy = False
 
@@ -981,7 +997,7 @@ def search_device_servers(search_text):
 
 
 from xmi_parser import TangoXmiParser
-def create_or_update(update_object, activity, device_server=None):
+def create_or_update(update_object, activity, device_server=None, device_class=None):
     """this method creates or updates device server based on update/add object. It should be used inside atimic
     transaction to keep database consistent.
         :return (device_server, backup_device_server)
@@ -1126,118 +1142,146 @@ def create_or_update(update_object, activity, device_server=None):
 
     # old documentation will be
     current_docs = device_server.documentation.filter(invalidate_activity=None)
+    doc = None
 
-    if update_object.other_documentation1:
-        new_documentation = DeviceServerDocumentation(documentation_type=update_object.documentation1_type,
-                                                      url=update_object.documentation1_url,
-                                                      title=update_object.documentation1_title,
-                                                      documentation_file=update_object.documentation1_file,
-                                                      create_activity=activity,
-                                                      device_server=device_server)
+    new_documentation = DeviceServerDocumentation(documentation_type=update_object.documentation1_type,
+                                                  url=update_object.documentation1_url,
+                                                  title=update_object.documentation1_title,
+                                                  documentation_file=update_object.documentation1_file,
+                                                  create_activity=activity,
+                                                  device_server=device_server)
 
-        if current_docs.count() > 0 and (not update_object.script_operation or current_docs[0].updated_by_script()):
-            doc = current_docs[0]
-            assert isinstance(doc, DeviceServerDocumentation)
+    if update_object.documentation1_pk is not None:
+        doc = current_docs.filter(pk=update_object.documentation1_pk).first()
+        if doc is not None and (not update_object.script_operation or doc.updated_by_script()):
+            if update_object.other_documentation1:
 
-            if doc.documentation_type != update_object.documentation1_type \
-                    or update_object.documentation1_file is not None \
-                    or update_object.documentation1_url != doc.url \
-                    or update_object.documentation1_title != doc.title:
+                assert isinstance(doc, DeviceServerDocumentation)
 
-                new_documentation.save()
+                if doc.documentation_type != update_object.documentation1_type \
+                        or update_object.documentation1_file is not None \
+                        or update_object.documentation1_url != doc.url \
+                        or update_object.documentation1_title != doc.title:
 
+                    new_documentation.save()
+
+                    if backup_device_server is not None:
+                        doc.device_server = backup_device_server
+                        doc.make_invalid(activity=activity)
+                        doc.save()
+                    else:
+                        doc.make_invalid(activity=activity)
+                        doc.save()
+
+            else:
                 if backup_device_server is not None:
                     doc.device_server = backup_device_server
-                    doc.make_invalid(activity=activity)
-                    doc.save()
-                else:
-                    doc.make_invalid(activity=activity)
-                    doc.save()
+                doc.make_invalid(activity=activity)
+                doc.save()
 
-        else:
-            new_documentation.save()
-
-    elif current_docs.count()>0 and (not update_object.script_operation or current_docs[0].updated_by_script()):
-        doc = current_docs[0]
-        doc.make_invalid(activity=activity)
-        doc.save()
+    elif update_object.other_documentation1:
+        new_documentation.save()
 
     # doc 2
-    if update_object.other_documentation2:
-        new_documentation = DeviceServerDocumentation(documentation_type=update_object.documentation2_type,
-                                                      url=update_object.documentation2_url,
-                                                      title=update_object.documentation2_title,
-                                                      documentation_file=update_object.documentation2_file,
-                                                      create_activity=activity,
-                                                      device_server=device_server)
-        if current_docs.count() > 1 and (not update_object.script_operation or current_docs[1].updated_by_script()):
-            doc = current_docs[1]
-            assert isinstance(doc, DeviceServerDocumentation)
-            if doc.documentation_type != update_object.documentation2_type \
-                    or update_object.documentation2_file is not None \
-                    or update_object.documentation2_url != doc.url \
-                    or update_object.documentation2_title != doc.title:
+    doc = None
 
-                new_documentation.save()
+    new_documentation = DeviceServerDocumentation(documentation_type=update_object.documentation2_type,
+                                                  url=update_object.documentation2_url,
+                                                  title=update_object.documentation2_title,
+                                                  documentation_file=update_object.documentation2_file,
+                                                  create_activity=activity,
+                                                  device_server=device_server)
 
+    if update_object.documentation2_pk is not None:
+        doc = current_docs.filter(pk=update_object.documentation2_pk).first()
+        if doc is not None and (not update_object.script_operation or doc.updated_by_script()):
+            if update_object.other_documentation2:
+
+                assert isinstance(doc, DeviceServerDocumentation)
+
+                if doc.documentation_type != update_object.documentation2_type \
+                        or update_object.documentation2_file is not None \
+                        or update_object.documentation2_url != doc.url \
+                        or update_object.documentation2_title != doc.title:
+
+                    new_documentation.save()
+
+                    if backup_device_server is not None:
+                        doc.device_server = backup_device_server
+                        doc.make_invalid(activity=activity)
+                        doc.save()
+                    else:
+                        doc.make_invalid(activity=activity)
+                        doc.save()
+
+            else:
                 if backup_device_server is not None:
                     doc.device_server = backup_device_server
-                    doc.make_invalid(activity=activity)
-                    doc.save()
-                else:
-                    doc.make_invalid(activity=activity)
-                    doc.save()
-        else:
-            new_device_server.save()
+                doc.make_invalid(activity=activity)
+                doc.save()
 
-    elif current_docs.count() > 1  and (not update_object.script_operation or current_docs[1].updated_by_script()):
-        doc = current_docs[1]
-        doc.make_invalid(activity=activity)
-        doc.save()
+    elif update_object.other_documentation2:
+        new_documentation.save()
 
     # doc 3
-    if update_object.other_documentation3:
-        new_documentation = DeviceServerDocumentation(documentation_type=update_object.documentation3_type,
-                                                      url=update_object.documentation3_url,
-                                                      title=update_object.documentation3_title,
-                                                      documentation_file=update_object.documentation3_file,
-                                                      create_activity=activity,
-                                                      device_server=device_server)
-        if current_docs.count() > 2 and (not update_object.script_operation or current_docs[2].updated_by_script()):
-            doc = current_docs[2]
-            assert isinstance(doc, DeviceServerDocumentation)
-            if doc.documentation_type != update_object.documentation3_type \
-                    or update_object.documentation3_file is not None \
-                    or update_object.documentation3_url != doc.url \
-                    or update_object.documentation3_title != doc.title:
+    doc = None
 
-                new_documentation.save()
+    new_documentation = DeviceServerDocumentation(documentation_type=update_object.documentation3_type,
+                                                  url=update_object.documentation3_url,
+                                                  title=update_object.documentation3_title,
+                                                  documentation_file=update_object.documentation3_file,
+                                                  create_activity=activity,
+                                                  device_server=device_server)
 
+    if update_object.documentation3_pk is not None:
+        doc = current_docs.filter(pk=update_object.documentation3_pk).first()
+        if doc is not None and (not update_object.script_operation or doc.updated_by_script()):
+            if update_object.other_documentation1:
+
+                assert isinstance(doc, DeviceServerDocumentation)
+
+                if doc.documentation_type != update_object.documentation3_type \
+                        or update_object.documentation3_file is not None \
+                        or update_object.documentation3_url != doc.url \
+                        or update_object.documentation3_title != doc.title:
+
+                    new_documentation.save()
+
+                    if backup_device_server is not None:
+                        doc.device_server = backup_device_server
+                        doc.make_invalid(activity=activity)
+                        doc.save()
+                    else:
+                        doc.make_invalid(activity=activity)
+                        doc.save()
+
+            else:
                 if backup_device_server is not None:
                     doc.device_server = backup_device_server
-                    doc.make_invalid(activity=activity)
-                    doc.save()
-                else:
-                    doc.make_invalid(activity=activity)
-                    doc.save()
-        else:
-            new_device_server.save()
+                doc.make_invalid(activity=activity)
+                doc.save()
 
-    elif current_docs.count() > 2 and (not update_object.script_operation or current_docs[2].updated_by_script()):
-        doc = current_docs[2]
-        doc.make_invalid(activity=activity)
-        doc.save()
+    elif update_object.other_documentation3:
+        new_documentation.save()
 
 
             # get classes and interface
     if (update_object.use_uploaded_xmi_file or update_object.use_url_xmi_file ) and parser is not None:
         # for xmi file all old device classes and relation are moved to backup and new are created from scratch
         if not update_object.add_class:
-            for cl in device_server.device_classes.all():
+            if device_class is None:
+                for cl in device_server.device_classes.all():
+                    cl.make_invalid(activity)
+                    if backup_device_server is not None:
+                        cl.device_server = backup_device_server
+                    cl.save()
+            else:
+                cl = device_server.device_classes.filter(pk=device_class).first()
                 cl.make_invalid(activity)
                 if backup_device_server is not None:
                     cl.device_server = backup_device_server
                 cl.save()
+
 
         # read classes from xmi file
         cls = parser.get_device_classes()
@@ -1302,7 +1346,12 @@ def create_or_update(update_object, activity, device_server=None):
 
     elif update_object.use_manual_info:
         if backup_device_server is not None and not update_object.add_class:
-            for cl in device_server.device_classes.all():
+            if device_class is None:
+                clq = device_server.device_classes.all()
+            else:
+                clq = device_server.device_classes.filter(pk=device_class)
+
+            for cl in clq:
                 clo = cl.make_backup(activity)
                 clo.device_server = backup_device_server
                 clo.save()
@@ -1314,8 +1363,13 @@ def create_or_update(update_object, activity, device_server=None):
 
 
         # manual info provided
-        if len(device_server.device_classes.all()) > 0:
-            cl = device_server.device_classes.all()[0]
+        if device_class is None:
+            clq = device_server.device_classes.all()
+        else:
+            clq = device_server.device_classes.filter(pk=device_class)
+
+        if clq.count() > 0 and not update_object.add_class:
+            cl=clq.first()
             cl.last_update_activity = activity
             cl_info = cl.info
             cl_info.last_update_activity = activity
@@ -1324,6 +1378,9 @@ def create_or_update(update_object, activity, device_server=None):
             cl.create_activity = activity
             cl_info = DeviceClassInfo()
             cl_info.create_activity = activity
+            if backup_device_server is not None:
+                cl.last_update_activity = activity
+                cl_info.last_update_activity = activity
 
         cl.name = update_object.class_name
         cl.description = update_object.class_description
