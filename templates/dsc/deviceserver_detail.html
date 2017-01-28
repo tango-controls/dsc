@@ -89,6 +89,7 @@
 
 
     <br />
+    {% if deviceserver.repository.url or deviceserver.is_valid %}
     <span style="font-weight:bold;">Repository:</span>
     {% if deviceserver.repository.url %}
     <a href="{{deviceserver.repository.url}}" target="_blank">
@@ -109,6 +110,7 @@
     <a href="{{deviceserver.repository.download_url}}" target="_blank">
         <span style="font-weight:bold;">Download</span>
     </a>
+    {% endif %}
     {% endif %}
 <br />
     <span style="font-weight:bold;">Contact:</span>
