@@ -7,13 +7,30 @@
 <h1 style="text-transform: none">Deleting {{deviceserver.name}}</h1>
 {% endblock %}
 {% block content %}
+{% if deviceserver.device_classes.all.count > 1 and not device_class %}
+<h4>Please select class to delete:</h4>
+<p>
+<ul id="device-class-list">
+{% for cl in deviceserver.device_classes.all %}
+    <li>
+        <a href="{% url 'deviceserver_delete' deviceserver.pk%}?device_class={{cl.pk}}">{{cl.name}}</a>:
+        {{cl.description|truncatechars:60}}
+    </li>
+{% endfor %}
+</ul>
+</p>
+<p>
+    <a href="{% url 'deviceserver_detail' deviceserver.pk %}" class="dsc-back">Cancel</a>
+</p>
+{% else %}
 <form action="" method="post">{% csrf_token %}
-    <h4>Are you sure you want to delete "{{ deviceserver.name }}" device server?</h4>
+    <h4>Are you sure you want to delete "{{ deviceserver.name }}" device class {{device_class.name}}?</h4>
     <p>
     <button type="submit" value="Confirm" class="cancel btn btn-default">Delete</button>
     <a href="{% url 'deviceserver_detail' deviceserver.pk %}" class="dsc-back">Cancel</a>
     </p>
 </form>
+{% endif %}
 
 
 {% endblock %}

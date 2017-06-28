@@ -15,7 +15,7 @@ from dsc.tables import DeviceServerTable
 class DeviceServerPlugin(CMSPluginBase): #LastPublishedObjectPluginBase
 
     model = DeviceServerPluginModel
-    name = 'Device Servers Catalogue'
+    name = 'Device Classes Catalogue'
     render_template = "dsc/catalogue_frontpage.html"
     cache = False
 
@@ -27,12 +27,14 @@ class DeviceServerPlugin(CMSPluginBase): #LastPublishedObjectPluginBase
 
         families_count = {}
         for f in families:
-            families_count[f] = filtered_device_servers(family=f).distinct().count()
+            if f=='':
+                f = 'Other'
+            families_count[f] = families_count.get(f,0)+DeviceServer.objects.filter(invalidate_activity=None).\
+                filter(device_classes__info__class_family=f).distinct().count()
 
         context['families_count'] = sorted(families_count.iteritems())
         context['families'] = families
 
-        print families_count
         context['count_all'] = DeviceServer.objects.filter(invalidate_activity=None).count()
 
         # table of device servers
@@ -43,7 +45,12 @@ class DeviceServerPlugin(CMSPluginBase): #LastPublishedObjectPluginBase
             query = search_device_servers(search_text)
             context['search'] = search_text
         else:
-            query = filtered_device_servers(family=family)
+            if family is not None:
+                query =  DeviceServer.objects.filter(invalidate_activity=None).\
+                    filter(device_classes__info__class_family=family)
+            else:
+                query = DeviceServer.objects.filter(invalidate_activity=None).\
+                    order_by('-created_at')
 
         table = DeviceServerTable(query.distinct())
         RequestConfig(request, paginate={'per_page': 10}).configure(table)
@@ -74,7 +81,7 @@ plugin_pool.register_plugin(DeviceServerPlugin)
 
 class DeviceServersListPlugin(CMSPluginBase):
     """ Presents table with randomly picked-up device servers"""
-    name = 'Device Servers random list'
+    name = 'Device Classes random list'
     render_template = "dsc/inc/deviceserver_list.html"
     cache = False
 
@@ -117,7 +124,7 @@ plugin_pool.register_plugin(DeviceServersListPlugin)
 
 class DeviceServersRandomListPlugin(CMSPluginBase):
     """ Presents table with randomly picked-up device servers"""
-    name = 'Device Servers random list'
+    name = 'Device Classes random list'
     render_template = "dsc/inc/deviceserver_randomlist.html"
     cache = False
 
@@ -160,7 +167,7 @@ plugin_pool.register_plugin(DeviceServersRandomListPlugin)
 class DeviceServersActivityPlugin(CMSPluginBase): #LastPublishedObjectPluginBase
     # TODO device server plugin filters etc
     model = DeviceServersActivityPluginModel
-    name = 'Device Servers Catalogue Activity'
+    name = 'Device Classes Catalogue Activity'
     render_template = "dsc/inc/catalogue_activities.html"
     cache = False
 

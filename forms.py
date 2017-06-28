@@ -11,6 +11,7 @@ from tango.forms import BaseForm
 from xmi_parser import TangoXmiParser
 import dal.autocomplete
 from django.core.urlresolvers import reverse_lazy
+from django.core.validators import validate_email
 
 
 class DeviceServerFilterForm(BaseForm):
@@ -39,6 +40,7 @@ class DeviceServerSearchForm(forms.Form):
 
 class DeviceServerAddForm(forms.ModelForm):
 
+
     def clean(self):
         """Will check if fields are provided according to checkboxes"""
         cleaned_data = super(DeviceServerAddForm, self).clean()
@@ -48,6 +50,7 @@ class DeviceServerAddForm(forms.ModelForm):
             raise forms.ValidationError('You must provide either .XMI file or enter information manually.')
 
         if cleaned_data['use_url_xmi_file']:
+            cleaned_data['contact_email'] = ''
             xmi_url = cleaned_data.get('xmi_file_url', None)
             if xmi_url is None or xmi_url=='':
                 raise forms.ValidationError("You have to provide a valid URL.")
@@ -94,6 +97,8 @@ class DeviceServerAddForm(forms.ModelForm):
 
                 is_valid, message = parser.is_valid()
 
+                cleaned_data['contact_email']=''
+
                 if not is_valid:
                     raise forms.ValidationError(message)
 
@@ -114,28 +119,50 @@ class DeviceServerAddForm(forms.ModelForm):
 
         if cleaned_data.get('repository_url','')=='' and cleaned_data.get('repository_contact','')=='':
             raise forms.ValidationError('You must provide either repostiry URL or contact email to let someone  '
-                                        'access your device server.')
+                                        'access your device classes.')
+
+        if cleaned_data.get('other_documentation1', False):
+            if len(cleaned_data.get('documentation1_url', ''))==0 \
+                    and cleaned_data.get('documentation1_file', None) is None:
+                raise forms.ValidationError('To add or update documentation you must provide its URL.')
+
+        if cleaned_data.get('other_documentation2', False):
+            if len(cleaned_data.get('documentation2_url', ''))==0 \
+                    and cleaned_data.get('documentation2_file', None) is None:
+                raise forms.ValidationError('To add or update documentation you must provide its URL.')
+
+        if cleaned_data.get('other_documentation3', False):
+            if len(cleaned_data.get('documentation3_url', ''))==0 \
+                    and cleaned_data.get('documentation3_file', None) is None:
+                raise forms.ValidationError('To add or update documentation you must provide its URL.')
 
         return cleaned_data
 
     class Meta:
         model = DeviceServerAddModel
+        updating = False
         fields = ['development_status',
                   'ds_info_copy',
                   'certified',
                   'use_uploaded_xmi_file',
+                  'script_operation',
                   'use_url_xmi_file',
                   'use_manual_info',
                   'xmi_file',
                   'xmi_file_url',
                   'name', 'description', 'contact_email', 'platform', 'language', 'license_name',
                   'repository_type', 'repository_url', 'repository_download_url',
-                  'repository_contact',
+                  'repository_contact', 'repository_tag',
                   'upload_readme', 'readme_file',
                   'other_documentation1',
-                  'documentation1_type', 'documentation1_url',
+                  'documentation1_pk',
+                  'documentation1_type', 'documentation1_url', 'documentation1_title', 'documentation1_file',
                   'other_documentation2',
-                  'documentation2_type', 'documentation2_url',
+                  'documentation2_pk',
+                  'documentation2_type', 'documentation2_url', 'documentation2_title', 'documentation2_file',
+                  'other_documentation3',
+                  'documentation3_pk',
+                  'documentation3_type', 'documentation3_url', 'documentation3_title', 'documentation3_file',
                   'class_name', 'class_description',
                   'class_copyright', 'class_family',
                   'manufacturer', 'product_reference', 'bus', 'key_words'
@@ -144,11 +171,46 @@ class DeviceServerAddForm(forms.ModelForm):
 
 class DeviceServerUpdateForm(DeviceServerAddForm):
 
+
+    def clean(self):
+        """Will check if fields are provided according to checkboxes"""
+        cleaned_data = super(DeviceServerUpdateForm, self).clean()
+        if cleaned_data.get('use_uploaded_xmi_file', True) and \
+                        cleaned_data.get('last_update_method','manual') != 'file':
+            if not cleaned_data.get('change_update_method',False):
+                raise forms.ValidationError('To use other than previously selected update method you have to mark'
+                                            'this explicitly. It is to avoid accidental information overwrite.')
+
+        if cleaned_data.get('use_url_xmi_file', True) and \
+                        cleaned_data.get('last_update_method','manual') != 'url':
+            if not cleaned_data.get('change_update_method',False):
+                raise forms.ValidationError('To use other than previously selected update method you have to mark'
+                                            'this explicitly. It is to avoid accidental information overwrite.')
+
+        if cleaned_data.get('use_manual_info', True) and \
+                        cleaned_data.get('last_update_method','file') != 'manual':
+            if not cleaned_data.get('change_update_method',False):
+                raise forms.ValidationError('To use other than previously selected update method you have to mark'
+                                            'this explicitly. It is to avoid accidental information overwrite.')
+            validate_email(cleaned_data.get('contact_email'))
+
+        return cleaned_data
+
+    last_update_method = forms.CharField(widget=forms.HiddenInput(), required=False)
+    contact_email = forms.CharField(required=False)
+    documentation1_pk = forms.IntegerField(widget=forms.HiddenInput(), required=False)
+    documentation2_pk = forms.IntegerField(widget=forms.HiddenInput(), required=False)
+    documentation3_pk = forms.IntegerField(widget=forms.HiddenInput(), required=False)
+
     class Meta:
         model = DeviceServerUpdateModel
+        updating = True
         fields = ['development_status',
                   'ds_info_copy',
                   'certified',
+                  'change_update_method',
+                  'script_operation',
+                  'last_update_method',
                   'use_uploaded_xmi_file',
                   'use_url_xmi_file',
                   'use_manual_info',
@@ -157,12 +219,17 @@ class DeviceServerUpdateForm(DeviceServerAddForm):
                   'xmi_file_url',
                   'name', 'description', 'contact_email', 'platform', 'language', 'license_name',
                   'repository_type', 'repository_url', 'repository_download_url',
-                  'repository_contact',
+                  'repository_contact', 'repository_tag',
                   'upload_readme', 'readme_file',
                   'other_documentation1',
-                  'documentation1_type', 'documentation1_url',
+                  'documentation1_pk',
+                  'documentation1_type', 'documentation1_url', 'documentation1_title', 'documentation1_file',
                   'other_documentation2',
-                  'documentation2_type', 'documentation2_url',
+                  'documentation2_pk',
+                  'documentation2_type', 'documentation2_url', 'documentation2_title', 'documentation2_file',
+                  'other_documentation3',
+                  'documentation3_pk',
+                  'documentation3_type', 'documentation3_url', 'documentation3_title', 'documentation3_file',
                   'class_name', 'class_description',
                   'class_copyright', 'class_family',
                   'manufacturer', 'product_reference', 'bus', 'key_words'

@@ -12,7 +12,7 @@ from webu.admin import (
                 DeviceServerDocumentation, DeviceClassInfo,
                 DeviceServerActivity, DeviceServerLicense,
                 DeviceAttribute, DeviceCommand,
-                DevicePipe, DeviceProperty, DeviceAttributeInfo)
+                DevicePipe, DeviceProperty, DeviceAttributeInfo, DeviceServerAddModel, DeviceServerUpdateModel)
 class DeviceServersAdminPanel(admin.ModelAdmin):
     pass
 

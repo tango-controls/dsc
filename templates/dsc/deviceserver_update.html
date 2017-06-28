@@ -7,8 +7,23 @@
 <h1 style="text-transform: none">Update {{object.name}}</h1>
 {% endblock %}
 {% block content %}
-
-<h4>Please provide updatede information for the device server.</h4>
+{% if deviceserver.device_classes.all.count > 1 and not device_class %}
+<h4>Please select class to edit:</h4>
+<p>
+<ul id="device-class-list">
+{% for cl in deviceserver.device_classes.all %}
+    <li>
+        <a href="{% url 'deviceserver_update' deviceserver.pk%}?device_class={{cl.pk}}">{{cl.name}}</a>:
+        {{cl.description|truncatechars:60}}
+    </li>
+{% endfor %}
+</ul>
+</p>
+<p>
+    <a href="{% url 'deviceserver_detail' deviceserver.pk %}" class="dsc-back">Cancel</a>
+</p>
+{% else %}
+<h4>Please provide updated information for device classes implemented in this device server.</h4>
 <form method="POST" class="post-form" enctype="multipart/form-data">{% csrf_token %}
     <table>
         <tbody><tr><td colspan="2">
@@ -28,5 +43,6 @@
 
     </p>
 </form>
+{% endif %}
 
 {% endblock %}

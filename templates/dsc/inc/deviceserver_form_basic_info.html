@@ -4,6 +4,12 @@
     <tr>
         <th>{{ form.development_status.label_tag }}</th><td>{{ form.development_status }}</td>
     </tr>
+    {% if form.repository_tag.errors %}
+    <tr><td colspan="2">{{ form.repository_tag.errors }}</td></tr>
+    {% endif %}
+    <tr>
+        <th><label>Release:</label></th><td>{{ form.repository_tag }}</td>
+    </tr>
     {% if perms.dsc.admin_deviceserver %}
     <tr>
         <th>{{ form.certified.label_tag }}</th><td>{{ form.certified }}</td>
@@ -39,6 +45,32 @@
         <td>{{ form.use_manual_info }}</td>
     </tr>
 </tbody>
+{% if form.last_update_method %}
+<tbody id="update_method_change_warning">
+<tr><th colspan="3">
+    {{ form.last_update_method }}
+    <label>
+    The class has been updated or created
+    {% if form.last_update_method.value == 'manual' %}
+        manually.
+    {% endif %}
+    {% if form.last_update_method.value == 'url' %}
+        with an URL to .XMI file.
+    {% endif %}
+    {% if form.last_update_method.value == 'file' %}
+        with an uploaded .xmi file.
+    {% endif %}
+    You are going to use other method. It will overwrite the information
+    which may lead to lost of the last changes.
+    If you are sure you would like to do this please select 'Change update method' below.
+    </label>
+</th></tr>
+    <tr>
+        <th colspan="2"><label>Change update method</label></th><td>{{ form.change_update_method }}</td>
+    </tr>
+</tbody>
+{% endif %}
+
 <tbody id="dsc_add_class">
     {% if form.add_class %}
     <tr>
@@ -172,6 +204,7 @@
         {% else %}
         $("#dsc_device_server_info").show();
         {% endif %}
+        $("#update_method_change_warning").hide();
 
         $('#id_ds_info_copy').change(function() {
             // this will contain a reference to the checkbox
@@ -189,6 +222,11 @@
         $("#dsc_add_class").show();
         $("#dsc_xmi").show();
         $('#id_use_uploaded_xmi_file')[0].checked = true;
+            {% if form.last_update_method %}
+                {% if form.last_update_method.value != 'file' %}
+        $("#update_method_change_warning").show();
+                {% endif %}
+            {% endif %}
         {% else %}
         $("#dsc_xmi").hide();
         $('#id_use_uploaded_xmi_file')[0].checked = false;
@@ -198,15 +236,25 @@
         $("#dsc_add_class").show();
         $("#dsc_xmi_url").show();
         $('#id_use_url_xmi_file')[0].checked = true;
+            {% if form.last_update_method %}
+                {% if form.last_update_method.value != 'url' %}
+        $("#update_method_change_warning").show();
+                {% endif %}
+            {% endif %}
         {% else %}
         $("#dsc_xmi_url").hide();
         $('#id_use_url_xmi_file')[0].checked = false;
         {% endif %}
 
         {% if form.use_manual_info.value %}
-        $("#dsc_add_class").show();
+        $("#id_add_class")[0].checked = false
         $("#dsc_manual").show();
         $('#id_use_manual_info')[0].checked = true;
+        {% if form.last_update_method %}
+                {% if form.last_update_method.value != 'manual' %}
+        $("#update_method_change_warning").show();
+                {% endif %}
+            {% endif %}
         {% else %}
         $("#dsc_manual").hide();
         $('#id_use_manual_info')[0].checked = false;
@@ -223,6 +271,13 @@
                 $('#dsc_manual').hide();
                 $('#id_use_manual_info')[0].checked = false;
                 $('#id_use_url_xmi_file')[0].checked = false;
+                {% if form.last_update_method %}
+                    {% if form.last_update_method.value != 'file' %}
+                $("#update_method_change_warning").show();
+                    {% else %}
+                $("#update_method_change_warning").hide();
+                    {% endif %}
+                {% endif %}
 
 
             } else {
@@ -235,6 +290,9 @@
                 $('#id_use_url_xmi_file')[0].checked = true;
                 {% endif %}
                 $('#id_use_manual_info')[0].checked = false;
+                {% if form.last_update_method %}
+                $("#update_method_change_warning").hide();
+                {% endif %}
 
             }
         });
@@ -250,6 +308,13 @@
                 $('#dsc_manual').hide();
                 $('#id_use_manual_info')[0].checked = false;
                 $('#id_use_uploaded_xmi_file')[0].checked = false;
+                {% if form.last_update_method %}
+                    {% if form.last_update_method.value != 'url' %}
+                $("#update_method_change_warning").show();
+                    {% else %}
+                $("#update_method_change_warning").hide();
+                    {% endif %}
+                {% endif %}
 
             } else {
                 // the checkbox is now no longer checked
@@ -262,6 +327,9 @@
                 $('#dsc_xmi').show();
                 {% endif %}
                 $('#id_use_manual_info')[0].checked = false;
+                {% if form.last_update_method %}
+                $("#update_method_change_warning").hide();
+                {% endif %}
 
             }
         });
@@ -272,10 +340,18 @@
                 // the checkbox is now checked
                 $('#dsc_xmi').hide();
                 $("#dsc_add_class").show();
+                // $("#id_add_class")[0].checked = false;
                 $('#dsc_xmi_url').hide();
                 $('#dsc_manual').show();
                 $('#id_use_uploaded_xmi_file')[0].checked = false;
                 $('#id_use_url_xmi_file')[0].checked = false;
+                {% if form.last_update_method %}
+                    {% if form.last_update_method.value != 'manual' %}
+                $("#update_method_change_warning").show();
+                    {% else %}
+                $("#update_method_change_warning").hide();
+                    {% endif %}
+                {% endif %}
             } else {
                 // the checkbox is now no longer checked
                 $("#dsc_add_class").hide();
@@ -285,6 +361,9 @@
                 $('#dsc_xmi').show();
                 {% endif %}
                 $('#dsc_manual').hide();
+                {% if form.last_update_method %}
+                $("#update_method_change_warning").hide();
+                {% endif %}
 
             }
         });

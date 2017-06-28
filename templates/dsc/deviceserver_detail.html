@@ -2,8 +2,22 @@
 {% load cms_tags i18n thumbnail webu_utils %}
 {% load render_table from django_tables2 %}
 {% load staticfiles %}
-{% load markup %}
-{% load ratings %}
+{% load markup_tags %}
+{% load dsc_tags %}
+
+{% block extra_head %}
+    {{ block.super }}
+    <meta property="og:url" content="{{ request.build_absolute_uri }}{{ object.get_absolute_url }}" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title"  content="{{deviceserver.name}} Device Class/Server" />
+    <meta property="og:description" content="{{og_description}}" />
+
+{% endblock %}
+
+{% block meta_title %}
+{{deviceserver.name}} - {{block.super}}
+{% endblock %}
+
 
 {% block content_header %}
 <h1 style="text-transform: none">{{deviceserver.name}}</h1>
@@ -36,8 +50,7 @@
                 <a href="{% url 'deviceserver_delete' deviceserver.pk %}" class="icon-delete">Delete</a>
 
             </span>
-        {% endif %}.
-
+        {% endif %}        .
     </div>
     <hr/>
 
@@ -51,20 +64,20 @@
     <h4>This device server is deleted.<br />Information provided here may be no longer valid.</h4>
 {% endif %}
 {% if deviceserver.status != 'deleted' and not deviceserver.is_valid %}
-    <h4>This is historical information of {{deviceserver.invalidate_activity.device_server.name}} device server.
-        You may find valid information
-        <a href="{% url 'deviceserver_detail' deviceserver.invalidate_activity.device_server.pk %}"> here.</a>
-    </h4>
-{% endif %}
+    <h4>This is historical information of device classes implemented in
+        {{deviceserver.invalidate_activity.device_server.name}} device server.
 
-<div style="display: flex; flex-direction: row;">
-{% if deviceserver.is_valid %}
-<div style="margin-top:5pt; margin-bottom:5pt; padding: 10px; ">
-    {% ratings deviceserver %}
-</div>
+    </h4>
+        <a href="{% url 'deviceserver_detail' deviceserver.invalidate_activity.device_server.pk %}" style="font-weight:bold;">
+            Use this link to find the valid information.
+        </a>
 {% endif %}
-<p style="margin-top:5pt; margin-bottom:5pt; padding: 10px;">
-    <span style="font-weight:bold;">Development status:</span> {{ deviceserver.get_development_status_display }} <br />
+<p style="margin-top:5pt; margin-bottom:5pt;">
+    <span style="font-weight:bold;">Development status:</span>
+    {{ deviceserver.get_development_status_display }}{% if deviceserver.repository.tag %},
+            <span style="font-weight:bold;">Release:</span> {{deviceserver.repository.tag}}
+        {% endif %}
+    <br />
     <span style="font-weight:bold;">Information status:</span> {{ deviceserver.get_status_display }}
     {% if deviceserver.status == 'new' or deviceserver.status == 'updated' %}
         {% if perms.dsc.admin_deviceserver %} <br />
@@ -76,13 +89,21 @@
 
 
     <br />
+    {% if deviceserver.repository.url or deviceserver.is_valid %}
     <span style="font-weight:bold;">Repository:</span>
     {% if deviceserver.repository.url %}
     <a href="{{deviceserver.repository.url}}" target="_blank">
-        {{deviceserver.repository.repository_type}}
+        {{deviceserver.repository.url}}
     </a>
+
     {% else %}
-    This device server is not available in a public repository. Please contact the
+    {% if deviceserver.device_classes.all.count > 1 %}
+    These device classes are
+    {% else %}
+    This device class is
+    {% endif %}
+
+    not available in a public repository. Please contact the
     author{% if deviceserver.repository.contact_email %} {{ deviceserver.repository.contact_email|urlize }}{% endif %}.
     {% endif  %}
     {% if deviceserver.repository.download_url %}<br />
@@ -90,22 +111,20 @@
         <span style="font-weight:bold;">Download</span>
     </a>
     {% endif %}
+    {% endif %}
 <br />
     <span style="font-weight:bold;">Contact:</span>
-    {% for cl in deviceserver.device_classes.all %}
-        {% if cl.is_valid or not deviceserver.is_valid %} {{ cl.info.contact_email|urlize }}; {% endif %}
+    {% for contact in contacts %}
+        {{ contact|urlize|safe_for_robots }}
+
     {% endfor %}
 </p>
-</div>
 {% if deviceserver.description %}
-<div><
 <h4>Description</h4>
 <hr />
-<p>{{ deviceserver.description|restructuredtext}}</p>
-</div>
+<p>{{ deviceserver.description|apply_markup:"restructuredtext"}}</p>
 {% endif %}
 <hr /> <br />
-
 
 
 <div id="dsc-detail-tabs">
@@ -130,7 +149,9 @@
         <div id="dsc-{{spec.cl.name}}-class-tab">
             <h4>Class Description</h4>
             <hr />
-            <p>{{ spec.cl.description|restructuredtext}}</p>
+            <p>
+                {{ spec.cl.description|apply_markup:"restructuredtext"}}
+            </p>
             <p><span style="font-weight:bold;">Family:</span>
                 {{ spec.cl.info.class_family }}
             </p>
@@ -140,11 +161,15 @@
                 <p><span style="font-weight:bold;">Platform:</span> {{spec.cl.info.platform}}</p>
             {% endif %}
 
+            {% if spec.cl.language %}
+                <p><span style="font-weight:bold;">Language:</span> {{spec.cl.language}}</p>
+            {% endif %}
+
             <p><span style="font-weight:bold;">License:</span>
                 <a href="{{spec.cl.license.url}}" target="_blank">{{spec.cl.license.name}}</a>
             </p>
             <p><span style="font-weight:bold;">Contact:</span>
-                {{ spec.cl.info.contact_email|urlize }}
+                {{ spec.cl.info.contact_email|urlize|safe_for_robots }}
             </p>
             {% if spec.cl.info.manufacturer or spec.cl.info.bus %}
                 <h4>Hardware</h4>
@@ -154,7 +179,8 @@
                     </p>
                     <p>
                         {% if spec.cl.info.product_reference %}
-                            <span style="font-weight:bold;">Product:</span> {{spec.cl.info.product_reference}}
+                            <span style="font-weight:bold;">Product:</span>
+                            {{spec.cl.info.product_reference|apply_markup:"restructuredtext"}}
                         {% endif %}
                     </p>
                 {% endif %}
@@ -189,32 +215,7 @@
         {% endif %}
     {% endfor %}
     <div id="dsc-documentation-tab" style="word-break: break-all;">
-        {% for doc in deviceserver.documentation.all %}
-            {% if doc.is_valid %}
-                <div>
-                    <span style="font-weight:bold;">{{doc.documentation_type}}:</span>
-                    <a href="{{doc.url}}" target="_blank">{{doc.url}}</a>
-                    <hr />
-                </div>
-            {% endif %}
-        {% endfor %}
-        {% if readme or readme_link %}
-            <div style="word-wrap: break-word;">
-                <h4>README</h4>
-                {% if rst %}
-                    {{ readme|restructuredtext }}
-                { % elif md %}
-                    {{readme}}
-                {% else %}
-                    {% if not readme %}
-                        <a href="{{readme_link}}" target="_blank"> {{readme_name}} </a>
-                    {% else %}
-                        {{readme|linebreaks}}
-                    {% endif %}
-                {% endif %}
-            </div>
-        {% endif %}
-
+        {% include 'dsc/inc/deviceserver_documentation.html' %}
     </div>
 
     <div id="dsc-history-tab">
