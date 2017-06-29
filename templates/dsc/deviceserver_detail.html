@@ -151,6 +151,11 @@
             </li>
             {% endif %}
         {% endfor %}
+        {% if deviceserver.is_valid %}
+        <li style="float:right;">
+            <a href="#dsc-comments-tab"><span>Comments</span></a>
+        </li>
+        {% endif %}
         <li style="float:right;">
             <a href="#dsc-documentation-tab"><span>Documentation</span></a>
         </li>
@@ -229,6 +234,11 @@
         </div>
         {% endif %}
     {% endfor %}
+    {% if deviceserver.is_valid %}
+    <div id="dsc-comments-tab">
+        {% include 'dsc/inc/deviceserver_comments.html' %}
+    </div>
+    {% endif %}
     <div id="dsc-documentation-tab" style="word-break: break-all;">
         {% include 'dsc/inc/deviceserver_documentation.html' %}
     </div>
