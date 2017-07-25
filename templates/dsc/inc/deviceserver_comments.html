@@ -1,7 +1,9 @@
 {% load comments static %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'fluent_comments/css/ajaxcomments.css' %}" />
-<script type="text/javascript" src="{% static 'fluent_comments/js/ajaxcomments.js' %}"></script>
-
 {% render_comment_list for deviceserver %}
+<hr style="margin-top:12pt"/>
+{% if user.is_authenticated %}
 {% render_comment_form for deviceserver %}
+{% else %}
+<p>Please log in to comment.</p>
+{% endif %}
