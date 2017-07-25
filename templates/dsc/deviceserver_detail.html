@@ -5,6 +5,7 @@
 {% load markup_tags %}
 {% load dsc_tags %}
 {% load ratings %}
+{% load comments %}
 
 
 {% block extra_head %}
@@ -153,7 +154,8 @@
         {% endfor %}
         {% if deviceserver.is_valid %}
         <li style="float:right;">
-            <a href="#dsc-comments-tab"><span>Comments</span></a>
+            {% get_comment_count for deviceserver as comment_count %}
+            <a href="#dsc-comments-tab"><span>Comments ({{comment_count}})</span></a>
         </li>
         {% endif %}
         <li style="float:right;">
