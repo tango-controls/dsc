@@ -281,3 +281,21 @@ a.visited.dsc-back  {
 .dsc-cmd-tooltip:hover .tooltiptext {
     visibility: visible;
 }
+
+/* comments and stars */
+
+.comments-form fieldset {
+    padding: 0px;
+    border-width: 0px;
+}
+
+.comments-form .btn {
+    margin-left: 5px;
+}
+
+
+
+.star-ratings-rating-full, .star-ratings-rating-empty {
+  background-size: cover;
+
+}

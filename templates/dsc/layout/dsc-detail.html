@@ -6,8 +6,8 @@
 {% block principal %}
     {{ block.super }}
     {% addtoblock "css" %}
-        <link rel="stylesheet" href="{% static "dsc/css/dsc.css" %}" media="all"  />
         <link rel="stylesheet" href="{% static "star-ratings/css/star-ratings.css" %}">
+        <link rel="stylesheet" href="{% static "dsc/css/dsc.css" %}" media="all"  />
     {% endaddtoblock %}
     {% addtoblock "js" %}<script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
     {% endaddtoblock %}

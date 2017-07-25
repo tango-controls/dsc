@@ -91,5 +91,7 @@ urlpatterns = patterns(
 
     url(r'^comments/', include('django_comments.urls')),
 
+    url(r'^blog/comments/', include('fluent_comments.urls'))
+
 )
 
