@@ -50,10 +50,12 @@
 
 
 
-        {% if deviceserver.created_by == user or perms.dsc.admin_deviceserver %}
+        {% if user.is_authenticated %}
             <span style="margin-right:10pt;">
                 <a href="{% url 'deviceserver_update' deviceserver.pk %}" class="icon-edit">Edit</a>
             </span>
+        {% endif %}
+        {% if deviceserver.created_by == user or perms.dsc.admin_deviceserver %}
             <span style="margin-right:10pt;">
                 <a href="{% url 'deviceserver_delete' deviceserver.pk %}" class="icon-delete">Delete</a>
 
