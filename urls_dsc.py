@@ -19,7 +19,7 @@ urlpatterns = patterns(
 
     url(
          r'^ds/(?P<pk>\d+)/update/$',
-         permission_required('dsc.update_own_deviceserver')(DeviceServerUpdateView.as_view()),
+         login_required(DeviceServerUpdateView.as_view()),
          name='deviceserver_update'),
 
     url(
