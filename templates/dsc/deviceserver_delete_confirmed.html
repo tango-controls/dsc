@@ -1,0 +1,13 @@
+{% extends request.is_ajax|yesno:"layout/ajax.html,dsc/layout/normal.html" %}
+{% load cms_tags i18n thumbnail webu_utils %}
+{% load render_table from django_tables2 %}
+{% load staticfiles %}
+
+{% block content_header %}
+<h1 style="text-transform: none">{{deviceserver.name}} Deleted</h1>
+{% endblock %}
+{% block content %}
+<h4>The device class "{{ deviceserver.name }}" has been deleted.</h4>
+<a href="{% page_url request.current_page %}" class="dsc-back">Back</a>
+
+{% endblock %}

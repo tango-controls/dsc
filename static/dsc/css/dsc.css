@@ -1,0 +1,301 @@
+#dsc-detail-tabs {
+    background: #eaeaea;
+    border: none;
+}
+#dsc-detail-tabs .ui-widget-header {
+    background: white;
+    border: none;
+    border-bottom: 1px solid #c0c0c0;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+}
+#dsc-detail-tabs .ui-tabs-nav .ui-state-default {
+    background: #fafafa;
+    border: none;
+}
+#dsc-detail-tabs .ui-tabs-nav .ui-state-active {
+    background: #eaeaea;
+    border: none;
+}
+#dsc-detail-tabs .ui-tabs-nav .ui-state-default a {
+    color: #a0a0a0;
+}
+
+#dsc-detail-tabs .ui-tabs-nav .ui-state-active a {
+    color: #459e00;
+}
+
+#dsc-detail-tabs p {
+    margin-top: 5pt;
+    margin-bottom: 1pt;
+}
+
+
+
+tr.odd {
+    background:#fafafa;
+
+}
+
+th.manufacturers {
+    font-size:98%;
+    padding-left:6px;
+}
+
+th.manufacturers a {
+    color: rgb(50,75,50);
+}
+
+th.manufacturers a:hover {
+    color: rgb(50,50,50);
+}
+
+
+td.manufacturers {
+    word-wrap: break-word;
+    font-size:98%;
+    padding:6px;
+}
+
+th.products {
+    font-size:98%;
+    padding-left:6px;
+    font-color: rgb(0,10,0);
+}
+
+th.products a {
+    color: rgb(50,75,50);
+}
+
+th.products a:hover {
+    color: rgb(50,50,50);
+}
+
+td.products {
+    word-wrap: break-word;
+    word-break: break-all;
+    font-size:98%;
+    padding:6px;
+
+}
+
+th.family {
+    font-size:98%;
+    padding-left:6px;
+    font-color: rgb(0,10,0);
+}
+
+th.family a {
+    color: rgb(50,75,50);
+}
+
+th.family a:hover {
+    color: rgb(50,50,50);
+}
+
+td.family {
+    word-wrap: break-word;
+    font-size:98%;
+    padding:6px;
+
+}
+
+th.license {
+    font-size:98%;
+    padding-left:6px;
+    font-color: rgb(0,10,0);
+}
+
+th.license a {
+    color: rgb(50,75,50);
+}
+
+th.license a:hover {
+    color: rgb(50,50,50);
+}
+
+td.license {
+    font-size:98%;
+    padding:6px;
+
+}
+
+th.name {
+    font-size:98%;
+    padding-left:6px;
+    font-color: rgb(0,10,0);
+}
+
+th.name a {
+    color: rgb(50,75,50);
+}
+
+th.name a:hover {
+    color: rgb(50,50,50);
+}
+
+td.name {
+    font-size:98%;
+    padding:6px;
+}
+
+th.description {
+    font-size:98%;
+    padding-left:6px;
+    font-color: rgb(0,10,0);
+}
+
+th.description a {
+    color: rgb(50,75,50);
+}
+
+th.description a:hover {
+    color: rgb(50,50,50);
+}
+
+td.description {
+    word-wrap: break-word;
+    font-size:98%;
+    padding:6px;
+}
+
+#dsc-detail-tabs h4 {
+    margin-top: 7pt;
+}
+
+#table-container table {
+    padding-right:4-px;
+}
+
+a.dsc-back  {
+    float:right;
+    height:40px;
+    font-size:1em;
+    display:inline-block;
+    text-align:center;
+    vertical-align:center;
+    margin-left:10px;
+    margin-right:20px;
+    text-decoration:none;
+    text-transform: uppercase;
+    border:none;
+    padding:10px;
+}
+
+a.hover.dsc-back  {
+    float:right;
+    height:40px;
+    font-size:1em;
+    display:inline-block;
+    text-align:center;
+    vertical-align:center;
+    margin-left:10px;
+    margin-right:20px;
+    text-decoration:none;
+    text-transform: uppercase;
+    border:none;
+    padding:10px;
+}
+
+a.visited.dsc-back  {
+    float:right;
+    height:40px;
+    font-size:1em;
+    display:inline-block;
+    text-align:center;
+    vertical-align:center;
+    margin-left:10px;
+    margin-right:20px;
+    text-decoration:none;
+    text-transform: uppercase;
+    border:none;
+    padding:10px;
+}
+
+.pagination, .next, .previous, .current, .cardinality {
+   display: flex;
+   flex-direction: row;
+   /* Below sets up your display method: flex-start|flex-end|space-between|space-around */
+   justify-content: flex-start;
+   /* Below removes bullets and cleans white-space */
+   list-style: none;
+   padding-right: 10px;
+
+}
+
+.system-message {
+    display: none;
+}
+
+/* Tooltip container */
+.dsc-tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.dsc-tooltip .tooltiptext {
+    visibility: hidden;
+    max-width: 450px;
+    white-space:pre-line;
+    background-color: grey;
+    color: #fff;
+    text-align: left;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 6px;
+    opacity: 0.9;
+    font-weight: normal;
+
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.dsc-tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.dsc-cmd-tooltip .tooltiptext {
+    visibility: hidden;
+    width: 400px;
+    white-space:pre-line;
+    background-color: grey;
+    color: #fff;
+    text-align: left;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 6px;
+    opacity: 0.9;
+    font-weight: normal;
+
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.dsc-cmd-tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+/* comments and stars */
+
+.comments-form fieldset {
+    padding: 0px;
+    border-width: 0px;
+}
+
+.comments-form .btn {
+    margin-left: 5px;
+}
+
+
+
+.star-ratings-rating-full, .star-ratings-rating-empty {
+  background-size: cover;
+
+}

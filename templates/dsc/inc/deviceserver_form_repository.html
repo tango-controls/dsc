@@ -1,0 +1,106 @@
+{% load cms_tags menu_tags sekizai_tags static %}
+<tbody>
+    <tr>
+        <th><label>Available in a public repository?</label></th><td><input type="checkbox" id="dsc_repo_public_check" /></td>
+    </tr>
+</tbody>
+
+<tbody id="dsc_repo_public">
+    {% if form.repository_type.errors %}
+    <tr><td colspan="2">{{ form.repository_type.errors }}</td></tr>
+    {% endif %}
+    <tr>
+        <th>{{ form.repository_type.label_tag }}</th><td>{{ form.repository_type }}</td>
+    </tr>
+    {% if form.repository_url.errors %}
+    <tr><td colspan="2">{{ form.repository_url.errors }}</td></tr>
+    {% endif %}
+    <tr>
+        <th>{{ form.repository_url.label_tag }}</th><td>{{ form.repository_url }}</td>
+    </tr>
+    <tr>
+        <th><label>Available for download?</label></th><td><input type="checkbox" id="dsc_repo_download_check" /></td>
+    </tr>
+</tbody>
+
+<tbody id="dsc_repo_download">
+    {% if form.repository_download_url.errors %}
+    <tr><td colspan="2">{{ form.repository_download_url.errors }}</td></tr>
+    {% endif %}
+     <tr>
+        <th>{{ form.repository_download_url.label_tag }}</th><td>{{ form.repository_download_url }}</td>
+    </tr>
+
+</tbody>
+<tbody id="dsc_repo_contact">
+    {% if form.repository_contact.errors %}
+    <tr><td colspan="2">{{ form.repository_contact.errors }}</td></tr>
+    {% endif %}
+    <tr>
+        <th><label>Contact e-mail to get the device server:</label></th><td>{{ form.repository_contact }}</td>
+    </tr>
+</tbody>
+
+
+
+
+{% addtoblock 'js' %}
+
+    <script language="JavaScript">
+
+        {% if form.repository_download_url.value %}
+        $("#dsc_repo_download").show();
+        $('#dsc_repo_download_check')[0].checked = true;
+        {% else %}
+        $("#dsc_repo_download").hide();
+        $('#dsc_repo_download_check')[0].checked = false;
+        {% endif %}
+
+        {% if form.repository_url.value %}
+        $("#dsc_repo_public").show();
+        {% if not form.repository_contact.value %}
+        $("#dsc_repo_contact").hide();
+        {% endif %}
+        $('#dsc_repo_public_check')[0].checked = true;
+        {% else %}
+        $("#dsc_repo_public").hide();
+        $("#dsc_repo_contact").show();
+        $('#dsc_repo_public_check')[0].checked = false;
+        {% endif %}
+
+
+
+
+        // handling showing/hiding public repo
+        $('#dsc_repo_public_check').change(function() {
+            // this will contain a reference to the checkbox
+            if (this.checked) {
+                // the checkbox is now checked
+                $('#dsc_repo_public').show();
+                $("#dsc_repo_contact").hide();
+            } else {
+                // the checkbox is now no longer checked
+                $('#dsc_repo_public').hide();
+                $('#dsc_repo_download').hide();
+                $("#dsc_repo_contact").show();
+                $('#dsc_repo_download_check')[0].checked = false;
+
+            }
+        });
+
+        // handling showing/hiding download
+        $('#dsc_repo_download_check').change(function() {
+            // this will contain a reference to the checkbox
+            if (this.checked) {
+                // the checkbox is now checked
+                $('#dsc_repo_download').show();
+
+            } else {
+                // the checkbox is now no longer checked
+                $('#dsc_repo_download').hide();
+            }
+        });
+
+    </script>
+
+{% endaddtoblock %}

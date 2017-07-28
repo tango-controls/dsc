@@ -1,0 +1,46 @@
+{% load render_table from django_tables2 %}
+{% load cms_tags %}
+{% load dsc_tags %}
+
+{% url 'deviceserver_add' as add_url %}
+
+<h4>
+    There are device classes for the following <i>families:</i>
+</h4>
+<p style="font-size:110%;">
+{% include 'dsc/inc/families_list.html' %}
+</p>
+{% include 'dsc/inc/deviceserver_fulltextsearch.html' %}
+<p style="font-size:120%;margin-top:0px;">
+    Here you will find device classes available in the community. Device classes provide among others
+    connectivity to equipment. So, if you want to connect your hardware to Tango Controls please check this catalogue.
+    One or more device classes can be wrapped as a device server to connect one or more devices to your Tango control
+    system. Tango imposes no limit on the number of devices or classes in a device server. It depends on the
+    implementation of the device class.
+</p>
+<p>
+    <span style="font-size:120%;font-weight:bold;">
+        Did you write a new device class?
+        <a href="{{ add_url }}">Please share it.</a>
+    </span>
+</p>
+<p style="margin-bottom:10pt; margin-top:5pt;" id="ds-table">
+    {% if family %}
+        Below you will find device classes of <span style="font-weight:bold;">{{family}}</span> family.
+    {% else %}
+        {% if search %}
+            Below you will find device classes for <span style="font-weight:bold;">{{search}}</span> search string.
+        {% else %}
+            Below you will find a table with all device classes.
+            Please click a family name above or use search to narrow the list.
+        {% endif %}
+    {% endif %}
+    You may also use <a href="{% url 'deviceserver_advanced_search' %}">
+        <span style="font-weight:bold;font-size:120%;">advanced search</span>
+    </a>
+    to find a device class you are looking for.</p>
+</p>
+<p>
+{% include 'dsc/inc/deviceserver_list.html' %}
+</p>
+

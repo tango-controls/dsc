@@ -1,0 +1,17 @@
+{% for activity in activities|dictsortreversed:'created_at' %}
+<p style="margin:16px;font-size:110%;">
+    {{ activity.created_at|date }}, {{ activity.created_by.get_full_name }}
+    <br />
+    <span style="font-weight:bold">{{activity.activity_type|title}}
+        <a href="{% url 'deviceserver_detail' activity.device_server.pk  %}" style="font-weight:bold">{{activity.device_server.name}}
+        </a>:
+    </span>
+    <br />
+    {{activity.activity_info|truncatechars:100}}
+    </p>
+    {% if not forloop.last %}
+
+        <hr />
+
+    {% endif %}
+{% endfor %}

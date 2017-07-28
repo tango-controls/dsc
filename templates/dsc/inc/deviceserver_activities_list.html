@@ -1,0 +1,52 @@
+{% if deviceserver.is_valid %}
+
+{% for activity in deviceserver.activities.all|dictsortreversed:'created_at' %}
+    {{ activity.created_at|date }}, {{ activity.created_by.get_full_name }}
+    <br />
+    <span style="font-weight:bold">{{activity.activity_type|title}}:</span>
+    <br />
+    {{activity.activity_info}}
+    <br />
+    {% if activity.device_server_backup %}
+        You can see previous version
+        <a href="{% url 'deviceserver_detail' activity.device_server_backup.pk  %}" style="font-weight:bold">
+            here
+        </a>.
+    {% endif %}
+    {% if not forloop.last %}
+        <br />
+        <br />
+        <hr />
+        <br />
+    {% endif %}
+{% endfor %}
+
+{% else %}
+
+{% for activity in deviceserver.invalidate_activity.device_server.activities.all|dictsortreversed:'created_at' %}
+    {{ activity.created_at|date }}, {{ activity.created_by.get_full_name }}
+    <br />
+    <span style="font-weight:bold;">{{activity.activity_type|title}}:</span>
+    <br />
+    {{activity.activity_info}}
+    <br />
+    {% if activity.device_server_backup and activity.pk != deviceserver.invalidate_activity.pk %}
+        You can see previous version
+        <a href="{% url 'deviceserver_detail' activity.device_server_backup.pk  %}" style="font-weight:bold">
+            here
+        </a>.
+    {% endif %}
+    {% if activity.pk == deviceserver.invalidate_activity.pk %}
+        <span style="font-weight:bold;color:rgb(50,120,50);">You are looking at this version now.</span>
+    {% endif %}
+
+    {% if not forloop.last %}
+        <br />
+        <br />
+        <hr />
+        <br />
+    {% endif %}
+{% endfor %}
+
+
+{% endif %}

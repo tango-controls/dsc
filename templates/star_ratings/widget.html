@@ -1,0 +1,18 @@
+{% extends "star_ratings/widget_base.html" %}
+{% load i18n %}
+{% block rating_detail %}
+
+    <div class="star-ratings-rating-average">Average: <span class='star-ratings-rating-value'>{{ rating.average|floatformat:"-2" }}</span></div>
+
+    <div class="star-ratings-rating-count">{% trans 'Rating Count: ' %} <span class='star-ratings-rating-value'>{{ rating.count }}</span></div>
+
+{% if user.is_authenticated %}
+
+    <div class="star-ratings-rating-user">{% trans 'You Rated: ' %} <span class='star-ratings-rating-value'>{% if user_rating %}{{ user_rating.score }}{% else %}{% trans 'Not rated' %}{% endif %}</span></div>
+
+{% endif %}
+
+{% if not user.is_authenticated and not anonymous_ratings and not read_only %}
+<br />Please log in to rate.
+{% endif %}
+{% endblock %}

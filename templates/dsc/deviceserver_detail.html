@@ -1,0 +1,268 @@
+{% extends request.is_ajax|yesno:"layout/ajax.html,dsc/layout/dsc-detail.html" %}
+{% load cms_tags i18n thumbnail webu_utils %}
+{% load render_table from django_tables2 %}
+{% load staticfiles %}
+{% load markup_tags %}
+{% load dsc_tags %}
+{% load ratings %}
+{% load comments %}
+
+
+{% block extra_head %}
+    {{ block.super }}
+    <meta property="og:url" content="{{ request.build_absolute_uri }}{{ object.get_absolute_url }}" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title"  content="{{deviceserver.name}} Device Class/Server" />
+    <meta property="og:description" content="{{og_description}}" />
+
+{% endblock %}
+
+{% block meta_title %}
+{{deviceserver.name}} - {{block.super}}
+{% endblock %}
+
+
+{% block content_header %}
+<h1 style="text-transform: none">{{deviceserver.name}}</h1>
+{% endblock %}
+
+{% block content %}
+
+
+{% if message %}
+    <h4>{{message}}</h4>
+{% endif %}
+
+{% if deviceserver.is_valid %}
+    <div id="fb-root"></div>
+
+            <script>(function(d, s, id) {
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) return;
+              js = d.createElement(s); js.id = id;
+              js.src = "//connect.facebook.net/en_EN/sdk.js#xfbml=1&version=v2.8";
+              fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
+  <div style="margin-bottom:5pt">
+      <span style="float:right;">
+          <div class="fb-like" data-href="{{ request.build_absolute_uri }}{{ object.get_absolute_url }}" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+      </span>
+
+
+
+        {% if user.is_authenticated %}
+            <span style="margin-right:10pt;">
+                <a href="{% url 'deviceserver_update' deviceserver.pk %}" class="icon-edit">Edit</a>
+            </span>
+        {% endif %}
+        {% if deviceserver.created_by == user or perms.dsc.admin_deviceserver %}
+            <span style="margin-right:10pt;">
+                <a href="{% url 'deviceserver_delete' deviceserver.pk %}" class="icon-delete">Delete</a>
+
+            </span>
+        {% endif %}        .
+    </div>
+    <hr/>
+
+{% endif %}
+
+{% if deviceserver.certified %}
+    <h4>This device server is certified as a reference implementation.</h4>
+{% endif %}
+
+{% if deviceserver.status == 'deleted' %}
+    <h4>This device server is deleted.<br />Information provided here may be no longer valid.</h4>
+{% endif %}
+{% if deviceserver.status != 'deleted' and not deviceserver.is_valid %}
+    <h4>This is historical information of device classes implemented in
+        {{deviceserver.invalidate_activity.device_server.name}} device server.
+
+    </h4>
+        <a href="{% url 'deviceserver_detail' deviceserver.invalidate_activity.device_server.pk %}" style="font-weight:bold;">
+            Use this link to find the valid information.
+        </a>
+{% endif %}
+
+{% if deviceserver.is_valid %}
+        <span style="float:right;margin-top:5pt; margin-bottom:5pt;margin-left:2em;">
+            {% ratings deviceserver %}
+        </span>
+{% endif %}
+
+<p style="margin-top:5pt; margin-bottom:5pt;">
+
+    <span style="font-weight:bold;">Development status:</span>
+    {{ deviceserver.get_development_status_display }}{% if deviceserver.repository.tag %},
+            <span style="font-weight:bold;">Release:</span> {{deviceserver.repository.tag}}
+        {% endif %}
+    <br />
+    <span style="font-weight:bold;">Information status:</span> {{ deviceserver.get_status_display }}
+    {% if deviceserver.status == 'new' or deviceserver.status == 'updated' %}
+        {% if perms.dsc.admin_deviceserver %} <br />
+            <span style="font-size:90%; margin-top:2pt;">As an administrator, you may
+            <a href="{% url 'deviceserver_verify' deviceserver.pk %}"> <b>confirm</b></a>
+            that information is valid.</span>
+        {% endif %}
+    {% endif %}
+
+
+    <br />
+    {% if deviceserver.repository.url or deviceserver.is_valid %}
+    <span style="font-weight:bold;">Repository:</span>
+    {% if deviceserver.repository.url %}
+    <a href="{{deviceserver.repository.url}}" target="_blank">
+        {{deviceserver.repository.url}}
+    </a>
+
+    {% else %}
+    {% if deviceserver.device_classes.all.count > 1 %}
+    These device classes are
+    {% else %}
+    This device class is
+    {% endif %}
+
+    not available in a public repository. Please contact the
+    author{% if deviceserver.repository.contact_email %} {{ deviceserver.repository.contact_email|urlize }}{% endif %}.
+    {% endif  %}
+    {% if deviceserver.repository.download_url %}<br />
+    <a href="{{deviceserver.repository.download_url}}" target="_blank">
+        <span style="font-weight:bold;">Download</span>
+    </a>
+    {% endif %}
+    {% endif %}
+<br />
+    <span style="font-weight:bold;">Contact:</span>
+    {% for contact in contacts %}
+        {{ contact|urlize|safe_for_robots }}
+
+    {% endfor %}
+</p>
+{% if deviceserver.description %}
+<h4>Description</h4>
+<hr />
+<p>{{ deviceserver.description|apply_markup:"restructuredtext"}}</p>
+{% endif %}
+<hr /> <br />
+
+
+<div id="dsc-detail-tabs">
+    <ul>
+        {% for cl_name, spec in specifications.items %}
+            {% if spec.cl.is_valid or not deviceserver.is_valid %}
+            <li>
+                <a href="#dsc-{{spec.cl.name}}-class-tab"><span>{{spec.cl.name}}</span></a>
+            </li>
+            {% endif %}
+        {% endfor %}
+        {% if deviceserver.is_valid %}
+        <li style="float:right;">
+            {% get_comment_count for deviceserver as comment_count %}
+            <a href="#dsc-comments-tab"><span>Comments ({{comment_count}})</span></a>
+        </li>
+        {% endif %}
+        <li style="float:right;">
+            <a href="#dsc-documentation-tab"><span>Documentation</span></a>
+        </li>
+        <li style="float:right;">
+            <a href="#dsc-history-tab"><span>History</span></a>
+        </li>
+    </ul>
+
+    {% for cl_name, spec in specifications.items %}
+        {% if True or spec.cl.is_valid or not deviceserver.is_valid %}
+        <div id="dsc-{{spec.cl.name}}-class-tab">
+            <h4>Class Description</h4>
+            <hr />
+            <p>
+                {{ spec.cl.description|apply_markup:"restructuredtext"}}
+            </p>
+            <p><span style="font-weight:bold;">Family:</span>
+                {{ spec.cl.info.class_family }}
+            </p>
+
+            <p><span style="font-weight:bold;">Key words:</span> {{spec.cl.info.key_words}}</p>
+            {% if spec.cl.info.platform %}
+                <p><span style="font-weight:bold;">Platform:</span> {{spec.cl.info.platform}}</p>
+            {% endif %}
+
+            {% if spec.cl.language %}
+                <p><span style="font-weight:bold;">Language:</span> {{spec.cl.language}}</p>
+            {% endif %}
+
+            <p><span style="font-weight:bold;">License:</span>
+                <a href="{{spec.cl.license.url}}" target="_blank">{{spec.cl.license.name}}</a>
+            </p>
+            <p><span style="font-weight:bold;">Contact:</span>
+                {{ spec.cl.info.contact_email|urlize|safe_for_robots }}
+            </p>
+            {% if spec.cl.info.manufacturer or spec.cl.info.bus %}
+                <h4>Hardware</h4>
+                <hr />
+                {% if spec.cl.info.manufacturer %}
+                    <p><span style="font-weight:bold;">Manufacturer:</span> {{spec.cl.info.manufacturer}}
+                    </p>
+                    <p>
+                        {% if spec.cl.info.product_reference %}
+                            <span style="font-weight:bold;">Product:</span>
+                            {{spec.cl.info.product_reference|apply_markup:"restructuredtext"}}
+                        {% endif %}
+                    </p>
+                {% endif %}
+
+                {% if spec.cl.info.bus %}
+                    <p><span style="font-weight:bold;">Bus:</span> {{spec.cl.info.bus}}</p>
+                {% endif %}
+
+            {% endif %}
+
+
+            <h4>Class interface</h4>
+            <hr />
+            <p>
+                <span style="font-weight:bold;">Attributes:</span>
+                {% render_table spec.attributes_table %}
+            </p>
+            <p>
+                <span style="font-weight:bold;">Commands:</span>
+                {% render_table spec.commands_table %}
+            </p>
+            <p>
+                <span style="font-weight:bold;">Pipes:</span>
+                {% render_table spec.pipes_table %}
+            </p>
+            <p>
+                <span style="font-weight:bold;">Properties:</span>
+                {% render_table spec.properties_table %}
+            </p>
+
+        </div>
+        {% endif %}
+    {% endfor %}
+    {% if deviceserver.is_valid %}
+    <div id="dsc-comments-tab">
+        {% include 'dsc/inc/deviceserver_comments.html' %}
+    </div>
+    {% endif %}
+    <div id="dsc-documentation-tab" style="word-break: break-all;">
+        {% include 'dsc/inc/deviceserver_documentation.html' %}
+    </div>
+
+    <div id="dsc-history-tab">
+        {% include 'dsc/inc/deviceserver_activities_list.html' %}
+
+    </div>
+</div>
+<div>
+    <span style="font-weight:bold;">Added by:</span>{{deviceserver.created_by}}
+    <span style="font-weight:bold;">on:</span>{{deviceserver.created_at}}
+</div>
+
+{% endblock %}
+
+{% block extra_script %}
+    {{ block.super }}
+    <script language="JavaScript">
+        $("#dsc-detail-tabs").tabs();
+    </script>
+
+{% endblock %}
