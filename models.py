@@ -273,6 +273,12 @@ class DeviceServer(DscManagedModel):
 
     readme = models.FileField(verbose_name='Readme', upload_to='dsc_readmes', null=True, blank=True, max_length=100000)
 
+    picture = models.ImageField(verbose_name="Picture",
+                                upload_to='dsc_pictures',
+                                null=True,
+                                blank=True,
+                                max_length=1024*1024)
+
     class Meta:
         permissions = (
             ('admin_deviceserver', 'do various administration tasks on device servers'),
@@ -348,7 +354,8 @@ class DeviceServer(DscManagedModel):
                                  invalidate_activity=activity,
                                  development_status=self.development_status,
                                  certified=self.certified,
-                                 readme=self.readme
+                                 readme=self.readme,
+                                 picture=self.picture
                                  )
         return backup_ds
 
@@ -477,7 +484,8 @@ class DeviceClass(DscManagedModel):
                                 choices=zip(['Cpp', 'Python', 'PythonHL', 'Java', 'CSharp', 'LabView'],
                                             ['Cpp', 'Python', 'PythonHL', 'Java', 'CSharp', 'LabView']),
                                 verbose_name='Language', default='Cpp')
-    # def make_invalid(self, activity):
+
+    #  def make_invalid(self, activity):
     #    super(DeviceClass,self).make_invalid(activity)
     #    for attr in
 
@@ -495,7 +503,7 @@ class DeviceClass(DscManagedModel):
         clo.make_invalid(activity)
         clo.device_server = self.device_server
 
-        return  clo
+        return clo
 
 
 class DeviceClassInfo(DscManagedModel):
@@ -653,6 +661,11 @@ class DeviceServerAddModel(models.Model):
         default=STATUS_NEW,
     )
 
+    picture = models.ImageField(verbose_name="Picture",
+                                upload_to='dsc_pictures',
+                                null=True,
+                                blank=True,
+                                max_length=1024 * 1024)
 
     # repository
     process_from_repository = models.BooleanField(verbose_name='Use repository only', blank=True, default=False)
@@ -878,6 +891,7 @@ class DeviceServerUpdateModel(DeviceServerAddModel):
         self.certified = device_server.certified
         self.ds_status = device_server.status
         self.development_status = device_server.development_status
+        self.picture = device_server.picture
 
         self.last_update_method = device_server.last_update_method()
 
@@ -946,8 +960,6 @@ class DeviceServerUpdateModel(DeviceServerAddModel):
             self.key_words = cl.info.key_words
             self.contact_email = cl.info.contact_email
 
-
-
         return self
 
 
@@ -997,6 +1009,7 @@ def search_device_servers(search_text):
 
 
 from xmi_parser import TangoXmiParser
+
 def create_or_update(update_object, activity, device_server=None, device_class=None):
     """this method creates or updates device server based on update/add object. It should be used inside atimic
     transaction to keep database consistent.
@@ -1034,6 +1047,9 @@ def create_or_update(update_object, activity, device_server=None, device_class=N
 
     if update_object.ds_status is not None:
         new_device_server.status = update_object.ds_status
+
+    if update_object.picture is not None:
+        new_device_server.picture = update_object.picture
 
     if update_object.ds_info_copy:
         new_device_server.description = ''
@@ -1073,6 +1089,8 @@ def create_or_update(update_object, activity, device_server=None, device_class=N
         device_server.development_status = new_device_server.development_status
         device_server.certified = new_device_server.certified
         device_server.status = STATUS_UPDATED
+        if new_device_server.picture is not None:
+            device_server.picture = new_device_server.pictrure
 
     # make sure device server has pk
     device_server.save()
