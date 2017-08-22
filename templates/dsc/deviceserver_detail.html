@@ -15,7 +15,7 @@
 	<meta property="og:title"  content="{{deviceserver.name}} Device Class/Server" />
     <meta property="og:description" content="{{og_description}}" />
     {% if deviceserver.picture %}
-    <meta property="og:image" content="deviceserver.picture.url" />
+    <meta property="og:image" content="{{ deviceserver.picture.url }}" />
     {% else %}
     <meta property="og:image" content="{% static "dsc/img/default-ds-picture.png" %}" />
     {% endif %}
@@ -97,7 +97,11 @@
 
 <p style="margin-top:5pt; margin-bottom:5pt;">
     <span class="dsc-picture">
-        <img src='{% static "dsc/img/default-ds-picture.png" %}'>
+        {% if deviceserver.picture %}
+        <img class="dsc-picture" src='{{ deviceserver.picture.url }}'>
+        {% else %}
+        <img class="dsc-picture" src='{% static "dsc/img/default-ds-picture.png" %}'>
+        {% endif %}
     </span>
 
     <span style="font-weight:bold;">Development status:</span>

@@ -1090,7 +1090,7 @@ def create_or_update(update_object, activity, device_server=None, device_class=N
         device_server.certified = new_device_server.certified
         device_server.status = STATUS_UPDATED
         if new_device_server.picture is not None:
-            device_server.picture = new_device_server.pictrure
+            device_server.picture = new_device_server.picture
 
     # make sure device server has pk
     device_server.save()
