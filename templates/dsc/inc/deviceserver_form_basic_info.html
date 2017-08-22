@@ -17,24 +17,31 @@
     {% endif %}
 </tbody>
 <tbody >
+    {% if form.picture.errors %}
+        <tr><td colspan="3">{{ form.picture.errors }}</td></tr>
+    {% endif %}
+    <tr>
+        <th>{{ form.picture.label_tag }}</th><td colspan="2">{{ form.picture }}</td>
+    </tr>
     <tr><th colspan="2"><label>Use device server name and description from class?</label></th>
         <td>{{ form.ds_info_copy }}</td>
     </tr>
 </tbody>
 <tbody id="dsc_device_server_info">
     {% if form.name.errors %}
-            <tr><td colspan="2">{{ form.name.errors }}</td></tr>
+            <tr><td colspan="3">{{ form.name.errors }}</td></tr>
     {% endif %}
      <tr>
         <th>{{ form.name.label_tag }}</th><td colspan="2">{{ form.name }}</td>
     </tr>
 
     {% if form.description.errors %}
-        <tr><td colspan="2">{{ form.description.errors }}</td></tr>
+        <tr><td colspan="3">{{ form.description.errors }}</td></tr>
     {% endif %}
     <tr>
         <th>{{ form.description.label_tag }}</th><td colspan="2">{{ form.description }}</td>
     </tr>
+
 </tbody>
 <tbody id="dsc_selelct_xmi_manual">
     <tr><th colspan="3"><label>Class info source:</label></th></tr>
