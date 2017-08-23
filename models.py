@@ -522,6 +522,10 @@ class DeviceClassInfo(DscManagedModel):
     key_words = models.CharField(max_length=255, verbose_name="Key words", blank=True, null=True)
     product_reference = models.CharField(max_length=255, verbose_name="Product", default='')
 
+    def all_families(self):
+        families = [ self.class_family, ] + [ dcf.family for dcf in self.additional_families ]
+        return set(families)
+
     def make_backup(self,activity):
         cli = DeviceClassInfo()
         cli.device_class = self.device_class
@@ -545,6 +549,12 @@ class DeviceClassInfo(DscManagedModel):
 
     def __str__(self):
         return '%s' % self.device_class
+
+
+class DeviceClassFamily(DscManagedModel):
+    device_class = models.ManyToManyField(DeviceClassInfo, related_name='additional_families')
+    family = models.CharField(max_length=128, blank=True, null=True, default='', unique=True)
+
 
 
 class DeviceAttribute(DscManagedModel):
