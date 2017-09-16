@@ -189,8 +189,8 @@
             <p>
                 {{ spec.cl.description|apply_markup:"restructuredtext"}}
             </p>
-            <p><span style="font-weight:bold;">Family:</span>
-                {{ spec.cl.info.class_family }}
+            <p>
+                {% include 'dsc/inc/deviceserver_families.html' %}
             </p>
 
             <p><span style="font-weight:bold;">Key words:</span> {{spec.cl.info.key_words}}</p>

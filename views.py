@@ -350,10 +350,10 @@ class DeviceServerProductAutocomplete(dal.autocomplete.Select2ListView):
 
         manufacturer = self.forwarded.get('manufacturer', None)
         if manufacturer:
-            p=list(dsc_models.DeviceClassInfo.objects.filter(manufacturer=manufacturer). \
+            p = list(dsc_models.DeviceClassInfo.objects.filter(manufacturer=manufacturer). \
                    order_by('product_reference').values_list('product_reference',flat=True).distinct())
         else:
-            p=list(dsc_models.DeviceClassInfo.objects. \
+            p = list(dsc_models.DeviceClassInfo.objects. \
                    order_by('product_reference').values_list('product_reference', flat=True).distinct())
 
         if self.request.GET.get('q',None) is not None:
@@ -387,6 +387,18 @@ class DeviceServerLicenseAutocomplete(dal.autocomplete.Select2ListView):
             k.append(self.request.GET.get('q',None))
         return k
 
+
+class DeviceClassFamilyAutocomplete(dal.autocomplete.Select2QuerySetView):
+    """Provide autocomplete feature for ClassFamily fields"""
+
+    def get_queryset(self):
+
+        qs = dsc_models.DeviceClassFamily.objects.all()
+
+        if self.q:
+            qs = qs.filter(name__istartswith=self.q)
+
+        return qs
 
 
 def update_class_description(request):

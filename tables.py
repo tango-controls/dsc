@@ -4,6 +4,7 @@ from models import DeviceServer, DeviceServerActivity, DeviceAttribute, DevicePr
 from django_tables2.utils import A
 from django.utils.safestring import mark_safe
 
+
 class DeviceServerTable(tables.Table):
 
     name = tables.LinkColumn('deviceserver_detail', args=[A('pk')] )

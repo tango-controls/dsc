@@ -1,0 +1,11 @@
+{% load cms_tags menu_tags sekizai_tags static %}
+
+<tbody id="additional_families">
+
+    {% if form.additional_families.errors %}
+    <tr><td colspan="3">{{ form.repository_tag.errors }}</td></tr>
+    {% endif %}
+    <tr>
+        <th><label>Additional families</label></th><td>{{ form.additional_families }}</td>
+    </tr>
+</tbody>

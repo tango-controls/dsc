@@ -15,6 +15,10 @@
             {{ form.non_field_errors }}
         </td></tr></tbody>
         {% include 'dsc/inc/deviceserver_form_basic_info.html' %}
+
+    </table>
+    <table>
+        {% include 'dsc/inc/deviceserver_form_additional_families.html' %}
     </table>
     <table>
         {% include 'dsc/inc/deviceserver_form_repository.html' %}
@@ -29,4 +33,13 @@
 
 {% endblock %}
 
+{% block extra_script %}
 
+    {{ block.super }}
+
+    <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+
+    {{ form.media }}
+
+
+{% endblock %}

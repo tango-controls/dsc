@@ -5,7 +5,7 @@ from dsc.views import DeviceServerDetailView, DeviceServerAddView, search_view, 
     DeviceServerManufacturerAutocomplete, DeviceServerProductAutocomplete, \
     DeviceServerFamilyAutocomplete,DeviceServerLicenseAutocomplete, DeviceServerBusAutocomplete, \
     DeviceServerUpdateView, deviceserver_delete_view, DeviceServerVerifyView, deviceserver_verify_view, \
-    device_servers_list, advanced_search_view, families_view
+    device_servers_list, advanced_search_view, families_view, DeviceClassFamilyAutocomplete
 from django.contrib.auth.decorators import login_required, permission_required
 
 from tango.cms_urls import content_action_urls #TODO do przemyślenia i implementacji w DSc potrzebne akcje albo kopia i włąśne
@@ -86,6 +86,11 @@ urlpatterns = patterns(
          r'^autocomplete/licenses/$',
          DeviceServerLicenseAutocomplete.as_view(),
          name='deviceserver_licenses'),
+
+    url(
+         r'^autocomplete/additionalfamilies/$',
+         DeviceClassFamilyAutocomplete.as_view(),
+         name='deviceserver_additionalfamilies'),
 
     url(r'^ratings/', include('star_ratings.urls', namespace='ratings', app_name='ratings')),
 

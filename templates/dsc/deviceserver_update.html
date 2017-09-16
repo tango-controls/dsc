@@ -4,7 +4,8 @@
 {% load staticfiles %}
 
 {% block content_header %}
-<h1 style="text-transform: none">Update {{object.name}}</h1>
+<h1 style="text-transform: none">Update {{object.name}}{% if form and form.class_name.value != object.name %}/{{form.class_name.value}}{% endif %}
+</h1>
 {% endblock %}
 {% block content %}
 {% if deviceserver.device_classes.all.count > 1 and not device_class %}
@@ -33,6 +34,9 @@
         {% include 'dsc/inc/deviceserver_form_basic_info.html' %}
     </table>
     <table>
+        {% include 'dsc/inc/deviceserver_form_additional_families.html' %}
+    </table>
+    <table>
         {% include 'dsc/inc/deviceserver_form_repository.html' %}
 
         {% include 'dsc/inc/deviceserver_form_documentation.html' %}
@@ -44,5 +48,16 @@
     </p>
 </form>
 {% endif %}
+
+{% endblock %}
+
+{% block extra_script %}
+
+    {{ block.super }}
+
+    <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+
+    {{ form.media }}
+
 
 {% endblock %}

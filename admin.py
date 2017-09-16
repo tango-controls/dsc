@@ -5,27 +5,18 @@ from webu.admin import (
     FrontendEditableAdminMixinFactory,
     WebuTopModelAdminMixin, WebuBottomModelAdminMixin,
 )
-# Register your models here.
-#TODO Administracja wszystkimi obiektami DSC
 
+
+# Register your models here.
 @admin.register(DeviceServer, DeviceClass, DeviceServerRepository,
                 DeviceServerDocumentation, DeviceClassInfo,
                 DeviceServerActivity, DeviceServerLicense,
                 DeviceAttribute, DeviceCommand,
-                DevicePipe, DeviceProperty, DeviceAttributeInfo, DeviceServerAddModel, DeviceServerUpdateModel)
+                DevicePipe, DeviceProperty, DeviceAttributeInfo, DeviceServerAddModel, DeviceServerUpdateModel,
+                DeviceClassFamily)
 class DeviceServersAdminPanel(admin.ModelAdmin):
     pass
 
-'''
-class DeviceServersAdmin(WebuTopModelAdminMixin,
-    FrontendEditableAdminMixinFactory('name'),
-    PlaceholderAdminMixin,
-    WebuBottomModelAdminMixin,
-    admin.ModelAdmin):
-    list_display = ('name', 'created_at', 'created_by', 'license')
-    list_filter = ('name', 'created_at', 'created_by', 'license')
 
-    pass
 
-admin.site.register(DeviceServer, DeviceServersAdmin)
-'''
+

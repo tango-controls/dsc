@@ -138,9 +138,6 @@ DS_PROPERTIES_DATATYPES = {
 
 }
 
-# TODO extend class Content from tango if needed
-###############################################################################################
-
 
 class DscManagedModel(models.Model):
 
@@ -186,7 +183,7 @@ class DscManagedModel(models.Model):
             create_object = self.create_activity.create_object
 
         if create_object is not None and create_object.all().count()>0:
-            if  create_object.first().use_uploaded_xmi_file:
+            if create_object.first().use_uploaded_xmi_file:
                 return 'file'
             elif create_object.first().use_url_xmi_file:
                 return 'url'
@@ -202,7 +199,6 @@ class DscManagedModel(models.Model):
         if create_object is not None and create_object.all().count()>0:
             return create_object.first().script_operation
         return False
-
 
     def delete(self, activity=None, user=None):
         if activity is None:
@@ -224,7 +220,6 @@ class DscManagedModel(models.Model):
 class DeviceServer(DscManagedModel):
     """Model for a DeviceServer basic entities."""
 
-    # TODO: implement interface
     name = models.CharField(
         max_length=128,
         verbose_name='Device Server')
@@ -285,10 +280,7 @@ class DeviceServer(DscManagedModel):
             ('update_own_deviceserver', 'do changes to device server for creator'),
             ('delete_own_deviceserver', 'deletion of device server for creator'),
         )
-    #     app_label = 'dsc'
-    #     verbose_name = 'device server'
-    #     verbose_name_plural = 'device servers'
-    #     ordering = [ 'name', ]
+
 
     # TODO addverbose names
 
@@ -344,6 +336,7 @@ class DeviceServer(DscManagedModel):
 
     def make_backup(self, activity):
         # for device server
+
         backup_ds = DeviceServer(name=self.name, description=self.description,
                                  license=self.license,
                                  created_by=self.created_by,
@@ -364,6 +357,7 @@ class DeviceServer(DscManagedModel):
 
 class DeviceServerActivity(models.Model):
     """Model for tracking of activity around Device Server."""
+
     activity_type = models.CharField(
         verbose_name='Activity',
         max_length=10,
@@ -407,6 +401,7 @@ class DeviceServerDocumentation(DscManagedModel):
                                                       ['README', 'Manual', 'Installation Guide',
                                                        'Generated', 'Source Documentation']
                                                       ))
+
     title = models.CharField(max_length=255,
                              blank=True,
                              null=True,
@@ -436,6 +431,7 @@ class DeviceServerDocumentation(DscManagedModel):
 
 class DeviceServerRepository(DscManagedModel):
     """Model for referencing repository where the device serve could be found"""
+
     repository_type = models.SlugField(
         verbose_name='Repository Type',
         choices=zip(['GIT', 'SVN', 'Mercurial', 'FTP', 'Other'],
@@ -443,10 +439,15 @@ class DeviceServerRepository(DscManagedModel):
         null=True,
         blank=True
     )
+
     url = models.URLField(verbose_name='URL', null=True, blank=True)
+
     path_in_repository = models.CharField(max_length=255, verbose_name='Path', blank=True, default='')
+
     contact_email = models.EmailField(verbose_name='Please write to', blank=True, null=True, default='')
+
     download_url = models.URLField(verbose_name='Download URL', null=True, blank=True)
+
     tag = models.CharField(verbose_name='Tag', max_length=128, blank=True, null=True, default='')
 
     device_server = models.OneToOneField(DeviceServer, related_name='repository', null=True)
@@ -456,10 +457,12 @@ class DeviceServerRepository(DscManagedModel):
 
 
 class DeviceServerLicense(models.Model):
-    """Model for providing info about licencing of devcie servers."""
-    name = models.CharField(primary_key=True, max_length=64, verbose_name='License',
-                            )
+    """Model for providing info about licencing of device servers."""
+
+    name = models.CharField(primary_key=True, max_length=64, verbose_name='License')
+
     description = models.TextField(verbose_name='Description', blank=True, null=True, default='')
+
     url = models.URLField(blank=True, verbose_name='URL', null=True)
 
     def __str__(self):
@@ -468,9 +471,13 @@ class DeviceServerLicense(models.Model):
 
 class DeviceClass(DscManagedModel):
     """Model to describe device classes implemented by device server"""
+
     name = models.CharField(max_length=128, verbose_name='Name')
+
     description = models.TextField(verbose_name='Description', blank=True, null=True)
+
     device_server = models.ForeignKey(DeviceServer, related_name='device_classes')
+
     license = models.ForeignKey(
         'DeviceServerLicense',
         editable=True,
@@ -479,15 +486,13 @@ class DeviceClass(DscManagedModel):
         blank=True,
         null=True,
         verbose_name='License')
+
     class_copyright = models.CharField(max_length=255, verbose_name="Copyright", default='', blank=True)
+
     language = models.CharField(max_length=32,
                                 choices=zip(['Cpp', 'Python', 'PythonHL', 'Java', 'CSharp', 'LabView'],
                                             ['Cpp', 'Python', 'PythonHL', 'Java', 'CSharp', 'LabView']),
                                 verbose_name='Language', default='Cpp')
-
-    #  def make_invalid(self, activity):
-    #    super(DeviceClass,self).make_invalid(activity)
-    #    for attr in
 
     def __str__(self):
         return '%s' % self.name
@@ -506,29 +511,51 @@ class DeviceClass(DscManagedModel):
         return clo
 
 
+class DeviceClassFamily(DscManagedModel):
+    """Model to store additional families for classes"""
+
+    family = models.CharField(max_length=128, unique=True)
+
+    def __str__(self):
+        return '%s' % self.family
+
+
 class DeviceClassInfo(DscManagedModel):
     """Model for information about device server."""
+
     device_class = models.OneToOneField(DeviceClass, related_name='info')
+
     xmi_file = models.CharField(max_length=128, blank=True, null=True)  # this will store a link to source xmi_file
+
     contact_email = models.EmailField(verbose_name='Contact')
+
     class_family = models.CharField(max_length=128, blank=True, null=True, default='')  # TODO: implement choices
+
     platform = models.CharField(max_length=64,
                                 choices=zip(['Windows', 'Unix Like', 'All Platforms'],
                                             ['Windows', 'Unix Like', 'All Platforms']),
                                 verbose_name='Platform', default='All Platforms')
+
     bus = models.CharField(max_length=128, verbose_name='Bus', blank=True, null=True)  # TODO: implement bus choices
+
     manufacturer = models.CharField(max_length=128, verbose_name='Manufacturer', default='', null=True)
-    # at the beginning there will not be any manufacturer table
+
     key_words = models.CharField(max_length=255, verbose_name="Key words", blank=True, null=True)
+
     product_reference = models.CharField(max_length=255, verbose_name="Product", default='')
 
+    additional_families = models.ManyToManyField(DeviceClassFamily, related_name='device_class_infos')
+
     def all_families(self):
-        families = [ self.class_family, ] + [ dcf.family for dcf in self.additional_families ]
+        families = [ self.class_family, ] + [dcf.family for dcf in self.additional_families]
         return set(families)
 
-    def make_backup(self,activity):
+    def make_backup(self,activity, cl=None):
         cli = DeviceClassInfo()
-        cli.device_class = self.device_class
+        if cl is None:
+            cli.device_class = self.device_class
+        else:
+            cli.device_class = cl
         cli.contact_email = self.contact_email
         cli.class_family = self.class_family
         cli.platform = self.platform
@@ -539,9 +566,10 @@ class DeviceClassInfo(DscManagedModel):
         cli.create_activity = self.create_activity
         cli.last_update_activity = self.last_update_activity
         cli.invalidate_activity = activity
+        cli.save() # need to have an id to upfate many-to-many field
+        cli.additional_families.add(*self.additional_families.all())
 
         return cli
-
 
     @property
     def device_server(self):
@@ -551,21 +579,20 @@ class DeviceClassInfo(DscManagedModel):
         return '%s' % self.device_class
 
 
-class DeviceClassFamily(DscManagedModel):
-    device_class = models.ManyToManyField(DeviceClassInfo, related_name='additional_families')
-    family = models.CharField(max_length=128, blank=True, null=True, default='', unique=True)
-
-
-
 class DeviceAttribute(DscManagedModel):
     """Model for providing basic description of attribute"""
+
     name = models.CharField(max_length=64, verbose_name='Name')
+
     description = models.TextField(verbose_name='Description', blank=True, null=True)
+
     attribute_type = models.SlugField(choices=zip(['Scalar', 'Spectrum', 'Image'],
                                                   ['Scalar', 'Spectrum', 'Image']),
                                       verbose_name='Type', default='Scalar')
+
     data_type = models.SlugField(choices=zip(DS_ATTRIBUTE_DATATYPES.values(), DS_ATTRIBUTE_DATATYPES.values()),
                                  verbose_name='Data Type', default='DevString')
+
     device_class = models.ForeignKey(DeviceClass, related_name='attributes')
 
     @property
@@ -577,17 +604,24 @@ class DeviceAttribute(DscManagedModel):
 
 
 class DeviceCommand(DscManagedModel):
-    """Model for providing basic description of attribute"""
+    """Model for providing basic description of commands"""
+
     name = models.CharField(max_length=64, verbose_name='Name')
+
     description = models.TextField(verbose_name='Description', blank=True, null=True)
+
     input_type = models.SlugField(choices=zip(DS_COMMAND_DATATYPES.values(),
                                               DS_COMMAND_DATATYPES.values()),
                                   verbose_name='Argument Type',blank=True, null=True)
+
     input_description = models.TextField(verbose_name='Argin description', blank=True, null=True)
+
     output_type = models.SlugField(choices=zip(DS_COMMAND_DATATYPES.values(),
                                                DS_COMMAND_DATATYPES.values()),
                                    verbose_name='Output Type',blank=True, null=True)
+
     output_description = models.TextField(verbose_name='Argout description', blank=True, null=True)
+
     device_class = models.ForeignKey(DeviceClass, related_name='commands')
 
     @property
@@ -599,9 +633,12 @@ class DeviceCommand(DscManagedModel):
 
 
 class DevicePipe(DscManagedModel):
-    """Model for providing basic description of attribute"""
+    """Model for providing basic description of pipes"""
+
     name = models.CharField(max_length=64, verbose_name='Name')
+
     description = models.TextField(verbose_name='Description', blank=True)
+
     device_class = models.ForeignKey(DeviceClass, related_name='pipes')
 
     @property
@@ -613,7 +650,8 @@ class DevicePipe(DscManagedModel):
 
 
 class DeviceProperty(DscManagedModel):
-    """Model for providing basic description of attribute"""
+    """Model for providing basic description of properties"""
+
     name = models.CharField(max_length=64, verbose_name='Name')
     description = models.TextField(verbose_name='Description', blank=True)
     property_type = models.SlugField(verbose_name='Type')
@@ -630,9 +668,10 @@ class DeviceProperty(DscManagedModel):
 
 class DeviceAttributeInfo(DscManagedModel):
     """Model for providing additional infos about attributes. For future extenstion."""
-    device_attribute = models.OneToOneField(DeviceAttribute,related_name='attribute_info')
-    # TODO: implement extended interface of DeviceAttributeInfo
 
+    device_attribute = models.OneToOneField(DeviceAttribute,related_name='attribute_info')
+
+    # TODO: implement extended interface of DeviceAttributeInfo
     def __str__(self):
         return '%s' % self.device_attribute
 
@@ -641,6 +680,7 @@ class DeviceAttributeInfo(DscManagedModel):
 
 class DeviceServerAddModel(models.Model):
     """This model is used to provide form and optionally do background processing"""
+
     ds_info_copy = models.BooleanField(verbose_name='Guess device server name and description from class info?',
                                        blank=True, default=True)
 
@@ -648,6 +688,7 @@ class DeviceServerAddModel(models.Model):
                                            blank=True, default=False)
 
     name = models.CharField(max_length=64, verbose_name='Device server name', blank=True, default='')
+
     description = models.TextField(verbose_name='Description', blank=True, default='')
 
     development_status = models.CharField(
@@ -679,6 +720,7 @@ class DeviceServerAddModel(models.Model):
 
     # repository
     process_from_repository = models.BooleanField(verbose_name='Use repository only', blank=True, default=False)
+
     available_in_repository = models.BooleanField(verbose_name='Available in repository', default=True)
 
     repository_type = models.SlugField(
@@ -687,16 +729,23 @@ class DeviceServerAddModel(models.Model):
                     ['GIT', 'SVN', 'Mercurial', 'FTP', 'Other']),
         blank=True, default=''
     )
+
     repository_url = models.URLField(verbose_name='Repository URL', blank=True, default='')
+
     repository_path = models.CharField(max_length=255, verbose_name='Path within reposiroty', blank=True, default='')
+
     repository_contact = models.EmailField(verbose_name='Please write to', blank=True, null=True, default='')
+
     repository_download_url= models.URLField(verbose_name='Dwonload URL', blank=True, default='')
+
     repository_tag = models.CharField(verbose_name='Tag', max_length=128, blank=True, null=True, default='')
 
     # documentation
     upload_readme = models.BooleanField(verbose_name='Upload README', blank=True, default=False)
+
     readme_file = models.FileField(verbose_name='README file', upload_to='dsc_readmes',
                                    blank=True, null=True, max_length=100000)
+
     other_documentation1 = models.BooleanField(verbose_name='Other documentation - 1', blank=True, default=False)
 
     documentation1_pk = models.IntegerField(blank=True, null=True)
@@ -704,9 +753,9 @@ class DeviceServerAddModel(models.Model):
     documentation1_type = models.SlugField(verbose_name='Documentation type',
                                            choices=zip(['README', 'Manual', 'InstGuide',
                                                        'Generated', 'SourceDoc'],
-                                                      ['README', 'Manual', 'Installation Guide',
-                                                       'Generated', 'Source Documentation']
-                                                      ), null=True, blank=True)
+                                                       ['README', 'Manual', 'Installation Guide',
+                                                       'Generated', 'Source Documentation']),
+                                           null=True, blank=True)
 
     documentation1_url = models.URLField(verbose_name='URL', blank=True, null=True, default='')
 
@@ -717,11 +766,10 @@ class DeviceServerAddModel(models.Model):
                                             verbose_name='Title')
 
     documentation1_file = models.FileField(verbose_name='Document',
-                                          upload_to='dsc_readmes',
-                                          null=True,
-                                          blank=True,
-                                          max_length=2000000
-                                          )
+                                           upload_to='dsc_readmes',
+                                           null=True,
+                                           blank=True,
+                                           max_length=2000000)
 
     other_documentation2 = models.BooleanField(verbose_name='Other documentation - 2', blank=True, default=False)
 
@@ -797,12 +845,14 @@ class DeviceServerAddModel(models.Model):
     xmi_file_url = models.URLField(verbose_name='XMI source URL', blank=True, null=True, default='')
 
     def xmi_string(self):
-        """ :return  (xmi_string, is_ok, error_message)"""
+        """ This method returns .XMI string
+            :return  (xmi_string, is_ok, error_message)
+        """
+
         if hasattr(self,'valid_xmi_string'):
             if self.valid_xmi_string is not None:
                 return self.valid_xmi_string, True, ''
         try:
-
             if self.use_uploaded_xmi_file:
                 if self.xmi_file.size < 10:
                     raise Exception('The .XMI file seems to be empty.')
@@ -831,32 +881,41 @@ class DeviceServerAddModel(models.Model):
 
         except Exception as e:
             raise e
-            #return '', False, e.message
 
         return xmi_string, True, ''
 
     # manual info
     use_manual_info = models.BooleanField(verbose_name='Provide data manually', blank=True, default=False)
+
     class_name = models.CharField(max_length=64, verbose_name='Class name', blank=True, default='')
+
     class_description = models.TextField(verbose_name='Class description', blank=True, default='')
+
     contact_email = models.EmailField(verbose_name='Contact email', blank=True,default='')
 
     class_copyright = models.CharField(max_length=255, verbose_name="Copyright", default='', blank=True)
+
     language = models.CharField(max_length=32,
                                 choices=zip(['Cpp', 'Python', 'PythonHL', 'Java', 'CSharp', 'LabView'],
                                             ['Cpp', 'Python', 'PythonHL', 'Java', 'CSharp', 'LabView']),
                                 verbose_name='Language', default='Cpp', blank=True)
 
     class_family = models.CharField(max_length=128, blank=True, null=True, default='')  # TODO: implement choices
+
+    additional_families = models.ManyToManyField(DeviceClassFamily)
+
     platform = models.CharField(max_length=64,
                                 choices=zip(['Windows', 'Unix Like', 'All Platforms'],
                                             ['Windows', 'Unix Like', 'All Platforms']),
                                 verbose_name='Platform', default='All Platforms', blank=True)
     bus = models.CharField(max_length=128, verbose_name='Bus', blank=True, null=True)  # TODO: implement bus choices
+
     manufacturer = models.CharField(max_length=128, verbose_name='Manufacturer', default='', null=True, blank=True)
-    # at the beginning there will not be any manufacturer table
+
     key_words = models.CharField(max_length=255, verbose_name="Key words", blank=True, null=True, default='')
+
     product_reference = models.CharField(max_length=255, verbose_name="Product", default='', blank=True)
+
     license_name = models.CharField(max_length=64, verbose_name='License type', blank=True, default='GPL')
 
     # internal information
@@ -881,7 +940,7 @@ class DeviceServerAddModel(models.Model):
 
 
 class DeviceServerUpdateModel(DeviceServerAddModel):
-
+    """Model for handling update form"""
 
     change_update_method = models.BooleanField(verbose_name='Change update method',
                                                blank=True,
@@ -893,8 +952,10 @@ class DeviceServerUpdateModel(DeviceServerAddModel):
                                           verbose_name='Previous update method: ', default='url', blank=True)
 
     def from_device_server(self, device_server, device_class=None):
-        """ Fill fields based on device_server object"""
+        """ Fills fields based on device_server object"""
+
         assert isinstance(device_server, DeviceServer)
+
         self.name = device_server.name
         self.description = device_server.description
         self.readme_file = device_server.readme
@@ -906,7 +967,7 @@ class DeviceServerUpdateModel(DeviceServerAddModel):
         self.last_update_method = device_server.last_update_method()
 
         if device_server.license is not None:
-            self.license_name=device_server.license.name
+            self.license_name = device_server.license.name
 
         if hasattr(device_server, 'repository'):
             assert isinstance(device_server.repository, DeviceServerRepository)
@@ -918,7 +979,7 @@ class DeviceServerUpdateModel(DeviceServerAddModel):
             self.repository_tag = device_server.repository.tag
 
         docs = device_server.documentation.filter(invalidate_activity=None).all().distinct()
-        if docs.count()>0:
+        if docs.count() > 0:
             self.other_documentation1 = True
             self.documentation1_type = docs[0].documentation_type
             self.documentation1_title = docs[0].title
@@ -926,7 +987,7 @@ class DeviceServerUpdateModel(DeviceServerAddModel):
             self.documentation1_url = docs[0].url
             self.documentation1_pk = docs[0].pk
 
-        if docs.count()>1:
+        if docs.count() > 1:
             self.other_documentation2 = True
             self.documentation2_type = docs[1].documentation_type
             self.documentation2_title = docs[1].title
@@ -934,7 +995,7 @@ class DeviceServerUpdateModel(DeviceServerAddModel):
             self.documentation2_url = docs[1].url
             self.documentation2_pk = docs[1].pk
 
-        if docs.count()>2:
+        if docs.count() > 2:
             self.other_documentation3 = True
             self.documentation3_type = docs[2].documentation_type
             self.documentation3_title = docs[2].title
@@ -949,7 +1010,7 @@ class DeviceServerUpdateModel(DeviceServerAddModel):
 
         self.ds_info_copy = False
 
-        if len(cls)>0:
+        if len(cls) > 0:
             cl = cls[0]
             assert isinstance(cl, DeviceClass)
             self.class_copyright = cl.class_copyright
@@ -970,11 +1031,15 @@ class DeviceServerUpdateModel(DeviceServerAddModel):
             self.key_words = cl.info.key_words
             self.contact_email = cl.info.contact_email
 
+            self.save() # needs to do it to have pk
+            self.additional_families.add(*cl.info.additional_families.all())
+
         return self
 
 
 def filtered_device_servers(family=None, manufacturer=None, product=None, bus=None, key_words=None):
     """ Provides a filtered queryset of device servers"""
+
     q = DeviceServer.objects.filter(invalidate_activity=None)
 
     if manufacturer is not None:
@@ -983,7 +1048,7 @@ def filtered_device_servers(family=None, manufacturer=None, product=None, bus=No
     if product is not None:
         q = q.filter(device_classes__info__product_reference__icontains=product)
 
-    if family is not None and len(family)>0:
+    if family is not None and len(family) > 0:
         q = q.filter(device_classes__info__class_family=family)
 
     if bus is not None:
@@ -997,6 +1062,7 @@ def filtered_device_servers(family=None, manufacturer=None, product=None, bus=No
 
 def search_device_servers(search_text):
     """ Provides a filtered queryset of device servers"""
+
     q = DeviceServer.objects.filter(invalidate_activity=None).filter(device_classes__invalidate_activity=None)
 
     qn = q.filter(name__icontains=search_text) | q.filter(device_classes__name__icontains=search_text)
@@ -1020,11 +1086,13 @@ def search_device_servers(search_text):
 
 from xmi_parser import TangoXmiParser
 
+
 def create_or_update(update_object, activity, device_server=None, device_class=None):
     """this method creates or updates device server based on update/add object. It should be used inside atimic
     transaction to keep database consistent.
         :return (device_server, backup_device_server)
     """
+
     assert isinstance(update_object, DeviceServerAddModel)
 
     backup_device_server = None
@@ -1064,7 +1132,7 @@ def create_or_update(update_object, activity, device_server=None, device_class=N
     if update_object.ds_info_copy:
         new_device_server.description = ''
         if not update_object.use_url_xmi_file and not update_object.use_uploaded_xmi_file \
-                and len(update_object.class_name)>0:
+                and len(update_object.class_name) > 0:
             new_device_server.name = update_object.class_name
             if len(update_object.license_name) > 0:
                 lic = DeviceServerLicense.objects.get_or_create(name=update_object.license_name)[0]
@@ -1081,7 +1149,7 @@ def create_or_update(update_object, activity, device_server=None, device_class=N
     if new_device_server.license is not None and new_device_server.license.pk is None:
         new_device_server.license.save()
 
-    # so, we have base inforamtion
+    # so, we have base information
     if device_server is None:
         device_server = new_device_server
         device_server.create_activity = activity
@@ -1310,7 +1378,6 @@ def create_or_update(update_object, activity, device_server=None, device_class=N
                     cl.device_server = backup_device_server
                 cl.save()
 
-
         # read classes from xmi file
         cls = parser.get_device_classes()
         for cl in cls:
@@ -1329,6 +1396,9 @@ def create_or_update(update_object, activity, device_server=None, device_class=N
             class_info = parser.get_device_class_info(cl)
             assert (isinstance(class_info, DeviceClassInfo))
             class_info.device_class = cl
+            class_info.save() # need to do it to be able to populate m2m field
+            class_info.additional_families.clear()
+            class_info.additional_families.add(*update_object.additional_families.all())
             class_info.create_activity = activity
             if backup_device_server is not None:
                 class_info.last_update_activity = activity
@@ -1384,20 +1454,18 @@ def create_or_update(update_object, activity, device_server=None, device_class=N
                 clo.device_server = backup_device_server
                 clo.save()
                 if hasattr(cl,'info'):
-                    cloi = cl.info.make_backup(activity)
-                    cloi.device_class = clo
+                    cloi = cl.info.make_backup(activity, clo)
                     cloi.save()
-
-
 
         # manual info provided
         if device_class is None:
             clq = device_server.device_classes.all()
+
         else:
             clq = device_server.device_classes.filter(pk=device_class)
 
         if clq.count() > 0 and not update_object.add_class:
-            cl=clq.first()
+            cl = clq.first()
             cl.last_update_activity = activity
             cl_info = cl.info
             cl_info.last_update_activity = activity
@@ -1432,6 +1500,9 @@ def create_or_update(update_object, activity, device_server=None, device_class=N
         cl_info.manufacturer = update_object.manufacturer
         cl_info.product_reference = update_object.product_reference
         cl_info.key_words = update_object.key_words
+        cl_info.save() # make sure to that cl_inf has a valid id
+        cl_info.additional_families.clear()
+        cl_info.additional_families.add(*update_object.additional_families.all())
 
         cl_info.save()
 
@@ -1460,4 +1531,3 @@ class DeviceServersActivityPluginModel(CMSPlugin):
     class Meta:
         app_label = 'dsc'
         verbose_name = 'Device Classes Catalogue Activity plugin'
-
