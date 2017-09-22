@@ -365,9 +365,12 @@ class DeviceServerProductAutocomplete(dal.autocomplete.Select2ListView):
 class DeviceServerFamilyAutocomplete(dal.autocomplete.Select2ListView):
     """Provide autocomplete feature for product fields"""
     def get_list(self):
-        f = list(dsc_models.DeviceClassInfo.objects.all().order_by('class_family').values_list('class_family', flat=True).distinct())
+        f = set(dsc_models.DeviceClassInfo.objects.all().order_by('class_family')
+                 .values_list('class_family', flat=True).distinct())
+        f.update(dsc_models.DeviceClassFamily.objects.all().order_by('family')
+                 .values_list('family', flat=True).distinct())
 
-        return f
+        return list(f)
 
 
 class DeviceServerBusAutocomplete(dal.autocomplete.Select2ListView):

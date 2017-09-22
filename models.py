@@ -1049,7 +1049,8 @@ def filtered_device_servers(family=None, manufacturer=None, product=None, bus=No
         q = q.filter(device_classes__info__product_reference__icontains=product)
 
     if family is not None and len(family) > 0:
-        q = q.filter(device_classes__info__class_family=family)
+        q = q.filter(device_classes__info__class_family=family) | \
+            q.filter(device_classes__info__additional_families__family__icontains=family)
 
     if bus is not None:
         q = q.filter(device_classes__info__bus__icontains=bus)
@@ -1073,7 +1074,8 @@ def search_device_servers(search_text):
 
     qp = q.filter(device_classes__info__product_reference__icontains=search_text)
 
-    qf = q.filter(device_classes__info__class_family__icontains=search_text)
+    qf = q.filter(device_classes__info__class_family__icontains=search_text) | \
+            q.filter(device_classes__info__additional_families__family__icontains=search_text)
 
     qb = q.filter(device_classes__info__bus__icontains=search_text)
 
