@@ -22,6 +22,7 @@ from tables import DeviceAttributesTable, DeviceCommandsTable, DevicePipesTable,
     DevicePropertiesTable, DeviceServerSearchTable, DeviceServerTable
 from forms import DeviceServerAddForm, DeviceServerSearchForm, DeviceServerUpdateForm
 import models as dsc_models
+import update_logic
 
 # Create your views here
 
@@ -407,6 +408,7 @@ class DeviceClassFamilyAutocomplete(dal.autocomplete.Select2QuerySetView):
 def update_class_description(request):
     pass
 
+
 class DeviceServerUpdateView(BreadcrumbMixinDetailView, UpdateView):
     """ View that process device server adding to the system. """
 
@@ -472,7 +474,7 @@ class DeviceServerUpdateView(BreadcrumbMixinDetailView, UpdateView):
             activity.save()
 
             # create device server
-            self.device_server, old_ds = dsc_models.create_or_update(update_object, activity, self.device_server,
+            self.device_server, old_ds = update_logic.create_or_update(update_object, activity, self.device_server,
                                                                 device_class=self.request.GET.get('device_class', None))
             #  just to make sure we save device server
             self.device_server.save()
@@ -621,7 +623,7 @@ class DeviceServerAddView(BreadcrumbMixinDetailView, FormView):
             activity.save()
 
             # create device server
-            self.device_server, old_ds = dsc_models.create_or_update(add_device,activity)
+            self.device_server, old_ds = update_logic.create_or_update(add_device,activity)
             #  just to make sure we save device server
             self.device_server.save()
 
