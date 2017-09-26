@@ -1,5 +1,63 @@
 from models import *
 from xmi_parser import TangoXmiParser
+from django.db.models import Count
+
+
+def qs_equivalent(qs1, qs2):
+    """Compares two querysets if both contains the same elements"""
+
+    qs1 = qs1.distinct()
+    qs2 = qs2.distinct()
+
+    qs3 = qs1 & qs2
+
+    if qs1.count() == qs2.count() and qs1.count() == qs3.distinct().count():
+        return True
+    else:
+        return False
+
+
+def backup_affected_classes(update_object, activity, device_server, device_class=None, backup_device_server=None):
+    """Perform backup of classes that will be updated by current activity"""
+
+    # to make IDE aware of type
+    assert isinstance(update_object, DeviceServerAddModel)
+
+    # do backup only if possible and necessary
+    if not update_object.add_class and backup_device_server is not None:
+
+        if update_object.use_uploaded_xmi_file or update_object.use_url_xmi_file or update_object.use_manual_info:
+            # when main information is going to be updated new objects will be created, so the old are just redirected
+            # to backup device server
+            if device_class is None:
+                # if class is not selected wipe all device classes
+                for cl in device_server.device_classes.all():
+                    cl.make_invalid(activity)
+                    cl.device_server = backup_device_server
+                    cl.save()
+            else:
+                # selected class - backup only selected one
+                cl = device_server.device_classes.filter(pk=device_class).first()
+                cl.make_invalid(activity)
+                cl.device_server = backup_device_server
+                cl.save()
+
+        else:
+            # in other case backup classes have to be created
+            class_query = device_server.device_classes.all()
+            if device_class is not None:
+                class_query = class_query.filter(pk=device_class)
+
+            for cl in class_query:
+                if cl.is_valid() and cl.info is not None:
+                    if not qs_equivalent(cl.info.additional_families, update_object.additional_families):
+
+                        backup_class = cl.make_backup(activity)
+                        if backup_device_server is not None:
+                            backup_class.device_server = backup_device_server
+                        backup_class.save()
+                        backup_class_info = cl.info.make_backup(activity, backup_class)
+                        backup_class_info.save()
 
 
 def documentation_update(update_object, activity, device_server, backup_device_server=None):
@@ -185,6 +243,25 @@ def repository_update(update_object, activity, device_server, backup_device_serv
         new_repository.save()
 
 
+def additional_families_update(update_object, activity, device_server, device_class=None, backup_device_server=None):
+    """Updates list of device families"""
+
+    class_query = device_server.device_classes.all()
+    if device_class is not None:
+        class_query = class_query.filter(pk=device_class)
+
+    for cl in class_query:
+        if cl.is_valid() and cl.info is not None:
+            if not qs_equivalent(cl.info.additional_families, update_object.additional_families):
+                cl.last_update_activity = activity
+                cl.save()
+                cl.info.last_update_activity = activity
+                cl.info.save()
+                cl.info.additional_families.clear()
+                cl.info.additional_families.add(*update_object.additional_families.all())
+                cl.info.save()
+
+
 def create_or_update(update_object, activity, device_server=None, device_class=None):
     """this method creates or updates device server based on update/add object. It should be used inside atimic
     transaction to keep database consistent.
@@ -272,32 +349,17 @@ def create_or_update(update_object, activity, device_server=None, device_class=N
     # make sure device server has pk
     device_server.save()
 
-    # # mark it in activity
-    # activity.device_server = device_server
-    # activity.device_server_backup = backup_device_server
-    # activity.save()
-
+    # repository info update if necessary
     repository_update(update_object, activity, device_server, backup_device_server)
 
     # call update documentation
     documentation_update(update_object, activity, device_server, backup_device_server)
 
+    # make backup of classes
+    backup_affected_classes(update_object, activity, device_server, device_class, backup_device_server)
+
     # get classes and interface
     if (update_object.use_uploaded_xmi_file or update_object.use_url_xmi_file) and parser is not None:
-        # for xmi file all old device classes and relation are moved to backup and new are created from scratch
-        if not update_object.add_class:
-            if device_class is None:
-                for cl in device_server.device_classes.all():
-                    cl.make_invalid(activity)
-                    if backup_device_server is not None:
-                        cl.device_server = backup_device_server
-                    cl.save()
-            else:
-                cl = device_server.device_classes.filter(pk=device_class).first()
-                cl.make_invalid(activity)
-                if backup_device_server is not None:
-                    cl.device_server = backup_device_server
-                cl.save()
 
         # read classes from xmi file
         cls = parser.get_device_classes()
@@ -318,8 +380,6 @@ def create_or_update(update_object, activity, device_server=None, device_class=N
             assert (isinstance(class_info, DeviceClassInfo))
             class_info.device_class = cl
             class_info.save()  # need to do it to be able to populate m2m field
-            class_info.additional_families.clear()
-            class_info.additional_families.add(*update_object.additional_families.all())
             class_info.create_activity = activity
             if backup_device_server is not None:
                 class_info.last_update_activity = activity
@@ -364,19 +424,6 @@ def create_or_update(update_object, activity, device_server=None, device_class=N
                 prop.save()
 
     elif update_object.use_manual_info:
-        if backup_device_server is not None and not update_object.add_class:
-            if device_class is None:
-                clq = device_server.device_classes.all()
-            else:
-                clq = device_server.device_classes.filter(pk=device_class)
-
-            for cl in clq:
-                clo = cl.make_backup(activity)
-                clo.device_server = backup_device_server
-                clo.save()
-                if hasattr(cl, 'info'):
-                    cloi = cl.info.make_backup(activity, clo)
-                    cloi.save()
 
         # manual info provided
         if device_class is None:
@@ -426,6 +473,10 @@ def create_or_update(update_object, activity, device_server=None, device_class=N
         cl_info.additional_families.add(*update_object.additional_families.all())
 
         cl_info.save()
+
+    # update additional families (only for non-script operations):
+    if not update_object.script_operation:
+        additional_families_update(update_object, activity, device_server, device_class, backup_device_server)
 
     # return device_server
     return device_server, backup_device_server

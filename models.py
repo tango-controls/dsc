@@ -492,7 +492,10 @@ class DeviceClass(DscManagedModel):
                                 verbose_name='Language', default='Cpp')
 
     def __str__(self):
-        return '%s' % self.name
+        if self.is_valid():
+            return '%s' % self.name
+        else:
+            return 'invalidated-%s' % self.name
 
     def make_backup(self, activity):
         clo = DeviceClass()
