@@ -8,6 +8,8 @@ from django.views.generic import TemplateView, FormView, UpdateView
 from django.db import transaction
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, JsonResponse
+from django.contrib.auth.models import User
+from django.db.models import Q
 
 from webu.custom_models.views import CustomModelDetailView
 from webu.views import CMSDetailView
@@ -377,7 +379,7 @@ class DeviceServerFamilyAutocomplete(dal.autocomplete.Select2ListView):
 class DeviceServerBusAutocomplete(dal.autocomplete.Select2ListView):
     """Provide autocomplete feature for bus fields"""
     def get_list(self):
-        b=list(dsc_models.DeviceClassInfo.objects.all().order_by('bus').values_list('bus', flat=True).distinct())
+        b = list(dsc_models.DeviceClassInfo.objects.all().order_by('bus').values_list('bus', flat=True).distinct())
         if self.request.GET.get('q',None) is not None:
             b.append(self.request.GET.get('q',None))
         return b
@@ -385,11 +387,55 @@ class DeviceServerBusAutocomplete(dal.autocomplete.Select2ListView):
 
 class DeviceServerLicenseAutocomplete(dal.autocomplete.Select2ListView):
     """Provide autocomplete feature for product fields"""
+
     def get_list(self):
-        k=list(dsc_models.DeviceServerLicense.objects.all().values_list('name', flat=True).distinct())
+        k = list(dsc_models.DeviceServerLicense.objects.all().values_list('name', flat=True).distinct())
         if self.request.GET.get('q',None) is not None:
             k.append(self.request.GET.get('q',None))
         return k
+
+
+class CatalogueUsersAutocomplete(dal.autocomplete.Select2ListView):
+    """Provide autocomplete feature for users"""
+
+    def get_list(self):
+
+        # prepare a list of users which was working with the catalogue (have some activities)
+        #user_query = User.objects.filter(id__in=list(set(dsc_models.DeviceServerActivity.objects.all().
+        #                                            values_list('created_by__id').distinct()))).distinct()
+
+        user_query = User.objects.all()
+
+        q = self.request.GET.get('q', None)
+
+        # limit the list to the ones that matches typed value
+        if q is not None:
+
+            if self.request.user.is_authenticated():
+                user_query = user_query.filter(Q(username__istartswith=q) | Q(first_name__istartswith=q) |
+                                           Q(last_name__istartswith=q) | Q(email__istartswith=q))
+            else:
+                user_query = user_query.filter(Q(username__istartswith=q) | Q(first_name__istartswith=q) |
+                                                 Q(last_name__istartswith=q))
+
+        users_list = list(user_query.values_list('username',flat=True)) \
+            + list(user_query.values_list('first_name',flat=True)) \
+            + list(user_query.values_list('last_name',flat=True))
+
+        if self.request.user.is_authenticated():
+            users_list += list(user_query.values_list('email',flat=True))
+
+        # add list of contacts from .xmi
+        if self.request.user.is_authenticated() and q is not None:
+            users_list += list(dsc_models.DeviceServerRepository.objects.filter(contact_email__istartswith=q)
+                               .values_list('contact_email', flat=True).distinct())
+            users_list += list(dsc_models.DeviceClassInfo.objects.filter(contact_email__istartswith=q)
+                               .values_list('contact_email').distinct())
+        # add search string
+        if q is not None:
+            users_list.append(q)
+
+        return list(set(users_list))
 
 
 class DeviceClassFamilyAutocomplete(dal.autocomplete.Select2QuerySetView):
@@ -554,7 +600,6 @@ def deviceserver_delete_view(request, pk):
                     return render_to_response('dsc/deviceserver_delete_question.html',
                                               {'deviceserver': device_server}, context)
 
-
         return render_to_response('dsc/deviceserver_delete_confirmed.html',
                                       {'deviceserver': device_server}, context)
 
@@ -589,6 +634,7 @@ def deviceserver_verify_view(request, pk):
                 context['message']='This device server and classes it provides are already verified.'
 
     return HttpResponseRedirect(reverse('deviceserver_detail', kwargs={'pk' : device_server.pk}))
+
 
 class DeviceServerAddView(BreadcrumbMixinDetailView, FormView):
     """ View that process device server adding to the system. """

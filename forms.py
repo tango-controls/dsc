@@ -47,6 +47,11 @@ class DeviceServerSearchForm(forms.Form):
                                                             )
                                                         )
 
+    user = dal.autocomplete.Select2ListCreateChoiceField(label='User', required=False,
+                                                         widget=dal.autocomplete.ListSelect2(
+                                                            url=reverse_lazy('deviceserver_users')
+                                                            )
+                                                         )
 
 class DeviceServerAddForm(forms.ModelForm):
 
