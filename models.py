@@ -1,5 +1,6 @@
 import urllib2
 from django.db import models
+from django.db.models import Q
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from webu.models import LastPublishedObjectPluginBase, ObjectManager
@@ -1039,7 +1040,7 @@ class DeviceServerUpdateModel(DeviceServerAddModel):
         return self
 
 
-def filtered_device_servers(family=None, manufacturer=None, product=None, bus=None, key_words=None):
+def filtered_device_servers(family=None, manufacturer=None, product=None, bus=None, key_words=None, user=None):
     """ Provides a filtered queryset of device servers"""
 
     q = DeviceServer.objects.filter(invalidate_activity=None)
@@ -1059,6 +1060,16 @@ def filtered_device_servers(family=None, manufacturer=None, product=None, bus=No
 
     if key_words is not None:
         q = q.filter(device_classes__info__key_words__icontains=key_words)
+
+    if user is not None:
+        q = q.filter(Q(device_classes__info__contact_email__istartswith=user) |
+                     Q(repository__contact_email__istartswith=user) |
+                     Q(device_classes__class_copyright__icontains=user) |
+                     Q(activities__created_by__username__istartswith=user) |
+                     Q(activities__created_by__first_name__istartswith=user) |
+                     Q(activities__created_by__last_name__istartswith=user) |
+                     Q(activities__created_by__email__istartswith=user)
+                     )
 
     return q.filter(invalidate_activity=None)
 

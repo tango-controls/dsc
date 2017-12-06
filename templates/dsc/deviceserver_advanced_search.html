@@ -25,6 +25,32 @@
                 <button type="submit" class="search btn btn-default">Search</button>
             </form>
         </div>
+        {% if manufacturer or product or family or key_words or bus or dsc_user %}
+        <div>
+            <h4>Search results for:</h4>
+            <ul>
+                {% if manufacturer %}
+                <li><span style="font-weight:bold;">Manufacturer:</span> {{manufacturer}}</li>
+                {% endif %}
+                {% if product %}
+                <li><span style="font-weight:bold;">Product:</span> {{product}} </li>
+                {% endif %}
+                {% if bus %}
+                <li><span style="font-weight:bold;">Bus:</span> {{bus}}</li>
+                {% endif %}
+                {% if family %}
+                <li><span style="font-weight:bold;">Family:</span> {{family}} </li>
+                {% endif %}
+                {% if key_words %}
+                <li><span style="font-weight:bold;">Key words:</span> {{key_words}}</li>
+                {% endif %}
+                {% if dsc_user %}
+                <li><span style="font-weight:bold;">User:</span> {{dsc_user}}</li>
+                {% endif %}
+
+            </ul>
+        </div>
+        {% endif %}
         <span id="ds-table"></span>
         {% if table %}
 

@@ -255,6 +255,7 @@ def advanced_search_view(request):
     family = ''
     bus = ''
     key_words = ''
+    user = ''
     if request.method == 'GET':
         form = DeviceServerSearchForm(request.GET)
         if form.is_valid():
@@ -264,12 +265,14 @@ def advanced_search_view(request):
             family = form.cleaned_data.get('family', None)
             bus = form.cleaned_data.get('bus', None)
             key_words = form.cleaned_data.get('key_words', None)
+            user = form.cleaned_data.get('user', None)
 
             q = dsc_models.filtered_device_servers(manufacturer=man,
                                                    product=prod,
                                                    family=family,
                                                    bus=bus,
-                                                   key_words=key_words)
+                                                   key_words=key_words,
+                                                   user=user)
 
             device_servers = q.distinct().order_by('name')
             table = DeviceServerSearchTable(device_servers)
@@ -288,7 +291,8 @@ def advanced_search_view(request):
                                                                'product': prod,
                                                                'family': family,
                                                                'bus': bus,
-                                                               'key_words': key_words
+                                                               'key_words': key_words,
+                                                               'dsc_user': user,
                                                                }, context)
 
 
@@ -401,10 +405,11 @@ class CatalogueUsersAutocomplete(dal.autocomplete.Select2ListView):
     def get_list(self):
 
         # prepare a list of users which was working with the catalogue (have some activities)
-        #user_query = User.objects.filter(id__in=list(set(dsc_models.DeviceServerActivity.objects.all().
-        #                                            values_list('created_by__id').distinct()))).distinct()
+        user_query = User.objects.filter(id__in=list(set(dsc_models.DeviceServerActivity.objects.all().
+                                                    values_list('created_by__id', flat=True).distinct()))).distinct()
 
-        user_query = User.objects.all()
+        # user_query = dsc_models.DeviceServerActivity.objects.all().values('created_by').distinct()
+            # User.objects.all()
 
         q = self.request.GET.get('q', None)
 
@@ -418,9 +423,9 @@ class CatalogueUsersAutocomplete(dal.autocomplete.Select2ListView):
                 user_query = user_query.filter(Q(username__istartswith=q) | Q(first_name__istartswith=q) |
                                                  Q(last_name__istartswith=q))
 
-        users_list = list(user_query.values_list('username',flat=True)) \
-            + list(user_query.values_list('first_name',flat=True)) \
-            + list(user_query.values_list('last_name',flat=True))
+        users_list = list(user_query.values_list('username', flat=True)) \
+            + list(user_query.values_list('first_name', flat=True)) \
+            + list(user_query.values_list('last_name', flat=True))
 
         if self.request.user.is_authenticated():
             users_list += list(user_query.values_list('email',flat=True))
@@ -430,7 +435,7 @@ class CatalogueUsersAutocomplete(dal.autocomplete.Select2ListView):
             users_list += list(dsc_models.DeviceServerRepository.objects.filter(contact_email__istartswith=q)
                                .values_list('contact_email', flat=True).distinct())
             users_list += list(dsc_models.DeviceClassInfo.objects.filter(contact_email__istartswith=q)
-                               .values_list('contact_email').distinct())
+                               .values_list('contact_email', flat=True).distinct())
         # add search string
         if q is not None:
             users_list.append(q)
