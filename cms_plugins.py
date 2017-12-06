@@ -7,9 +7,77 @@ from django.template import RequestContext
 import random
 
 from dsc.models import DeviceServerPluginModel, DeviceServer, DeviceServerActivity, DeviceServersActivityPluginModel, \
-    DeviceClassInfo, filtered_device_servers, search_device_servers
+    DeviceClassInfo, filtered_device_servers, search_device_servers, DeviceServerOldPluginModel, \
+    DeviceServerSearchPluginModel
 
 from dsc.tables import DeviceServerTable
+
+
+class DeviceServerOldPlugin(CMSPluginBase): #LastPublishedObjectPluginBase
+
+    model = DeviceServerOldPluginModel
+    name = 'Device Classes Catalogue Old'
+    render_template = "dsc/catalogue_frontpage_old.html"
+    cache = False
+
+    def render(self, context, instance, placeholder):
+
+        # prepare list of families
+        families = DeviceClassInfo.objects.filter(invalidate_activity=None).order_by('class_family').\
+            values_list('class_family', flat=True).distinct()
+
+        families_count = {}
+        for f in families:
+            if f=='':
+                f = 'Other'
+            families_count[f] = families_count.get(f,0)+DeviceServer.objects.filter(invalidate_activity=None).\
+                filter(device_classes__info__class_family=f).distinct().count()
+
+        context['families_count'] = sorted(families_count.iteritems())
+        context['families'] = families
+
+        context['count_all'] = DeviceServer.objects.filter(invalidate_activity=None).count()
+
+        # table of device servers
+        request = context['request']
+        family = request.GET.get('family', None)
+        search_text = request.GET.get('search', None)
+        if search_text is not None:
+            query = search_device_servers(search_text)
+            context['search'] = search_text
+        else:
+            if family is not None:
+                query =  DeviceServer.objects.filter(invalidate_activity=None).\
+                    filter(device_classes__info__class_family=family)
+            else:
+                query = DeviceServer.objects.filter(invalidate_activity=None).\
+                    order_by('-created_at')
+
+        table = DeviceServerTable(query.distinct())
+        RequestConfig(request, paginate={'per_page': 10}).configure(table)
+        context['device_servers'] = table
+        context['family'] = family
+
+        # clean context from nested context to get around of bug in context.flatten (django tracker #24765)
+        context_inside = True
+
+        while context_inside:
+
+            new_context_dicts = []
+            context_inside = False
+            for d in context.dicts:
+
+                if isinstance(d, RequestContext):
+                    new_context_dicts.extend(d.dicts)
+                    context_inside = True
+                else:
+                    new_context_dicts.append(d)
+            context.dicts = new_context_dicts
+
+
+        return context
+
+plugin_pool.register_plugin(DeviceServerOldPlugin)
 
 
 class DeviceServerPlugin(CMSPluginBase): #LastPublishedObjectPluginBase
@@ -79,9 +147,76 @@ class DeviceServerPlugin(CMSPluginBase): #LastPublishedObjectPluginBase
 plugin_pool.register_plugin(DeviceServerPlugin)
 
 
+class DeviceServerSearchPlugin(CMSPluginBase): #LastPublishedObjectPluginBase
+
+    model = DeviceServerSearchPluginModel
+    name = 'Device Classes Catalogue Search'
+    render_template = "dsc/inc/deviceserver_fulltextsearch.html"
+    cache = False
+
+    def render(self, context, instance, placeholder):
+
+        # prepare list of families
+        families = DeviceClassInfo.objects.filter(invalidate_activity=None).order_by('class_family').\
+            values_list('class_family', flat=True).distinct()
+
+        families_count = {}
+        for f in families:
+            if f=='':
+                f = 'Other'
+            families_count[f] = families_count.get(f,0)+DeviceServer.objects.filter(invalidate_activity=None).\
+                filter(device_classes__info__class_family=f).distinct().count()
+
+        context['families_count'] = sorted(families_count.iteritems())
+        context['families'] = families
+
+        context['count_all'] = DeviceServer.objects.filter(invalidate_activity=None).count()
+
+        # table of device servers
+        request = context['request']
+        family = request.GET.get('family', None)
+        search_text = request.GET.get('search', None)
+        if search_text is not None:
+            query = search_device_servers(search_text)
+            context['search'] = search_text
+        else:
+            if family is not None:
+                query =  DeviceServer.objects.filter(invalidate_activity=None).\
+                    filter(device_classes__info__class_family=family)
+            else:
+                query = DeviceServer.objects.filter(invalidate_activity=None).\
+                    order_by('-created_at')
+
+        table = DeviceServerTable(query.distinct())
+        RequestConfig(request, paginate={'per_page': 10}).configure(table)
+        context['device_servers'] = table
+        context['family'] = family
+
+        # clean context from nested context to get around of bug in context.flatten (django tracker #24765)
+        context_inside = True
+
+        while context_inside:
+
+            new_context_dicts = []
+            context_inside = False
+            for d in context.dicts:
+
+                if isinstance(d, RequestContext):
+                    new_context_dicts.extend(d.dicts)
+                    context_inside = True
+                else:
+                    new_context_dicts.append(d)
+            context.dicts = new_context_dicts
+
+
+        return context
+
+plugin_pool.register_plugin(DeviceServerSearchPlugin)
+
+
 class DeviceServersListPlugin(CMSPluginBase):
     """ Presents table with randomly picked-up device servers"""
-    name = 'Device Classes random list'
+    name = 'Device Classes list'
     render_template = "dsc/inc/deviceserver_list.html"
     cache = False
 

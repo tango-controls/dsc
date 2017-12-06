@@ -11,6 +11,19 @@
 {% include 'dsc/inc/families_list.html' %}
 </p>
 {% include 'dsc/inc/deviceserver_fulltextsearch.html' %}
+<p style="font-size:120%;margin-top:0px;">
+    Here you will find device classes available in the community. Device classes provide among others
+    connectivity to equipment. So, if you want to connect your hardware to Tango Controls please check this catalogue.
+    One or more device classes can be wrapped as a device server to connect one or more devices to your Tango control
+    system. Tango imposes no limit on the number of devices or classes in a device server. It depends on the
+    implementation of the device class.
+</p>
+<p>
+    <span style="font-size:120%;font-weight:bold;">
+        Did you write a new device class?
+        <a href="{{ add_url }}">Please share it.</a>
+    </span>
+</p>
 <p style="margin-bottom:10pt; margin-top:5pt;" id="ds-table">
     {% if family %}
         Below you will find device classes of <span style="font-weight:bold;">{{family}}</span> family.

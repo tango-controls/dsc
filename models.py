@@ -1105,12 +1105,30 @@ def search_device_servers(search_text):
 
 
 class DeviceServerPluginModel(CMSPlugin):
-    model = DeviceServerActivity
+    model = DeviceServer
 
     # TODO prepare plugin for administration CMS
     class Meta:
         app_label = 'dsc'
         verbose_name = 'Device Classes Catalogue plugin'
+
+
+class DeviceServerOldPluginModel(CMSPlugin):
+    model = DeviceServer
+
+    # TODO prepare plugin for administration CMS
+    class Meta:
+        app_label = 'dsc'
+        verbose_name = 'Device Classes Catalogue Old plugin'
+
+
+class DeviceServerSearchPluginModel(CMSPlugin):
+    model = DeviceServer
+
+    # TODO prepare plugin for administration CMS
+    class Meta:
+        app_label = 'dsc'
+        verbose_name = 'Device Classes Catalogue Search plugin'
 
 
 class DeviceServersActivityPluginModel(CMSPlugin):
