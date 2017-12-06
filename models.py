@@ -1067,9 +1067,12 @@ def filtered_device_servers(family=None, manufacturer=None, product=None, bus=No
                      Q(device_classes__class_copyright__icontains=user) |
                      Q(activities__created_by__username__istartswith=user) |
                      Q(activities__created_by__first_name__istartswith=user) |
+                     Q(activities__created_by__first_name__in=user.split()) |
                      Q(activities__created_by__last_name__istartswith=user) |
+                     Q(activities__created_by__last_name__in=user.split()) |
                      Q(activities__created_by__email__istartswith=user)
                      )
+
 
     return q.filter(invalidate_activity=None)
 

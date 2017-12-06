@@ -416,28 +416,33 @@ class CatalogueUsersAutocomplete(dal.autocomplete.Select2ListView):
         # limit the list to the ones that matches typed value
         if q is not None:
 
-            if self.request.user.is_authenticated():
+            if self.request.user.is_authenticated() or len(q) >= 2:
                 user_query = user_query.filter(Q(username__istartswith=q) | Q(first_name__istartswith=q) |
-                                           Q(last_name__istartswith=q) | Q(email__istartswith=q))
+                                           Q(last_name__istartswith=q) | Q(email__istartswith=q) |
+                                           Q(last_name__in=q.split()) | Q(first_name__in=q.split())
+                                           ).distinct()
             else:
                 user_query = user_query.filter(Q(username__istartswith=q) | Q(first_name__istartswith=q) |
-                                                 Q(last_name__istartswith=q))
+                                                 Q(last_name__istartswith=q)).distinct()
 
         users_list = list(user_query.values_list('username', flat=True)) \
-            + list(user_query.values_list('first_name', flat=True)) \
-            + list(user_query.values_list('last_name', flat=True))
+            + [a[0]+' '+a[1] for a in
+                zip(user_query.values_list('first_name', flat=True), user_query.values_list('last_name', flat=True))]
 
-        if self.request.user.is_authenticated():
-            users_list += list(user_query.values_list('email',flat=True))
+            # + list(user_query.values_list('first_name', flat=True).distinct()) \
+            # + list(user_query.values_list('last_name', flat=True).distinct())
+
+        if self.request.user.is_authenticated() or q is not None and len(q) >= 2:
+            users_list += list(user_query.values_list('email',flat=True).distinct())
 
         # add list of contacts from .xmi
-        if self.request.user.is_authenticated() and q is not None:
+        if q is not None and ( self.request.user.is_authenticated() or len(q) > 2 ):
             users_list += list(dsc_models.DeviceServerRepository.objects.filter(contact_email__istartswith=q)
                                .values_list('contact_email', flat=True).distinct())
             users_list += list(dsc_models.DeviceClassInfo.objects.filter(contact_email__istartswith=q)
                                .values_list('contact_email', flat=True).distinct())
         # add search string
-        if q is not None:
+        if q is not None and q not in users_list:
             users_list.append(q)
 
         return list(set(users_list))
