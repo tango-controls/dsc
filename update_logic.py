@@ -480,3 +480,5 @@ def create_or_update(update_object, activity, device_server=None, device_class=N
 
     # return device_server
     return device_server, backup_device_server
+
+

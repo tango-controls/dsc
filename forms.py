@@ -235,6 +235,7 @@ class DeviceServerUpdateForm(DeviceServerAddForm):
                   'certified',
                   'change_update_method',
                   'script_operation',
+                  'only_github',
                   'last_update_method',
                   'use_uploaded_xmi_file',
                   'use_url_xmi_file',

@@ -3,7 +3,7 @@
 {% for activity in deviceserver.activities.all|dictsortreversed:'created_at' %}
     {{ activity.created_at|date }}, {{ activity.created_by.get_full_name }}
     <br />
-    <span style="font-weight:bold">{{activity.activity_type|title}}:</span>
+    <span style="font-weight:bold">{{activity.get_activity_type_display|title}}:</span>
     <br />
     {{activity.activity_info}}
     <br />
@@ -26,7 +26,7 @@
 {% for activity in deviceserver.invalidate_activity.device_server.activities.all|dictsortreversed:'created_at' %}
     {{ activity.created_at|date }}, {{ activity.created_by.get_full_name }}
     <br />
-    <span style="font-weight:bold;">{{activity.activity_type|title}}:</span>
+    <span style="font-weight:bold;">{{activity.get_activity_type_display|title}}:</span>
     <br />
     {{activity.activity_info}}
     <br />

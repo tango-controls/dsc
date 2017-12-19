@@ -51,14 +51,14 @@ DS_ACTIVITY_CERTIFY = 'certify'
 DS_ACTIVITY_VERIFICATION = 'verify'
 DS_ACTIVITY_REVERT = 'revert'
 DS_ACTIVITY_CHOICES = (
-    (DS_ACTIVITY_ADD, 'Create'),
-    (DS_ACTIVITY_EDIT, 'Update'),
-    (DS_ACTIVITY_DOWNLOAD, 'Download'),
-    (DS_ACTIVITY_DELETE, 'Delete'),
-    (DS_ACTIVITY_APPLY_FOR_CERT, 'Apply for certification'),
-    (DS_ACTIVITY_CERTIFY, 'Certificate'),
-    (DS_ACTIVITY_VERIFICATION, 'Verify'),
-    (DS_ACTIVITY_VERIFICATION, 'Revert'),
+    (DS_ACTIVITY_ADD, 'Created'),
+    (DS_ACTIVITY_EDIT, 'Updated'),
+    (DS_ACTIVITY_DOWNLOAD, 'Downloaded'),
+    (DS_ACTIVITY_DELETE, 'Deleted'),
+    (DS_ACTIVITY_APPLY_FOR_CERT, 'Applied for certification'),
+    (DS_ACTIVITY_CERTIFY, 'Certificated'),
+    (DS_ACTIVITY_VERIFICATION, 'Verified'),
+    (DS_ACTIVITY_VERIFICATION, 'Reverted'),
 )
 
 
@@ -199,6 +199,27 @@ class DscManagedModel(models.Model):
         if create_object is not None and create_object.all().count() > 0:
             return create_object.first().script_operation
         return False
+
+    def update_object(self):
+        create_object = None
+        if self.last_update_activity is not None and hasattr(self.last_update_activity, 'create_object'):
+            create_object = self.last_update_activity.create_object
+        elif self.create_activity is not None and hasattr(self.create_activity, 'create_object'):
+            create_object = self.create_activity.create_object
+
+        if create_object is not None and create_object.all().count() > 0:
+            return create_object.first()
+        return None
+
+    def create_object(self):
+        c_object = None
+
+        if self.create_activity is not None and hasattr(self.create_activity, 'create_object'):
+            c_object = self.create_activity.create_object
+
+        if c_object is not None and c_object.all().count() > 0:
+            return c_object.first()
+        return None
 
     def delete(self, activity=None, user=None):
         if activity is None:
@@ -841,16 +862,18 @@ class DeviceServerAddModel(models.Model):
                                 blank=True,
                                 null=True)
 
-    use_url_xmi_file = models.BooleanField(verbose_name='Provide .xmi file URL populate database.',
+    use_url_xmi_file = models.BooleanField(verbose_name='Provide .xmi file URL to populate database.',
                                            blank=True,
                                            default=False)
 
     xmi_file_url = models.URLField(verbose_name='XMI source URL', blank=True, null=True, default='')
 
-    def xmi_string(self):
+    def xmi_string(self, raise_exception=True ):
         """ This method returns .XMI string
             :return  (xmi_string, is_ok, error_message)
         """
+
+        message = ""
 
         if hasattr(self, 'valid_xmi_string'):
             if self.valid_xmi_string is not None:
@@ -861,6 +884,9 @@ class DeviceServerAddModel(models.Model):
                     raise Exception('The .XMI file seems to be empty.')
                 if self.xmi_file.size > 200000:
                     raise Exception('The file is to large to be a Tango .XMI file.')
+
+                self.xmi_file.close()
+                self.xmi_file.open()
 
                 xmi_string = self.xmi_file.read()
 
@@ -874,6 +900,7 @@ class DeviceServerAddModel(models.Model):
 
                 xmi_string = response.read()
 
+
             parser = TangoXmiParser(xml_string=xmi_string)
 
             is_valid, message = parser.is_valid()
@@ -883,7 +910,10 @@ class DeviceServerAddModel(models.Model):
                 raise Exception(message)
 
         except Exception as e:
-            raise e
+            if raise_exception:
+                raise e
+            else:
+                return "", False, e.message
 
         return xmi_string, True, ''
 
@@ -953,6 +983,9 @@ class DeviceServerUpdateModel(DeviceServerAddModel):
                                           choices=zip(['manual', 'file', 'url'],
                                                       ['manual', 'file', 'url']),
                                           verbose_name='Previous update method: ', default='url', blank=True)
+
+    only_github = models.BooleanField(verbose_name='Updated only github?',
+                                           blank=True, default=False)
 
     def from_device_server(self, device_server, device_class=None):
         """ Fills fields based on device_server object"""
@@ -1140,3 +1173,39 @@ class DeviceServersActivityPluginModel(CMSPlugin):
     class Meta:
         app_label = 'dsc'
         verbose_name = 'Device Classes Catalogue Activity plugin'
+
+
+# Model for github ouath used to store .xmi on it
+class DscGitHubBackupConfig(models.Model):
+
+    oauth_id = models.CharField(
+        max_length=128,
+        verbose_name='OAuth id'
+    )
+
+    oauth_token = models.CharField(
+        max_length=128,
+        verbose_name='OAuth token'
+    )
+
+    repository_owner = models.CharField(
+        max_length=255,
+        default = 'tango-controls',
+        verbose_name='Repository owner'
+    )
+
+    repository_name = models.CharField(
+        max_length=255,
+        default='dsc',
+        verbose_name='Repository'
+    )
+
+    branch = models.CharField(
+        max_length=255,
+        default="xmi-backup",
+        verbose_name='Branch'
+    )
+
+    created_at = models.DateTimeField(
+        editable=False,
+        auto_now_add=True)

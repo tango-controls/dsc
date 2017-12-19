@@ -13,7 +13,7 @@ from webu.admin import (
                 DeviceServerActivity, DeviceServerLicense,
                 DeviceAttribute, DeviceCommand,
                 DevicePipe, DeviceProperty, DeviceAttributeInfo, DeviceServerAddModel, DeviceServerUpdateModel,
-                DeviceClassFamily)
+                DeviceClassFamily, DscGitHubBackupConfig)
 class DeviceServersAdminPanel(admin.ModelAdmin):
     pass
 

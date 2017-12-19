@@ -2,7 +2,7 @@
 <p style="margin:16px;font-size:110%;">
     {{ activity.created_at|date }}, {{ activity.created_by.get_full_name }}
     <br />
-    <span style="font-weight:bold">{{activity.activity_type|title}}
+    <span style="font-weight:bold">{{activity.get_activity_type_display|title}}
         <a href="{% url 'deviceserver_detail' activity.device_server.pk  %}" style="font-weight:bold">{{activity.device_server.name}}
         </a>:
     </span>

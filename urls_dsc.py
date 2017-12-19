@@ -5,7 +5,8 @@ from dsc.views import DeviceServerDetailView, DeviceServerAddView, search_view, 
     DeviceServerManufacturerAutocomplete, DeviceServerProductAutocomplete, \
     DeviceServerFamilyAutocomplete,DeviceServerLicenseAutocomplete, DeviceServerBusAutocomplete, \
     DeviceServerUpdateView, deviceserver_delete_view, DeviceServerVerifyView, deviceserver_verify_view, \
-    device_servers_list, advanced_search_view, families_view, DeviceClassFamilyAutocomplete, CatalogueUsersAutocomplete
+    device_servers_list, advanced_search_view, families_view, DeviceClassFamilyAutocomplete, \
+    CatalogueUsersAutocomplete, deviceserver_extended_json_view
 from django.contrib.auth.decorators import login_required, permission_required
 
 from tango.cms_urls import content_action_urls #TODO do przemyślenia i implementacji w DSc potrzebne akcje albo kopia i włąśne
@@ -31,6 +32,10 @@ urlpatterns = patterns(
          r'^ds/(?P<pk>.*)/verify$',
          deviceserver_verify_view,
          name='deviceserver_verify'),
+    url(
+         r'^ds/(?P<pk>.*)/json$',
+         deviceserver_extended_json_view,
+         name='deviceserver_json'),
 
     url(
          r'^ds/(?P<pk>.*)/$',

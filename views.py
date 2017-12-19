@@ -19,12 +19,15 @@ from django_tables2 import RequestConfig
 
 import dal.autocomplete
 
+import json
+
 from xmi_parser import TangoXmiParser
 from tables import DeviceAttributesTable, DeviceCommandsTable, DevicePipesTable, \
     DevicePropertiesTable, DeviceServerSearchTable, DeviceServerTable
 from forms import DeviceServerAddForm, DeviceServerSearchForm, DeviceServerUpdateForm
 import models as dsc_models
 import update_logic
+import github_backup
 
 # Create your views here
 
@@ -138,8 +141,67 @@ class DeviceServerVerifyView(DeviceServerDetailView):
                 else:
                     context['message'] = 'These device classes are already verified.'
 
-
         return context
+
+
+def get_ds_structure(ds, request):
+
+    ds_list = {}
+    if ds is not None:
+        assert isinstance(ds, dsc_models.DeviceServer)
+        if ds.last_update_activity is not None:
+            last_update = ds.last_update_activity.created_at
+        else:
+            last_update = ds.created_at
+
+        ds_list[ds.pk] = {
+            'name': ds.name,
+            'detail_url': request.build_absolute_uri(reverse('deviceserver_detail', kwargs={'pk': ds.pk})),
+            'update_url': request.build_absolute_uri(reverse('deviceserver_update', kwargs={'pk': ds.pk})),
+            'last_update': last_update,
+            'last_update_method': ds.last_update_method(),
+            'repository_url': str(ds.repository.url),
+            'repository_contact_email': str(ds.repository.contact_email),
+            'development_status': ds.development_status,
+            'status': ds.status,
+            'certified': str(ds.certified),
+            'license': str(ds.license),
+            'tag': ds.repository.tag,
+            'updated_by_script': ds.updated_by_script()
+        }
+
+        families = []
+        manufacturers = []
+        products = []
+        buses = []
+        cl_names = []
+        for cl in ds.device_classes.filter(invalidate_activity=None):
+            families.append(cl.info.class_family)
+            manufacturers.append(cl.info.manufacturer)
+            products.append(cl.info.product_reference)
+            buses.append(cl.info.bus)
+            cl_names.append(cl.name)
+
+        ds_list[ds.pk]['families'] = families
+        ds_list[ds.pk]['manufacturers'] = manufacturers
+        ds_list[ds.pk]['products'] = products
+        ds_list[ds.pk]['buses'] = buses
+        ds_list[ds.pk]['class_names'] = cl_names
+        docs = []
+        for doc in ds.documentation.filter(invalidate_activity=None):
+            assert isinstance(doc, dsc_models.DeviceServerDocumentation)
+            doc_dict = {
+                'title': str(doc.title),
+                'documentation_type': doc.documentation_type,
+                'url': doc.get_documentation_url(),
+                'updated_by_script': doc.updated_by_script(),
+                'pk': doc.pk
+            }
+
+            docs.append(doc_dict)
+        ds_list[ds.pk]['documentation'] = docs
+
+    return ds_list
 
 
 def device_servers_list(request):
@@ -147,10 +209,12 @@ def device_servers_list(request):
     if request.method == 'GET':
         repository_url = request.GET.get('repository_url')
         repository_contact_email = request.GET.get('repository_contact_email')
+        ds_id = request.GET.get('deviceserver')
 
     if request.method == 'POST':
         repository_url = request.POST.get('repository_url')
         repository_contact_email = request.POST.get('repository_contact_email')
+        ds_id = request.GET.get('deviceserver')
 
     repositories = dsc_models.DeviceServerRepository.objects.filter(invalidate_activity=None)
     if repository_url is not None:
@@ -159,60 +223,13 @@ def device_servers_list(request):
     if repository_contact_email is not None:
         repositories = repositories.filter(contact_email=repository_contact_email)
 
+    if ds_id is not None:
+        repositories = repositories.filter(device_server__id=int(ds_id))
+
     for repo in repositories:
         ds = repo.device_server
         if ds is not None and not ds_list.has_key(ds.pk) and ds.is_valid():
-            assert isinstance(ds,dsc_models.DeviceServer)
-            if ds.last_update_activity is not None:
-                last_update = ds.last_update_activity.created_at
-            else:
-                last_update = ds.created_at
-            ds_list[ds.pk] = {
-                'name': ds.name,
-                'detail_url': request.build_absolute_uri(reverse('deviceserver_detail', kwargs={'pk': ds.pk})),
-                'update_url': request.build_absolute_uri(reverse('deviceserver_update', kwargs={'pk': ds.pk})),
-                'last_update': last_update,
-                'last_update_method': ds.last_update_method(),
-                'repository_url': str(repo.url),
-                'repository_contact_email': str(repo.contact_email),
-                'development_status': ds.development_status,
-                'status': ds.status,
-                'certified': str(ds.certified),
-                'license': str(ds.license),
-                'tag': repo.tag,
-                'updated_by_script': ds.updated_by_script()
-            }
-
-            families = []
-            manufacturers = []
-            products = []
-            buses = []
-            cl_names = []
-            for cl in ds.device_classes.filter(invalidate_activity=None):
-                families.append(cl.info.class_family)
-                manufacturers.append(cl.info.manufacturer)
-                products.append(cl.info.product_reference)
-                buses.append(cl.info.bus)
-                cl_names.append(cl.name)
-
-            ds_list[ds.pk]['families'] = families
-            ds_list[ds.pk]['manufacturers'] = manufacturers
-            ds_list[ds.pk]['products'] = products
-            ds_list[ds.pk]['buses'] = buses
-            ds_list[ds.pk]['class_names'] = cl_names
-            docs = []
-            for doc in ds.documentation.filter(invalidate_activity=None):
-                assert isinstance(doc, dsc_models.DeviceServerDocumentation)
-                doc_dict = {
-                    'title': str(doc.title),
-                    'documentation_type': doc.documentation_type,
-                    'url': doc.get_documentation_url(),
-                    'updated_by_script': doc.updated_by_script(),
-                    'pk': doc.pk
-                }
-
-                docs.append(doc_dict)
-            ds_list[ds.pk]['documentation'] = docs
+            ds_list.update(get_ds_structure(ds,request))
 
     return JsonResponse(ds_list)
 
@@ -234,7 +251,6 @@ def search_view(request):
 
     table = DeviceServerTable(query.distinct())
     RequestConfig(request, paginate={'per_page': 30}).configure(table)
-
 
     if 'breadcrumb_extra_ancestors' not in context:
         context['breadcrumb_extra_ancestors'] = []
@@ -516,33 +532,49 @@ class DeviceServerUpdateView(BreadcrumbMixinDetailView, UpdateView):
             update_object.valid_xmi_string = form.cleaned_data.get('xmi_string', None)
             update_object.save()
 
-            if update_object.add_class:
-                ainfo = 'A device class has been added.'
-            else:
-                ainfo = 'The device class has been updated.'
+            if not update_object.only_github:
 
-            # mark  activity
-            activity = dsc_models.DeviceServerActivity(activity_type=dsc_models.DS_ACTIVITY_EDIT,
-                                                       activity_info=ainfo,
-                                                       created_by=self.request.user
-                                                       )
-            # it is related by other object, so it is good if it has primary key
-            activity.save()
+                if update_object.add_class:
+                    ainfo = 'A device class has been added.'
+                else:
+                    ainfo = 'The device class has been updated.'
 
-            # create device server
-            self.device_server, old_ds = update_logic.create_or_update(update_object, activity, self.device_server,
-                                                                device_class=self.request.GET.get('device_class', None))
-            #  just to make sure we save device server
-            self.device_server.save()
+                # mark  activity
+                activity = dsc_models.DeviceServerActivity(activity_type=dsc_models.DS_ACTIVITY_EDIT,
+                                                           activity_info=ainfo,
+                                                           created_by=self.request.user
+                                                           )
+                # it is related by other object, so it is good if it has primary key
+                activity.save()
 
-            activity.device_server = self.device_server
-            activity.device_server_backup = old_ds
-            activity.save()
+                # create device server
+                self.device_server, old_ds = update_logic.create_or_update(update_object, activity, self.device_server,
+                                                                    device_class=self.request.GET.get('device_class', None))
+                #  just to make sure we save device server
+                self.device_server.save()
 
-            # mark success
-            update_object.activity = activity
+                activity.device_server = self.device_server
+                activity.device_server_backup = old_ds
+                activity.save()
+
+                # mark success
+                update_object.activity = activity
+
             update_object.processed_ok = True
             update_object.save()
+
+            if update_object.use_uploaded_xmi_file or update_object.use_url_xmi_file:
+                github_backup.save_xmi_on_github(
+                    self.device_server,
+                    update_object.xmi_string(raise_exception=False),
+                    json.dumps(
+                        get_ds_structure(self.device_server, self.request),
+                        indent=4,
+                        sort_keys=True,
+                        default=str
+                    ),
+                    self.request
+                )
 
         return super(DeviceServerUpdateView, self).form_valid(form)
 
@@ -551,10 +583,11 @@ class DeviceServerUpdateView(BreadcrumbMixinDetailView, UpdateView):
 
 @login_required
 def deviceserver_delete_view(request, pk):
+
     context = RequestContext(request)
     if 'breadcrumb_extra_ancestors' not in context:
         context['breadcrumb_extra_ancestors'] = []
-    context['breadcrumb_extra_ancestors'].append((request.get_full_path(),'Advanced Search'))
+    context['breadcrumb_extra_ancestors'].append((request.get_full_path(),'Device Server/Class delete'))
 
     device_server = dsc_models.DeviceServer.objects.get(pk=pk)
     device_class = request.GET.get('device_class')
@@ -618,7 +651,7 @@ def deviceserver_verify_view(request, pk):
     context = RequestContext(request)
     if 'breadcrumb_extra_ancestors' not in context:
         context['breadcrumb_extra_ancestors'] = []
-    context['breadcrumb_extra_ancestors'].append((request.get_full_path(),'Advanced Search'))
+    context['breadcrumb_extra_ancestors'].append((request.get_full_path(),'Device Server verification'))
     device_server = dsc_models.DeviceServer.objects.get(pk=pk)
     if request.user.has_perm('dsc.admin_deviceserver'):
         if device_server.status == dsc_models.STATUS_NEW or device_server.status == dsc_models.STATUS_UPDATED:
@@ -691,7 +724,49 @@ class DeviceServerAddView(BreadcrumbMixinDetailView, FormView):
             add_device.processed_ok = True
             add_device.save()
 
+            github_backup.save_xmi_on_github(self.device_server,
+                                             add_device.xmi_string(raise_exception=False),
+                                             json.dumps( get_ds_structure(self.device_server, self.request),
+                                                         indent=4, sort_keys=True, default=str),
+                                             self.request
+                                            )
+
         return super(DeviceServerAddView, self).form_valid(form)
 
     def get_success_url(self):
         return reverse('deviceserver_detail', kwargs={'pk': self.device_server.pk})
+
+
+def deviceserver_extended_json_view(request, pk):
+    """ Render JSON with ds details including xmi files"""
+
+    context = RequestContext(request)
+
+    device_server = dsc_models.DeviceServer.objects.get(pk=pk)
+    device_class = request.GET.get('device_class')
+
+    ds_dict = get_ds_structure(device_server,request)
+    ds_dict['xmi_files'] = {}
+
+    cls = device_server.device_classes.filter(invalidate_activity=None)
+    if device_class is not None:
+        cls = cls.filter(pk=device_class)
+
+    for cl in cls:
+        assert (isinstance(cl, dsc_models.DeviceClass))
+        xmi_string = ""
+        ok = False
+        update_object = cl.update_object()
+        create_object = cl.create_object()
+
+        if update_object is not None and (update_object.use_uploaded_xmi_file or update_object.use_url_xmi_file):
+            assert (isinstance(update_object, dsc_models.DeviceServerAddModel))
+            xmi_string, ok, message = update_object.xmi_string(raise_exception=False)
+        elif create_object is not None and (create_object.use_uploaded_xmi_file or create_object.use_url_xmi_file):
+            assert (isinstance(create_object, dsc_models.DeviceServerAddModel))
+            xmi_string, ok, message = create_object.xmi_string(raise_exception=False)
+
+        if ok:
+            ds_dict['xmi_files'][cl.name] = xmi_string
+
+    return JsonResponse(ds_dict)
