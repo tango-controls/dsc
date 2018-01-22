@@ -21,9 +21,9 @@ class DeviceServerTable(tables.Table):
                 rednered_value += ", "
             else:
                 vFirst = False
-            rednered_value += u.info.manufacturer
+            if u.info.manufacturer is not None:
+                rednered_value += u.info.manufacturer
         return rednered_value
-
 
     products = tables.Column(accessor='device_classes', verbose_name='Products',
                              order_by="device_classes__info__product_reference")
@@ -37,9 +37,9 @@ class DeviceServerTable(tables.Table):
                 rednered_value += ", "
             else:
                 vFirst = False
-            rednered_value += u.info.product_reference
+            if u.info.product_reference is not None:
+                rednered_value += u.info.product_reference
         return rednered_value
-
 
     family = tables.Column(accessor='device_classes', verbose_name='Family',
                            order_by="device_classes__info__class_family")
@@ -53,7 +53,8 @@ class DeviceServerTable(tables.Table):
                 rednered_value += ", "
             else:
                 vFirst = False
-            rednered_value += u.info.class_family
+            if u.info.class_family is not None:
+                rednered_value += u.info.class_family
         return rednered_value
 
     class Meta:
@@ -75,6 +76,9 @@ class DeviceServerSearchTable(DeviceServerTable):
 
 class DSCTooltipTable(tables.Table):
 
+    def tooltip_style(self, record):
+        return 'style="width:%dpx;"' % (10*max(40, len(str(self.tooltip(record)))))
+
     def tooltip(self, record):
         return record.pk
 
@@ -87,6 +91,7 @@ class DSCTooltipTable(tables.Table):
     def render_name(self, record, value):
         return mark_safe('<span class="'+self.tooltip_class(record)+'">'+str(value)+'<span class="tooltiptext "'+\
                          self.tooltip_style(record) + ' >' + str(self.tooltip(record)) + "</span></span>")
+
 
 class DevicePropertiesTable(DSCTooltipTable):
 
@@ -126,7 +131,7 @@ class DevicePipesTable(tables.Table):
 class DeviceCommandsTable(DSCTooltipTable):
 
     def tooltip_style(self, record):
-        return 'style="width:%dpx;"' % (10*max(30, len(str(record.input_description)),
+        return 'style="width:%dpx;"' % (10*max(40, len(str(record.input_description)),
                                                len(str(record.output_description))))
 
     def tooltip(self, record):
