@@ -261,7 +261,7 @@ a.visited.dsc-back  {
 
 .dsc-cmd-tooltip .tooltiptext {
     visibility: hidden;
-    width: 400px;
+    max-width: 450px;
     white-space:pre-line;
     background-color: grey;
     color: #fff;

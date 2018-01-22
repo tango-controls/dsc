@@ -77,13 +77,11 @@ class DeviceServerSearchTable(DeviceServerTable):
 class DSCTooltipTable(tables.Table):
 
     def tooltip_style(self, record):
-        return 'style="width:%dpx;"' % (10*max(40, len(str(self.tooltip(record)))))
+        # return 'style="width:%dpx;"' % (10*min(40, len(str(self.tooltip(record)).strip())))
+        return 'style="width: -webkit-min-content;  width: -moz-min-content; width:min-content;"'
 
     def tooltip(self, record):
         return record.pk
-
-    def tooltip_style(self, record):
-        return ''
 
     def tooltip_class(self, record):
         return 'dsc-tooltip'
@@ -106,6 +104,9 @@ class DevicePropertiesTable(DSCTooltipTable):
 
 
 class DeviceAttributesTable(DSCTooltipTable):
+
+    # def tooltip_style(self, record):
+    #    return 'style="width:%dem;"' % (min(40, len(str(self.tooltip(record)))-36))
 
     def tooltip(self, record):
         # workaround for missed data types
@@ -130,9 +131,9 @@ class DevicePipesTable(tables.Table):
 
 class DeviceCommandsTable(DSCTooltipTable):
 
-    def tooltip_style(self, record):
-        return 'style="width:%dpx;"' % (10*max(40, len(str(record.input_description)),
-                                               len(str(record.output_description))))
+    #def tooltip_style(self, record):
+    #    return 'style="width:%dem;"' % (1*max(15, len(str(record.input_description)),
+    #                                           len(str(record.output_description))))
 
     def tooltip(self, record):
         # workaround for missed data types
