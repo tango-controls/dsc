@@ -78,7 +78,7 @@ class DSCTooltipTable(tables.Table):
 
     def tooltip_style(self, record):
         # return 'style="width:%dpx;"' % (10*min(40, len(str(self.tooltip(record)).strip())))
-        return 'style="width: -webkit-min-content;  width: -moz-min-content; width:min-content;"'
+        return 'style="width: -webkit-max-content;  width: -moz-max-content; width: max-content;"'
 
     def tooltip(self, record):
         return record.pk
