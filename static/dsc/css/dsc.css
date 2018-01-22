@@ -232,6 +232,9 @@ a.visited.dsc-back  {
 .dsc-tooltip {
     position: relative;
     display: inline-block;
+    width: -webkit-max-content;
+    width: -moz-max-content;
+    width: max-content;
     border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
 }
 
