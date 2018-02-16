@@ -1,0 +1,41 @@
+{
+    "7": {
+        "buses": [
+            "VME"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "MCA8715"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/7/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 36, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Acquisition/MCA8715/MCA8715.pdf"
+            }
+        ], 
+        "families": [
+            "Acquisition"
+        ], 
+        "last_update": "2018-01-05 15:15:19.916215+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "none"
+        ], 
+        "name": "MCA8715", 
+        "products": [
+            ""
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Acquisition/1D/MCA8715", 
+        "status": "updated", 
+        "tag": "Release_1_10", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/7/update/", 
+        "updated_by_script": true
+    }
+}
