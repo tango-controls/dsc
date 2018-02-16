@@ -1,0 +1,41 @@
+{
+    "38": {
+        "buses": [
+            "Socket"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "MaiaInterlock"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/38/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 70, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Acquisition/MaiaInterlock/MaiaInterlock.pdf"
+            }
+        ], 
+        "families": [
+            "Acquisition"
+        ], 
+        "last_update": "2017-02-23 09:13:58.233398+00:00", 
+        "last_update_method": "url", 
+        "license": "GPL", 
+        "manufacturers": [
+            "Brookhaven National Laboratory & Commonwealth Scientific and Industrial Research Organisation"
+        ], 
+        "name": "MaiaInterlock", 
+        "products": [
+            "Maia Detector"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Acquisition/2D/MaiaInterlock", 
+        "status": "updated", 
+        "tag": "Release_1_1", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/38/update/", 
+        "updated_by_script": true
+    }
+}
