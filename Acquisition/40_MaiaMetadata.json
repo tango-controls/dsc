@@ -1,0 +1,41 @@
+{
+    "40": {
+        "buses": [
+            "Data Socket"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "MaiaMetadata"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/40/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 72, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Acquisition/MaiaMetadata/MaiaMetadata.pdf"
+            }
+        ], 
+        "families": [
+            "Acquisition"
+        ], 
+        "last_update": "2017-02-23 09:14:13.664369+00:00", 
+        "last_update_method": "url", 
+        "license": "GPL", 
+        "manufacturers": [
+            "Brookhaven National Laboratory and Commonwealth Scientific and Industrial Research Organisation"
+        ], 
+        "name": "MaiaMetadata", 
+        "products": [
+            "Maia Detector"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Acquisition/2D/MaiaMetadata", 
+        "status": "updated", 
+        "tag": "Release_1_1", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/40/update/", 
+        "updated_by_script": true
+    }
+}
