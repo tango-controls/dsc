@@ -1,0 +1,41 @@
+{
+    "43": {
+        "buses": [
+            "Socket"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "MaiaSensor"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/43/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 75, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Acquisition/MaiaSensor/MaiaSensor.pdf"
+            }
+        ], 
+        "families": [
+            "Acquisition"
+        ], 
+        "last_update": "2017-02-23 09:14:37.911959+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "Brookhaven National Laboratory & Commonwealth Scientific and Industrial Research Organisation"
+        ], 
+        "name": "MaiaSensor", 
+        "products": [
+            "Maia Detector"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Acquisition/2D/MaiaSensor", 
+        "status": "updated", 
+        "tag": "Release_1_2", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/43/update/", 
+        "updated_by_script": true
+    }
+}
