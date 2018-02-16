@@ -1,0 +1,41 @@
+{
+    "64": {
+        "buses": [
+            "Not Applicable"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "StraightSectionOptic"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/64/", 
+        "development_status": "new", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 104, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/BeamDiagnostics/StraightSectionOptic/StraightSectionOptic.pdf"
+            }
+        ], 
+        "families": [
+            "Calculation"
+        ], 
+        "last_update": "2017-02-23 09:25:19.724594+00:00", 
+        "last_update_method": "url", 
+        "license": "GPL", 
+        "manufacturers": [
+            "none"
+        ], 
+        "name": "StraightSectionOptic", 
+        "products": [
+            ""
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/BeamDiagnostics/EsrfBeamOptic/StraightSectionOptic", 
+        "status": "updated", 
+        "tag": "", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/64/update/", 
+        "updated_by_script": true
+    }
+}
