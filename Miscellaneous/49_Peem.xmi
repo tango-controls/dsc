@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="Peem">
+    <description description="Device Server for access to the PEEM SW (Leem2000 and U-view)&#xA;It will use a DCOM communication." title="PEEM DS" sourcePath="/home/amilan/workspace/PEEM" language="Cpp" filestogenerate="XMI   file,Code files" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_4Impl" sourcePath=""/>
+      <identification contact="at cells.es - amilan" author="amilan" emailDomain="cells.es" classFamily="Miscellaneous" siteSpecific="" platform="Windows" bus="Not Applicable" manufacturer="none" reference=""/>
+      <comments commandsTable="//================================================================&#xA;//&#xA;//  The following table gives the correspondence&#xA;//  between command and method names.&#xA;//&#xA;//  Command name        |  Method name&#xA;//----------------------------------------------------------------&#xA;//  State               |  Inherited (no method)&#xA;//  Status              |  Inherited (no method)&#xA;//  ChangePSValue       |  change_psvalue&#xA;//  GetPSValue          |  get_psvalue&#xA;//  GetValueFromModule  |  get_value_from_module&#xA;//  SetPSValue          |  set_psvalue&#xA;//  SetValueToModule    |  set_value_to_module&#xA;//  GetPSMnemonic       |  get_psmnemonic&#xA;//  GetPSName           |  get_psname&#xA;//  GetPSUnit           |  get_psunit&#xA;//  PSLimitLow          |  pslimit_low&#xA;//  GetPSLimitHigh      |  get_pslimit_high&#xA;//  GetMicrometerValue  |  get_micrometer_value&#xA;//  ReadGauge           |  read_gauge&#xA;//  ReadGaugeLabel      |  read_gauge_label&#xA;//  ReadGaugeUnit       |  read_gauge_unit&#xA;//  GetChangedModules   |  get_changed_modules&#xA;//  SelectPreset        |  select_preset&#xA;//  SetPhi              |  set_phi&#xA;//  ShutdownLEEM        |  shutdown_leem&#xA;//  ExportParameters    |  export_parameters&#xA;//  ImportParameters    |  import_parameters&#xA;//  AcquireSimpleImage  |  acquire_simple_image&#xA;//  ExportImage         |  export_image&#xA;//================================================================"/>
+    </description>
+    <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="State Code">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its &lt;i>device_status&lt;/i> data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Status description">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
+    </commands>
+    <commands name="ChangePSValue" description="Modify the value (current, temperature etc.) of a module." execMethod="change_psvalue" displayLevel="OPERATOR">
+      <argin description="Comma separated list of arguments:&#xA;1. Index (must be a integer)&#xA;2. deltaValue (float value)">
+        <type xsi:type="pogoDsl:FloatArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetPSValue" description="Get the value (current, temperature, etc) of a module." execMethod="get_psvalue" displayLevel="OPERATOR">
+      <argin description="Index">
+        <type xsi:type="pogoDsl:UShortType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:FloatType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetValueFromModule" description="Get a value from module by name. Implemented for compatibility purposes&#xA;with previous CORBA interface." execMethod="get_value_from_module" displayLevel="OPERATOR">
+      <argin description="name: name of module as it appears in the LEEM window.">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="Stringified value of module if ok.&#xA;Error messages:&#xA;&#x9;leem2000 get">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SetPSValue" description="Set the value (current, temperature, etc) of a module." execMethod="set_psvalue" displayLevel="OPERATOR">
+      <argin description="">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SetValueToModule" description="Get a value from module by name. Implemented for compatibility purposes&#xA;with previous CORBA interface" execMethod="set_value_to_module" displayLevel="OPERATOR">
+      <argin description="name: name of module as it appears in the LEEM window&#xA;value: pointer to variant, value->vt is set to VT_R4 on return and value->fltVal&#xA;contains the value of the module on return">
+        <type xsi:type="pogoDsl:StringArrayType"/>
+      </argin>
+      <argout description="TRUE`` if ok&#xA;Error messages:&#xA;&#x9;leem2000 set">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetPSMnemonic" description="Get the abbreviation for the specified power supply.&#xA;This abbreviation is used for image sequencing." execMethod="get_psmnemonic" displayLevel="OPERATOR">
+      <argin description="Index for the power supply">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="Abbreviation for the specified power supply.">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetPSName" description="Get the name of a module." execMethod="get_psname" displayLevel="OPERATOR">
+      <argin description="Index of the module.">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="PSName.">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetPSUnit" description="Get the units of a module." execMethod="get_psunit" displayLevel="OPERATOR">
+      <argin description="Index">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="Units of a module">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="PSLimitLow" description="Gets low limit of a module." execMethod="pslimit_low" displayLevel="OPERATOR">
+      <argin description="Index of a module">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="Low limit of a module">
+        <type xsi:type="pogoDsl:FloatType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetPSLimitHigh" description="Gets high limit of a module." execMethod="get_pslimit_high" displayLevel="OPERATOR">
+      <argin description="Index">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="High limit of a module">
+        <type xsi:type="pogoDsl:FloatType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetMicrometerValue" description="Reads micrometers." execMethod="get_micrometer_value" displayLevel="OPERATOR">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="1. xcoord&#xA;2. ycoord">
+        <type xsi:type="pogoDsl:FloatArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ReadGauge" description="Reads value (pressure) from vacuum gauge." execMethod="read_gauge" displayLevel="OPERATOR">
+      <argin description="id= gauge id, possible values 1,2,3,4">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="Pressure">
+        <type xsi:type="pogoDsl:FloatType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ReadGaugeLabel" description="Reads label assigned to respective vacuum gauge in LEEM program." execMethod="read_gauge_label" displayLevel="OPERATOR">
+      <argin description="id= gauge id, possible values 1,2,3,4">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="Label">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ReadGaugeUnit" description="Reads units of specified vacuum gauge in LEEM program" execMethod="read_gauge_unit" displayLevel="OPERATOR">
+      <argin description="id= gauge id, possible values 1,2,3,4">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="Units.">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetChangedModules" description="Checks if any of the power supply values have been changed since last&#xA;call to this method." execMethod="get_changed_modules" displayLevel="OPERATOR">
+      <argin description="The safearray is an array of float with twice the number of elements as&#xA;returned by GetChangedModules:&#xA;changeddata[n]: index of power supply module,&#xA;-1 last entry, no more supplies follow&#xA;changeddata[n+1]: value of that indexed power supply&#xA;n=0 .. 2x nr of changed modules as returned by GetChangedModules">
+        <type xsi:type="pogoDsl:FloatArrayType"/>
+      </argin>
+      <argout description="Returns 0 if no change, return 1-3 if 1,2 or 3 supplies have changed&#xA;returns &lt;0 if internal error occured (i.e. allocation of safearray).&#xA;A maximum of 3 is returned.">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SelectPreset" description="to remotely select a set of LEEM power supply presets" execMethod="select_preset" displayLevel="OPERATOR">
+      <argin description="Comma separated arguments:&#xA;1. group: A or B&#xA;2. name: label of preset as in LEEM2000">
+        <type xsi:type="pogoDsl:StringArrayType"/>
+      </argin>
+      <argout description="Returns:&#xA;0 if successful &#xA;-2: no such group found &#xA;-3: no such name for preset found">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SetPhi" description="Sets phi of the SpinGun supply. LEEM with spingun only" execMethod="set_phi" displayLevel="OPERATOR">
+      <argin description="Angle">
+        <type xsi:type="pogoDsl:FloatType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ShutdownLEEM" description="Remotely shut down LEEM2000 including forced slow rampdown of all&#xA;power supplies (despite of any selection of ``Slow Shutdown``).&#xA;Possible use: Uninterruptable Power Supply calls this after power failure." execMethod="shutdown_leem" displayLevel="OPERATOR">
+      <argin description="mode: currently not used, set to 0">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ExportParameters" description="Save all power supply settings to a text file. This file can subsequently be&#xA;loaded by the ImportParameters method." execMethod="export_parameters" displayLevel="OPERATOR">
+      <argin description="fullfilename: path and filename including 3 letter file type extension">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ImportParameters" description="Load power supply settings from a text file saved previously by the&#xA;ExportParameter method. Settings assumed to be from the same microscope." execMethod="import_parameters" displayLevel="OPERATOR">
+      <argin description="fullfilename: path and filename including 3 letter file type extension">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="AcquireSimpleImage" description="Start acquiring a single image" execMethod="acquire_simple_image" displayLevel="OPERATOR">
+      <argin description="ImageID: Especifies in which image window to collect.">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ExportImage" description="Saves the current image to a file of the choosen format." execMethod="export_image" displayLevel="OPERATOR">
+      <argin description="Comma separated arguments: Filename,Format,Imagecontents&#xA;Filename: Windows compliant file-name without extension.&#xA;Format: &#xA;    0: DAT (generic)&#xA;        Imagecontents: ignored, set to 0&#xA;    1: PNG&#xA;        Imagecontents: 0: RGB(8+8+8),x,y,z as seen on screen&#xA;                                     1: RGB(8+8+8),x,y raw,z as seen on screen&#xA;                                     2: 16bit GRAYLEVEL, x,y,z raw data&#xA;    2: TIFF&#xA;        Imagecontents: 0: RGB(8+8+8),x,y,z as seen on screen&#xA;                                     1: RGB(8+8+8),x,y raw,z as seen on screen&#xA;    3: BMP&#xA;        Imagecontents: 0: RGB(8+8+8),x,y,z as seen on screen&#xA;                                     1: RGB(8+8+8),x,y raw,z as seen on screen&#xA;    4: JPG&#xA;        quality as set in `Save As Dialog` in Uview&#xA;        Imagecontents: 0: RGB(8+8+8),x,y,z as seen on screen&#xA;    5: TIFF&#xA;        Imagecontents: ignored, set to 0">
+        <type xsi:type="pogoDsl:StringArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <attributes name="NrModules" attType="Scalar" rwType="READ" displayLevel="OPERATOR" maxX="0" maxY="0" allocReadMember="false">
+      <dataType xsi:type="pogoDsl:IntType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Gets the number of implemented modules, power supply and others." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="PresetLabel" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Returns the name of the currently active preset." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>OFF</readExcludedStates>
+    </attributes>
+    <attributes name="Leem2000Version" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
+      <dataType xsi:type="pogoDsl:FloatType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Version + SubVersion*0.001" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>OFF</readExcludedStates>
+    </attributes>
+    <attributes name="InitDone" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Tells the calling script that all LEEM startup tasks have been completed." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>OFF</readExcludedStates>
+    </attributes>
+    <attributes name="Spin" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
+      <dataType xsi:type="pogoDsl:ShortType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="set and read spin. LEEM with spingun only" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>OFF</readExcludedStates>
+    </attributes>
+    <attributes name="FolderForImage" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" memorized="true" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="AcquisitionInProgress" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Get/Set the current state of image acquisition.&#xA;True: acquisition in progress.&#xA;False: image ready.&#xA;If you set it to True, acquisition starts." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="CameraExpTime" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <states name="ON" description="Device is connected">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="OFF" description="Device is disconnected.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="/usr/share/pogo/preferences"/>
+  </classes>
+</pogoDsl:PogoSystem>
