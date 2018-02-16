@@ -1,0 +1,41 @@
+{
+    "47": {
+        "buses": [
+            "Socket"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "PSCamera"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/47/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 82, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Acquisition/PSCamera/PSCamera.pdf"
+            }
+        ], 
+        "families": [
+            "Acquisition"
+        ], 
+        "last_update": "2017-02-23 09:16:50.767397+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "Photonic Science"
+        ], 
+        "name": "PSCamera", 
+        "products": [
+            "Gemstar Xray CCD"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Acquisition/2D/PSCamera", 
+        "status": "updated", 
+        "tag": "Release_1_4", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/47/update/", 
+        "updated_by_script": true
+    }
+}
