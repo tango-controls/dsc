@@ -1,0 +1,41 @@
+{
+    "1536": {
+        "buses": [
+            "Ethernet"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "Xspress3"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/1536/", 
+        "development_status": "new", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 575, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Acquisition/Xspress3/Xspress3.pdf"
+            }
+        ], 
+        "families": [
+            "Acquisition"
+        ], 
+        "last_update": "2017-08-12 03:01:44.458012+00:00", 
+        "last_update_method": "url", 
+        "license": "GPL", 
+        "manufacturers": [
+            "Quantum Detectors"
+        ], 
+        "name": "Xspress3", 
+        "products": [
+            "Xspress3"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Acquisition/1D/Xspress3", 
+        "status": "updated", 
+        "tag": "", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/1536/update/", 
+        "updated_by_script": true
+    }
+}
