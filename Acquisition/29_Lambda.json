@@ -1,0 +1,41 @@
+{
+    "29": {
+        "buses": [
+            "Ethernet"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "Lambda"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/29/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 61, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Acquisition/Lambda/Lambda.pdf"
+            }
+        ], 
+        "families": [
+            "Acquisition"
+        ], 
+        "last_update": "2018-01-05 15:15:30.646143+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "DESY(FS-DS)"
+        ], 
+        "name": "Lambda", 
+        "products": [
+            ""
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Acquisition/2D/Lambda", 
+        "status": "updated", 
+        "tag": "Release_1_6", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/29/update/", 
+        "updated_by_script": true
+    }
+}
