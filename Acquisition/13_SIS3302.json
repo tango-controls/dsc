@@ -1,0 +1,41 @@
+{
+    "13": {
+        "buses": [
+            "VME"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "SIS3302"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/13/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 43, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Acquisition/SIS3302/SIS3302.pdf"
+            }
+        ], 
+        "families": [
+            "Acquisition"
+        ], 
+        "last_update": "2017-04-20 13:03:13.457236+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "none"
+        ], 
+        "name": "SIS3302", 
+        "products": [
+            ""
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Acquisition/1D/SIS3302", 
+        "status": "updated", 
+        "tag": "Release_1_11", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/13/update/", 
+        "updated_by_script": true
+    }
+}
