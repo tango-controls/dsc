@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="LinacData" pogoRevision="8.1">
+    <description description="Device Server to control the ALBAs Linac manufactured by Thales." title="LinacAlba" sourcePath="/home/serguei/src/Linac/LinacAlba/new_src" language="Python" filestogenerate="XMI   file,Code files,html Pages" license="GPL" hasMandatoryProperty="false" hasConcreteProperty="false" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <identification contact="at cells.es - lkrause" author="lkrause" emailDomain="cells.es" classFamily="Miscellaneous" siteSpecific="" platform="Unix Like" bus="Ethernet" manufacturer="Thales" reference="Alba-linac"/>
+    </description>
+    <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device state">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its device_status data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device status">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="ReloadAttrFile" description="" execMethod="reload_attr_file" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="Exec" description="" execMethod="exec" displayLevel="EXPERT" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetBit" description="" execMethod="get_bit" displayLevel="EXPERT" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:ShortArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetByte" description="" execMethod="get_byte" displayLevel="EXPERT" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetShort" description="" execMethod="get_short" displayLevel="EXPERT" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetFloat" description="" execMethod="get_float" displayLevel="EXPERT" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:FloatType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="HexDump" description="" execMethod="hex_dump" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="Hex" description="" execMethod="hex" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="DumpTo" description="" execMethod="dump_to" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="WriteBit" description="" execMethod="write_bit" displayLevel="EXPERT" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:ShortArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="WriteByte" description="" execMethod="write_byte" displayLevel="EXPERT" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:ShortArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="WriteShort" description="" execMethod="write_short" displayLevel="EXPERT" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:ShortArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="WriteFloat" description="" execMethod="write_float" displayLevel="EXPERT" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:FloatArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ResetState" description="" execMethod="reset_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="Update" description="" execMethod="update" displayLevel="OPERATOR" polledPeriod="50">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <states name="INIT" description="The device is being initialised">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="ON" description="PLC communication normal">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="ALARM" description="Transient issue">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="FAULT" description="Unrecoverable issue">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="UNKNOWN" description="No connection with the PLC, no state information">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="$(TANGO_HOME)"/>
+  </classes>
+</pogoDsl:PogoSystem>
