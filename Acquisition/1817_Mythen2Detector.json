@@ -1,0 +1,41 @@
+{
+    "1817": {
+        "buses": [
+            "Data Socket"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "Mythen2Detector"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/1817/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 585, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Acquisition/Mythen2Detector/Mythen2Detector.pdf"
+            }
+        ], 
+        "families": [
+            "Acquisition"
+        ], 
+        "last_update": "2017-12-23 03:01:56.520293+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "DECTRIS"
+        ], 
+        "name": "Mythen2Detector", 
+        "products": [
+            ""
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Acquisition/1D/Mythen2Detector", 
+        "status": "updated", 
+        "tag": "release_1_2_1", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/1817/update/", 
+        "updated_by_script": true
+    }
+}
