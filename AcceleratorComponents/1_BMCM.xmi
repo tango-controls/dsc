@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="BMCM" pogoRevision="8.4">
+    <description description="The aim of this project is to measure 3 currents feeding the 3 following magnets families in the Booster:&#xA;Dipole, Focusing quadrupoles, Defocusing quadrupoles.&#xA;The project is using the Dance board of ESRF connected to a measurement board developed by the Power Supply group. The DANCE board is a platform connecting a COMEX board with a FPGA (spartan6) via a PCIe communication&#xA;The FPGA is interfacing the 3 ADC of the Power Supply board and provides data and registers for settings.&#xA;This class BMCM (BoosterMagnetsCurrentMeasurement) is running on the COMEX (Intel Atom 32bits) and is in charge of controlling the FPGA registers and acquiring data." title="Booster Magnets Current Measurment" sourcePath="/mnt/esrf-devel/tango/cppserver/machine/powersupply/bpss/BMCM/src" language="Cpp" filestogenerate="XMI   file,Code files,html Pages" license="GPL" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <identification contact="at esrf.fr - broquet" author="broquet" emailDomain="esrf.fr" classFamily="AcceleratorComponents" siteSpecific="ESRF" platform="Unix Like" bus="PCI Express" manufacturer="ESRF" reference="Dance"/>
+    </description>
+    <deviceProperties name="DataReadTimeOut" description="Time to wait in milliseconds when waiting the data from the FPGA.">
+      <type xsi:type="pogoDsl:ShortType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="WaitOnTrigger" description="Allow the possibility to start the trigger on demand.&#xA;In this case, the FPGA will wait indefinitely until the trigger pulse arrived.&#xA;So the DS will catch a time out error. If this property is set to TRUE, the DS will set a infinite time out.">
+      <type xsi:type="pogoDsl:BooleanType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="TuneD_offset" description="Dipole offset for tune processing">
+      <type xsi:type="pogoDsl:UIntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="TuneQf_offset" description="Quadripole focusing offset for tune processing">
+      <type xsi:type="pogoDsl:UIntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="TuneQd_offset" description="Quadripole defocusing offset for tune processing">
+      <type xsi:type="pogoDsl:UIntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="CurrentD_offset" description="Offset of the ADC measuring the current of the Dipole">
+      <type xsi:type="pogoDsl:UIntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="CurrentD_gain" description="Gain of the ADC measuring the current of the Dipole">
+      <type xsi:type="pogoDsl:DoubleType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="CurrentQf_offset" description="Offset of the ADC measuring the current of the Quadripole focusing">
+      <type xsi:type="pogoDsl:UIntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="CurrentQf_gain" description="Gain of the ADC measuring the current of the Quadripole focusing">
+      <type xsi:type="pogoDsl:DoubleType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="CurrentQd_offset" description="Offset of the ADC measuring the current of the Quadripole defocusing">
+      <type xsi:type="pogoDsl:UIntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="CurrentQd_gain" description="Gain of the ADC measuring the current of the Quadripole defocusing">
+      <type xsi:type="pogoDsl:DoubleType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device state">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its device_status data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device status">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="MeasurementsStart" description="Start measurements. The sequence is as following:&#xA;- Write the parameters to FPGA registers.&#xA;Parameters are: ->delayFromTrigger&#xA;                        ->sampleNumber&#xA;                        ->settings (which is a combination of mode, drate and adcSclk)&#xA;                        ->DAC1 (DAC frequency offset in Hz)&#xA;                        ->DAC2 (DAC amplitude)&#xA;- Start FPGA measurement&#xA;- Wait FPGA filled a RAM&#xA;- Read the RAM&#xA;- Loop the 2 last steps until MeasurementsStpo is called or number of period requested is reached (mode 1 &amp; 2)&#xA;- Quit the Measurements acquisition thread" execMethod="measurements_start" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="MeasurementsStop" description="Stop the measurements.&#xA;This command will stop the mesurements even if the number of period requested has not been reached (in mode 1 &amp; 2)." execMethod="measurements_stop" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ParametersUpdate" description="This command allows to write parameters to FPGA without starting an acquisition." execMethod="parameters_update" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="FpgaControlRegistersRead" description="Read some control registers of the FPGA.&#xA;The input argument defines the number of register to read.&#xA;The command returns the value of each registers." execMethod="fpga_control_registers_read" displayLevel="EXPERT" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:UShortType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="FpgaControlRegistersWrite" description="Write a value to a setting register of the FPGA.&#xA;The input arguments are the register address and the value.&#xA;arg1 -> Address of the register&#xA;arg2 -> Value to write in the register&#xA;Address range :0 to 16&#xA;Value range     :0 to 4294967295 (unsigned 32bits)&#xA;Address 0 -> register 0 -> control register&#xA;Address 1 -> register 1 -> delay from Trigger&#xA;Address 2 -> register 2 -> number of Samples&#xA;Address 3 -> register 3 -> settings (mode, drate, triggers, ...)&#xA;Address 4 -> register 4 -> DAC Frequency offset&#xA;Address 5 -> register 5 -> DAC Amplitude &amp; Tune gain" execMethod="fpga_control_registers_write" displayLevel="EXPERT" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="FpgaRamRead" description="Read the RAM of the FPGA.&#xA;The input arguments define the number of register to read in a given RAM offset.&#xA;arg1 -> RAM offset: set to 0 for the first ram, set to 1 for the second ram.&#xA;arg2 -> Number of Register: 1 to 32768." execMethod="fpga_ram_read" displayLevel="EXPERT" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:UShortArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="FpgaRAMReset" description="Reset the whole RAM to 0." execMethod="fpga_ramreset" displayLevel="EXPERT" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <attributes name="mode" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:ShortType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Define the acquisition mode.&#xA;0 -> Current measurement: 4 samples per period for each 3 channels&#xA;1 -> Test lab: continuous acquisition with drate@125kSPS. No trigger." label="Mode" unit="" standardUnit="" displayUnit="" format="%2d" maxValue="1" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="delayFromTrigger" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:UIntType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="This delay corresponds to the interval time between the trigger and the first sample measured in the period." label="Delay from Trigger (us)" unit="us" standardUnit="" displayUnit="" format="%6d" maxValue="4294967295" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="sampleNumber" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:UShortType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="This corresponds to the total number of samples to measure in the period. It is not yet implemented.&#xA;This number of samples could be associated with an interval time set by the user between each samples." label="Number of samples" unit="S/Per" standardUnit="" displayUnit="" format="%6d" maxValue="2180" minValue="1" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="continuousBufferSize" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:UIntType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="For the acquisition modes using ring buffer (continuous acquisition / triggered acquisition with continuous enable), this attribute set the size of the ring buffer." label="Ring buffer size" unit="S" standardUnit="" displayUnit="" format="%6d" maxValue="43688" minValue="1" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="lastAdc1" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Last Dipole current measured" label="Dipole current" unit="A" standardUnit="" displayUnit="" format="%.3f" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="lastAdc2" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Last Qf current measured. Valid when recordNu is disable." label="Qf current" unit="A" standardUnit="" displayUnit="" format="%.3f" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="lastAdc3" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Last Qd current measured Valid when recordNu is disable." label="Qd current" unit="A" standardUnit="" displayUnit="" format="%.3f" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="trigger" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="True : first sample acquire at delay from trigger&#xA;False : no trigger" label="Trigger" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="simulTrigger" attType="Scalar" rwType="READ_WRITE" displayLevel="EXPERT" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="This attribute is useful for test purpose.&#xA;If the External Trigger is not plugged on the board, the trigger is simulate. ADC data will be stored with the delay specified in the REG1 (delayFromTrigger scalar attribute)." label="Simulate Trigger" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="drate" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:ShortType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="This is an ADC parameter. Defined the Sampling rate of the ADC.&#xA;0 -> 125 kSs&#xA;1 -> 250 kSs&#xA;2 -> 500 kSs" label="Drate" unit="" standardUnit="" displayUnit="" format="%2d" maxValue="2" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="adcSclk" attType="Scalar" rwType="READ_WRITE" displayLevel="EXPERT" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:ShortType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="0  0 -> SCLK from ADC                      0&#xA;1  0 -> SCLK from FPGA, F=???           2&#xA;0  1 -> SCLK from FPGA, F=32MHz    1&#xA;1  1 -> SCLK from FPGA, F=???           3" label="ADC SCLK setting" unit="" standardUnit="" displayUnit="" format="%2d" maxValue="3" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="cleaningMode" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Enable/Disable the cleaning. This is directly linked to the FPGA register.&#xA;Cleaning is FPGA internal processing. It can be enable/disable for both modes Current Measurement and Test Lab." label="Cleaning" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="lastTuneX" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Last Tune X measured. Valid when recordNu is enable" label="Tune X" unit="" standardUnit="" displayUnit="" format="%.0f" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="lastTuneZ" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Last Tune Z measured. Valid when recordNu is enable" label="Tune Z" unit="" standardUnit="" displayUnit="" format="%.0f" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="tuneFrequencyOffset" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:UIntType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Set the Tune frequency offset (for DAC) for cleaning mode." label="Tune Frequency Offset" unit="Hz" standardUnit="" displayUnit="" format="%6d" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="tuneAmplitude" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Set the Tune amplitude (for DAC) for cleaning mode." label="Tune Amplitude (DAC)" unit="" standardUnit="" displayUnit="" format="%.2f" maxValue="1.0" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="tuneGain" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Set the Gain of the Tune for the cleaning mode." label="Tune Gain" unit="" standardUnit="" displayUnit="" format="%.2f" maxValue="1.0" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="tuneContinuous" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Enable/Disable permanently tunes computed." label="Continuous Tune processing" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="recordNu" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Enable/Disable recording Nux &amp; Nuz instead of Qf and Qd.&#xA;When Enable, spectrum Qf &amp; Qd are empty (ignored)." label="Record Nux and Nuz" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="fpgaVersion" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Read the FPGA version" label="FPGA Version" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="fpgaIsRunning" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Check if the FPGA has already been set. If FALSE, the default settings are applied." label="FPGA already running" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="dsVersion" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Read the Tango Device Server version" label="DS Version" unit="" standardUnit="" displayUnit="" format="%3lf" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="D" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="43688" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="There are 3 ADC measuring Magnets Current on the Acquisition board:&#xA;3 ADC -> Dipole, Focusing Quadrupoles, Defocusing Quadrupoles.&#xA;Correspondence between ADC and Magnet current:&#xA;ADC1 -> Dipole                          (DipoleCurrent)&#xA;ADC2 -> Focusing Quadrupole     (QfCurrent)&#xA;ADC3 -> Defocusing Quadrupole  (QdCurrent)" label="Dipole Current" unit="A" standardUnit="" displayUnit="" format="%.1lf" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="Qf" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="43688" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="There are 3 ADC measuring Magnets Current on the Acquisition board:&#xA;3 ADC -> Dipole, Focusing Quadrupoles, Defocusing Quadrupoles.&#xA;Correspondence between ADC and Magnet current:&#xA;ADC1 -> Dipole                          (DipoleCurrent)&#xA;ADC2 -> Focusing Quadrupole     (QfCurrent)&#xA;ADC3 -> Defocusing Quadrupole  (QdCurrent)" label="Qf Current" unit="A" standardUnit="" displayUnit="" format="%.1lf" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="Qd" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="43688" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="There are 3 ADC measuring Magnets Current on the Acquisition board:&#xA;3 ADC -> Dipole, Focusing Quadrupoles, Defocusing Quadrupoles.&#xA;Correspondence between ADC and Magnet current:&#xA;ADC1 -> Dipole                          (DipoleCurrent)&#xA;ADC2 -> Focusing Quadrupole     (QfCurrent)&#xA;ADC3 -> Defocusing Quadrupole  (QdCurrent)" label="Qd Current" unit="A" standardUnit="" displayUnit="" format="%.1lf" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="Nux" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="43688" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="When Cleaning and Record Nux &amp;Nuz are enabled, the tune data processed are recorded instead of current.&#xA;Qf -> Nux&#xA;Qd -> Nuz" label="Nux" unit="" standardUnit="" displayUnit="" format="%.1lf" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="Nuz" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="43688" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="When Cleaning and Record Nux &amp;Nuz are enabled, the tune data processed are recorded instead of current.&#xA;Qf -> Nux&#xA;Qd -> Nuz" label="Nuz" unit="" standardUnit="" displayUnit="" format="%.1lf" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <states name="OFF" description="Means the Device Server is stopped. No measurements have been started.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="FAULT" description="Communication with FPGA failed or FPGA time out.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="RUNNING" description="Measurement have been started">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="ALARM" description="">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="/segfs/tango/cppserver/env"/>
+  </classes>
+</pogoDsl:PogoSystem>
