@@ -1,0 +1,41 @@
+{
+    "19": {
+        "buses": [
+            "Not Applicable"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "EigerDectris"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/19/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 50, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Acquisition/EigerDectris/EigerDectris.pdf"
+            }
+        ], 
+        "families": [
+            "Acquisition"
+        ], 
+        "last_update": "2017-04-29 03:00:45.939515+00:00", 
+        "last_update_method": "url", 
+        "license": "GPL", 
+        "manufacturers": [
+            "Dectris"
+        ], 
+        "name": "EigerDectris", 
+        "products": [
+            "Eiger"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Acquisition/2D/EigerDectris", 
+        "status": "updated", 
+        "tag": "Release_1_3", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/19/update/", 
+        "updated_by_script": true
+    }
+}
