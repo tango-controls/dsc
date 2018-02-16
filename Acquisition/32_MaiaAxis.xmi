@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="MaiaAxis">
+    <description description="Class for setting Maia Axis parameters." title="Maia Axis settings" sourcePath="/home/tnunez/Tango_svn/Servers/Acquisition/MaiaAxis/trunk" language="Cpp" filestogenerate="XMI   file,Code files,html Pages" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <identification contact="at mail.desy.de - tnunez" author="tnunez" emailDomain="mail.desy.de" classFamily="Acquisition" siteSpecific="" platform="Unix Like" bus="Data Socket" manufacturer="Brookhaven National Laboratory &amp; Commonwealth Scientific and Industrial Research Organisation" reference="Maia Detector"/>
+      <comments commandsTable="//================================================================&#xA;//&#xA;//  The following table gives the correspondence&#xA;//  between command and method names.&#xA;//&#xA;//  Command name  |  Method name&#xA;//----------------------------------------------------------------&#xA;//  State         |  Inherited (no method)&#xA;//  Status        |  Inherited (no method)&#xA;//  Calibrate     |  calibrate&#xA;//================================================================"/>
+    </description>
+    <deviceProperties name="SocketDS" description="Name of the tango device making the socket connection (MaiaCtrl)">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="AxisNb" description="Axis number">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="SimulationMode" description="1 if silmulation mode">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>0</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="EncoderSource" description="0 if only one set">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>0</DefaultPropValue>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device state">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its device_status data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device status">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="Calibrate" description="Set the position given in the argument as current position." execMethod="calibrate" displayLevel="OPERATOR">
+      <argin description="Position to set as current position">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <attributes name="EncoderMode" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Type of encoder (stepdir or quad)" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="EncoderDir" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Direction coding of differential encoder steps (uu, dd, ud, du)" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="Encoder" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:IntType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Value of encoder counter" label="" unit="counts" standardUnit="" displayUnit="" format="" maxValue="8388607" minValue="-8388608" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="PositionScale" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Size of one encoder step" label="" unit="units" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="PositionUnit" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Units of position. String containing real units, anything can be written, it is only used in the logging file." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="Position" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Current position. Read position, writting does not move anything, only calibrates." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="PixelOrigin" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Positin of origin of spatila pixel array" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="PixelPitch" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Size of spatial pixels" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="ScanSize" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:IntType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Size of spatial pixel array" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="Pixel" attType="Scalar" rwType="READ" displayLevel="OPERATOR" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Current spatial pixel" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="PixelHysteresis" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Spatial pixel transition hysteresis" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="EncoderJog" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:IntType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Force fake step of encoder (+1,-1)" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <states name="ON" description="">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="FAULT" description="">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="$(TANGO_CLASSES)/cppserver/common"/>
+  </classes>
+</pogoDsl:PogoSystem>
