@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+    <classes name="WebCam" pogoRevision="8.1">
+        <description
+                description="This simple server implements tango for web cameras. This server is used at HZG during sample precharacterization stage of tomography experiments. &#xA;It operates DigiMicro camera to shoot sample and samples barcode. These pictures are then stored in the final experiment's data stack in NeXus file.&#xA;&#xA;This server is implemented in webcams independent way, so any webcamera can be used with this server.&#xA;&#xA;Currently the server is intended to run in JRE 7 32 bit. "
+                title="WebCamServer" sourcePath="C:\mnt\Projects\hzg.wpn.projects\WebCamServer" language="Java"
+                filestogenerate="XMI   file" license="GPL" hasMandatoryProperty="false" hasConcreteProperty="false"
+                hasAbstractCommand="false" hasAbstractAttribute="false">
+            <inheritances classname="Device_Impl" sourcePath=""/>
+            <identification contact="at hzg.de - igor.khokhriakov" author="igor.khokhriakov" emailDomain="hzg.de"
+                            classFamily="Miscellaneous" siteSpecific="" platform="Windows" bus="Not Applicable"
+                            manufacturer="none" reference=""/>
+        </description>
+        <commands name="State"
+                  description="This command gets the device state (stored in its device_state data member) and returns it to the caller."
+                  execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+            <argin description="none">
+                <type xsi:type="pogoDsl:VoidType"/>
+            </argin>
+            <argout description="Device state">
+                <type xsi:type="pogoDsl:StateType"/>
+            </argout>
+            <status abstract="true" inherited="true" concrete="true"/>
+        </commands>
+        <commands name="Status"
+                  description="This command gets the device status (stored in its device_status data member) and returns it to the caller."
+                  execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+            <argin description="none">
+                <type xsi:type="pogoDsl:VoidType"/>
+            </argin>
+            <argout description="Device status">
+                <type xsi:type="pogoDsl:ConstStringType"/>
+            </argout>
+            <status abstract="true" inherited="true" concrete="true"/>
+        </commands>
+        <commands name="start" description="Starts capturing the video" execMethod="start" displayLevel="OPERATOR"
+                  polledPeriod="0">
+            <argin description="">
+                <type xsi:type="pogoDsl:VoidType"/>
+            </argin>
+            <argout description="">
+                <type xsi:type="pogoDsl:VoidType"/>
+            </argout>
+            <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+        </commands>
+        <commands name="stop" description="Stops capturing the video" execMethod="stop" displayLevel="OPERATOR"
+                  polledPeriod="0">
+            <argin description="">
+                <type xsi:type="pogoDsl:VoidType"/>
+            </argin>
+            <argout description="">
+                <type xsi:type="pogoDsl:VoidType"/>
+            </argout>
+            <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+        </commands>
+        <commands name="changeFormat"
+                  description="Sets current format of the camera. An array of supported formats can be obtained by supportedFormats attribute"
+                  execMethod="change_format" displayLevel="OPERATOR" polledPeriod="0">
+            <argin description="Format ndx">
+                <type xsi:type="pogoDsl:IntType"/>
+            </argin>
+            <argout description="">
+                <type xsi:type="pogoDsl:VoidType"/>
+            </argout>
+            <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+        </commands>
+        <commands name="capture" description="Captures current frame and stores it in image attribute"
+                  execMethod="capture" displayLevel="OPERATOR" polledPeriod="0">
+            <argin description="">
+                <type xsi:type="pogoDsl:VoidType"/>
+            </argin>
+            <argout description="">
+                <type xsi:type="pogoDsl:VoidType"/>
+            </argout>
+            <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+        </commands>
+        <attributes name="curretFormat" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX=""
+                    maxY="" allocReadMember="true" isDynamic="false">
+            <dataType xsi:type="pogoDsl:StringType"/>
+            <changeEvent fire="false" libCheckCriteria="false"/>
+            <archiveEvent fire="false" libCheckCriteria="false"/>
+            <dataReadyEvent fire="false" libCheckCriteria="true"/>
+            <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+            <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue=""
+                        maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+        </attributes>
+        <attributes name="supportedFormats" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="0"
+                    maxX="128" maxY="" allocReadMember="true" isDynamic="false">
+            <dataType xsi:type="pogoDsl:StringType"/>
+            <changeEvent fire="false" libCheckCriteria="false"/>
+            <archiveEvent fire="false" libCheckCriteria="false"/>
+            <dataReadyEvent fire="false" libCheckCriteria="true"/>
+            <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+            <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue=""
+                        maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+        </attributes>
+        <attributes name="image" attType="Image" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="1600"
+                    maxY="1200" allocReadMember="true" isDynamic="false">
+            <dataType xsi:type="pogoDsl:IntType"/>
+            <changeEvent fire="false" libCheckCriteria="false"/>
+            <archiveEvent fire="false" libCheckCriteria="false"/>
+            <dataReadyEvent fire="false" libCheckCriteria="true"/>
+            <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+            <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue=""
+                        maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+        </attributes>
+        <preferences docHome="./doc_html" makefileHome="/home/taurel/tmp/tango_install/share/pogo/preferences"/>
+    </classes>
+</pogoDsl:PogoSystem>
