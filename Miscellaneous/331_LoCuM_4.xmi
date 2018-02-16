@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="LoCuM_4" pogoRevision="8.2">
+    <description description="controls the 4 channel Low-Current Monito called LoCuM_4. it consists of several components:&#xA;- 4 current to voltage converters&#xA;- an optically isolated amplifier&#xA;- BIAS supply&#xA;- Controller&#xA;- an interface to host computer" title="LoCuM_4" sourcePath="/home/experiences/proxima1/com-proxima1/elattaoui/LoCuM_4/src" language="Cpp" filestogenerate="XMI   file,Code files" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_4Impl" sourcePath=""/>
+      <identification contact="at nexeya.com - sebastien.gara" author="sebastien.gara" emailDomain="nexeya.com" classFamily="Miscellaneous" siteSpecific="" platform="All Platforms" bus="Not Applicable" manufacturer="none" reference=""/>
+    </description>
+    <deviceProperties name="SerialProxyName" description="name of the serial line proxy used">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="Bias" description="Bias of the LoCuM, among : PLUS, MINUS, EXT, DEF">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>NONE</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="RangeList" description="List of supported ranges">
+      <type xsi:type="pogoDsl:DoubleVectorType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="State Code">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its &lt;i>device_status&lt;/i> data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Status description">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SetControlMode" description="select the control mode" execMethod="set_control_mode" displayLevel="EXPERT" polledPeriod="0">
+      <argin description="true: local, false:  remote">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argin>
+      <argout description="nothing">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SendLocum4Command" description="send a Locum4 command. All commands are described in the Locum4 programmer's guide." execMethod="send_locum4_command" displayLevel="EXPERT" polledPeriod="0">
+      <argin description="Locum4 command string">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="response to the command">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="RangeUp" description="increase the range" execMethod="range_up" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="nothing">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="nothing">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="RangeDown" description="decrease the range" execMethod="range_down" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SetManualRange" description="to set the manual mode" execMethod="set_manual_range" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="nothing">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argin>
+      <argout description="nothing">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <attributes name="gain" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0" allocReadMember="false" isDynamic="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="to select input current  range." label="range" unit="&#xfffd;A" standardUnit="&#xfffd;A" displayUnit="&#xfffd;A" format="%8.4f" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <states name="FAULT" description="serial line communication broken">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="ON" description="by defaut the initial state is ON">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="ALARM" description="Configured bias not properly set on hardware">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="../doc/doc_html" makefileHome="$(TANGO_HOME)"/>
+  </classes>
+</pogoDsl:PogoSystem>
