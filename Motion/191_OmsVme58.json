@@ -1,0 +1,41 @@
+{
+    "191": {
+        "buses": [
+            "VME"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "OmsVme58"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/191/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 341, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Motion/OmsVme58/OmsVme58.pdf"
+            }
+        ], 
+        "families": [
+            "Motion"
+        ], 
+        "last_update": "2018-02-17 03:21:27.094296+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "none"
+        ], 
+        "name": "OmsVme58", 
+        "products": [
+            ""
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Motion/MotorControllers/OmsVme58", 
+        "status": "updated", 
+        "tag": "Release_1_68", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/191/update/", 
+        "updated_by_script": true
+    }
+}
