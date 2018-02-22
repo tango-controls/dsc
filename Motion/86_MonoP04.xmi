@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="MonoP04" pogoRevision="8.4">
+    <description description="Control of the p04 monochromator interfacing to EPICS." title="TANGO Device Server" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/BeamlineComponents/Monochromators/MonoP04/trunk" language="Python" filestogenerate="XMI   file,Code files,html Pages" hasMandatoryProperty="false" hasConcreteProperty="false" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+      <inheritances classname="Device_4Impl" sourcePath=""/>
+      <identification contact="at mail.desy.de - tnunez" author="tnunez" emailDomain="mail.desy.de" classFamily="Motion" siteSpecific="" platform="Unix Like" bus="Not Applicable" manufacturer="none" reference=""/>
+    </description>
+    <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="State Code">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its &lt;i>device_status&lt;/i> data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Status description">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
+    </commands>
+    <commands name="Calibrate" description="" execMethod="calibrate" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Value to set the current position.">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ResetMotor" description="Only for consistency. It makes nothing." execMethod="reset_motor" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="StopMove" description="" execMethod="stop_move" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <attributes name="Position" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="1" maxY="1">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Monochromator energy." label="" unit="eV" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="UnitLimitMax" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="1" maxY="1" memorized="true">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="" unit="eV" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="UnitLimitMin" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="1" maxY="1" memorized="true">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="" unit="eV" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="Cff" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="1" maxY="1" allocReadMember="false" isDynamic="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Cff value" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="MirrorName" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Type of mirror and surface" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="GratingName" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Lines per mm and depth of ruling" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <states name="ON" description="">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="MOVING" description="">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="ALARM" description="">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="/usr/share/pogo/preferences"/>
+  </classes>
+</pogoDsl:PogoSystem>
