@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="TTTGW">
+    <description description="The Tine to Tango gateway class maps Tine devices into Tango devices.&#xA;&lt;p >&#xA;The Tine naming schema uses as Tango device names with three fields as:&#xA;&lt;br />&#xA;&lt;b>CONTEXT/SERVER_NAME/DEVICE_NAME&lt;/b>&#xA;&lt;br />&#xA;The names can be mapped one to one&#xA;from Tine to Tango. A Tine device has a set of properties to read and write data.&#xA;These Tine properties can be mapped, in most cases, to Tango attributes.&#xA;&lt;/p>&lt;p>&#xA;The basic idea of the Tine to Tango Gateway is based on the one to one&#xA;name mapping. Every Tango device created for the gateway class &lt;b>MUST&lt;/b>&#xA;use a valid Tine device name.&#xA;During the init_device() the connection to the Tine device will be established&#xA;with the given device name.&#xA;The properties of the Tine device are queried and mapped to Tango attributes.&#xA;For every Tine property a dynamic attribute will be&#xA;created under the same name. This is possible for all standard data types,&#xA;but not for special Tine structure types.&#xA;Tine properties with no input and no ouput data are mapped into Tango&#xA;commands.&#xA;&lt;/p>&lt;p >&#xA;Tine alarms are mapped into an ALARM state of the Tango device.&#xA;The alarm description is available with the Tango status command.&#xA;&lt;/p>&lt;p>&#xA;&lt;b>LIMITATION: Tine properties with different input and output data types are&#xA;not yet handled. &lt;/b>&#xA;&lt;br />&#xA;They must be mapped into Tango commands. Tango commands&#xA;can be created dynamically, but they are seen always by all devices of the class.&#xA;This makes sense only when all devices instanciated by the gateway class have&#xA;the same interface. To insure the same interface, the Tine devices mapped must have&#xA;the same SERVER_NAME.&#xA;&lt;/p>&#xA;To access the Tine control systen, you have to specify the Tine Equipment Name Server (ENS)&#xA;to be used. This can be done by setting  the TINE_HOME environment variable&#xA;to point to a local cshosts.csv file which contains the address of the  ENS to be used.&#xA;For further information please read the&#xA;&lt;a href=http://adweb.desy.de/mcs/tine/index.html> Tine documentation&lt;/a> under&#xA;http://adweb.desy.de/mcs/tine/index.html" title="Tine to Tango Gateway" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/Communication/TTTGW/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Makefile,html Pages" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_4Impl" sourcePath=""/>
+      <identification contact="at esrg.fr - meyer" author="meyer" emailDomain="esrg.fr" classFamily="Communication" siteSpecific="" platform="Unix Like" bus="Not Applicable" manufacturer="none" reference=""/>
+      <comments commandsTable="//================================================================&#xA;//&#xA;//  The following table gives the correspondence&#xA;//  between command and method names.&#xA;//&#xA;//  Command name  |  Method name&#xA;//----------------------------------------------------------------&#xA;//  State         |  dev_state&#xA;//  Status        |  dev_status&#xA;//================================================================"/>
+    </description>
+    <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="State Code">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its &lt;i>device_status&lt;/i> data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Status description">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
+    </commands>
+    <states name="ON" description="The Tine device is responding correctly on the network">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="UNKNOWN" description="No connection to the Tine device. The device is not responding on the network.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="ALARM" description="The Tine device indicates one or more alarms. The alarm description is available&#xA;with the status command.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="/usr/share/pogo/preferences"/>
+  </classes>
+</pogoDsl:PogoSystem>
