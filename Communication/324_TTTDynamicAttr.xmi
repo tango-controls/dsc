@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="TTTDynamicAttr">
+    <description description="Exports the tango attribute set in the property AttributeToExport to Tine with a fixed name." title="Tango to Tine gateway wrapper for a variable Tango attribute." sourcePath="/home/tnunez/Tango_svn/DeviceClasses/Communication/TTTDynamicAttr/trunk" language="Cpp" filestogenerate="XMI   file,Code files,html Pages" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_4Impl" sourcePath=""/>
+      <identification contact="at mail.desy.de - tnunez" author="tnunez" emailDomain="mail.desy.de" classFamily="Communication" siteSpecific="" platform="Unix Like" bus="Not Applicable" manufacturer="none" reference=""/>
+      <comments commandsTable="//================================================================&#xA;//&#xA;//  The following table gives the correspondence&#xA;//  between command and method names.&#xA;//&#xA;//  Command name  |  Method name&#xA;//----------------------------------------------------------------&#xA;//  State         |  Inherited (no method)&#xA;//  Status        |  Inherited (no method)&#xA;//================================================================"/>
+    </description>
+    <deviceProperties name="AttributeToExport" description="Attribute to export (without the device name)">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="TineContext" description="The Tine context to be used to register the Tine server.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>DEFAULT</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="TinePortOffset" description="The port offset for the Tine server.">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>1</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="TineSubSystem" description="The Tine sub system to be used for the Tine server.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>Services</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="TineLogPath" description="The path where the Tine log file will be written.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>/tmp</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="TineEqmName" description="The name to be used to register the Tine equpment module.&#xA;This name will be shown in Tine as the name of the Tine server.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>TangoTineGateway</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="DeviceToExport" description="Name of the device from which the AttributeToExport attribute will be read.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="State Code">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its &lt;i>device_status&lt;/i> data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Status description">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
+    </commands>
+    <states name="ON" description="The Tine server is answering to the network">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="UNKNOWN" description="The Tine server is NOT answering on the network any more.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="/usr/share/pogo/preferences"/>
+  </classes>
+</pogoDsl:PogoSystem>
