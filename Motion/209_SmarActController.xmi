@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="SmarActController">
+    <description description="Controller server for the SmarAct MCS-3C-IDSH controller" title="SmarActController" sourcePath="/home/blume/src/TangoSvn/Servers/Motion/SmarActController/trunk" language="Cpp" filestogenerate="XMI   file,Code files" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <identification contact="at desy.de - johannes.blume" author="johannes.blume" emailDomain="desy.de" classFamily="Motion" siteSpecific="" platform="Unix Like" bus="Not Applicable" manufacturer="SmarAct" reference="MCS-3C-IDSH (RS232)"/>
+      <comments commandsTable="//================================================================&#xA;//&#xA;//  The following table gives the correspondence&#xA;//  between command and method names.&#xA;//&#xA;//  Command name      |  Method name&#xA;//----------------------------------------------------------------&#xA;//  State             |  Inherited (no method)&#xA;//  Status            |  Inherited (no method)&#xA;//  Reset             |  reset&#xA;//  BaudRate          |  baud_rate&#xA;//  Stop              |  stop&#xA;//  AxisStatus        |  axis_status&#xA;//  GetSensorType     |  get_sensor_type&#xA;//  SetSensorType     |  set_sensor_type&#xA;//  GetPosition       |  get_position&#xA;//  SetPosition       |  set_position&#xA;//  SetSpeed          |  set_speed&#xA;//  GetSpeed          |  get_speed&#xA;//  SetFrequency      |  set_frequency&#xA;//  Home              |  home&#xA;//  SetAngleLimit     |  set_angle_limit&#xA;//  GetAngleLimit     |  get_angle_limit&#xA;//  SetPositionLimit  |  set_position_limit&#xA;//  GetPositionLimit  |  get_position_limit&#xA;//  DefinePosition    |  define_position&#xA;//  GetLimitMax       |  get_limit_max&#xA;//  SetLimitMax       |  set_limit_max&#xA;//  GetLimitMin       |  get_limit_min&#xA;//  SetLimitMin       |  set_limit_min&#xA;//  GetAxisType       |  get_axis_type&#xA;//  PositionKnown     |  position_known&#xA;//================================================================"/>
+    </description>
+    <deviceProperties name="HostName" description="Hostname of terminal server">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>&quot;&quot;</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="PortNumber" description="Port number on terminal server">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>&quot;&quot;</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="ConnectType" description="can be serial or net">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>&quot;&quot;</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="BaudRate" description="tty baud rate">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>0</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="DeviceFile" description="tty device file">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>&quot;&quot;</DefaultPropValue>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device state">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its device_status data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device status">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="Reset" description="Reset the controller" execMethod="reset" displayLevel="OPERATOR">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="BaudRate" description="Set baud rate to argin" execMethod="baud_rate" displayLevel="OPERATOR">
+      <argin description="9600 -> 115200">
+        <type xsi:type="pogoDsl:UIntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="Stop" description="Stop movement" execMethod="stop" displayLevel="OPERATOR">
+      <argin description="axis index (0-3)">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="AxisStatus" description="Get status for axis argin" execMethod="axis_status" displayLevel="OPERATOR">
+      <argin description="axis index">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="current axis status (cf. smarxrm.h)">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="GetSensorType" description="Get sensor type for axis argin" execMethod="get_sensor_type" displayLevel="OPERATOR">
+      <argin description="axis index">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="sensor type">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="SetSensorType" description="Set sensor type for axis argin" execMethod="set_sensor_type" displayLevel="OPERATOR">
+      <argin description="0: axis index&#xA;1: sensor type">
+        <type xsi:type="pogoDsl:ShortArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="GetPosition" description="Get position for axis argin" execMethod="get_position" displayLevel="OPERATOR">
+      <argin description="0: axis index&#xA;1: axis type (linear, rotary, ...)">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argin>
+      <argout description="current position">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="SetPosition" description="Moves axis argin to position" execMethod="set_position" displayLevel="OPERATOR">
+      <argin description="0: axis index&#xA;1: position&#xA;2: hold time">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="SetSpeed" description="Set velocity for axis" execMethod="set_speed" displayLevel="OPERATOR">
+      <argin description="0 = axis index&#xA;1 = speed">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="GetSpeed" description="Get velocity for axis argin" execMethod="get_speed" displayLevel="OPERATOR">
+      <argin description="axis index">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="current velocity">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="SetFrequency" description="Set the closed loop maximum frequency" execMethod="set_frequency" displayLevel="OPERATOR">
+      <argin description="0 = axis index&#xA;1 = frequency">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="Home" description="Run reference mark search for axis" execMethod="home" displayLevel="OPERATOR">
+      <argin description="0 = axis&#xA;1 = direction (0 = forward, 1 = backward)&#xA;2 = hold time&#xA;3 = autozero (0 = no autozero, 1 = autozero)">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="SetAngleLimit" description="sets limit for rotary movements" execMethod="set_angle_limit" displayLevel="OPERATOR">
+      <argin description="0 = axis index&#xA;1 = minimum angle&#xA;2 = minimum revolutions&#xA;3 = maximum angle&#xA;4 = maximum revolutions">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="GetAngleLimit" description="sets limit for rotary movements" execMethod="get_angle_limit" displayLevel="OPERATOR">
+      <argin description="axis index">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="0 = minimum angle&#xA;1 = minimum revolutions&#xA;2 = maximum angle&#xA;3 = maximum revolutions">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="SetPositionLimit" description="sets limits for linear movements" execMethod="set_position_limit" displayLevel="OPERATOR">
+      <argin description="0 = axis index&#xA;1 = minimum position&#xA;2 = maximum position">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="GetPositionLimit" description="gets limit for linear movements" execMethod="get_position_limit" displayLevel="OPERATOR">
+      <argin description="axis index">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="0 = minimum position&#xA;1 = maximum position">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="DefinePosition" description="define current position of axis (argin[0]) as argin[1]" execMethod="define_position" displayLevel="OPERATOR">
+      <argin description="">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="GetLimitMax" description="Get the maximum limit set for this axis" execMethod="get_limit_max" displayLevel="OPERATOR">
+      <argin description="0: axis index&#xA;1: axis type">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argin>
+      <argout description="Maximum limit">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="SetLimitMax" description="Set the maximum limit set for this axis" execMethod="set_limit_max" displayLevel="OPERATOR">
+      <argin description="0: axis index&#xA;1: axis type&#xA;2: maximum limit">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="GetLimitMin" description="Get the minimum limit set for this axis" execMethod="get_limit_min" displayLevel="OPERATOR">
+      <argin description="0: axis index&#xA;1: axis type">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argin>
+      <argout description="Minimum limit">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="SetLimitMin" description="Set the maximum limit set for this axis" execMethod="set_limit_min" displayLevel="OPERATOR">
+      <argin description="0: axis index&#xA;1: axis type&#xA;2: minimum limit">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="GetAxisType" description="Get type of axis" execMethod="get_axis_type" displayLevel="OPERATOR">
+      <argin description="axis index">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="can be:&#xA;&#xA;0: linear&#xA;1: rotary&#xA;2: goniometer">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="PositionKnown" description="Checks whether the physical position of axis argin is known." execMethod="position_known" displayLevel="OPERATOR">
+      <argin description="axis index">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="false : position not known&#xA;true: position known">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <attributes name="SensorsEnabled" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="read true   = sensors enabled&#xA;read false  = sensors disabled&#xA;write true  = enable sensors&#xA;write false = disable sensors" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
+    </attributes>
+    <states name="ON" description="Everything ok">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="FAULT" description="Something went wrong (check status)">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="/usr/local/share/pogo/preferences"/>
+  </classes>
+</pogoDsl:PogoSystem>
