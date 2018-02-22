@@ -1,0 +1,41 @@
+{
+    "119": {
+        "buses": [
+            "Ethernet"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "CAENelsAH501D"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/119/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 257, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/MeasureInstruments/CAENelsAH501D/CAENelsAH501D.pdf"
+            }
+        ], 
+        "families": [
+            "Instrumentation"
+        ], 
+        "last_update": "2018-01-05 15:16:42.657942+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "CAENels"
+        ], 
+        "name": "CAENelsAH501D", 
+        "products": [
+            "AH501D"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/MeasureInstruments/CAENelsAH501D", 
+        "status": "updated", 
+        "tag": "Release_1_2", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/119/update/", 
+        "updated_by_script": true
+    }
+}
