@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="CAENelsAH501D" pogoRevision="9.1">
+    <description description="Tango server for the 4-channel bipolar picoamperemeter." title="CAENelsAH501D" sourcePath="./" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions,html Pages" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <identification contact="at desy.de - jan.meyer" author="jan.meyer" emailDomain="desy.de" classFamily="Instrumentation" siteSpecific="" platform="Unix Like" bus="Ethernet" manufacturer="CAENels" reference="AH501D"/>
+    </description>
+    <deviceProperties name="Host" description="Hostname or IP address to the device">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>192.168.0.10</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="Port" description="Portnumber used on the device.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>10001</DefaultPropValue>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device state">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its device_status data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device status">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="Start" description="Start data acquisition. If trigger mode is active, the device will only take data while the gate signal is in high state." execMethod="start" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>RUNNING</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="StartOnce" description="Start data acquisition for one interval. If trigger mode is active, the device will only take data while the gate signal is in high state and only these times are used to determine the interval." execMethod="start_once" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>RUNNING</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="Stop" description="Stop data aquisition." execMethod="stop" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>ON</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="Sync" description="Synchronize the internal ADCs. This command is to be used only for debugging purposes." execMethod="sync" displayLevel="EXPERT" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>RUNNING</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="SetOffset" description="Set the current averages as zero offset." execMethod="set_offset" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>ON</excludedStates>
+      <excludedStates>RUNNING</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <attributes name="Channels" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:UCharType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Set the number of active input channels" label="" unit=" " standardUnit=" " displayUnit=" " format="%1d" maxValue="4" minValue="1" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>RUNNING</writeExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
+    </attributes>
+    <attributes name="Range" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:UCharType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Dimension of the expected current maximum." label="" unit="A" standardUnit="A" displayUnit="A" format="10^-%1d" maxValue="9" minValue="3" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>RUNNING</writeExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
+    </attributes>
+    <attributes name="Resolution" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:UCharType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Resolution of the ADCs." label="" unit="bit" standardUnit="bit" displayUnit="bit" format="%2d" maxValue="24" minValue="16" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>RUNNING</writeExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
+    </attributes>
+    <attributes name="Rate" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:FloatType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Achieved sampling rate." label="" unit="Hz" standardUnit="Hz" displayUnit="Hz" format="%.1f" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+    </attributes>
+    <attributes name="Interval" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:FloatType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Interval for which the moving averages will be calculated." label="" unit="s" standardUnit="s" displayUnit="s" format="%.3f" maxValue="60" minValue="0.0001" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>RUNNING</writeExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
+    </attributes>
+    <attributes name="TriggerMode" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="If set, the device will only take values while the trigger input signal is high." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>RUNNING</writeExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
+    </attributes>
+    <attributes name="Value1" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Present current at channel 1." label="" unit="A" standardUnit="A" displayUnit="A" format="%e" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+    </attributes>
+    <attributes name="Value2" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Present current at channel 2." label="" unit="A" standardUnit="A" displayUnit="A" format="%e" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+    </attributes>
+    <attributes name="Value3" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Present current at channel 3." label="" unit="A" standardUnit="A" displayUnit="A" format="%e" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+    </attributes>
+    <attributes name="Value4" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Present current at channel 4." label="" unit="A" standardUnit="A" displayUnit="A" format="%e" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+    </attributes>
+    <attributes name="Average1" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Average current over Interval at channel 1." label="" unit="A" standardUnit="A" displayUnit="A" format="%e" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>ON</readExcludedStates>
+      <readExcludedStates>RUNNING</readExcludedStates>
+      <readExcludedStates>FAULT</readExcludedStates>
+    </attributes>
+    <attributes name="Average2" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Average current over Interval at channel 2." label="" unit="A" standardUnit="A" displayUnit="A" format="%e" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>ON</readExcludedStates>
+      <readExcludedStates>RUNNING</readExcludedStates>
+      <readExcludedStates>FAULT</readExcludedStates>
+    </attributes>
+    <attributes name="Average3" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Average current over Interval at channel 3." label="" unit="A" standardUnit="A" displayUnit="A" format="%e" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>ON</readExcludedStates>
+      <readExcludedStates>RUNNING</readExcludedStates>
+      <readExcludedStates>FAULT</readExcludedStates>
+    </attributes>
+    <attributes name="Average4" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Average current over Interval at channel 4." label="" unit="A" standardUnit="A" displayUnit="A" format="%e" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>ON</readExcludedStates>
+      <readExcludedStates>RUNNING</readExcludedStates>
+      <readExcludedStates>FAULT</readExcludedStates>
+    </attributes>
+    <attributes name="Offset1" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Offset current for channel 1." label="" unit="A" standardUnit="A" displayUnit="A" format="%e" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
+    </attributes>
+    <attributes name="Offset2" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Offset current for channel 2." label="" unit="A" standardUnit="A" displayUnit="A" format="%e" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
+    </attributes>
+    <attributes name="Offset3" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Offset current for channel 3." label="" unit="A" standardUnit="A" displayUnit="A" format="%e" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
+    </attributes>
+    <attributes name="Offset4" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Offset current for channel 4." label="" unit="A" standardUnit="A" displayUnit="A" format="%e" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
+    </attributes>
+    <attributes name="BiasVoltage" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:FloatType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Voltage at bias output." label="" unit="V" standardUnit="V" displayUnit="V" format="%.2f" maxValue="30.0" minValue="0.0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>RUNNING</writeExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
+    </attributes>
+    <attributes name="FirmwareVersion" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Current firmware version." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+    </attributes>
+    <states name="ON" description="Device is in working order and waiting for commands.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="RUNNING" description="Device is busy taking data. No commands will be processed until acquisition is stopped.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="FAULT" description="No normal operation possible.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="$(TANGO_HOME)"/>
+  </classes>
+</pogoDsl:PogoSystem>
