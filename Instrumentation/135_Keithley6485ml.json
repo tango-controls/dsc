@@ -1,0 +1,41 @@
+{
+    "135": {
+        "buses": [
+            "GPIB"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "Keithley6485ml"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/135/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 278, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/MeasureInstruments/Keithley6485ml/Keithley6485ml.pdf"
+            }
+        ], 
+        "families": [
+            "Instrumentation"
+        ], 
+        "last_update": "2017-02-23 10:25:50.873368+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "Keithley"
+        ], 
+        "name": "Keithley6485ml", 
+        "products": [
+            "6485"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/MeasureInstruments/Keithley/Keithley6485ml", 
+        "status": "updated", 
+        "tag": "Release_1_5", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/135/update/", 
+        "updated_by_script": true
+    }
+}
