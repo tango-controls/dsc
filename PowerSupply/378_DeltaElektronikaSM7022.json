@@ -1,0 +1,41 @@
+{
+    "378": {
+        "buses": [
+            "Ethernet"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "DeltaElektronikaSM7022"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/378/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 431, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/PowerSupply/DeltaElektronikaSM7022/DeltaElektronikaSM7022.pdf"
+            }
+        ], 
+        "families": [
+            "PowerSupply"
+        ], 
+        "last_update": "2017-02-23 11:02:26.588559+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "Delta Elektronika"
+        ], 
+        "name": "DeltaElektronikaSM7022", 
+        "products": [
+            "SM70-22"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/PowerSupply/DeltaElektronikaSM7022", 
+        "status": "updated", 
+        "tag": "Release_1_1", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/378/update/", 
+        "updated_by_script": true
+    }
+}
