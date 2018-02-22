@@ -1,0 +1,41 @@
+{
+    "401": {
+        "buses": [
+            "Not Applicable"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "UniChiller"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/401/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 545, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Temperature/UniChiller/UniChiller.pdf"
+            }
+        ], 
+        "families": [
+            "Miscellaneous"
+        ], 
+        "last_update": "2017-02-23 11:42:23.960428+00:00", 
+        "last_update_method": "url", 
+        "license": "GPL", 
+        "manufacturers": [
+            "Huber"
+        ], 
+        "name": "UniChiller", 
+        "products": [
+            "http://www.huber-online.com/de/product_datasheet.aspx?no=3012.0062.99"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Temperature/UniChiller", 
+        "status": "updated", 
+        "tag": "Release_1_0", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/401/update/", 
+        "updated_by_script": true
+    }
+}
