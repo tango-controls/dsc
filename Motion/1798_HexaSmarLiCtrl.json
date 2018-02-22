@@ -1,0 +1,41 @@
+{
+    "1798": {
+        "buses": [
+            "TCP/UDP"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "HexaSmarLiCtrl"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/1798/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 581, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Motion/HexaSmarLiCtrl/HexaSmarLiCtrl.pdf"
+            }
+        ], 
+        "families": [
+            "Motion"
+        ], 
+        "last_update": "2017-05-13 03:01:49.251994+00:00", 
+        "last_update_method": "url", 
+        "license": "GPL", 
+        "manufacturers": [
+            "Smaract"
+        ], 
+        "name": "HexaSmarLiCtrl", 
+        "products": [
+            "http://www.smaract.de/index.php/products/smarpod"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Motion/Hexapods/HexaSmarLiCtrl", 
+        "status": "new", 
+        "tag": "Release_1_0", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/1798/update/", 
+        "updated_by_script": true
+    }
+}
