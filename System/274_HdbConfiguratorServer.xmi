@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="HdbConfiguratorServer" pogoRevision="9.2">
+    <description description="This class is able to use HdbConfigurator classes to Add/Start/Stop&#xA;archiving attributes on HDB++ subscribers.&#xA;It uses call on HdbConfiguratorServer device." title="HDB++ manager" sourcePath="/mntdirect/_segfs/tango/jserver/HdbConfiguratorServer/src" language="Java" filestogenerate="XMI   file,Code files,Protected Regions" license="GPL" copyright="Copyright (C): 2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016&#xA;               European Synchrotron Radiation Facility&#xA;               BP 220, Grenoble 38043&#xA;               France" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <identification contact="at esrf.fr - accelerator-control" author="accelerator-control" emailDomain="esrf.fr" classFamily="System" siteSpecific="" platform="All Platforms" bus="Not Applicable" manufacturer="none" reference="">
+        <keyWords>Archiving</keyWords>
+        <keyWords>Archiving</keyWords>
+        <keyWords>Archiving</keyWords>
+        <keyWords>Archiving</keyWords>
+        <keyWords>Archiving</keyWords>
+        <keyWords>Archiving</keyWords>
+        <keyWords>Archiving</keyWords>
+        <keyWords>Archiving</keyWords>
+        <keyWords>Archiving</keyWords>
+        <keyWords>Archiving</keyWords>
+      </identification>
+    </description>
+    <deviceProperties name="HdbManager" mandatory="true" description="The HDB++ manager device name (HdbConfiguratorServer class).&#xA;This property is mandatory">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="WaitingTime" description="Waiting time before trying to add attributes to HDB++ in seconds">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>10</DefaultPropValue>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device state">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its device_status data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device status">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="AddAttributes" description="Add specified attributes to the specified subscriber attribute list&#xA;if not already done and start archiving.&#xA;Due to a possible dead lock, during this command execution and&#xA;the event subscribing, this subscription will delayed and done by a thread.&#xA;To avoid a bottle neck for this command execution, the subscriptions&#xA;will be serialized. That means that it could takes several seconds.&#xA;Use AddingState and AddingStatus commands to know if subscriptions&#xA;are done without problem." execMethod="add_attributes" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="[0] - Subscriber name.&#xA;[1] - Attribute 1 name.&#xA;[2] - Attribute 2 name.&#xA; - - - - - &#xA;[n] - Attribute n name.&#xA;[n+1] - true/false for using push event (false if not specified)">
+        <type xsi:type="pogoDsl:StringArrayType"/>
+      </argin>
+      <argout description="ID number. Usefull to get information later.">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="AddingState" description="Returns the AddingAttributes command state." execMethod="adding_state" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ID returns by AddAttributes command">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="ON if adding has been done.&#xA;ALARM if at least one have failed.&#xA;MOVING if adding is not finished.">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="AddingStatus" description="Returns the AddingAttributes command status." execMethod="adding_status" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ID returns by AddAttributes command">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="Return AddAttributes command error message if any.">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="AttributeIsManaged" description="Check if the specified attribute is managed by a subscriber.&#xA;If not, use AddAttributes command to set it managed." execMethod="attribute_is_managed" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Attribute name">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="true if attribute managed. False otherwise.">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="AttributeStarted" description="Check if attribute archiving is started" execMethod="attribute_started" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Specified attribute name.">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="true if archiving is started">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="AttributePaused" description="Check if attribute archiving is paused" execMethod="attribute_paused" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Specified attribute name.">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="true if archiving is paused">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="AttributeStopped" description="Check if attribute archiving is stopped" execMethod="attribute_stopped" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Specified attribute name.">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="true if archiving is stopped">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="AttributeGetArchiver" description="Returns the subscriber name for specified attribute." execMethod="attribute_get_archiver" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Specified attriute name.">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="The subscriber name.">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="AttributeGetArchiverAlias" description="Returns the subscriber alias for specified attribute." execMethod="attribute_get_archiver_alias" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Specified attriute alias.">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="The subscriber name.">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="StartArchiving" description="Start archiving for specified attributes." execMethod="start_archiving" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Attribute names to be started.">
+        <type xsi:type="pogoDsl:StringArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="StopArchiving" description="Stop archiving for specified attributes." execMethod="stop_archiving" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Attribute names to be stopped.">
+        <type xsi:type="pogoDsl:StringArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="RemoveAttributes" description="Stop archiving if necessary and remove attributes from subscriber list" execMethod="remove_attributes" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Attribute list to be removed">
+        <type xsi:type="pogoDsl:StringArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <attributes name="HdbManagerDeviceName" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Returns the manager device name" label="HDB manager device name" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="ArchiverList" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="1000" maxX="0" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Managed archiver list" label="Archiver list" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="ArchiverAliasList" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="1000" maxX="0" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Managed archiver alias list" label="Archiver Alias list" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <states name="ON" description="Every thing is OK.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="UNKNOWN" description="The HdbManager device is not responding.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="ALARM" description="The HdbManger device ALARM.&#xA;At least one subscriber is in ALARM.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="/segfs/tango/cppserver/env"/>
+  </classes>
+</pogoDsl:PogoSystem>
