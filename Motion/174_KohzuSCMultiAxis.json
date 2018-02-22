@@ -1,0 +1,41 @@
+{
+    "174": {
+        "buses": [
+            "GPIB"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "KohzuSCMultiAxis"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/174/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 324, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Motion/KohzuSCMultiAxis/KohzuSCMultiAxis.pdf"
+            }
+        ], 
+        "families": [
+            "Motion"
+        ], 
+        "last_update": "2017-02-23 10:39:33.881217+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "none"
+        ], 
+        "name": "KohzuSCMultiAxis", 
+        "products": [
+            ""
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Motion/MotorControllers/Kohzu/KohzuSCMultiAxis", 
+        "status": "updated", 
+        "tag": "Release_1_9", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/174/update/", 
+        "updated_by_script": true
+    }
+}
