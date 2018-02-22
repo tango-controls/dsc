@@ -1,0 +1,41 @@
+{
+    "355": {
+        "buses": [
+            "VME"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "TIP850u10"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/355/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 235, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/InputOutput/TIP850u10/TIP850u10.pdf"
+            }
+        ], 
+        "families": [
+            "InputOutput"
+        ], 
+        "last_update": "2018-01-05 15:16:28.424492+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "none"
+        ], 
+        "name": "TIP850u10", 
+        "products": [
+            ""
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/InputOutput/TIP850u10", 
+        "status": "updated", 
+        "tag": "Release_1_6", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/355/update/", 
+        "updated_by_script": true
+    }
+}
