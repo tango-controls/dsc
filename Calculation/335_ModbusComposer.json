@@ -1,0 +1,41 @@
+{
+    "335": {
+        "buses": [
+            "Modbus"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "ModbusComposer"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/335/", 
+        "development_status": "new", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 154, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Calculation/ModbusComposer/ModbusComposer.pdf"
+            }
+        ], 
+        "families": [
+            "Calculation"
+        ], 
+        "last_update": "2018-01-13 03:02:28.581132+00:00", 
+        "last_update_method": "url", 
+        "license": "GPL", 
+        "manufacturers": [
+            "none"
+        ], 
+        "name": "ModbusComposer", 
+        "products": [
+            ""
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Calculation/ModbusComposer", 
+        "status": "updated", 
+        "tag": "", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/335/update/", 
+        "updated_by_script": true
+    }
+}
