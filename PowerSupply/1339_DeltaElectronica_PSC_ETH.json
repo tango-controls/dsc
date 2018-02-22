@@ -1,0 +1,41 @@
+{
+    "1339": {
+        "buses": [
+            "Ethernet"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "DeltaElectronica_PSC_ETH"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/1339/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 430, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/PowerSupply/DeltaElectronica_PSC_ETH/DeltaElectronica_PSC_ETH.pdf"
+            }
+        ], 
+        "families": [
+            "PowerSupply"
+        ], 
+        "last_update": "2017-04-20 13:14:53.464766+00:00", 
+        "last_update_method": "file", 
+        "license": "None", 
+        "manufacturers": [
+            "Delta Electronica"
+        ], 
+        "name": "DeltaElectronica_PSC_ETH", 
+        "products": [
+            "SM-800 (PSC-ETH control)"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/PowerSupply/DeltaElectronica_PSC_ETH", 
+        "status": "updated", 
+        "tag": "release_1_0_0", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/1339/update/", 
+        "updated_by_script": true
+    }
+}
