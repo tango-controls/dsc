@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="IcePapController" pogoRevision="8.1">
+    <description description="A class to perform tcp/ip connections and data transmissions exchages with&#xA;the IcePAP controller unit." title="" sourcePath="/mntdirect/_segfs/tango/cppserver/motion/motor/icepap/controller" language="Cpp" filestogenerate="XMI   file,Code files" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_4Impl" sourcePath="/segfs/tango/templates/AbstractClasses"/>
+      <identification contact="at esrf.fr - chaize" author="chaize" emailDomain="esrf.fr" classFamily="Motion" siteSpecific="" platform="All Platforms" bus="Socket" manufacturer="none" reference=""/>
+    </description>
+    <deviceProperties name="IPaddress" description="A string containing either the internet host name, or IP address&#xA;of the IcePAP controller unit">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="Comm_timeout" description="A time-out (in seconds) for the TCP/IP communication.">
+      <type xsi:type="pogoDsl:DoubleType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>5.0</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="IPMASK" description="give the IP mask for write access.&#xA;any client should be inside the IP mask to be allowed to write">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>255.255.0.0</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="Location" description="name of the room hosting the icepap controller">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>ESRF</DefaultPropValue>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="State Code">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its &lt;i>device_status&lt;/i> data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Status description">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
+    </commands>
+    <commands name="GetIP" description="The command to extract an IP address of the IcePAP controller - this is the only command that has sence&#xA;for this device server" execMethod="get_ip" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="IP address or host name of the IcePAP controller">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetTimeout" description="Retrives  from the property  the TCP/IP communications time-out value in sec" execMethod="get_timeout" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="time-out in sec, for TCP/IP communications">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="raw_cmd" description="send a command on the socket" execMethod="raw_cmd" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="command to send">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="answer">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <attributes name="Location" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="location of the icepap controller (useful in case of need)" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <states name="ON" description="Well, the state is always &quot;ON' as soon as the server is running">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="/segfs/tango/cppserver/env"/>
+  </classes>
+</pogoDsl:PogoSystem>
