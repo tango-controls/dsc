@@ -1,0 +1,41 @@
+{
+    "976": {
+        "buses": [
+            "Not Applicable"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "GenericMirror"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/976/", 
+        "development_status": "new", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 125, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/BeamlineComponents/GenericMirror/GenericMirror.pdf"
+            }
+        ], 
+        "families": [
+            "BeamlineComponents"
+        ], 
+        "last_update": "2018-02-22 14:24:00.104787+00:00", 
+        "last_update_method": "file", 
+        "license": "None", 
+        "manufacturers": [
+            ""
+        ], 
+        "name": "GenericMirror", 
+        "products": [
+            "Gener"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/BeamlineComponents/Mirrors/GenericMirror", 
+        "status": "updated", 
+        "tag": "", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/976/update/", 
+        "updated_by_script": true
+    }
+}
