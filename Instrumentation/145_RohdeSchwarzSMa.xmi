@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="RohdeSchwarzSMa" pogoRevision="9.1">
+    <description description="This class handles Rohdes and Schwarz SMA signal generators. &#xA;Supported model is:&#xA;-SMA100A&#xA;&#xA;This device server implements just a limited set of features from this signal generator.&#xA;This is done on purpose in order to limit the risk of human mistake since this device server can be used to control &#xA;the master source of an accelerator." title="Rohde and Schwarz SMA signal generator device server" sourcePath="/segfs/tango/cppserver/instrumentation/SignalGenerator/RohdeSchwarzSMa/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Makefile,Protected Regions,html Pages" license="GPL" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <identification contact="at esrf.fr - accelerator-control" author="accelerator-control" emailDomain="esrf.fr" classFamily="Instrumentation" siteSpecific="" platform="All Platforms" bus="Socket" manufacturer="RohdeSchwarz" reference="SMA 100A">
+        <keyWords>Master Source GPIB</keyWords>
+        <keyWords>Master Source GPIB</keyWords>
+      </identification>
+    </description>
+    <deviceProperties name="Gpib_device_name" description="This is the gpib device exported by gpibDeviceServer that will be controlled.&#xA;If this property is set (not empty), the Socket_device_name property should &#xA;not be set or be empty.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="Mult_factor" description="Multiplicator factor. &#xA;Warning: Frequency mul_factor should never be greater than signed 32bits integer max value.">
+      <type xsi:type="pogoDsl:DoubleType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>1.0</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="Socket_device_name" description="This is the socket Tango device used to communicate with the instrument.&#xA;If this property is set (not empty), the Gpib_device_name property should &#xA;not be set or be empty.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="State Code">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its &lt;i>device_status&lt;/i> data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Status description">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
+    </commands>
+    <commands name="On" description="Switch signal generation ON according to settings.&#xA;This will:&#xA;- switch the RF output ON.&#xA;- set the frequency to the latest memorized set point&#xA;- set the level (voltage) to the latest memorized set point&#xA;- enable the frequency mode&#xA;- switch the attenuator in Fixed mode in order to freeze the attenuators and avoid glitches&#xA;- enable frequency narrow mode&#xA;- activate the phase continuous mode" execMethod="on" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="Off" description="Switch signal generation OFF." execMethod="off" displayLevel="EXPERT" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="Reset" description="!!WARNING!! This command will change the settings (RF to 1GHz) and switch RF output OFF.&#xA;Performs a factory preset of the instrument.&#xA;The device server will memorize (only in RAM, not in Tango database) the frequency and voltage set points &#xA;before sending the reset command to the instrument.&#xA;The expected settings and set points will be applied again the next time the user will execute the on() command.&#xA;The following list gives an overview of the presets for the most important generator settings.&#xA;The other presets can be found in the preset tables of the individual menus and&#xA;the information accompanying the remote commands.&#xA;- ``RF frequency`` = 1 GHz&#xA;- ``RF level`` RF output switched off&#xA;- ``Offsets`` = 0&#xA;- ``Modulations State`` = Off&#xA;- Uninterrupted level settings are switched off&#xA;- ``Level Attenuator Mode`` = AUTO&#xA;- Internal level control ``Level ALC`` = AUTO&#xA;- User correction ``Level Ucor`` = OFF&#xA;- ``LF output State`` = Off&#xA;- ``Sweep State`` = Off&#xA;- ``List mode State`` = Off" execMethod="reset" displayLevel="EXPERT" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="Shutdown" description="Shut the master source down.&#xA;!!Warning!!: After having sent this command, the instrument &#xA;will no longer respond on the network.&#xA;The only way to re-establish the communication will be to press the &#xA;Standby button physically on the instrument." execMethod="shutdown" displayLevel="EXPERT" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <attributes name="Frequency" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Frequency" label="Frequency" unit="hz" standardUnit="hz" displayUnit="hz" format="%12.2f" maxValue="3000000000" minValue="9000" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="Voltage" attType="Scalar" rwType="READ_WRITE" displayLevel="EXPERT" polledPeriod="0" maxX="0" maxY="0" memorized="true" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Output Level in dBm.&#xA;!! Warning !! If you change this value, the new value might not be compatible with narrow mode or attenuator fixed mode.&#xA;You might need to execute the on() command again to get the behaviour you are expecting.&#xA;An error will be displayed on the instrument display in case the new level value is not compatible with the current mode." label="Level" unit="dBm" standardUnit="dBm" displayUnit="dBm" format="%4.2f" maxValue="30" minValue="-145" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <states name="ON" description="The device is generating the signal.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="OFF" description="The device is NOT generating the signal.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="FAULT" description="The device is in Fault.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="/segfs/tango/cppserver/env"/>
+  </classes>
+</pogoDsl:PogoSystem>
