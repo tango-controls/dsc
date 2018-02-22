@@ -1,0 +1,41 @@
+{
+    "1178": {
+        "buses": [
+            "USB"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "Spectrometer"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/1178/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 294, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/MeasureInstruments/Spectrometer/Spectrometer.pdf"
+            }
+        ], 
+        "families": [
+            "MeasureInstruments"
+        ], 
+        "last_update": "2017-04-20 13:12:13.705485+00:00", 
+        "last_update_method": "file", 
+        "license": "None", 
+        "manufacturers": [
+            "Ocean Optics"
+        ], 
+        "name": "Spectrometer", 
+        "products": [
+            "USB2000+"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/MeasureInstruments/Spectrometer", 
+        "status": "updated", 
+        "tag": "release_1_2_1", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/1178/update/", 
+        "updated_by_script": true
+    }
+}
