@@ -1,0 +1,41 @@
+{
+    "105": {
+        "buses": [
+            "USB"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "KMTronicRelay"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/105/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 218, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/InputOutput/KMTronicRelay/KMTronicRelay.pdf"
+            }
+        ], 
+        "families": [
+            "Instrumentation"
+        ], 
+        "last_update": "2017-02-23 10:09:12.972552+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "KMTronic"
+        ], 
+        "name": "KMTronicRelay", 
+        "products": [
+            "TwoRelayController"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/InputOutput/KMTronicRelay", 
+        "status": "updated", 
+        "tag": "Release_1_0", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/105/update/", 
+        "updated_by_script": true
+    }
+}
