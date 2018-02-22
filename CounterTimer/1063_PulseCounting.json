@@ -1,0 +1,41 @@
+{
+    "1063": {
+        "buses": [
+            "Not Applicable"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "PulseCounting"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/1063/", 
+        "development_status": "new", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 198, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/CounterTimer/PulseCounting/PulseCounting.pdf"
+            }
+        ], 
+        "families": [
+            "CounterTimer"
+        ], 
+        "last_update": "2018-02-22 14:33:16.269393+00:00", 
+        "last_update_method": "file", 
+        "license": "None", 
+        "manufacturers": [
+            "none"
+        ], 
+        "name": "PulseCounting", 
+        "products": [
+            ""
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/CounterTimer/NI/PulseCounting", 
+        "status": "updated", 
+        "tag": "", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/1063/update/", 
+        "updated_by_script": true
+    }
+}
