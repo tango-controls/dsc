@@ -1,0 +1,41 @@
+{
+    "1057": {
+        "buses": [
+            "Ethernet"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "DigitalDelayGenerator"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/1057/", 
+        "development_status": "new", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 192, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/CounterTimer/DigitalDelayGenerator/DigitalDelayGenerator.pdf"
+            }
+        ], 
+        "families": [
+            "CounterTimer"
+        ], 
+        "last_update": "2018-02-22 14:32:43.228178+00:00", 
+        "last_update_method": "file", 
+        "license": "None", 
+        "manufacturers": [
+            "Highland Technology"
+        ], 
+        "name": "DigitalDelayGenerator", 
+        "products": [
+            "T560"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/CounterTimer/DigitalDelayGenerator", 
+        "status": "updated", 
+        "tag": "", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/1057/update/", 
+        "updated_by_script": true
+    }
+}
