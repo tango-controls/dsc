@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="TangoEpics" pogoRevision="9.1">
+    <description description="Tango device server for accessing Epics Process Variables.&#xA;&#xA;You must provide the list of PVs you want to interface and optionally a host&#xA;name and then the device will create a tango attribute for each PV.&#xA;&#xA;Take into account that Tango and Epics follow different naming conventions,&#xA;which may cause problems. In order to allow maximum flexibility all options have&#xA;been left open in order to translate the Epics process variable names to tango&#xA;attributes names:&#xA;&#xA;1) Name the tango attribute exactly as the Epics process variable name. Take&#xA;   into account that this may cause problems if process variables names include&#xA;   special characters.&#xA;&#xA;2) Name the tango attribute just like the Epics process variable name but&#xA;   replacing the special characters by others. The replacement may be:&#xA;  a- Automatic: all special characters are replace by a _ character&#xA;  b- Manual: you can specify replacement strings for special characters&#xA;&#xA;3) Give your own names to tango attributes.&#xA;&#xA;See properties section for more details on how to configure all these options.&#xA;&#xA;Note that if your Epics IOC contains process variables named State and/or Status&#xA;these will compulsory have to be renamed.&#xA;&#xA;The server uses PyEpics for interfacing Epics. See:&#xA;http://cars9.uchicago.edu/software/python/pyepics3/index.html" title="Tango device server for accessing EPICS Process Variables" sourcePath="/home/jmoldes/workspace/TangoEpics/trunk" language="Python" filestogenerate="XMI   file,Code files,Protected Regions,html Pages" license="GPL" copyright="" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <identification contact="at cells.es - jmoldes" author="jmoldes" emailDomain="cells.es" classFamily="Communication" siteSpecific="" platform="All Platforms" bus="Not Applicable" manufacturer="none" reference=""/>
+    </description>
+    <deviceProperties name="ProcessVariables" description="This is the list of EPICS process variables that we want to interface and,&#xA;optionally ,the name we want to give to their corresponding tango attribute.&#xA;&#xA;Take into account that naming conventions in Tango and Epics are different.&#xA;Epics pv reserved characters and keywords (Epics Application Developer&#x2019;s Guide):&#xA; - See 6.3.1 Keywords and 6.3.2 Unquoted strings of &#xA;Tango reserved characters and strings:&#xA; - Appendix C.4 Reserved words and characters, limitations&#xA;&#xA;Each row has the following format (TAB means the tabulator character):&#xA;epics_pv_nameTABtango_attr_name&#xA;&#xA;The use of this optional tango name opens two possibilities:&#xA;&#xA;1) If a ``tango_attr_name`` is provided then it will be used as the tango attribute&#xA;name corresping to the pv name, no matter which characters or keywords may be.&#xA;&#xA;2) If no ``TABtango_attr_name`` is given then the corresponding tango attribute will&#xA;be named exactly as the epics process variable BUT special characters may&#xA;optionally be replaced in the tango attribute name. This gives 3 options:&#xA;&#xA;  a- Do nothing and name the tango attribute exactly as the PV name. Take into&#xA;     account that this may cause problems with tango. In order to do this you&#xA;     have to define the AutoTranslate property and leave it empty (otherwise&#xA;     default translation characters will be used).&#xA;&#xA;  b- Replace it with any string that you decide. To do so you have to specify&#xA;     the replacement string in the AutoTranslate property.&#xA;&#xA;  c- Replace it with character _. This is the default behaviour (default values&#xA;     of AutoTranslate property do this)&#xA;&#xA;Remember that in any case the original PV name is set as the corresponding tango&#xA;attribute description field of its default properties (which you can easily&#xA;retrieve by getting attribute`s AttributeInfo with attribute_query() method)&#xA;Furthermore you can use the getEpicsName and getTangoName functions to find out&#xA;the correspondence between epic pv name and tango attribute name.">
+      <type xsi:type="pogoDsl:StringVectorType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="Host" description="Optional host name to prepend to all PV names">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="AutoTranslation" description="Array of strings for special characters replacement. Each string consist on a&#xA;first character (this is the epics special character) and at least another&#xA;character (may be more), which will replace the epics special character in the&#xA;tango attribute name. For example you could replace the epics : character with&#xA;the string _colon_ by providing the replacement string `:_colon_`">
+      <type xsi:type="pogoDsl:StringVectorType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>__,-_,:_,._,[_,]_,&lt;_,>_,;_</DefaultPropValue>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device state">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its device_status data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device status">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="getHost" description="Returns the value of the optional property Host" execMethod="get_host" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Value of the optional property Host">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="getTangoName" description="Returns the Tango attribute name for an Epics process variable name.&#xA;Take into account that the device is case sensitive" execMethod="get_tango_name" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Epics process variable name">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="Tango attribute name for the Epics process variable name">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="getEpicsName" description="Returns Epics process variable name for a Tango attribute name.&#xA;Take into account that the device is case sensitive" execMethod="get_epics_name" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Tango attribute name">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="Epics process variable name">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <states name="FAULT" description="Invalid properties">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="ON" description="">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="/usr/local/share/pogo/preferences"/>
+  </classes>
+</pogoDsl:PogoSystem>
