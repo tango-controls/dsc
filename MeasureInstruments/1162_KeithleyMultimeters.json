@@ -1,0 +1,41 @@
+{
+    "1162": {
+        "buses": [
+            "GPIB"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "KeithleyMultimeters"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/1162/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 282, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/MeasureInstruments/KeithleyMultimeters/KeithleyMultimeters.pdf"
+            }
+        ], 
+        "families": [
+            "MeasureInstruments"
+        ], 
+        "last_update": "2017-04-20 13:11:50.215008+00:00", 
+        "last_update_method": "file", 
+        "license": "None", 
+        "manufacturers": [
+            "Keithley"
+        ], 
+        "name": "KeithleyMultimeters", 
+        "products": [
+            "2700"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/MeasureInstruments/Keithley/KeithleyMultimeters", 
+        "status": "updated", 
+        "tag": "release_0_0_6", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/1162/update/", 
+        "updated_by_script": true
+    }
+}
