@@ -1,0 +1,46 @@
+{
+    "253": {
+        "buses": [
+            "Ethernet", 
+            "Ethernet"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "VarianGetterpump", 
+            "VarianGetterpumpCtrl"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/253/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 422, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/OtherInstruments/VarianGetterpump/VarianGetterpump.pdf"
+            }
+        ], 
+        "families": [
+            "Instrumentation", 
+            "Instrumentation"
+        ], 
+        "last_update": "2017-02-23 10:59:17.813949+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "Varian", 
+            "Varian"
+        ], 
+        "name": "VarianGetterpump", 
+        "products": [
+            "Getterpump", 
+            "Getterpump"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/OtherInstruments/VarianGetterpump", 
+        "status": "updated", 
+        "tag": "Release_1_4", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/253/update/", 
+        "updated_by_script": true
+    }
+}
