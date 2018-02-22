@@ -1,0 +1,41 @@
+{
+    "279": {
+        "buses": [
+            "Not Applicable"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "SettingsManager"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/279/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 485, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/SoftwareSystem/SettingsManager/SettingsManager.pdf"
+            }
+        ], 
+        "families": [
+            "Archiving"
+        ], 
+        "last_update": "2017-02-23 11:24:24.225443+00:00", 
+        "last_update_method": "url", 
+        "license": "GPL", 
+        "manufacturers": [
+            "none"
+        ], 
+        "name": "SettingsManager", 
+        "products": [
+            ""
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/SoftwareSystem/SettingsManager", 
+        "status": "updated", 
+        "tag": "SettingsManager-Release-1.3", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/279/update/", 
+        "updated_by_script": true
+    }
+}
