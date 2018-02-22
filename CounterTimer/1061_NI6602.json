@@ -1,0 +1,41 @@
+{
+    "1061": {
+        "buses": [
+            "Compact PCI"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "NI6602"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/1061/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 196, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/CounterTimer/NI6602/NI6602.pdf"
+            }
+        ], 
+        "families": [
+            "CounterTimer"
+        ], 
+        "last_update": "2018-02-22 14:33:05.102578+00:00", 
+        "last_update_method": "file", 
+        "license": "None", 
+        "manufacturers": [
+            "NI"
+        ], 
+        "name": "NI6602", 
+        "products": [
+            "6602"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/CounterTimer/NI/NI6602", 
+        "status": "updated", 
+        "tag": "release_2_1_0", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/1061/update/", 
+        "updated_by_script": true
+    }
+}
