@@ -1,0 +1,41 @@
+{
+    "172": {
+        "buses": [
+            "GPIB"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "KohzuSCAxis"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/172/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 322, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Motion/KohzuSCAxis/KohzuSCAxis.pdf"
+            }
+        ], 
+        "families": [
+            "Motion"
+        ], 
+        "last_update": "2017-02-23 10:39:18.813526+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "none"
+        ], 
+        "name": "KohzuSCAxis", 
+        "products": [
+            ""
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Motion/MotorControllers/Kohzu/KohzuSCAxis", 
+        "status": "updated", 
+        "tag": "Release_1_24", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/172/update/", 
+        "updated_by_script": true
+    }
+}
