@@ -1,0 +1,41 @@
+{
+    "251": {
+        "buses": [
+            "GPIB"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "TGA1240WaveGen"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/251/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 420, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/OtherInstruments/TGA1240WaveGen/TGA1240WaveGen.pdf"
+            }
+        ], 
+        "families": [
+            "Instrumentation"
+        ], 
+        "last_update": "2017-02-23 10:59:01.014280+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "Thurlby Thandar Instruments"
+        ], 
+        "name": "TGA1240WaveGen", 
+        "products": [
+            "TGA1240 Waveform generators"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/OtherInstruments/TGA1240WaveGen", 
+        "status": "updated", 
+        "tag": "Release_1_1", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/251/update/", 
+        "updated_by_script": true
+    }
+}
