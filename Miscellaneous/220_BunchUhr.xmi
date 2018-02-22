@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="BunchUhr">
+    <description description="Tango server for Petra III Bunch Uhr up from Version 3.04." title="BunchUhr" sourcePath="/home/janmeyer/workspace/BunchUhr" language="Cpp" filestogenerate="XMI   file,Code files" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <inheritances classname="DeviceSerial" sourcePath="."/>
+      <identification contact="at desy.de - jan.meyer" author="jan.meyer" emailDomain="desy.de" classFamily="Miscellaneous" siteSpecific="" platform="Unix Like" bus="Serial Line" manufacturer="DESY MSK" reference="Petra III Bunch Uhr"/>
+      <comments commandsTable="//================================================================&#xA;//&#xA;//  The following table gives the correspondence&#xA;//  between command and method names.&#xA;//&#xA;//  Command name  |  Method name&#xA;//----------------------------------------------------------------&#xA;//  State         |  Inherited (no method)&#xA;//  Status        |  Inherited (no method)&#xA;//================================================================"/>
+    </description>
+    <deviceProperties name="Connection" description="If the connection is made local (local) or remote (remote) via a terminal server.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="true" concrete="true"/>
+      <DefaultPropValue>local</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="Host" description="Hostname or IP of the terminal server for remote connection.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="true" concrete="true"/>
+      <DefaultPropValue>localhost</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="Port" description="Port used on the terminal server for remote connection.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="true" concrete="true"/>
+      <DefaultPropValue>10000</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="Device" description="Device node used for local connection.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="true" concrete="true"/>
+      <DefaultPropValue>/dev/ttyS0</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="BaudRate" description="Connection speed in bits/s. Used for local connections only.">
+      <type xsi:type="pogoDsl:UIntType"/>
+      <status abstract="false" inherited="true" concrete="true"/>
+      <DefaultPropValue>9600</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="DataBits" description="Number of data bits. Used for local connections only.">
+      <type xsi:type="pogoDsl:UShortType"/>
+      <status abstract="false" inherited="true" concrete="true"/>
+      <DefaultPropValue>8</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="Parity" description="Wheter and what kind of parity bit is used. May be none (N), odd (O), even (E), mark (M), or space (S). Used for local connections only.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="true" concrete="true"/>
+      <DefaultPropValue>N</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="StopBits" description="How many stop bits are used - for local connections only.">
+      <type xsi:type="pogoDsl:UShortType"/>
+      <status abstract="false" inherited="true" concrete="true"/>
+      <DefaultPropValue>1</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="FlowControl" description="Whether XON/XOFF (software), CTS/RTS (hardware) or no (none) flow control is used.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="true" concrete="true"/>
+      <DefaultPropValue>none</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="TimeOut" description="Connection timeout in deciseconds. It has to be between 1 and 255ds.">
+      <type xsi:type="pogoDsl:UShortType"/>
+      <status abstract="false" inherited="true" concrete="true"/>
+      <DefaultPropValue>20</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="AutoReconnect" description="Whether the server will automatically try to reconnect on errors.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>true</DefaultPropValue>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device state">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its device_status data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device status">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <attributes name="Raster1" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:UCharType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Raster      BC        BT&#xA;--------------------------------------------------&#xA;00      5,2Mhz    130Khz   /40 bunch&#xA;01      7,8Mhz    130Khz   /60 bunch&#xA;02     10,4Mhz    130Khz   /80 bunch&#xA;03     16,9Mhz    130Khz   /120 bunch&#xA;04     31,3Mhz    130Khz   /240 bunch&#xA;05     46,8Mhz    130Khz   /360 bunch &#xA;06     62,5Mhz    130Khz   /480 bunch &#xA;07        auto    130Khz   auto&#xA;10     10,4Mhz      1Khz   cycle /130&#xA;11     10,4Mhz      5Khz   cycle /26&#xA;12     10,4Mhz     10Khz   cylce /13&#xA;13     10,4Mhz     65Khz   cycle /2&#xA;14      5,2Mhz    130Khz   /40 bunch&#xA;15      7,8Mhz    130Khz   /60 bunch&#xA;16     10,4Mhz    130Khz   /80 bunch&#xA;17     31,3Mhz    130Khz   /240 bunch&#xA;20       65Khz    130Khz   pulse duration 200ns&#xA;21      130Khz    130Khz   pulse duration 200ns&#xA;22      260Khz    130Khz   pulse duration 200ns&#xA;23      520Khz    130Khz   pulse duration 200ns&#xA;24    reserved&#xA;25    reserved&#xA;26    reserved&#xA;27    reserved&#xA;" label="RasterLeft" unit=" " standardUnit=" " displayUnit=" " format="%2d" maxValue="27" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="Delay1" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:ShortType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Delay time for this channel." label="DelayLeft" unit="ns" standardUnit="ns" displayUnit="ns" format="%4d" maxValue="9999" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>INIT</readExcludedStates>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>INIT</writeExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
+    </attributes>
+    <attributes name="RemoteControl1" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Whether the configuration is done localy or via Tango. If set to false, all settings for this channel are ignored." label="RemoteControlLeft" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>INIT</readExcludedStates>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>INIT</writeExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
+    </attributes>
+    <attributes name="Raster2" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:UCharType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Raster      BC        BT&#xA;--------------------------------------------------&#xA;00      5,2Mhz    130Khz   /40 bunch&#xA;01      7,8Mhz    130Khz   /60 bunch&#xA;02     10,4Mhz    130Khz   /80 bunch&#xA;03     16,9Mhz    130Khz   /120 bunch&#xA;04     31,3Mhz    130Khz   /240 bunch&#xA;05     46,8Mhz    130Khz   /360 bunch &#xA;06     62,5Mhz    130Khz   /480 bunch &#xA;07        auto    130Khz   auto&#xA;10     10,4Mhz      1Khz   cycle /130&#xA;11     10,4Mhz      5Khz   cycle /26&#xA;12     10,4Mhz     10Khz   cylce /13&#xA;13     10,4Mhz     65Khz   cycle /2&#xA;14      5,2Mhz    130Khz   /40 bunch&#xA;15      7,8Mhz    130Khz   /60 bunch&#xA;16     10,4Mhz    130Khz   /80 bunch&#xA;17     31,3Mhz    130Khz   /240 bunch&#xA;20       65Khz    130Khz   pulse duration 200ns&#xA;21      130Khz    130Khz   pulse duration 200ns&#xA;22      260Khz    130Khz   pulse duration 200ns&#xA;23      520Khz    130Khz   pulse duration 200ns&#xA;24    reserved&#xA;25    reserved&#xA;26    reserved&#xA;27    reserved" label="RasterRight" unit=" " standardUnit=" " displayUnit=" " format="%2d" maxValue="27" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="Delay2" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:ShortType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Delay time for this channel." label="DelayRight" unit="ns" standardUnit="ns" displayUnit="ns" format="%4d" maxValue="9999" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="RemoteControl2" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Whether the configuration is done localy or via Tango. If set to false, all settings for this channel are ignored." label="RemoteControlRight" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="Raster3" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:UCharType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Raster      BC        BT&#xA;--------------------------------------------------&#xA;00      5,2Mhz    130Khz   /40 bunch&#xA;01      7,8Mhz    130Khz   /60 bunch&#xA;02     10,4Mhz    130Khz   /80 bunch&#xA;03     16,9Mhz    130Khz   /120 bunch&#xA;04     31,3Mhz    130Khz   /240 bunch&#xA;05     46,8Mhz    130Khz   /360 bunch &#xA;06     62,5Mhz    130Khz   /480 bunch &#xA;07        auto    130Khz   auto&#xA;10     10,4Mhz      1Khz   cycle /130&#xA;11     10,4Mhz      5Khz   cycle /26&#xA;12     10,4Mhz     10Khz   cylce /13&#xA;13     10,4Mhz     65Khz   cycle /2&#xA;14      5,2Mhz    130Khz   /40 bunch&#xA;15      7,8Mhz    130Khz   /60 bunch&#xA;16     10,4Mhz    130Khz   /80 bunch&#xA;17     31,3Mhz    130Khz   /240 bunch&#xA;20       65Khz    130Khz   pulse duration 200ns&#xA;21      130Khz    130Khz   pulse duration 200ns&#xA;22      260Khz    130Khz   pulse duration 200ns&#xA;23      520Khz    130Khz   pulse duration 200ns&#xA;24    reserved&#xA;25    reserved&#xA;26    reserved&#xA;27    reserved" label="RasterBack" unit=" " standardUnit=" " displayUnit=" " format="%2d" maxValue="27" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="Delay3" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:ShortType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Delay time for this channel." label="DelayBack" unit="ns" standardUnit="ns" displayUnit="ns" format="%4d" maxValue="9999" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="DisplayMachineData" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="If set to true, the BunchUhr will display the machine status. Elsewise, the actual configuration is shown." label="DisplayMachineData" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>INIT</readExcludedStates>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>INIT</writeExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
+    </attributes>
+    <states name="ON" description="Device is in working order and waiting for commands.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="INIT" description="The device server is initializing the connection and reading out the current state.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="FAULT" description="Device is not connected, not running or does not work as expected.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="$(TANGO_CLASSES)/cppserver/common"/>
+  </classes>
+</pogoDsl:PogoSystem>
