@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="Orbit3SensorCtrl" pogoRevision="8.4">
+    <description description="Class connecting to the Orbit3 Measurement System" title="Orbit3Sensor Controller" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/MeasureInstruments/Orbit3SensorCtrl/trunk" language="Python" filestogenerate="XMI   file,Code files,html Pages" license="GPL" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <identification contact="at mail.desy.de - tnunez" author="tnunez" emailDomain="mail.desy.de" classFamily="MeasureInstruments" siteSpecific="" platform="Unix Like" bus="Ethernet" manufacturer="Solartron Metrology" reference="Orbit3"/>
+    </description>
+    <deviceProperties name="IPAddress" mandatory="true" description="IP Address of the controller">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="PortNb" description="Port Number of the controller">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>10001</DefaultPropValue>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device state">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its device_status data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device status">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="ReadMeasurement" description="Make a measurement and return the value in counts" execMethod="read_measurement" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Sensor ID">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="Measured Value in counts">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SetAddr" description="Set Addr to a sensor with a given ID" execMethod="set_addr" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Sensor ID, Adress to set to">
+        <type xsi:type="pogoDsl:StringArrayType"/>
+      </argin>
+      <argout description="1 if correctly set">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ReadMULTFactor" description="Return the MULT factor for converting counts in units. It depends on the resolution." execMethod="read_multfactor" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Sensor Adress">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="MULT factor">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SetResolution" description="Set resolution. Possible values: 14, 16, 18" execMethod="set_resolution" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Sensor Address, Resolution">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <states name="ON" description="">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="FAULT" description="">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="/usr/share/pogo/preferences"/>
+  </classes>
+</pogoDsl:PogoSystem>
