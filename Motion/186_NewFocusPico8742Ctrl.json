@@ -1,0 +1,41 @@
+{
+    "186": {
+        "buses": [
+            "TCP/UDP"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "NewFocusPico8742Ctrl"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/186/", 
+        "development_status": "new", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 335, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Motion/NewFocusPico8742Ctrl/NewFocusPico8742Ctrl.pdf"
+            }
+        ], 
+        "families": [
+            "Motion"
+        ], 
+        "last_update": "2017-02-23 10:41:00.247083+00:00", 
+        "last_update_method": "url", 
+        "license": "GPL", 
+        "manufacturers": [
+            "none"
+        ], 
+        "name": "NewFocusPico8742Ctrl", 
+        "products": [
+            ""
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Motion/MotorControllers/NewFocus/NewFocusPico8742Ctrl", 
+        "status": "updated", 
+        "tag": "", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/186/update/", 
+        "updated_by_script": true
+    }
+}
