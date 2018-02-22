@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="HostInfo" pogoRevision="8.4">
+    <description description="The class collects some hardware information about the host on which it's running.&#xA;" title="MCS Host Info" sourcePath="/mntdirect/_segfs/tango/cppserver/admin/HostInfo" language="Cpp" filestogenerate="XMI   file,Code files" license="GPL" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <identification contact="at esrf.fr - broquet" author="broquet" emailDomain="esrf.fr" classFamily="Miscellaneous" siteSpecific="ESRF" platform="Unix Like" bus="Not Applicable" manufacturer="none" reference=""/>
+    </description>
+    <classProperties name="pciDeviceList" description="This property gives the list of PCI devices known (IEEE1394, Serial Communication ...)&#xA;The DS scan the PCI bus and compare VendorID and DeviceID with those listed in the property.&#xA;All Intel PCI devices are ignored. Other ``motherboard`` PCI Devices as Broadcom Ethernet device can be ignored.&#xA;Add it in the code ( read_pciDevices() method ).&#xA;The syntax of a PCI device item is:&#xA;vendorIDdeviceID description&#xA;Ex: 1093c801 National Instruments : PCI-GPIB">
+      <type xsi:type="pogoDsl:StringVectorType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </classProperties>
+    <classProperties name="osSupported" description="This property defined the list of Operating System on which this DS will run.&#xA;!!! Be Careful !!! : The method setting the OS name is based on the /etc/issue file. So be sure the items of the property are the same as the OS name found in /etc/issue.&#xA;For instance, if the file /etc/issue gives ``Debian GNU/Linux 7.0 (final)`` don`t put ``debian`` in the property array, but ``Debian``">
+      <type xsi:type="pogoDsl:StringVectorType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </classProperties>
+    <deviceProperties name="pciDeviceList" description="This property gives the list of PCI devices known (IEEE1394, Serial Communication ...)&#xA;The DS scan the PCI bus and compare VendorID and DeviceID with those listed in the property.&#xA;All Intel PCI devices are ignored. Other ``motherboard`` PCI Devices as Broadcom Ethernet device can be ignored.&#xA;Add it in the code ( read_pciDevices() method )&#xA;The syntax of a PCI device item is:&#xA;vendorIDdeviceID description&#xA;Ex: 1093c801 National Instruments : PCI-GPIB">
+      <type xsi:type="pogoDsl:StringVectorType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="osSupported" description="This property defined the list of Operating System on which this DS will run.&#xA;!!! Be Careful !!! : The method setting the OS name is based on the /etc/issue file. So be sure the items of the property are the same as the OS name found in /etc/issue.&#xA;For instance, if the file /etc/issue gives ``Debian GNU/Linux 7.0 (final)`` don`t put ``debian`` in the property array, but ``Debian``.">
+      <type xsi:type="pogoDsl:StringVectorType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device state">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its device_status data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device status">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="saveStatus" description="Save status in database. It puts a device property called LastStatus containing the status value.&#xA;The status contains all attributes value. The property is overwritten when calling this command." execMethod="save_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <attributes name="kernelVersion" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Version of the kernel running on the host followed by the Operating System architecture (32 or 64bits)." label="Kernel Version" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="cpuArchitecture" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="CPU architecture (32 or 64 bits)" label="CPU Architecture" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="osDistribution" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Operating System distribution. This attribute is based on the /etc/issue file of standard Linux distribution.&#xA;This attribute uses the property osSupported. It tries to find the strings defined in osUpported in the /etc/issue file. If one of the items is found, the release is concatenated.&#xA;Otherwise, the attribute value is Unsupported. It is very important to check the spelling of the property items compared to the /etc/issue file." label="OS Distribution" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="hostType" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Check if the host is a VME. Otherwise, it is set to Rackable PC." label="Host Type" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="netInterface" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Network Interface. Gives the interface name with the corresponding IP Address and MAC Address." label="Network Interface" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="upTime" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="10000" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Time from last boot up." label="UP Time" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="pciDevices" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="List of PCI devices plugged on the host.&#xA;For each device, it compares if it is a motherboard device as INTEL device or BROADCOM ethernet controller. The comparison is done by Vendor ID.&#xA;The Vendor ID of motherboard device is defined as macro in the code.&#xA;If a motherboard device is found, it is ignored. If the PCI device is not a motherboard device, it is compared with the PCI devices defined in the property pciDeviceList. If the comparison failed, the PCI device is unknown." label="PCI Devices" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <preferences docHome="./doc_html" makefileHome="/segfs/tango/cppserver/env"/>
+  </classes>
+</pogoDsl:PogoSystem>
