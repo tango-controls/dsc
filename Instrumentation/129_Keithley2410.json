@@ -1,0 +1,41 @@
+{
+    "129": {
+        "buses": [
+            "GPIB"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "Keithley2410"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/129/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 270, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/MeasureInstruments/Keithley2410/Keithley2410.pdf"
+            }
+        ], 
+        "families": [
+            "Instrumentation"
+        ], 
+        "last_update": "2017-02-23 10:24:34.354964+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "Keithley"
+        ], 
+        "name": "Keithley2410", 
+        "products": [
+            "2410"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/MeasureInstruments/Keithley/Keithley2410", 
+        "status": "updated", 
+        "tag": "Release_1_0", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/129/update/", 
+        "updated_by_script": true
+    }
+}
