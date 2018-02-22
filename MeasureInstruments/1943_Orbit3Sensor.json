@@ -1,0 +1,41 @@
+{
+    "1943": {
+        "buses": [
+            "Ethernet"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "Orbit3Sensor"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/1943/", 
+        "development_status": "new", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 600, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/MeasureInstruments/Orbit3Sensor/Orbit3Sensor.pdf"
+            }
+        ], 
+        "families": [
+            "MeasureInstruments"
+        ], 
+        "last_update": "2018-02-10 03:05:01.045046+00:00", 
+        "last_update_method": "url", 
+        "license": "GPL", 
+        "manufacturers": [
+            "Solartron Metrology"
+        ], 
+        "name": "Orbit3Sensor", 
+        "products": [
+            "Orbit3"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/MeasureInstruments/Orbit3Sensor", 
+        "status": "new", 
+        "tag": "", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/1943/update/", 
+        "updated_by_script": true
+    }
+}
