@@ -1,0 +1,41 @@
+{
+    "118": {
+        "buses": [
+            "USB"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "BronkhorstMassFlowCtrl"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/118/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 256, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/MeasureInstruments/BronkhorstMassFlowCtrl/BronkhorstMassFlowCtrl.pdf"
+            }
+        ], 
+        "families": [
+            "Instrumentation"
+        ], 
+        "last_update": "2017-02-23 10:20:41.922768+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "Bronkhorst"
+        ], 
+        "name": "BronkhorstMassFlowCtrl", 
+        "products": [
+            "Mass Flow"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/MeasureInstruments/BronkhorstMassFlowCtrl", 
+        "status": "updated", 
+        "tag": "Release_1_1", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/118/update/", 
+        "updated_by_script": true
+    }
+}
