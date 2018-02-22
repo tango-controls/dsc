@@ -1,0 +1,41 @@
+{
+    "282": {
+        "buses": [
+            "GPIB"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "CryoConTempCtrl"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/282/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 513, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Temperature/CryoConTempCtrl/CryoConTempCtrl.pdf"
+            }
+        ], 
+        "families": [
+            "Instrumentation"
+        ], 
+        "last_update": "2017-02-23 11:35:27.308370+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "Cryogenics Control Systems"
+        ], 
+        "name": "CryoConTempCtrl", 
+        "products": [
+            "32 and 32B"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Temperature/CryoConTempCtrl", 
+        "status": "updated", 
+        "tag": "Release_1_3", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/282/update/", 
+        "updated_by_script": true
+    }
+}
