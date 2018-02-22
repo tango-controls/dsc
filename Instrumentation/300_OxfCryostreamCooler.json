@@ -1,0 +1,41 @@
+{
+    "300": {
+        "buses": [
+            "Data Socket"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "OxfCryostreamCooler"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/300/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 534, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Temperature/OxfCryostreamCooler/OxfCryostreamCooler.pdf"
+            }
+        ], 
+        "families": [
+            "Instrumentation"
+        ], 
+        "last_update": "2017-02-23 11:39:58.227367+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "Oxford Cryosystems"
+        ], 
+        "name": "OxfCryostreamCooler", 
+        "products": [
+            "700 Series Cryostream Cooler"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Temperature/OxfCryostreamCooler", 
+        "status": "updated", 
+        "tag": "Release_1_1", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/300/update/", 
+        "updated_by_script": true
+    }
+}
