@@ -1,0 +1,41 @@
+{
+    "357": {
+        "buses": [
+            "VME"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "VFCADC"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/357/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 237, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/InputOutput/VFCADC/VFCADC.pdf"
+            }
+        ], 
+        "families": [
+            "InputOutput"
+        ], 
+        "last_update": "2017-04-20 13:10:32.347494+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "none"
+        ], 
+        "name": "VFCADC", 
+        "products": [
+            ""
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/InputOutput/VFCADC", 
+        "status": "updated", 
+        "tag": "Release_1_11", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/357/update/", 
+        "updated_by_script": true
+    }
+}
