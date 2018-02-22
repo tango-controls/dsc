@@ -1,0 +1,41 @@
+{
+    "955": {
+        "buses": [
+            "Not Applicable"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "Xbpm"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/955/", 
+        "development_status": "new", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 109, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/BeamDiagnostics/Xbpm/Xbpm.pdf"
+            }
+        ], 
+        "families": [
+            "BeamDiagnostics"
+        ], 
+        "last_update": "2018-02-22 14:21:52.895985+00:00", 
+        "last_update_method": "file", 
+        "license": "None", 
+        "manufacturers": [
+            "none"
+        ], 
+        "name": "Xbpm", 
+        "products": [
+            ""
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/BeamDiagnostics/Xbpm", 
+        "status": "updated", 
+        "tag": "", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/955/update/", 
+        "updated_by_script": true
+    }
+}
