@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="BalzersTpg300" pogoRevision="8.1">
+    <description description="This device server is intended to control a Balzers TPG300 pressure gauge&#xA;controller" title="Balzers TPG300 pressure gauge controller device server." sourcePath="/mntdirect/_segfs/tango/cppserver/vacuum/gauges/BalzersTpg300" language="Cpp" filestogenerate="XMI   file,Code files,Makefile" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_4Impl" sourcePath=""/>
+      <identification contact="at esrf.fr - peru" author="peru" emailDomain="esrf.fr" classFamily="Vacuum" siteSpecific="" platform="Unix Like" bus="Serial Line" manufacturer="Balzers" reference="Tpg300"/>
+    </description>
+    <classProperties name="SleepTimeBetweenSendAndGet" description="Time to wait after a send to read the answer in milliseconds.">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>2</DefaultPropValue>
+    </classProperties>
+    <deviceProperties name="SerialDevicename" description="The device name of the serial device.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="UnderrangeControl" description="\'true\' if control is \'on\', \'false\' instead.">
+      <type xsi:type="pogoDsl:BooleanType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>false</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="Units" description="The unit in which the pressure value is expressed.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>mbar</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="LocalMode" description="If set to \'true\' sets the TPG300 to local mode (code =\'1001\').">
+      <type xsi:type="pogoDsl:BooleanType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>true</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="Relays" description="TPG relays configuration.&#xA;For each relay, a string as s1,s2,s3,s4 define the specified relay configuration:&#xA; - s1: Relay name (1,2,3,4,A or B)&#xA; - s2: The lower limit pressure  (e.g. 1.0E-6)&#xA; - s3: The upper limit pressure (e.g. 6.0E-6)&#xA; - s4: The switch assignment:&#xA;            - Relay 1->4 : gauge channel&#xA;            - Relay  A and B :  5 -> 8">
+      <type xsi:type="pogoDsl:StringVectorType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="SleepTimeBetweenSendAndGet" description="Time to wait after a send to read the answer in milliseconds.">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>0</DefaultPropValue>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="State Code">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its &lt;i>device_status&lt;/i> data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Status description">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
+    </commands>
+    <commands name="AddGauge" description="Add a gauge to the controller.&#xA;It sends the gauge configuration to be done by the comntroller thread" execMethod="add_gauge" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="value[0] = `A1`, `A2`, `B1` or `B2`)&#xA;value[1] = filter time&#xA;value[2] = device name">
+        <type xsi:type="pogoDsl:StringArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ConfigureFilterTime" description="Configure the filter time for the relevant gauge:&#xA;- param[0] = Gauge name ('A1', 'A2', 'B1', or 'B2').&#xA;- param[1] = Filter type ('fast', 'medium' or 'slow')." execMethod="configure_filter_time" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:StringArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ConfigureUnderrange" description="Configure the underrange control:&#xA;- &quot;false&quot;: Control is OFF.&#xA;- &quot;true&quot;: Control is ON." execMethod="configure_underrange" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ConfigureUnits" description="Configure pressure value units (&quot;mbar&quot;, &quot;Torr&quot;, &quot;Pa&quot;)." execMethod="configure_units" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetGaugePressure" description="Returns the pressure read by the considered gauge." execMethod="get_gauge_pressure" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="The gauge index ('A1', 'A2', 'B1' or 'B2').">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="The pressure value.">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetGaugeState" description="Returns the state of the considered gauge." execMethod="get_gauge_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="The gauge index ('A1', 'A2', 'B1' or 'B2').">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="The state of the gauge.">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetGaugeStatus" description="Returns a string describing the status of the&#xA;considered gauge." execMethod="get_gauge_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="IsInitialized" description="return true if specified gauge is nitialized." execMethod="is_initialized" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Channel number: e.g. B2">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="Off" description="Sets OFF the gauge gives as parameter." execMethod="off" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Gauge name (A1, A2, B1, B2)">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="On" description="Set ON the gauge given as parameter." execMethod="on" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Gauge name (A1, A2, B1, B2)">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SaveParameters" description="Save the present parameters set. This command takes a few&#xA;seconds to complete!" execMethod="save_parameters" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SetCodeMode" description="If argin is set to 'true' then to be operated the TPG300 waits for a code to&#xA;be entered (hard coded to 1001).&#xA;&#xA;if argin is set to 'false' no code is required to operate the TPG300.&#xA;&#xA;The 'code_mode' is the 'remote' mode for the TACO DS.&#xA;The 'no_code_mode' is the 'local' mode for the TACO DS." execMethod="set_code_mode" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <attributes name="A1Pressure" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="" unit="" standardUnit="mbar" displayUnit="" format="%.1e" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="A2Pressure" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="" unit="mbar" standardUnit="" displayUnit="" format="%.1e" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="B1Pressure" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="" unit="mbar" standardUnit="" displayUnit="" format="%.1e" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="B2Pressure" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="" unit="mbar" standardUnit="" displayUnit="" format="%.1e" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="A1State" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
+      <dataType xsi:type="pogoDsl:StateType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="A2State" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
+      <dataType xsi:type="pogoDsl:StateType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="B1State" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
+      <dataType xsi:type="pogoDsl:StateType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="B2State" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
+      <dataType xsi:type="pogoDsl:StateType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="ControlledGauges" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="4" maxY="" allocReadMember="false">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <states name="ON" description="The TPG300 is in this state when it works as it should.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="FAULT" description="The device server is in this state when the TPG300 does&#xA;not run as it should.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="/segfs/tango/cppserver/env"/>
+    <additionalFiles name="RefreshThread" path="/mntdirect/_segfs/tango/cppserver/vacuum/gauges/BalzersTpg300/RefreshThread.cpp"/>
+  </classes>
+</pogoDsl:PogoSystem>
