@@ -1,0 +1,41 @@
+{
+    "202": {
+        "buses": [
+            "Ethernet"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "PiezoPiE725"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/202/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 354, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Motion/PiezoPiE725/PiezoPiE725.pdf"
+            }
+        ], 
+        "families": [
+            "Motion"
+        ], 
+        "last_update": "2017-11-11 03:05:41.773415+00:00", 
+        "last_update_method": "url", 
+        "license": "GPL", 
+        "manufacturers": [
+            "Physik Instrumente (PI)"
+        ], 
+        "name": "PiezoPiE725", 
+        "products": [
+            "E725"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Motion/MotorControllers/PI/PiezoPiE725", 
+        "status": "updated", 
+        "tag": "Release_1_1", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/202/update/", 
+        "updated_by_script": true
+    }
+}
