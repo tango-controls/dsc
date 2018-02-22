@@ -1,0 +1,41 @@
+{
+    "162": {
+        "buses": [
+            "Socket"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "AttoCubeANC300Motor"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/162/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 314, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Motion/AttoCubeANC300Motor/AttoCubeANC300Motor.pdf"
+            }
+        ], 
+        "families": [
+            "Motion"
+        ], 
+        "last_update": "2017-02-23 10:37:08.310555+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "AttoCube"
+        ], 
+        "name": "AttoCubeANC300Motor", 
+        "products": [
+            "ANC300"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Motion/MotorControllers/Attocube/AttoCubeANC300Motor", 
+        "status": "updated", 
+        "tag": "Release_1_0", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/162/update/", 
+        "updated_by_script": true
+    }
+}
