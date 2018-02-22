@@ -1,0 +1,41 @@
+{
+    "368": {
+        "buses": [
+            "Socket"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "PhyMotionMotor"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/368/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 378, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Motion/PhyMotionMotor/PhyMotionMotor.pdf"
+            }
+        ], 
+        "families": [
+            "Motion"
+        ], 
+        "last_update": "2017-02-23 10:50:33.444458+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "Pythron"
+        ], 
+        "name": "PhyMotionMotor", 
+        "products": [
+            "phyMotion"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Motion/PhyMotionMotor", 
+        "status": "updated", 
+        "tag": "Release_1_2", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/368/update/", 
+        "updated_by_script": true
+    }
+}
