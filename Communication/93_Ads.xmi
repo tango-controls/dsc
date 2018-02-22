@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="Ads">
+    <description description="am implemantation of the Beckhoff ADS protocol" title="ADS" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/Communication/Ads/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Makefile,html Pages" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_4Impl" sourcePath=""/>
+      <identification contact="at desy.de - thorste.kracht" author="thorste.kracht" emailDomain="desy.de" classFamily="Communication" siteSpecific="" platform="Unix Like" bus="Not Applicable" manufacturer="none" reference=""/>
+      <comments commandsTable="//================================================================&#xA;//&#xA;//  The following table gives the correspondence&#xA;//  between command and method names.&#xA;//&#xA;//  Command name  |  Method name&#xA;//----------------------------------------------------------------&#xA;//  State         |  Inherited (no method)&#xA;//  Status        |  Inherited (no method)&#xA;//  ReadChar      |  read_char&#xA;//  ReadDouble    |  read_double&#xA;//  ReadFloat     |  read_float&#xA;//  ReadLong      |  read_long&#xA;//  ReadShort     |  read_short&#xA;//  WriteChar     |  write_char&#xA;//  WriteDouble   |  write_double&#xA;//  WriteFloat    |  write_float&#xA;//  WriteLong     |  write_long&#xA;//  WriteShort    |  write_short&#xA;//================================================================"/>
+    </description>
+    <deviceProperties name="HostName" description="PLC hostname">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="PortNo" description="PLC port number, e.g.: 801">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>801</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="SimulationMode" description="0 real mode, 1 simulation mode">
+      <type xsi:type="pogoDsl:UIntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="State Code">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its &lt;i>device_status&lt;/i> data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Status description">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
+    </commands>
+    <commands name="ReadChar" description="IndexGroup and IndexOffset are stored in an array of strings, a char is read from the&#xA;PLC and stored in argout" execMethod="read_char" displayLevel="OPERATOR">
+      <argin description="">
+        <type xsi:type="pogoDsl:StringArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ReadDouble" description="IndexGroup and IndexOffset are stored in an array of strings, a double (8B) is read from the&#xA;PLC and stored in argout" execMethod="read_double" displayLevel="OPERATOR">
+      <argin description="">
+        <type xsi:type="pogoDsl:StringArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ReadFloat" description="IndexGroup and IndexOffset are stored in an array of strings, a float (4B) is read from the&#xA;PLC and stored in argout" execMethod="read_float" displayLevel="OPERATOR">
+      <argin description="">
+        <type xsi:type="pogoDsl:StringArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:FloatType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ReadLong" description="IndexGroup and IndexOffset are stored in an array of strings, a long is read from the&#xA;PLC and stored in argout" execMethod="read_long" displayLevel="OPERATOR">
+      <argin description="">
+        <type xsi:type="pogoDsl:StringArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ReadShort" description="IndexGroup and IndexOffset are stored in an array of strings, a short is read from the&#xA;PLC and stored in argout" execMethod="read_short" displayLevel="OPERATOR">
+      <argin description="">
+        <type xsi:type="pogoDsl:StringArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="WriteChar" description="IndexGroup and IndexOffset are stored in an array of strings, the last string contains&#xA;the char that is written to the PLC" execMethod="write_char" displayLevel="OPERATOR">
+      <argin description="">
+        <type xsi:type="pogoDsl:StringArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="WriteDouble" description="IndexGroup and IndexOffset are stored in an array of strings, the last string contains&#xA;the double that is written to the PLC" execMethod="write_double" displayLevel="OPERATOR">
+      <argin description="">
+        <type xsi:type="pogoDsl:StringArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="WriteFloat" description="IndexGroup and IndexOffset are stored in an array of strings, the last string contains&#xA;the float that is written to the PLC" execMethod="write_float" displayLevel="OPERATOR">
+      <argin description="">
+        <type xsi:type="pogoDsl:StringArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="WriteLong" description="IndexGroup and IndexOffset are stored in an array of strings, the last string contains&#xA;the long that is written to the PLC" execMethod="write_long" displayLevel="OPERATOR">
+      <argin description="">
+        <type xsi:type="pogoDsl:StringArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="WriteShort" description="IndexGroup and IndexOffset are stored in an array of strings, the last string contains&#xA;the short that is written to the PLC" execMethod="write_short" displayLevel="OPERATOR">
+      <argin description="">
+        <type xsi:type="pogoDsl:StringArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <preferences docHome="./doc_html" makefileHome="/usr/share/pogo/preferences"/>
+  </classes>
+</pogoDsl:PogoSystem>
