@@ -1,0 +1,41 @@
+{
+    "360": {
+        "buses": [
+            "GPIB"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "RohdeSchwarzSMgx"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/360/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 292, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/MeasureInstruments/RohdeSchwarzSMgx/RohdeSchwarzSMgx.pdf"
+            }
+        ], 
+        "families": [
+            "Instrumentation"
+        ], 
+        "last_update": "2017-02-23 10:30:39.181576+00:00", 
+        "last_update_method": "url", 
+        "license": "GPL", 
+        "manufacturers": [
+            "RohdeSchwarz"
+        ], 
+        "name": "RohdeSchwarzSMgx", 
+        "products": [
+            "SMGX"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/MeasureInstruments/RohdeSchwarz/RohdeSchwarzSMgx", 
+        "status": "updated", 
+        "tag": "Release_1_1", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/360/update/", 
+        "updated_by_script": true
+    }
+}
