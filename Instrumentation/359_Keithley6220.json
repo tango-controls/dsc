@@ -1,0 +1,41 @@
+{
+    "359": {
+        "buses": [
+            "Serial Line"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "Keithley6220"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/359/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 275, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/MeasureInstruments/Keithley6220/Keithley6220.pdf"
+            }
+        ], 
+        "families": [
+            "Instrumentation"
+        ], 
+        "last_update": "2017-02-23 10:25:13.185959+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "Keithley"
+        ], 
+        "name": "Keithley6220", 
+        "products": [
+            "6220"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/MeasureInstruments/Keithley/Keithley6220", 
+        "status": "updated", 
+        "tag": "Keithley6220-Release-0.9", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/359/update/", 
+        "updated_by_script": true
+    }
+}
