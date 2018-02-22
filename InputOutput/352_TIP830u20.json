@@ -1,0 +1,41 @@
+{
+    "352": {
+        "buses": [
+            "VME"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "TIP830u20"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/352/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 232, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/InputOutput/TIP830u20/TIP830u20.pdf"
+            }
+        ], 
+        "families": [
+            "InputOutput"
+        ], 
+        "last_update": "2017-04-20 13:10:21.364141+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "none"
+        ], 
+        "name": "TIP830u20", 
+        "products": [
+            ""
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/InputOutput/TIP830u20", 
+        "status": "updated", 
+        "tag": "Release_1_6", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/352/update/", 
+        "updated_by_script": true
+    }
+}
