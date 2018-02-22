@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="APDDetector">
-    <description description="Class for controlling the APD Detector Head from FMB Oxford." title="APD Detector Server" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/Acquisition/1D/APDDetector/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Makefile,html Pages" hasAbstractCommand="false" hasAbstractAttribute="false">
+  <classes name="APDDetector" pogoRevision="8.4">
+    <description description="Class for controlling the APD Detector Head from FMB Oxford." title="APD Detector Server" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/Acquisition/1D/APDDetector/trunk" language="Cpp" filestogenerate="XMI   file,Code files,html Pages" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
       <inheritances classname="Device_4Impl" sourcePath=""/>
       <identification contact="at desy.de - maria-teresa.nunez-pardo-de-vera" author="maria-teresa.nunez-pardo-de-vera" emailDomain="desy.de" classFamily="Instrumentation" siteSpecific="" platform="Unix Like" bus="Not Applicable" manufacturer="FMB Oxford" reference="APD ACE Electronics"/>
-      <comments commandsTable="//================================================================&#xA;//&#xA;//  The following table gives the correspondence&#xA;//  between command and method names.&#xA;//&#xA;//  Command name  |  Method name&#xA;//----------------------------------------------------------------&#xA;//  State         |  dev_state&#xA;//  Status        |  Inherited (no method)&#xA;//  StartCounter  |  start_counter&#xA;//  StartScan     |  start_scan&#xA;//  StopScan      |  stop_scan&#xA;//================================================================"/>
     </description>
     <deviceProperties name="SocketDS" description="Name of the Tango Device connecting via socket to the device">
       <type xsi:type="pogoDsl:StringType"/>
@@ -14,7 +13,12 @@
       <type xsi:type="pogoDsl:StringType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </deviceProperties>
-    <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR">
+    <deviceProperties name="GpibAddress" description="GPIB primary device address. Only need if the communication is done via PrologixGpib.">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>-1</DefaultPropValue>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="none.">
         <type xsi:type="pogoDsl:VoidType"/>
       </argin>
@@ -23,7 +27,7 @@
       </argout>
       <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
     </commands>
-    <commands name="Status" description="This command gets the device status (stored in its &lt;i>device_status&lt;/i> data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR">
+    <commands name="Status" description="This command gets the device status (stored in its &lt;i>device_status&lt;/i> data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="none.">
         <type xsi:type="pogoDsl:VoidType"/>
       </argin>
@@ -32,7 +36,7 @@
       </argout>
       <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
     </commands>
-    <commands name="StartCounter" description="Starts the counter using the internal time base. The counting time muss always be given (in us).&#xA;The number of repetitions is optional (1 by default)." execMethod="start_counter" displayLevel="OPERATOR">
+    <commands name="StartCounter" description="Starts the counter using the internal time base. The counting time muss always be given (in us).&#xA;The number of repetitions is optional (1 by default)." execMethod="start_counter" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="Counting time, number of repetitions">
         <type xsi:type="pogoDsl:IntArrayType"/>
       </argin>
@@ -41,7 +45,7 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
-    <commands name="StartScan" description="Start an scan in the threshold for integration mode measurements.&#xA;It uses the attributes ScanLowLimit, ScanHighLimit, ScanNbSteps and ScanIntegrationTime" execMethod="start_scan" displayLevel="OPERATOR">
+    <commands name="StartScan" description="Start an scan in the threshold for integration mode measurements.&#xA;It uses the attributes ScanLowLimit, ScanHighLimit, ScanNbSteps and ScanIntegrationTime" execMethod="start_scan" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="">
         <type xsi:type="pogoDsl:VoidType"/>
       </argin>
@@ -50,7 +54,7 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
-    <commands name="StopScan" description="Stops the scan after finishing the current point." execMethod="stop_scan" displayLevel="OPERATOR">
+    <commands name="StopScan" description="Stops the scan after finishing the current point." execMethod="stop_scan" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="">
         <type xsi:type="pogoDsl:VoidType"/>
       </argin>
@@ -243,6 +247,6 @@
     <states name="MOVING" description="">
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </states>
-    <preferences docHome="./doc_html" makefileHome="$(TANGO_CLASSES)/cppserver/common"/>
+    <preferences docHome="./doc_html" makefileHome="/usr/share/pogo/preferences"/>
   </classes>
 </pogoDsl:PogoSystem>
