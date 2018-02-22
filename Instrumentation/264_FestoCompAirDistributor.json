@@ -1,0 +1,41 @@
+{
+    "264": {
+        "buses": [
+            "Ethernet"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "FestoCompAirDistributor"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/264/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 453, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/SampleEnvironment/FestoCompAirDistributor/FestoCompAirDistributor.pdf"
+            }
+        ], 
+        "families": [
+            "Instrumentation"
+        ], 
+        "last_update": "2017-02-23 11:11:04.110816+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "Fento"
+        ], 
+        "name": "FestoCompAirDistributor", 
+        "products": [
+            "CompressedAirDistributor"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/SampleEnvironment/FestoCompAirDistributor", 
+        "status": "updated", 
+        "tag": "Release_1_1", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/264/update/", 
+        "updated_by_script": true
+    }
+}
