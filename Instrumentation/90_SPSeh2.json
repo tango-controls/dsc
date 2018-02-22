@@ -1,0 +1,41 @@
+{
+    "90": {
+        "buses": [
+            "Ethernet"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "SPSeh2"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/90/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 145, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/BeamlineComponents/SPSeh2/SPSeh2.pdf"
+            }
+        ], 
+        "families": [
+            "Instrumentation"
+        ], 
+        "last_update": "2017-02-23 09:37:12.797652+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "none"
+        ], 
+        "name": "SPSeh2", 
+        "products": [
+            ""
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/BeamlineComponents/SPSeh2", 
+        "status": "updated", 
+        "tag": "Release_1_0", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/90/update/", 
+        "updated_by_script": true
+    }
+}
