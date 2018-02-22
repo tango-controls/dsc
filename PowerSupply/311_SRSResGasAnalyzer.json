@@ -1,0 +1,41 @@
+{
+    "311": {
+        "buses": [
+            "Ethernet"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "SRSResGasAnalyzer"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/311/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 563, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Vacuum/SRSResGasAnalyzer/SRSResGasAnalyzer.pdf"
+            }
+        ], 
+        "families": [
+            "PowerSupply"
+        ], 
+        "last_update": "2017-02-23 11:49:00.136451+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "Delta Elektronika"
+        ], 
+        "name": "SRSResGasAnalyzer", 
+        "products": [
+            "SM70-22"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Vacuum/SRSResGasAnalyzer", 
+        "status": "updated", 
+        "tag": "Release_1_1", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/311/update/", 
+        "updated_by_script": true
+    }
+}
