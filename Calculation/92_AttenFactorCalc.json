@@ -1,0 +1,41 @@
+{
+    "92": {
+        "buses": [
+            "Not Applicable"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "AttenFactorCalc"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/92/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 147, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Calculation/AttenFactorCalc/AttenFactorCalc.pdf"
+            }
+        ], 
+        "families": [
+            "Calculation"
+        ], 
+        "last_update": "2017-02-23 09:38:16.597422+00:00", 
+        "last_update_method": "url", 
+        "license": "GPL", 
+        "manufacturers": [
+            "none"
+        ], 
+        "name": "AttenFactorCalc", 
+        "products": [
+            ""
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Calculation/AttenFactorCalc", 
+        "status": "updated", 
+        "tag": "Release_1_0", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/92/update/", 
+        "updated_by_script": true
+    }
+}
