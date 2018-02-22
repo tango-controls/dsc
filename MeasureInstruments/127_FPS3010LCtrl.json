@@ -1,0 +1,41 @@
+{
+    "127": {
+        "buses": [
+            "Not Applicable"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "FPS3010LCtrl"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/127/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 263, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/MeasureInstruments/FPS3010LCtrl/FPS3010LCtrl.pdf"
+            }
+        ], 
+        "families": [
+            "MeasureInstruments"
+        ], 
+        "last_update": "2017-02-23 10:21:56.463626+00:00", 
+        "last_update_method": "url", 
+        "license": "GPL", 
+        "manufacturers": [
+            "Attocube"
+        ], 
+        "name": "FPS3010LCtrl", 
+        "products": [
+            "http://www.attocube.com/attosensorics/fps-sensor-systems/fps3010/"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/MeasureInstruments/FPS3010LCtrl", 
+        "status": "updated", 
+        "tag": "Release_1_1", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/127/update/", 
+        "updated_by_script": true
+    }
+}
