@@ -1,0 +1,41 @@
+{
+    "1871": {
+        "buses": [
+            "USB"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "CAENN1471HV"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/1871/", 
+        "development_status": "new", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 598, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/PowerSupply/CAENN1471HV/CAENN1471HV.pdf"
+            }
+        ], 
+        "families": [
+            "PowerSupply"
+        ], 
+        "last_update": "2017-12-23 03:04:22.115244+00:00", 
+        "last_update_method": "url", 
+        "license": "GPL", 
+        "manufacturers": [
+            "CAEN"
+        ], 
+        "name": "CAENN1471HV", 
+        "products": [
+            "N1471"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/PowerSupply/CAENN1471HV", 
+        "status": "new", 
+        "tag": "", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/1871/update/", 
+        "updated_by_script": true
+    }
+}
