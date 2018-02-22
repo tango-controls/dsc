@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="SimCcd">
+    <description description="A Ccd simulator which implements the Tango Ccd interface.&#xA;&#xA;This class simulates a Ccd commands and state machine. It returns a&#xA;simulated image and jpeg of it. It can save the image as a file.&#xA;&#xA;It is intended to be used as for test purposes and as an example of&#xA;a Ccd class in C++. For a real Ccd we recommend using the LIMA library." title="Simulated Ccd" sourcePath="./" language="Cpp" filestogenerate="XMI   file,Code files" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <inheritances classname="Ccd" sourcePath="/home/goetz/workspaces-3.5/tango/AbstractClasses/Ccd"/>
+      <identification contact="at esrf.fr - andy.gotz" author="andy.gotz" emailDomain="esrf.fr" classFamily="Simulators" siteSpecific="" platform="All Platforms" bus="Not Applicable" manufacturer="none" reference=""/>
+      <comments htmlInheritance="" commandsTable="//================================================================&#xA;//&#xA;//  The following table gives the correspondence&#xA;//  between command and method names.&#xA;//&#xA;//  Command name  |  Method name&#xA;//----------------------------------------------------------------&#xA;//  State         |  dev_state&#xA;//  Status        |  dev_status&#xA;//  Start         |  Inherited (no method)&#xA;//  Stop          |  Inherited (no method)&#xA;//  Reset         |  Inherited (no method)&#xA;//  WriteFile     |  Inherited (no method)&#xA;//================================================================"/>
+    </description>
+    <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="State Code">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its &lt;i>device_status&lt;/i> data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Status description">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="Start" description="start camera exposing" execMethod="start" displayLevel="OPERATOR">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="true" inherited="true" concreteHere="true"/>
+    </commands>
+    <commands name="Stop" description="stop camera exposing" execMethod="stop" displayLevel="OPERATOR">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="true" inherited="true" concreteHere="true"/>
+    </commands>
+    <commands name="Reset" description="reset camera" execMethod="reset" displayLevel="OPERATOR">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="true" inherited="true" concreteHere="true"/>
+    </commands>
+    <commands name="WriteFile" description="write image to file in the selected format, use the file parameters to generate file name" execMethod="write_file" displayLevel="OPERATOR">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="true" inherited="true" concreteHere="true"/>
+    </commands>
+    <attributes name="Exposure" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <status abstract="true" inherited="true" concreteHere="true"/>
+      <properties description="the exposure time for the image" label="exposure" unit="seconds" standardUnit="seconds" displayUnit="seconds" format="%6.3d" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="Trigger" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
+      <dataType xsi:type="pogoDsl:ShortType"/>
+      <status abstract="true" inherited="true" concreteHere="true"/>
+      <properties description="trigger mode of camera (0=internal, 1=external)" label="trigger" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="Width" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
+      <dataType xsi:type="pogoDsl:IntType"/>
+      <status abstract="true" inherited="true" concreteHere="true"/>
+      <properties description="width of image in pixels" label="width" unit="pixels" standardUnit="pixels" displayUnit="pixels" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="Height" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
+      <dataType xsi:type="pogoDsl:IntType"/>
+      <status abstract="true" inherited="true" concreteHere="true"/>
+      <properties description="height of image in pixels" label="height" unit="pixels" standardUnit="pixels" displayUnit="pixels" format="%d" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="Frames" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
+      <dataType xsi:type="pogoDsl:IntType"/>
+      <status abstract="true" inherited="true" concreteHere="true"/>
+      <properties description="number of images to take" label="frames" unit="" standardUnit="" displayUnit="" format="%d" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="Depth" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
+      <dataType xsi:type="pogoDsl:ShortType"/>
+      <status abstract="true" inherited="true" concreteHere="true"/>
+      <properties description="number of bits per pixel" label="depth" unit="bits" standardUnit="bits" displayUnit="bits" format="%d" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="FileFormat" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <status abstract="true" inherited="true" concreteHere="true"/>
+      <properties description="file format for saving images to disk" label="file format" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="ImageFormat" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="0" maxY="0">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <status abstract="true" inherited="true" concreteHere="true"/>
+      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="ImageCounter" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
+      <dataType xsi:type="pogoDsl:IntType"/>
+      <status abstract="true" inherited="true" concreteHere="true"/>
+      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="JpegQuality" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
+      <dataType xsi:type="pogoDsl:ShortType"/>
+      <status abstract="true" inherited="true" concreteHere="true"/>
+      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="JpegCompression" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <status abstract="true" inherited="true" concreteHere="true"/>
+      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="Image" attType="Scalar" rwType="READ" displayLevel="OPERATOR" maxX="4096" maxY="4096">
+      <dataType xsi:type="pogoDsl:EncodedType"/>
+      <status abstract="true" inherited="true" concreteHere="true"/>
+      <properties description="image data" label="image" unit="" standardUnit="" displayUnit="" format="RawImage" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="Roi" attType="Spectrum" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="4" maxY="0">
+      <dataType xsi:type="pogoDsl:IntType"/>
+      <status abstract="true" inherited="true" concreteHere="true"/>
+      <properties description="coordinates of the region of interest " label="region of interest" unit="pixels" standardUnit="pixels" displayUnit="pixels" format="%d" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="Binning" attType="Spectrum" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="2" maxY="0">
+      <dataType xsi:type="pogoDsl:ShortType"/>
+      <status abstract="true" inherited="true" concreteHere="true"/>
+      <properties description="binning factor of image" label="binning" unit="pixels" standardUnit="pixels" displayUnit="pixels" format="%d" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="FileParams" attType="Spectrum" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="4" maxY="0">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <status abstract="true" inherited="true" concreteHere="true"/>
+      <properties description="the file parameters for generating file names (directory, prefix, suffix, number)" label="file parameters" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="JpegImage" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="64000000" maxY="0">
+      <dataType xsi:type="pogoDsl:UCharType"/>
+      <status abstract="true" inherited="true" concreteHere="true"/>
+      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <states name="ON" description="camera is exposing">
+      <status abstract="false" inherited="true" concrete="true"/>
+    </states>
+    <states name="OFF" description="camera is ready to start a new exposure">
+      <status abstract="false" inherited="true" concrete="true"/>
+    </states>
+    <states name="FAULT" description="camera is in fault">
+      <status abstract="false" inherited="true" concrete="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="/segfs/tango/cppserver/env"/>
+  </classes>
+</pogoDsl:PogoSystem>
