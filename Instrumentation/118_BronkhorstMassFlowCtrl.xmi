@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="BronkhorstMassFlowCtrl">
+    <description description="Class talking to the Bronkhorst Mass Flow device using the FlowBus protocol," title="Bronkhorst Mass Flow Controller class" sourcePath="/home/tnunez/Tango_svn/Servers/Instrumentation/BronkhorstMassFlowCtrl/trunk" language="Cpp" filestogenerate="XMI   file,Code files,html Pages" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <identification contact="at mail.desy.de - tnunez" author="tnunez" emailDomain="mail.desy.de" classFamily="Instrumentation" siteSpecific="" platform="Unix Like" bus="USB" manufacturer="Bronkhorst" reference="Mass Flow"/>
+      <comments commandsTable="//================================================================&#xA;//&#xA;//  The following table gives the correspondence&#xA;//  between command and method names.&#xA;//&#xA;//  Command name  |  Method name&#xA;//----------------------------------------------------------------&#xA;//  State         |  Inherited (no method)&#xA;//  Status        |  Inherited (no method)&#xA;//  WriteReadUSB  |  write_read_usb&#xA;//================================================================"/>
+    </description>
+    <deviceProperties name="TerminalPort" description="Name of the device in /dev">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>/dev/ttyUSB0</DefaultPropValue>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device state">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its device_status data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device status">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="WriteReadUSB" description="Write to the USB device and return an answer." execMethod="write_read_usb" displayLevel="OPERATOR">
+      <argin description="String to write">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="Output Value">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <preferences docHome="./doc_html" makefileHome="$(TANGO_CLASSES)/cppserver/common"/>
+  </classes>
+</pogoDsl:PogoSystem>
