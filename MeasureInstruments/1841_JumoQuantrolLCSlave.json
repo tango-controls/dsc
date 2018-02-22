@@ -1,0 +1,41 @@
+{
+    "1841": {
+        "buses": [
+            "Modbus"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "JumoQuantrolLCSlave"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/1841/", 
+        "development_status": "new", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 594, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/MeasureInstruments/JumoQuantrolLCSlave/JumoQuantrolLCSlave.pdf"
+            }
+        ], 
+        "families": [
+            "MeasureInstruments"
+        ], 
+        "last_update": "2017-09-09 03:02:32.025751+00:00", 
+        "last_update_method": "url", 
+        "license": "GPL", 
+        "manufacturers": [
+            "Jumo"
+        ], 
+        "name": "JumoQuantrolLCSlave", 
+        "products": [
+            "Quantrol LC100/LC200/LC300"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/MeasureInstruments/JumoQuantrolLCSlave", 
+        "status": "new", 
+        "tag": "", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/1841/update/", 
+        "updated_by_script": true
+    }
+}
