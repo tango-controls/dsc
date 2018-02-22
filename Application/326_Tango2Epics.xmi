@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="Tango2Epics" pogoRevision="8.1">
+    <description description="A device can be integrated in Tango control system by developing a &#xA;specific Tango device server software for the device. In situations when&#xA;the Tango device server software is not available for the device, &#xA;but software support for the EPICS control system is available instead, &#xA;it is possible to use the Tango2Epics Tango device server to expose &#xA;the device in Tango system. It serves as a bridge, in form of a Tango device, &#xA;to EPICS control system. PVaccess device exposes the existing EPICS &#xA;Process Variables (PVs) of the device in form of Tango device attributes, &#xA;states, and emulates a preconfigured set of Tango device commands by &#xA;using the appropriate EPICS PVs. By using the Tango2Epics Tango device, &#xA;integration can be achieved through configuration only, with no development &#xA;required. More information can be found in the user manual, located: &#xA;http://sourceforge.net/p/tango-ds/code/HEAD/tree/DeviceClasses/Communication/Tango2Epics/trunk/doc/Tango2EpicsGateway.pdf." title="Tango2Epics Tango Device" sourcePath="/home/guest/workspace/trunk/src/Tango2Epics" language="Cpp" filestogenerate="XMI   file,Code files" license="GPL" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <identification contact="at cosylab.com - vid.juvan" author="vid.juvan" emailDomain="cosylab.com" classFamily="Application" siteSpecific="" platform="Unix Like" bus="Not Applicable" manufacturer="none" reference=""/>
+    </description>
+    <deviceProperties name="Variables" description="This is the property, that defines which PVs will be linked to what &#xA;Tango attributes, commands or states. It consists of multiple items, &#xA;each specifying one PV and its properties. Additionally it provides &#xA;the configuration for linking the PV to the Tango attributes, &#xA;commands or states. See the Extended BNF Format of device properties&#xA;in the user manual for the format of this property and its items.">
+      <type xsi:type="pogoDsl:StringVectorType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="ScalarAccessTimeout" description="This property specifies the value of the preferred timeout &#xA;(in seconds) for when trying to access a scalar PV.">
+      <type xsi:type="pogoDsl:DoubleType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>1</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="ArrayAccessTimeout" description="This property specifies the value of the preferred timeout &#xA;(in seconds) for when trying to access a array PV.">
+      <type xsi:type="pogoDsl:DoubleType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>1</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="SubscriptionCycle" description="This property specifies the value of the time period for subscription &#xA;cycles. Note: when closing the application, it might take one &#xA;subscription cycle period of time to close the subscriptions.">
+      <type xsi:type="pogoDsl:DoubleType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>2</DefaultPropValue>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device state">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its device_status data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device status">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="On" description="Allegedly represents a command for turning the device on. &#xA;It changes the values of specified PVs to the specified value. &#xA;Specifications about these actions are read from the Variable &#xA;device property. See the user manual for details on &#xA;configuration." execMethod="on" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="Off" description="Allegedly represents a command for turning the device off. &#xA;It changes the values of specified PVs to the specified value. &#xA;Specifications about these actions are read from the Variable &#xA;device property. See the user manual for details on &#xA;configuration." execMethod="off" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="Reset" description="Allegedly represents a command for reseting the device. &#xA;It changes the values of specified PVs to the specified value. &#xA;Specifications about these actions are read from the Variable &#xA;device property. See the user manual for details on &#xA;configuration." execMethod="reset" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <states name="ON" description="">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="OFF" description="">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="CLOSE" description="">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="OPEN" description="">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="INSERT" description="">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="EXTRACT" description="">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="MOVING" description="">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="STANDBY" description="">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="FAULT" description="">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="INIT" description="">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="RUNNING" description="">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="ALARM" description="">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="DISABLE" description="">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="UNKNOWN" description="">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="/usr/local/share/pogo/preferences"/>
+    <additionalFiles name="EpicsThreadHandler" path="/home/guest/workspace/trunk/src/Tango2Epics/EpicsThreadHandler.cpp"/>
+  </classes>
+</pogoDsl:PogoSystem>
