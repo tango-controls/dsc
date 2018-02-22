@@ -1,0 +1,41 @@
+{
+    "1397": {
+        "buses": [
+            "Not Applicable"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "MessageTrigger"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/1397/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 476, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/SoftwareSystem/MessageTrigger/MessageTrigger.pdf"
+            }
+        ], 
+        "families": [
+            "SoftwareSystem"
+        ], 
+        "last_update": "2017-04-20 13:16:58.136643+00:00", 
+        "last_update_method": "file", 
+        "license": "None", 
+        "manufacturers": [
+            "none"
+        ], 
+        "name": "MessageTrigger", 
+        "products": [
+            ""
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/SoftwareSystem/MessageTrigger", 
+        "status": "updated", 
+        "tag": "release_1_0_15", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/1397/update/", 
+        "updated_by_script": true
+    }
+}
