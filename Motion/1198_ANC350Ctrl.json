@@ -1,0 +1,41 @@
+{
+    "1198": {
+        "buses": [
+            "Ethernet"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "ANC350Ctrl"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/1198/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 311, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Motion/ANC350Ctrl/ANC350Ctrl.pdf"
+            }
+        ], 
+        "families": [
+            "Motion"
+        ], 
+        "last_update": "2017-04-20 13:12:48.803461+00:00", 
+        "last_update_method": "file", 
+        "license": "None", 
+        "manufacturers": [
+            "AttoCube"
+        ], 
+        "name": "ANC350Ctrl", 
+        "products": [
+            "ANC350"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Motion/MotorControllers/Attocube/ANC350Ctrl", 
+        "status": "updated", 
+        "tag": "Release_1_0", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/1198/update/", 
+        "updated_by_script": true
+    }
+}
