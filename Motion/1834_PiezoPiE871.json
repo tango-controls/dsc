@@ -1,0 +1,41 @@
+{
+    "1834": {
+        "buses": [
+            "Not Applicable"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "PiezoPiE871"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/1834/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 591, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Motion/PiezoPiE871/PiezoPiE871.pdf"
+            }
+        ], 
+        "families": [
+            "Motion"
+        ], 
+        "last_update": "2018-01-16 11:24:28.896951+00:00", 
+        "last_update_method": "url", 
+        "license": "GPL", 
+        "manufacturers": [
+            "Physik Instrumente (PI)"
+        ], 
+        "name": "PiezoPiE871", 
+        "products": [
+            "E871"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Motion/MotorControllers/PI/PiezoPiE871", 
+        "status": "updated", 
+        "tag": "Release_1_1", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/1834/update/", 
+        "updated_by_script": true
+    }
+}
