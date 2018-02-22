@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="ModbusComposer" pogoRevision="9.6">
+    <description description="A class to create dynamic attributes above a Modbus interface" title="ModbusComposer" sourcePath="/mntdirect/_segfs/tango/cppserver/calculcation/ModbusComposer" language="Cpp" filestogenerate="XMI   file,CMakeLists,Protected Regions" license="GPL" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <identification contact="at esrf.fr - pons" author="pons" emailDomain="esrf.fr" classFamily="Calculation" siteSpecific="" platform="All Platforms" bus="Modbus" manufacturer="none" reference=""/>
+    </description>
+    <deviceProperties name="Modbus_name" description="Name of the Modbus device">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="DynamicAttributes" description="List of dynacmic attributes&#xA;See &lt;a href=grammar.html>grammar.html&lt;/a>">
+      <type xsi:type="pogoDsl:StringVectorType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="DynamicCommands" description="List of dynacmic attributes&#xA;See &lt;a href=grammar.html>grammar.html&lt;/a>">
+      <type xsi:type="pogoDsl:StringVectorType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="DynamicStates" description="State definitions (Default state is ON)&#xA;See &lt;a href=grammar.html>grammar.html&lt;/a>">
+      <type xsi:type="pogoDsl:StringVectorType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="AddressOffset" description="Integer offset added to Addresses in every Modbus command call">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="DefaultReadCommand" description="Command use to read Modbus registers&#xA;(eg. ReadHoldingRegisters)">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="CacheConfig" description="Cache configuration, the read command is the DefaultReadCommand (if any)&#xA;&#xA;[0] = Start address&#xA;[1] = Number of register&#xA;[2] = Refresh period (ms)">
+      <type xsi:type="pogoDsl:IntVectorType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="CoilCacheConfig" description="Coil Cache configuration, the read can be only ReadMultipleCoilStatus&#xA;&#xA;[0] = Start address&#xA;[1] = Number of coil&#xA;[2] = Refresh period (ms)">
+      <type xsi:type="pogoDsl:IntVectorType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device state">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its device_status data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device status">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <dynamicCommands name="DynCommand" description="" execMethod="dyn_command" displayLevel="OPERATOR" polledPeriod="0" isDynamic="true">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </dynamicCommands>
+    <preferences docHome="./doc_html" makefileHome="/segfs/tango/cppserver/env"/>
+    <additionalFiles name="ExpParser" path="/mntdirect/_segfs/tango/cppserver/calculcation/ModbusComposer/ExpParser.cpp"/>
+    <additionalFiles name="AttributeMap" path="/mntdirect/_segfs/tango/cppserver/calculcation/ModbusComposer/AttributeMap.cpp"/>
+    <additionalFiles name="ModbusComposerThread" path="/mntdirect/_segfs/tango/cppserver/calculcation/ModbusComposer/ModbusComposerThread.cpp"/>
+  </classes>
+</pogoDsl:PogoSystem>
