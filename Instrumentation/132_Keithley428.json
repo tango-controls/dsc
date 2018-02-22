@@ -1,0 +1,41 @@
+{
+    "132": {
+        "buses": [
+            "GPIB"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "Keithley428"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/132/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 273, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/MeasureInstruments/Keithley428/Keithley428.pdf"
+            }
+        ], 
+        "families": [
+            "Instrumentation"
+        ], 
+        "last_update": "2017-02-23 10:24:58.290166+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "Keithley"
+        ], 
+        "name": "Keithley428", 
+        "products": [
+            "428"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/MeasureInstruments/Keithley/Keithley428", 
+        "status": "updated", 
+        "tag": "Release_1_5", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/132/update/", 
+        "updated_by_script": true
+    }
+}
