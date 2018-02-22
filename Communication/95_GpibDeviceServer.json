@@ -1,0 +1,41 @@
+{
+    "95": {
+        "buses": [
+            "GPIB"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "GpibDeviceServer"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/95/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 165, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Communication/GpibDeviceServer/GpibDeviceServer.pdf"
+            }
+        ], 
+        "families": [
+            "Communication"
+        ], 
+        "last_update": "2017-02-23 09:49:36.683006+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "none"
+        ], 
+        "name": "GpibDeviceServer", 
+        "products": [
+            ""
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Communication/GpibDeviceServer", 
+        "status": "updated", 
+        "tag": "Release_1_7", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/95/update/", 
+        "updated_by_script": true
+    }
+}
