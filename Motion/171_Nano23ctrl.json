@@ -1,0 +1,41 @@
+{
+    "171": {
+        "buses": [
+            "Not Applicable"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "Nano23ctrl"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/171/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 321, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Motion/Nano23ctrl/Nano23ctrl.pdf"
+            }
+        ], 
+        "families": [
+            "Motion"
+        ], 
+        "last_update": "2017-02-23 10:39:06.670265+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "none"
+        ], 
+        "name": "Nano23ctrl", 
+        "products": [
+            ""
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Motion/MotorControllers/Kleidiek/Nano23ctrl", 
+        "status": "updated", 
+        "tag": "Release_1_5", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/171/update/", 
+        "updated_by_script": true
+    }
+}
