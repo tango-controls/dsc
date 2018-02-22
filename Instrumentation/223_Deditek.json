@@ -1,0 +1,41 @@
+{
+    "223": {
+        "buses": [
+            "USB"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "Deditek"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/223/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 390, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/OtherInstruments/Deditek/Deditek.pdf"
+            }
+        ], 
+        "families": [
+            "Instrumentation"
+        ], 
+        "last_update": "2017-02-23 10:53:17.772927+00:00", 
+        "last_update_method": "url", 
+        "license": "GPL", 
+        "manufacturers": [
+            "DEDITEC"
+        ], 
+        "name": "Deditek", 
+        "products": [
+            "http://www.deditec.de/en/module/prod/usb-relais-und-opto-koppler-eingaenge-module/usb-optoin-8.html"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/OtherInstruments/Deditek", 
+        "status": "updated", 
+        "tag": "Release_1_0", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/223/update/", 
+        "updated_by_script": true
+    }
+}
