@@ -1,0 +1,41 @@
+{
+    "288": {
+        "buses": [
+            "Ethernet"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "Eurotherm3504"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/288/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 519, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Temperature/Eurotherm3504/Eurotherm3504.pdf"
+            }
+        ], 
+        "families": [
+            "Instrumentation"
+        ], 
+        "last_update": "2017-02-23 11:36:59.914584+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "Eurotherm"
+        ], 
+        "name": "Eurotherm3504", 
+        "products": [
+            "http://www.eurotherm.com/products/controllers/multi-loop/3500/3504/"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Temperature/Eurotherm3504", 
+        "status": "updated", 
+        "tag": "Release_1_1", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/288/update/", 
+        "updated_by_script": true
+    }
+}
