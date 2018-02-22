@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="PiLC" pogoRevision="8.4">
+    <description description="PiLC control class" title="PiLC control" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/OtherInstruments/PiLC/trunk" language="Cpp" filestogenerate="XMI   file,Code files,html Pages" hasMandatoryProperty="false" hasConcreteProperty="false" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <identification contact="at mail.desy.de - tnunez" author="tnunez" emailDomain="mail.desy.de" classFamily="Instrumentation" siteSpecific="" platform="Unix Like" bus="Not Applicable" manufacturer="none" reference=""/>
+    </description>
+    <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device state">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its device_status data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device status">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="WriteFPGA" description="Write data to FPGA." execMethod="write_fpga" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="FPGA address and data.">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="WriteDisplay" description="Write command to display" execMethod="write_display" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Command, value">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="InitPiLC" description="Command to initialize the PiLC. &#xA;It is automatically called when the server is started." execMethod="init_pi_lc" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ReadFPGA" description="Read data from FPGA." execMethod="read_fpga" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="FPGA address.">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="Output">
+        <type xsi:type="pogoDsl:UIntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ReadDisplay" description="Read data from Display" execMethod="read_display" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Command">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="Output">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="WriteReadIOBoard" description="Write data to IOBoard and read" execMethod="write_read_ioboard" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Command and data (red, green, blue).">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argin>
+      <argout description="Output">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="WriteIOCard" description="Write data to IOCard" execMethod="write_iocard" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="IOCard module, command and value">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ReadIOCard" description="Read data from IOCard" execMethod="read_iocard" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="IOCard module and command">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argin>
+      <argout description="Output">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="WriteMainBoard" description="Write data to main board." execMethod="write_main_board" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Command and value">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ReadMainBoard" description="Read data from main board" execMethod="read_main_board" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Command">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="Output">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="EPCSProgram" description="Reprogram FPGA. Information read from external files:&#xA;output_file.rbf&#xA;epcs_output.hex&#xA;PiLC is restarted at the end." execMethod="epcsprogram" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SPISendBytes" description="Send bytes. If debug is set to 1, a file called epcs_output.hex needs to open to write." execMethod="spisend_bytes" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Operation code, bytes, debug flag">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argin>
+      <argout description="Output data">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SPIReadID" description="Read ID" execMethod="spiread_id" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="ID">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SPIReadStatus" description="Read `Read` status" execMethod="spiread_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Status">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SPIWriteStatus" description="Read `Write` status" execMethod="spiwrite_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Write Status">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SPIWrite" description="Write data and wait until finish" execMethod="spiwrite" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Data to write">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="Status output">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SPIEraseBluk" description="" execMethod="spierase_bluk" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SPIReadByte" description="" execMethod="spiread_byte" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Address, bytes to read">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argin>
+      <argout description="Output">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SPIWritePage" description="" execMethod="spiwrite_page" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Data, address">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SPIWriteSector" description="Write data to pages. The data increment by 0x100 for each page and the address by 0x00100" execMethod="spiwrite_sector" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Data, length">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SPIErasePage" description="" execMethod="spierase_page" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Address">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SPIEraseSector" description="Erase the number of pages given by the input argument, starting with adress 0 and increasing the address by 0x010000" execMethod="spierase_sector" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Length">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="RPIShutdown" description="" execMethod="rpishutdown" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Time to shutdown">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="EventUpdate" description="Check if something has change and returns an array with the io to update." execMethod="event_update" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Event Update array">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="IOLedsUpdate" description="Update LEDs" execMethod="ioleds_update" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <states name="ON" description="">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="FAULT" description="">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="/usr/share/pogo/preferences"/>
+  </classes>
+</pogoDsl:PogoSystem>
