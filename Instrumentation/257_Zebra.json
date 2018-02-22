@@ -1,0 +1,41 @@
+{
+    "257": {
+        "buses": [
+            "Socket"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "Zebra"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/257/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 425, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/OtherInstruments/Zebra/Zebra.pdf"
+            }
+        ], 
+        "families": [
+            "Instrumentation"
+        ], 
+        "last_update": "2017-02-23 10:59:57.253367+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "DLS controls group"
+        ], 
+        "name": "Zebra", 
+        "products": [
+            "Zebra"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/OtherInstruments/Zebra", 
+        "status": "updated", 
+        "tag": "Release_1_2", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/257/update/", 
+        "updated_by_script": true
+    }
+}
