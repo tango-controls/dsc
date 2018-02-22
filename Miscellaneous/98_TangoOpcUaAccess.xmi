@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="TangoOpcUaAccess" pogoRevision="8.1">
+    <description description="Opc Ua Access" title="Opc Ua Access" sourcePath="D:\OPC UA\TangoOpcUaAccess" language="Cpp" filestogenerate="XMI   file,VC9 Project" license="GPL" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <identification contact="at nexeya.com - sebastien.gara" author="sebastien.gara" emailDomain="nexeya.com" classFamily="Miscellaneous" siteSpecific="" platform="All Platforms" bus="Ethernet" manufacturer="none" reference=""/>
+    </description>
+    <deviceProperties name="OpcUaServerAddress" description="Opc Ua Server Address">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>opc.tcp://lhostname:port</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="ConnectAtStartUp" description="">
+      <type xsi:type="pogoDsl:BooleanType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="OpcUaPolicyIndex" description="Policy index for the opc ua server&#xA;Generally, 0 is for None">
+      <type xsi:type="pogoDsl:UShortType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>0</DefaultPropValue>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device state">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its device_status data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device status">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="Connect" description="Connection to the OPC UA server" execMethod="connect" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>RUNNING</excludedStates>
+    </commands>
+    <commands name="Disconnect" description="Disconnection to the OPC UA server" execMethod="disconnect" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>STANDBY</excludedStates>
+    </commands>
+    <commands name="Browse" description="Browse the OPC UA server" execMethod="browse" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="OpcNodes">
+        <type xsi:type="pogoDsl:StringArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>STANDBY</excludedStates>
+    </commands>
+    <commands name="Call" description="Call the specified method on the OPC UA server" execMethod="call" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Name of the method, parameters">
+        <type xsi:type="pogoDsl:StringArrayType"/>
+      </argin>
+      <argout description="Result">
+        <type xsi:type="pogoDsl:StringArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>STANDBY</excludedStates>
+    </commands>
+    <commands name="RegisterNode" description="Register to the specified node on the OPC UA server" execMethod="register_node" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Node">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>STANDBY</excludedStates>
+    </commands>
+    <commands name="UnregisterNode" description="Unregister to the specified node on the OPC UA server" execMethod="unregister_node" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Node">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>STANDBY</excludedStates>
+    </commands>
+    <commands name="ReadDoubleValue" description="Read the double value of thespecified node on the OPC UA server" execMethod="read_double_value" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Node">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="Value">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>STANDBY</excludedStates>
+    </commands>
+    <commands name="WriteDoubleValue" description="Write the double value on the specified node on the OPC UA server" execMethod="write_double_value" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Node, value">
+        <type xsi:type="pogoDsl:DoubleStringArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>STANDBY</excludedStates>
+    </commands>
+    <commands name="Subscribe" description="Subscription to the OPC-UA server" execMethod="subscribe" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>STANDBY</excludedStates>
+    </commands>
+    <commands name="Unsubscribe" description="Unsubscription to the OPC-UA server" execMethod="unsubscribe" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>STANDBY</excludedStates>
+    </commands>
+    <commands name="ReadFloatValue" description="Read the float value of thespecified node on the OPC UA server" execMethod="read_float_value" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Node">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="Value">
+        <type xsi:type="pogoDsl:FloatType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>STANDBY</excludedStates>
+    </commands>
+    <commands name="WriteFloatValue" description="Write the float value on the specified node on the OPC UA server" execMethod="write_float_value" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Node, value">
+        <type xsi:type="pogoDsl:DoubleStringArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>STANDBY</excludedStates>
+    </commands>
+    <commands name="ReadBoolValue" description="Read the bool value of thespecified node on the OPC UA server" execMethod="read_bool_value" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Node">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="Value">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>STANDBY</excludedStates>
+    </commands>
+    <commands name="WriteBoolValue" description="Write the bool value on the specified node on the OPC UA server" execMethod="write_bool_value" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Node, value">
+        <type xsi:type="pogoDsl:LongStringArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>STANDBY</excludedStates>
+    </commands>
+    <commands name="ReadLongValue" description="Read the long value of thespecified node on the OPC UA server" execMethod="read_long_value" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Node">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="Value">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>STANDBY</excludedStates>
+    </commands>
+    <commands name="WriteLongValue" description="Write the long value on the specified node on the OPC UA server" execMethod="write_long_value" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Node, value">
+        <type xsi:type="pogoDsl:LongStringArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>STANDBY</excludedStates>
+    </commands>
+    <commands name="ReadStringValue" description="Read the string value of thespecified node on the OPC UA server" execMethod="read_string_value" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Node">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="Value">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>STANDBY</excludedStates>
+    </commands>
+    <commands name="WriteStringValue" description="Write the String value on the specified node on the OPC UA server" execMethod="write_string_value" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Node, value">
+        <type xsi:type="pogoDsl:StringArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>STANDBY</excludedStates>
+    </commands>
+    <commands name="ReadShortValue" description="Read the short value of the specified node on the OPC UA server" execMethod="read_short_value" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Node">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="Value">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>STANDBY</excludedStates>
+    </commands>
+    <commands name="WriteShortValue" description="Write the short value on the specified node on the OPC UA server" execMethod="write_short_value" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Node, value">
+        <type xsi:type="pogoDsl:LongStringArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>STANDBY</excludedStates>
+    </commands>
+    <commands name="ReadLong64Value" description="Read the long64 value of thespecified node on the OPC UA server" execMethod="read_long64_value" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Node">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="Value">
+        <type xsi:type="pogoDsl:LongType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>STANDBY</excludedStates>
+    </commands>
+    <commands name="WriteLong64Value" description="Write the long64 value on the specified node on the OPC UA server" execMethod="write_long64_value" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Node, value">
+        <type xsi:type="pogoDsl:LongStringArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>STANDBY</excludedStates>
+    </commands>
+    <commands name="ReadULongValue" description="Read the ulong value of thespecified node on the OPC UA server" execMethod="read_ulong_value" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Node">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="Value">
+        <type xsi:type="pogoDsl:UIntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>STANDBY</excludedStates>
+    </commands>
+    <commands name="WriteULongValue" description="Write the ulong value on the specified node on the OPC UA server" execMethod="write_ulong_value" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Node, value">
+        <type xsi:type="pogoDsl:LongStringArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>STANDBY</excludedStates>
+    </commands>
+    <commands name="ReadUShortValue" description="Read the ushort value of the specified node on the OPC UA server" execMethod="read_ushort_value" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Node">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="Value">
+        <type xsi:type="pogoDsl:UShortType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>STANDBY</excludedStates>
+    </commands>
+    <commands name="WriteUShortValue" description="Write the ushort value on the specified node on the OPC UA server" execMethod="write_ushort_value" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Node, value">
+        <type xsi:type="pogoDsl:LongStringArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>STANDBY</excludedStates>
+    </commands>
+    <commands name="ReadULong64Value" description="Read the ulong64 value of thespecified node on the OPC UA server" execMethod="read_ulong64_value" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Node">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="Value">
+        <type xsi:type="pogoDsl:ULongType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>STANDBY</excludedStates>
+    </commands>
+    <commands name="WriteULong64Value" description="Write the ulong64 value on the specified node on the OPC UA server" execMethod="write_ulong64_value" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Node, value">
+        <type xsi:type="pogoDsl:LongStringArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>STANDBY</excludedStates>
+    </commands>
+    <states name="INIT" description="Initialization state">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="FAULT" description="There is a FAULT on the device">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="RUNNING" description="The device is connected">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="STANDBY" description="The device is up and ready">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="$(TANGO_HOME)"/>
+  </classes>
+</pogoDsl:PogoSystem>
