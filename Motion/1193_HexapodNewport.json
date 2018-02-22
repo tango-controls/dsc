@@ -1,0 +1,41 @@
+{
+    "1193": {
+        "buses": [
+            "Ethernet"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "HexapodNewport"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/1193/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 307, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Motion/HexapodNewport/HexapodNewport.pdf"
+            }
+        ], 
+        "families": [
+            "Motion"
+        ], 
+        "last_update": "2017-04-20 13:12:40.350837+00:00", 
+        "last_update_method": "file", 
+        "license": "None", 
+        "manufacturers": [
+            "Newport"
+        ], 
+        "name": "HexapodNewport", 
+        "products": [
+            "HXP"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Motion/Hexapods/HexapodNewport", 
+        "status": "updated", 
+        "tag": "release_1_1_2", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/1193/update/", 
+        "updated_by_script": true
+    }
+}
