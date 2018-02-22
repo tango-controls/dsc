@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="Petra3Shutter" pogoRevision="8.4">
+    <description description="Class collecting all the information for shutters in a given beamline" title="Shutter Tango interface" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/MagneticDevices/Petra3Shutter/trunk" language="Cpp" filestogenerate="XMI   file,Code files,html Pages" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+      <inheritances classname="Device_4Impl" sourcePath=""/>
+      <identification contact="at desy.de - maria-teresa.nunez-pardo-de-vera" author="maria-teresa.nunez-pardo-de-vera" emailDomain="desy.de" classFamily="Instrumentation" siteSpecific="" platform="Unix Like" bus="Not Applicable" manufacturer="none" reference=""/>
+    </description>
+    <deviceProperties name="Beamline" description="Beamline number">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="State Code">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its &lt;i>device_status&lt;/i> data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Status description">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
+    </commands>
+    <commands name="CloseOpenABS_BS_0" description="Close/Open BS by sending 0/1" execMethod="close_open_abs__bs_0" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="0-> close, 1 -> open">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="CloseOpen_BS_1" description="Close/Open BS by sending 0/1" execMethod="close_open__bs_1" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="0-> close, 1 -> open">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="CloseOpen_BS_2" description="Close/Open BS by sending 0/1" execMethod="close_open__bs_2" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="0-> close, 1 -> open">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="CloseOpen_BS_3" description="Close/Open BS by sending 0/1" execMethod="close_open__bs_3" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="0-> close, 1 -> open">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="CloseOpen_BS_4" description="Close/Open BS by sending 0/1" execMethod="close_open__bs_4" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="0-> close, 1 -> open">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="CloseOpen_BS_5" description="Close/Open BS by sending 0/1" execMethod="close_open__bs_5" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="0-> close, 1 -> open">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="CloseOpen_BS_1B" description="" execMethod="close_open__bs_1_b" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="0-> close, 1 -> open">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <states name="ON" description="No errors">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="ALARM" description="No devices defined">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="/usr/share/pogo/preferences"/>
+  </classes>
+</pogoDsl:PogoSystem>
