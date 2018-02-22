@@ -1,0 +1,48 @@
+{
+    "239": {
+        "buses": [
+            "Serial Line", 
+            "Serial Line", 
+            "Serial Line", 
+            "Serial Line"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "MenloSMA1000", 
+            "DeviceSerial", 
+            "MenloSMA1000", 
+            "DeviceSerial"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/239/", 
+        "development_status": "released", 
+        "documentation": [], 
+        "families": [
+            "Controllers", 
+            "AbstractClasses", 
+            "Controllers", 
+            "AbstractClasses"
+        ], 
+        "last_update": "2017-02-23 10:56:41.529353+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "MenloSystems", 
+            "none", 
+            "MenloSystems", 
+            "none"
+        ], 
+        "name": "MenloSMA1000", 
+        "products": [
+            "SMA1000", 
+            "", 
+            "SMA1000", 
+            ""
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/OtherInstruments/MenloSMA1000", 
+        "status": "updated", 
+        "tag": "Release_1_0", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/239/update/", 
+        "updated_by_script": true
+    }
+}
