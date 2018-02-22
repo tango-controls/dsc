@@ -1,0 +1,38 @@
+{
+    "1846": {
+        "buses": [
+            "Serial Line", 
+            "Serial Line"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "DeviceSerial", 
+            "MicroEpsilonILR118x"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/1846/", 
+        "development_status": "released", 
+        "documentation": [], 
+        "families": [
+            "AbstractClasses", 
+            "MeasureInstruments"
+        ], 
+        "last_update": "2017-09-23 03:02:46.512486+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "none", 
+            "Micro-Epsilon"
+        ], 
+        "name": "MicroEpsilonILR118x", 
+        "products": [
+            "", 
+            "ILR118x"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/MeasureInstruments/MicroEpsilonILR118x", 
+        "status": "updated", 
+        "tag": "Release_1_1", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/1846/update/", 
+        "updated_by_script": true
+    }
+}
