@@ -1,0 +1,41 @@
+{
+    "336": {
+        "buses": [
+            "VME"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "DGG2"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/336/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 190, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/CounterTimer/DGG2/DGG2.pdf"
+            }
+        ], 
+        "families": [
+            "Instrumentation"
+        ], 
+        "last_update": "2017-04-20 13:08:31.688567+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "none"
+        ], 
+        "name": "DGG2", 
+        "products": [
+            ""
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/CounterTimer/DGG2", 
+        "status": "updated", 
+        "tag": "Release_1_10", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/336/update/", 
+        "updated_by_script": true
+    }
+}
