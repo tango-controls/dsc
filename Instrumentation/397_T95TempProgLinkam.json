@@ -1,0 +1,41 @@
+{
+    "397": {
+        "buses": [
+            "Data Socket"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "T95TempProgLinkam"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/397/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 541, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Temperature/T95TempProgLinkam/T95TempProgLinkam.pdf"
+            }
+        ], 
+        "families": [
+            "Instrumentation"
+        ], 
+        "last_update": "2017-02-23 11:41:54.046423+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "Linkam Scientific Instruments"
+        ], 
+        "name": "T95TempProgLinkam", 
+        "products": [
+            "T95 Temperature Programmer"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Temperature/T95TempProgLinkam", 
+        "status": "updated", 
+        "tag": "Release_1_1", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/397/update/", 
+        "updated_by_script": true
+    }
+}
