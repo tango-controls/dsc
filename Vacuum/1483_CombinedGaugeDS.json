@@ -1,0 +1,41 @@
+{
+    "1483": {
+        "buses": [
+            "rs232"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "CombinedGaugeDS"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/1483/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 554, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Vacuum/CombinedGaugeDS/CombinedGaugeDS.pdf"
+            }
+        ], 
+        "families": [
+            "Vacuum"
+        ], 
+        "last_update": "2017-04-20 13:19:32.980933+00:00", 
+        "last_update_method": "file", 
+        "license": "None", 
+        "manufacturers": [
+            "none"
+        ], 
+        "name": "CombinedGaugeDS", 
+        "products": [
+            ""
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Vacuum/CombinedGaugeDS", 
+        "status": "updated", 
+        "tag": "", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/1483/update/", 
+        "updated_by_script": true
+    }
+}
