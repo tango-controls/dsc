@@ -1,0 +1,41 @@
+{
+    "106": {
+        "buses": [
+            "Socket"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "CryoSMSMagnet"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/106/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 239, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/MagneticDevices/CryoSMSMagnet/CryoSMSMagnet.pdf"
+            }
+        ], 
+        "families": [
+            "Instrumentation"
+        ], 
+        "last_update": "2017-02-23 10:15:19.181435+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "Driesen + Kern GmbH"
+        ], 
+        "name": "CryoSMSMagnet", 
+        "products": [
+            "DKRF400"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/MagneticDevices/CryoSMSMagnet", 
+        "status": "updated", 
+        "tag": "Release_1_1", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/106/update/", 
+        "updated_by_script": true
+    }
+}
