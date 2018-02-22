@@ -1,0 +1,41 @@
+{
+    "1156": {
+        "buses": [
+            "Ethernet"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "Keithley6221"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/1156/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 276, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/MeasureInstruments/Keithley6221/Keithley6221.pdf"
+            }
+        ], 
+        "families": [
+            "MeasureInstruments"
+        ], 
+        "last_update": "2017-04-20 13:11:40.007046+00:00", 
+        "last_update_method": "file", 
+        "license": "None", 
+        "manufacturers": [
+            "Keithley"
+        ], 
+        "name": "Keithley6221", 
+        "products": [
+            "6221"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/MeasureInstruments/Keithley/Keithley6221", 
+        "status": "updated", 
+        "tag": "release_1_0_3", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/1156/update/", 
+        "updated_by_script": true
+    }
+}
