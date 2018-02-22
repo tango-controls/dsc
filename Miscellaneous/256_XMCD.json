@@ -1,0 +1,41 @@
+{
+    "256": {
+        "buses": [
+            "Not Applicable"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "XMCD"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/256/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 424, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/OtherInstruments/XMCD/XMCD.pdf"
+            }
+        ], 
+        "families": [
+            "Miscellaneous"
+        ], 
+        "last_update": "2017-02-23 10:59:49.487767+00:00", 
+        "last_update_method": "url", 
+        "license": "GPL", 
+        "manufacturers": [
+            "DESY"
+        ], 
+        "name": "XMCD", 
+        "products": [
+            "PiLC"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/OtherInstruments/XMCD", 
+        "status": "updated", 
+        "tag": "Release_2_1", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/256/update/", 
+        "updated_by_script": true
+    }
+}
