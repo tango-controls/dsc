@@ -1,0 +1,41 @@
+{
+    "157": {
+        "buses": [
+            "Not Applicable"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "HexapodCtrl"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/157/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 305, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Motion/HexapodCtrl/HexapodCtrl.pdf"
+            }
+        ], 
+        "families": [
+            "Motion"
+        ], 
+        "last_update": "2018-01-05 15:17:00.877637+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "Physik Instrument"
+        ], 
+        "name": "HexapodCtrl", 
+        "products": [
+            "M850 M840 hexapod"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Motion/Hexapods/HexapodCtrl", 
+        "status": "updated", 
+        "tag": "Release_1_8", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/157/update/", 
+        "updated_by_script": true
+    }
+}
