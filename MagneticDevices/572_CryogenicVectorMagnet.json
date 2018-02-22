@@ -1,0 +1,41 @@
+{
+    "572": {
+        "buses": [
+            "Socket"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "CryogenicVectorMagnet"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/572/", 
+        "development_status": "new", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 240, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/MagneticDevices/CryogenicVectorMagnet/CryogenicVectorMagnet.pdf"
+            }
+        ], 
+        "families": [
+            "MagneticDevices"
+        ], 
+        "last_update": "2017-02-23 10:15:28.032107+00:00", 
+        "last_update_method": "url", 
+        "license": "GPL", 
+        "manufacturers": [
+            "Cryogenic"
+        ], 
+        "name": "CryogenicVectorMagnet", 
+        "products": [
+            "Vector Magnet System J3901"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/MagneticDevices/CryogenicVectorMagnet", 
+        "status": "updated", 
+        "tag": "", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/572/update/", 
+        "updated_by_script": true
+    }
+}
