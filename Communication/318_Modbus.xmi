@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="Modbus" pogoRevision="9.0">
+    <description description="A Class to handle the modbus protocol over TCP/IP or Serial (RTU)." title="Modbus" sourcePath="/mntdirect/_segfs/tango/cppserver/ID/IDMULTI/Correction/Modbus/src" language="Cpp" filestogenerate="XMI   file,Code files" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_4Impl" sourcePath="/segfs/tango/templates/AbstractClasses"/>
+      <identification contact="at esrf.fr - accelerator-control" author="accelerator-control" emailDomain="esrf.fr" classFamily="Communication" siteSpecific="" platform="All Platforms" bus="Modbus" manufacturer="none" reference=""/>
+    </description>
+    <deviceProperties name="Protocol" description="RTU`` : Binary serial communication.&#xA;``TCP`` : Communication over ethernet.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>RTU</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="Iphost" description="The host IP address  used with the TCP protocol in the form&#xA;aa.bb.cc.dd.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="Serialline" description="The name of the serial line device used with RTU protocol.&#xA;This can be any device name of a Serial Class object in the Tango&#xA;system.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="Address" description="Node index used with the RTU or TCP protocol">
+      <type xsi:type="pogoDsl:ShortType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>1</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="CacheConfig" description="Describe which data has to be cached.&#xA;Each set of cached data is described by 3 parameters which are:&#xA;1 - Command to be used to read data (ReadHoldingRegisters, ReadInputStatus&#xA;ReadInutRegisters or ReadMultipleCoilStatus)&#xA;2 - First address to be read&#xA;3 - Number of data to read">
+      <type xsi:type="pogoDsl:StringVectorType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="CacheSleep" description="Cache update thread main loop sleeping time (in ms)">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>1000</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="SocketConnectionSleep" description="The necessary sleep time between closing a connection (Socket) and&#xA;opening a new connection. To avoid hang-ups a non blocking socket&#xA;is used to check the availability on the network. Afterwards the non blocking&#xA;socket is closed and a blocking socket will be opened.&#xA;The SocketConnectionSleep time specified the wait time in ms between&#xA;these two connections.">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>200</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="TCPTimeout" description="Timeout used when the TCP protocol is used (in sec)">
+      <type xsi:type="pogoDsl:DoubleType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>1</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="LogFile" description="Name og the file where are stored invalid frame">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="TCPNoDelay" description="Disable Nagle`s algorithm.&#xA;Set this property to reduce the latency of TCP transmissions.&#xA;This property is relevant only if the ``Protocol`` property is set to ``TCP``.">
+      <type xsi:type="pogoDsl:BooleanType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>false</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="TCPQuickAck" description="Set this property to true to enable TCP quick acknowledgements to reduce the TCP latency.&#xA;This could be useful with some electronic boards to force the device server to acknowledge immediately the received TCP packets.&#xA;This avoids TCP packets retransmissions and reduces the TCP latency.&#xA;Please note that this is relevant only if ``Protocol`` property is set to ``TCP``.&#xA;Please also note that this works only on Linux Operating Systems.">
+      <type xsi:type="pogoDsl:BooleanType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>false</DefaultPropValue>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="State Code">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its &lt;i>device_status&lt;/i> data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Status description">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
+    </commands>
+    <commands name="ForceSingleCoil" description="Write single coil (digital I/O) state." execMethod="force_single_coil" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="coil address, 0/1">
+        <type xsi:type="pogoDsl:ShortArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ReadCoilStatus" description="Read coil (digital I/O) status." execMethod="read_coil_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="coil address">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="Coil status">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ReadInputStatus" description="Read discrete input status. Return one boolean per array element." execMethod="read_input_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="input address, no. of inputs">
+        <type xsi:type="pogoDsl:ShortArrayType"/>
+      </argin>
+      <argout description="Input status.">
+        <type xsi:type="pogoDsl:CharArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ReadHoldingRegisters" description="Read multiple 16bits registers." execMethod="read_holding_registers" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="register address, no. of registers">
+        <type xsi:type="pogoDsl:ShortArrayType"/>
+      </argin>
+      <argout description="Holding 16bits register.">
+        <type xsi:type="pogoDsl:ShortArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ReadInputRegisters" description="Read Multiple 16bits input registers." execMethod="read_input_registers" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="register address, no. of registers">
+        <type xsi:type="pogoDsl:ShortArrayType"/>
+      </argin>
+      <argout description="Input 16bits registers">
+        <type xsi:type="pogoDsl:ShortArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="PresetSingleRegister" description="Write single 16bits register." execMethod="preset_single_register" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Register address, register value.">
+        <type xsi:type="pogoDsl:ShortArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ReadExceptionStatus" description="Read exception status (usually a predefined range of 8 bits" execMethod="read_exception_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="exception status">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="FetchCommEventCtr" description="Fetch communications event counter." execMethod="fetch_comm_event_ctr" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="status, event count">
+        <type xsi:type="pogoDsl:ShortArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ForceMultipleCoils" description="Write multiple coils (digital I/O) state.&#xA;argin[0] = coil_address&#xA;argin[1] = number of coils&#xA;argin[2] = 1st coil state&#xA;argin[3] = 2nd coil state&#xA;..." execMethod="force_multiple_coils" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="coil address, nb of coils, coil states">
+        <type xsi:type="pogoDsl:ShortArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ReadMultipleCoilsStatus" description="Read multiple coil (digital I/O) status.&#xA;argin[0] = register address&#xA;argin[1] = number of registers" execMethod="read_multiple_coils_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="coil address, nb of coils">
+        <type xsi:type="pogoDsl:ShortArrayType"/>
+      </argin>
+      <argout description="Status of coils">
+        <type xsi:type="pogoDsl:ShortArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="PresetMultipleRegisters" description="Write multiple 16bits registers.&#xA;argin[0] = register address&#xA;argin[1] = number of registers&#xA;argin[2] = 1st register&#xA;argin[3] = 2nd register&#xA;..." execMethod="preset_multiple_registers" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="register address, nb of registers, register data">
+        <type xsi:type="pogoDsl:ShortArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="MaskWriteRegister" description="Mask write a 16bits register." execMethod="mask_write_register" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="register address, AND mask, OR mask">
+        <type xsi:type="pogoDsl:ShortArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ReadWriteRegister" description="Read and Write multiple 16bits registers.&#xA;argin[0] = read address&#xA;argin[1] = nb of registers to read&#xA;argin[2] = write address,&#xA;argin[3] = nb of registers to write,&#xA;argin[4] = 1st register value to write&#xA;argin[5] = 2nd register value to write&#xA;..." execMethod="read_write_register" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="read address, no. to read, write address, nb.of write, write data">
+        <type xsi:type="pogoDsl:ShortArrayType"/>
+      </argin>
+      <argout description="read registers">
+        <type xsi:type="pogoDsl:ShortArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="PresetSingleRegisterBroadcast" description="Write single 16bits register at address 0 (Address reserved for broadcast)&#xA;Does not wait for the equipment response." execMethod="preset_single_register_broadcast" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="register value.">
+        <type xsi:type="pogoDsl:ShortArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <preferences docHome="./doc_html" makefileHome="/segfs/tango/cppserver/env"/>
+    <additionalFiles name="CacheThread" path="/mntdirect/_segfs/tango/cppserver/protocols/Modbus/src/CacheThread.cpp"/>
+    <additionalFiles name="ModbusCore" path="/mntdirect/_segfs/tango/cppserver/protocols/Modbus/src/ModbusCore.cpp"/>
+    <additionalFiles name="ModbusCoreSL" path="/mntdirect/_segfs/tango/cppserver/protocols/Modbus/src/ModbusCoreSL.cpp"/>
+  </classes>
+</pogoDsl:PogoSystem>
