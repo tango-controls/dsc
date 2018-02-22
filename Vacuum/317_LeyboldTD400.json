@@ -1,0 +1,41 @@
+{
+    "317": {
+        "buses": [
+            "Not Applicable"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "LeyboldTD400"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/317/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 557, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Vacuum/LeyboldTD400/LeyboldTD400.pdf"
+            }
+        ], 
+        "families": [
+            "Vacuum"
+        ], 
+        "last_update": "2017-02-23 11:46:36.191504+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "Leybold"
+        ], 
+        "name": "LeyboldTD400", 
+        "products": [
+            "https://leyboldproducts.oerlikon.com/products/produktkatalog_04.aspx?cid=1975"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Vacuum/LeyboldTD400", 
+        "status": "updated", 
+        "tag": "Release_1_3", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/317/update/", 
+        "updated_by_script": true
+    }
+}
