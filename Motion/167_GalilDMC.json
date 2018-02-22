@@ -1,0 +1,43 @@
+{
+    "167": {
+        "buses": [
+            "Ethernet", 
+            "Ethernet", 
+            "Ethernet"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "GalilDMCControl", 
+            "GalilDMCMotor", 
+            "GalilDMCPort"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/167/", 
+        "development_status": "released", 
+        "documentation": [], 
+        "families": [
+            "Motion", 
+            "Motion", 
+            "Motion"
+        ], 
+        "last_update": "2018-01-05 15:17:14.421542+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "Galil", 
+            "Galil", 
+            "Galil"
+        ], 
+        "name": "GalilDMC", 
+        "products": [
+            "DMC-40x0 Series", 
+            "DMC 40x0 Series", 
+            "DMC 40x0 Series"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Motion/MotorControllers/GalilDMC", 
+        "status": "updated", 
+        "tag": "Release_1_3", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/167/update/", 
+        "updated_by_script": true
+    }
+}
