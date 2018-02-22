@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="Agilent4uhvCtrl" pogoRevision="9.0">
+    <description description="This device server is intended to drive a Agilent 4UHV ion pump controller." title="Agilent 4UHV Ion Pump Controller" sourcePath="/mntdirect/_segfs/tango/cppserver/vacuum/ionpump/Agilent4uhvCtrl" language="Cpp" filestogenerate="XMI   file,Code files" license="GPL" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_4Impl" sourcePath=""/>
+      <identification contact="at esrf.fr - tappret" author="tappret" emailDomain="esrf.fr" classFamily="Vacuum" siteSpecific="" platform="Unix Like" bus="Serial Line" manufacturer="Agilent" reference="UHV"/>
+    </description>
+    <deviceProperties name="WindowDeviceName" description="The name of the associated WindowPortocol device.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="LoopTime" description="time between each read (in milliseconds)">
+      <type xsi:type="pogoDsl:UIntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>3000</DefaultPropValue>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="State Code">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its &lt;i>device_status&lt;/i> data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Status description">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
+    </commands>
+    <commands name="AddPump" description="Add a pump to be controlled.\nThe controller thread will initialize the specified pump and then control it." execMethod="add_pump" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Channel number">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChangeSetpoint" description="Change the setpoint of specified channel, and specified current" execMethod="change_setpoint" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="argin[0] = channel number coded as a float.\nargin[1] = setpoint value.\nargin[2] = 1 for first step current - 2 for second step current.">
+        <type xsi:type="pogoDsl:FloatArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetChannelState" description="Get the considered channel state (&quot;ON&quot; or &quot;OFF&quot;)." execMethod="get_channel_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="The channel number">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetChannelStatus" description="Get the status of the considered channel." execMethod="get_channel_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="The channel number">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetControlType" description="Read the type of control of the controller (&quot;remote&quot; or &quot;local&quot;)." execMethod="get_control_type" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="The controller control type">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetSize" description="Return the pump size." execMethod="get_size" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="The channel number.">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="The pump size">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetVersion" description="Get the controller firmware version." execMethod="get_version" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="The firmware version string.">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="IsInitialized" description="return true if specified pump is nitialized." execMethod="is_initialized" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Channel number.">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="Local" description="Set the controller to local mode (operated from front panel)." execMethod="local" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="Off" description="Set to OFF the considered channel." execMethod="off" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="The channel number.">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="On" description="Set to ON the considered channel." execMethod="on" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="The channel number.">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ReadCurrent" description="Get the measure current value of the considered channel." execMethod="read_current" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="The channel number">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="The current value">
+        <type xsi:type="pogoDsl:FloatType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ReadFixedMode" description="Returns TRUE if the pump is in FIXED mode, FALSE if the mode is STEP." execMethod="read_fixed_mode" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Channel number">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ReadImax" description="Read the imax of the considered channel." execMethod="read_imax" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="The channel number">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ReadIprotect" description="Read the iprotect of the considered channel." execMethod="read_iprotect" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="The channel number">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ReadIstep1" description="Read the istep1 of the considered channel." execMethod="read_istep1" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="The channel number">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:FloatType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ReadIstep2" description="Read the istep2 of the considered channel." execMethod="read_istep2" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="The channel number">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:FloatType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ReadPressure" description="Read the pressure of the considered channel." execMethod="read_pressure" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="The channel number.">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:FloatType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ReadStartMode" description="Returns TRUE if the pump is in START mode, FALSE if the mode is PROTECT" execMethod="read_start_mode" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Channel number">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ReadState" description="Get the state of the considered channel." execMethod="read_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="The channel number">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="The state of the channel">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ReadVmax" description="Read the Vmax of the considered channel." execMethod="read_vmax" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="The channel number">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ReadVoltage" description="Get the measure voltage value of the considered pump." execMethod="read_voltage" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="The channel number">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="The voltage value">
+        <type xsi:type="pogoDsl:FloatType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ReadVstep1" description="Read the vstep1 of the considered channel." execMethod="read_vstep1" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="The channel number">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ReadVstep2" description="Read the vstep2 of the considered channel." execMethod="read_vstep2" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="The channel number">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="Remote" description="Set the controller to the remote mode (operated using the serial line)." execMethod="remote" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SetFixedMode" description="Set the considered channel to the fixed mode." execMethod="set_fixed_mode" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="The channel number">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SetMaxVoltage" description="Set the max voltage for the considered channel.&#xA;- argin[0] = channel number&#xA;- argin[1] = max voltage value" execMethod="set_max_voltage" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="The channel number.">
+        <type xsi:type="pogoDsl:ShortArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SetProtectMode" description="Set the considered channel to the protect mode." execMethod="set_protect_mode" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="The channel number">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SetStartMode" description="Set the considered channel to the start mode." execMethod="set_start_mode" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="The channel number">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SetStepMode" description="Set the considered channel to the step mode." execMethod="set_step_mode" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="The channel number">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetController" description="get the type on Controller" execMethod="get_controller" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="type of contoller">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SetDefaultStepCurrent" description="set default step see below.&#xA;&#xA;Pump Type: &#x9;&#x9;Current for switching&#x9;Current for switching&#xA;&#x9;&#x9;from 7kV to 5kV:&#x9;from 5kV to 3kV:&#xA;&#xA;500 diode &#x9;&#x9;1.4E-3 A&#x9;&#x9;3.9E-5 A&#xA;300 diode &#x9;&#x9;7.2E-4 A&#x9;&#x9;2.1E-5 A&#xA;150 diode &#x9;&#x9;3.6E-4 A&#x9;&#x9;9.5E-6 A&#xA;75-55-40 diode &#x9;2.2E-4 A&#x9;&#x9;6.7E-6 A&#xA;20 diode &#x9;&#x9;2.0E-4 A&#x9;&#x9;2.7E-6 A&#xA;10 diode &#x9;&#x9;2.0E-5 A&#x9;&#x9;6.0E-6 A&#xA;500 StarCell &#x9;&#x9;9.0E-4 A&#x9;&#x9;2.5E-5 A&#xA;300 StarCell &#x9;&#x9;5.5E-4 A&#x9;&#x9;1.6E-5 A&#xA;150 StarCell&#x9;&#x9;3.0E-4 A&#x9;&#x9;8.5E-6 A&#xA;75-55-40 StarCell&#x9;1.3E-4 A&#x9;&#x9;3.8E-6 A&#xA;20 StarCell&#x9;&#x9;6.5E-5 A&#x9;&#x9;1.9E-6 A" execMethod="set_default_step_current" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <preferences docHome="./doc_html" makefileHome="/segfs/tango/cppserver/env"/>
+    <additionalFiles name="AgilentRefreshThread" path="/mntdirect/_segfs/tango/cppserver/vacuum/ionpump/Agilent4uhvCtrl/AgilentRefreshThread.cpp"/>
+  </classes>
+</pogoDsl:PogoSystem>
