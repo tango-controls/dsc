@@ -1,0 +1,41 @@
+{
+    "345": {
+        "buses": [
+            "Ethernet"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "WagoRelay"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/345/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 227, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/InputOutput/WagoRelay/WagoRelay.pdf"
+            }
+        ], 
+        "families": [
+            "InputOutput"
+        ], 
+        "last_update": "2017-02-23 10:11:58.950832+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "none"
+        ], 
+        "name": "WagoRelay", 
+        "products": [
+            ""
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/InputOutput/RemoteIO/WagoRelay", 
+        "status": "updated", 
+        "tag": "release1_1", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/345/update/", 
+        "updated_by_script": true
+    }
+}
