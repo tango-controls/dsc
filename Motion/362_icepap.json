@@ -1,0 +1,43 @@
+{
+    "362": {
+        "buses": [
+            "Socket", 
+            "Ethernet", 
+            "TCP/UDP"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "IcePapController", 
+            "IcePapMotor", 
+            "ExcentricMotor"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/362/", 
+        "development_status": "released", 
+        "documentation": [], 
+        "families": [
+            "Motion", 
+            "Motion", 
+            "Motion"
+        ], 
+        "last_update": "2017-02-23 10:49:20.004801+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "none", 
+            "none", 
+            "ESRF"
+        ], 
+        "name": "icepap", 
+        "products": [
+            "", 
+            "", 
+            "Icepap"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Motion/MotorControllers/icepap", 
+        "status": "updated", 
+        "tag": "RELEASE_2_1", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/362/update/", 
+        "updated_by_script": true
+    }
+}
