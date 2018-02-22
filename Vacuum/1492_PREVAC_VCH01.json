@@ -1,0 +1,41 @@
+{
+    "1492": {
+        "buses": [
+            "RS485"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "PREVAC_VCH01"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/1492/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 561, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Vacuum/PREVAC_VCH01/PREVAC_VCH01.pdf"
+            }
+        ], 
+        "families": [
+            "Vacuum"
+        ], 
+        "last_update": "2017-04-20 13:19:54.806028+00:00", 
+        "last_update_method": "file", 
+        "license": "None", 
+        "manufacturers": [
+            "PREVAC"
+        ], 
+        "name": "PREVAC_VCH01", 
+        "products": [
+            "VCH01"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Vacuum/PREVAC_VCH01", 
+        "status": "updated", 
+        "tag": "", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/1492/update/", 
+        "updated_by_script": true
+    }
+}
