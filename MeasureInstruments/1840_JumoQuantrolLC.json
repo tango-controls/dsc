@@ -1,0 +1,41 @@
+{
+    "1840": {
+        "buses": [
+            "Modbus"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "JumoQuantrolLC"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/1840/", 
+        "development_status": "new", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 593, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/MeasureInstruments/JumoQuantrolLC/JumoQuantrolLC.pdf"
+            }
+        ], 
+        "families": [
+            "MeasureInstruments"
+        ], 
+        "last_update": "2017-09-09 03:02:28.969307+00:00", 
+        "last_update_method": "url", 
+        "license": "GPL", 
+        "manufacturers": [
+            "Jumo"
+        ], 
+        "name": "JumoQuantrolLC", 
+        "products": [
+            "Quantrol LC"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/MeasureInstruments/JumoQuantrolLC", 
+        "status": "new", 
+        "tag": "", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/1840/update/", 
+        "updated_by_script": true
+    }
+}
