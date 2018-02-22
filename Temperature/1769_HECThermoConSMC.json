@@ -1,0 +1,41 @@
+{
+    "1769": {
+        "buses": [
+            "Socket"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "HECThermoConSMC"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/1769/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 580, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Temperature/HECThermoConSMC/HECThermoConSMC.pdf"
+            }
+        ], 
+        "families": [
+            "Temperature"
+        ], 
+        "last_update": "2018-01-20 03:06:00.876482+00:00", 
+        "last_update_method": "url", 
+        "license": "GPL", 
+        "manufacturers": [
+            "SMC"
+        ], 
+        "name": "HECThermoConSMC", 
+        "products": [
+            "HEC Thermo-con"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Temperature/HECThermoConSMC", 
+        "status": "updated", 
+        "tag": "Release_1_0", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/1769/update/", 
+        "updated_by_script": true
+    }
+}
