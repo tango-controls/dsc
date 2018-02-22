@@ -1,0 +1,41 @@
+{
+    "381": {
+        "buses": [
+            "Ethernet"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "Bilt"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/381/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 434, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/PowerSupply/Bilt/Bilt.pdf"
+            }
+        ], 
+        "families": [
+            "PowerSupply"
+        ], 
+        "last_update": "2017-02-23 11:03:17.773095+00:00", 
+        "last_update_method": "url", 
+        "license": "GPL", 
+        "manufacturers": [
+            "iTest"
+        ], 
+        "name": "Bilt", 
+        "products": [
+            "Module BE548"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/PowerSupply/Itest/Bilt", 
+        "status": "updated", 
+        "tag": "Release_3_11", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/381/update/", 
+        "updated_by_script": true
+    }
+}
