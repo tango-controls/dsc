@@ -1,0 +1,41 @@
+{
+    "148": {
+        "buses": [
+            "Ethernet"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "CubicPressVoggMotionCtrl"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/148/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 296, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Motion/CubicPressVoggMotionCtrl/CubicPressVoggMotionCtrl.pdf"
+            }
+        ], 
+        "families": [
+            "Motion"
+        ], 
+        "last_update": "2017-02-23 10:32:56.011034+00:00", 
+        "last_update_method": "url", 
+        "license": "GPL", 
+        "manufacturers": [
+            "Voggenreiter"
+        ], 
+        "name": "CubicPressVoggMotionCtrl", 
+        "products": [
+            "CubicPress"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Motion/CubicPressVoggMotionCtrl", 
+        "status": "updated", 
+        "tag": "Release_1_0", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/148/update/", 
+        "updated_by_script": true
+    }
+}
