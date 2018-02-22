@@ -1,0 +1,41 @@
+{
+    "131": {
+        "buses": [
+            "Ethernet"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "Keithley3706"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/131/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 272, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/MeasureInstruments/Keithley3706/Keithley3706.pdf"
+            }
+        ], 
+        "families": [
+            "Instrumentation"
+        ], 
+        "last_update": "2017-04-22 03:01:33.947290+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "Keithley"
+        ], 
+        "name": "Keithley3706", 
+        "products": [
+            "3706"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/MeasureInstruments/Keithley/Keithley3706", 
+        "status": "updated", 
+        "tag": "Release_1_11", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/131/update/", 
+        "updated_by_script": true
+    }
+}
