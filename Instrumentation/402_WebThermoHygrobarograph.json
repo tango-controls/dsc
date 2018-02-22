@@ -1,0 +1,41 @@
+{
+    "402": {
+        "buses": [
+            "Ethernet"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "WebThermoHygrobarograph"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/402/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 546, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Temperature/WebThermoHygrobarograph/WebThermoHygrobarograph.pdf"
+            }
+        ], 
+        "families": [
+            "Instrumentation"
+        ], 
+        "last_update": "2017-02-23 11:42:30.902391+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "W&T"
+        ], 
+        "name": "WebThermoHygrobarograph", 
+        "products": [
+            "Web Thermo Hygrobarograph"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Temperature/WebThermoHygrobarograph", 
+        "status": "updated", 
+        "tag": "Release_1_0", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/402/update/", 
+        "updated_by_script": true
+    }
+}
