@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="SmarActMotor" pogoRevision="8.1">
+    <description description="Axis server for SmarAct MCS-3C-IDSH controller" title="SmarActMotor" sourcePath="/ssd/blume/src/TangoSvn/tango-ds/DeviceClasses/Motion/MotorControllers/Smaract/SmarActMotor/trunk" language="Cpp" filestogenerate="XMI   file,Code files" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <identification contact="at desy.de - johannes.blume" author="johannes.blume" emailDomain="desy.de" classFamily="Motion" siteSpecific="" platform="Unix Like" bus="Not Applicable" manufacturer="SmarAct" reference="MCS-3C-IDSH"/>
+    </description>
+    <deviceProperties name="SmarActCtrlDevice" description="">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="AxisNumber" description="axis index number (0-2)">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device state">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its device_status data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device status">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
+    </commands>
+    <commands name="Calibrate" description="Calibrate axis to value argin" execMethod="calibrate" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="calibration value">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="StopMove" description="Stop movement of this axis" execMethod="stop_move" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="Home" description="Run reference mark search: direction, holdtime and autozero are taken from the corresponding attributes" execMethod="home" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <attributes name="Position" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Read: the current absolute position&#xA;Write: move to absolute position&#xA;Positions are im mm for linear movements, in deg for rotations." label="" unit="" standardUnit="" displayUnit="" format="%7.4f" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
+    </attributes>
+    <attributes name="Conversion" attType="Scalar" rwType="READ_WRITE" displayLevel="EXPERT" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
+    </attributes>
+    <attributes name="UnitLimitMin" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="The lower limit the axis is allowed to move to.&#xA;A value of 0 disables limit checking." label="" unit="" standardUnit="" displayUnit="" format="%7.4f" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
+    </attributes>
+    <attributes name="UnitLimitMax" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="The upper limit the axis is allowed to move to.&#xA;A value of 0 disables limit checking." label="" unit="" standardUnit="" displayUnit="" format="%7.4f" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
+    </attributes>
+    <attributes name="HoldTime" attType="Scalar" rwType="READ_WRITE" displayLevel="EXPERT" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:IntType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Hold time (ms): Specifies how long the position is actively held&#xA;after reaching the target.&#xA;Setting the maximum value (60000) will make the positioner hold&#xA;the position forever (until stopped with StopMove or moved to a new position)." label="" unit="ms" standardUnit="ms" displayUnit="ms" format="%5d" maxValue="60000" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
+    </attributes>
+    <attributes name="HomeDirection" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Direction to use when running reference mark search&#xA;false = forward&#xA;true = backward" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
+    </attributes>
+    <attributes name="AutoZero" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Decides whether the axis position will be set to zero&#xA;after a reference mark search (= Home)&#xA;true = position will be set to zero&#xA;false = position will not be set to zero" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
+    </attributes>
+    <attributes name="Speed" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="The closed loop move speed, cannot exceed the maximum closed loop frequency (MaxFrequency).&#xA;A value of 0 disables speed control." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
+    </attributes>
+    <attributes name="AxisType" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:IntType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="The axis type,&#xA;&#xA;0: linear movement&#xA;1: angular movement&#xA;2: goniometer" label="" unit="" standardUnit="" displayUnit="" format="%1d" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+    </attributes>
+    <attributes name="PositionKnown" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="true: the controller knows the physical position of this axis&#xA;false: he controller does not know the physical position of this axis&#xA;&#xA;if false, run command `Home`" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+    </attributes>
+    <attributes name="MaxFrequency" attType="Scalar" rwType="READ_WRITE" displayLevel="EXPERT" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:IntType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="The maximum closed loop frequency in hz (50 - 18500). If you experience&#xA;sudden stops on one axis when starting a movement on another&#xA;try setting this to a lower value.&#xA;&#xA;The value can not be read from the controller, so this is a memorized&#xA;attribute and will always be set on server startup." label="" unit="hz" standardUnit="hz" displayUnit="hz" format="" maxValue="18500" minValue="50" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
+    </attributes>
+    <states name="ON" description="Ready to move">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="MOVING" description="Axis is moving">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="FAULT" description="Something went wrong, check status">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="/usr/share/pogo/preferences"/>
+  </classes>
+</pogoDsl:PogoSystem>
