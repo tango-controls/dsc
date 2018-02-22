@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="DeviceSerial">
+    <description description="Extends Device_4Impl by functions to communicate with serial line devices." title="DeviceSerial" sourcePath="." language="Cpp" filestogenerate="XMI   file,Code files" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <identification contact="at desy.de - jan.meyer" author="jan.meyer" emailDomain="desy.de" classFamily="AbstractClasses" siteSpecific="" platform="Unix Like" bus="Serial Line" manufacturer="none" reference=""/>
+      <comments commandsTable="//================================================================&#xA;//&#xA;//  The following table gives the correspondence&#xA;//  between command and method names.&#xA;//&#xA;//  Command name  |  Method name&#xA;//----------------------------------------------------------------&#xA;//  State         |  Inherited (no method)&#xA;//  Status        |  Inherited (no method)&#xA;//================================================================"/>
+    </description>
+    <deviceProperties name="Connection" description="If the connection is made local (local) or remote (remote) via a terminal server.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>local</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="Host" description="Hostname or IP of the terminal server for remote connection.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>localhost</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="Port" description="Port used on the terminal server for remote connection.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>10000</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="Device" description="Device node used for local connection.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>/dev/ttyS0</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="BaudRate" description="Connection speed in bits/s. Used for local connections only.">
+      <type xsi:type="pogoDsl:UIntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>9600</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="DataBits" description="Number of data bits. Used for local connections only.">
+      <type xsi:type="pogoDsl:UShortType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>8</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="Parity" description="Wheter and what kind of parity bit is used. May be none (N), odd (O), even (E), mark (M), or space (S). Used for local connections only.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>N</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="StopBits" description="How many stop bits are used - for local connections only.">
+      <type xsi:type="pogoDsl:UShortType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>1</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="FlowControl" description="Whether XON/XOFF (software), CTS/RTS (hardware) or no (none) flow control is used.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>none</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="TimeOut" description="Connection timeout in deciseconds. It has to be between 1 and 255ds.">
+      <type xsi:type="pogoDsl:UShortType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>20</DefaultPropValue>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device state">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its device_status data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device status">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <preferences docHome="./doc_html" makefileHome="$(TANGO_CLASSES)/cppserver/common"/>
+  </classes>
+</pogoDsl:PogoSystem>
