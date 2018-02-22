@@ -1,0 +1,46 @@
+{
+    "220": {
+        "buses": [
+            "Serial Line", 
+            "Serial Line"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "BunchUhr", 
+            "DeviceSerial"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/220/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 388, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/OtherInstruments/BunchUhr/BunchUhr.pdf"
+            }
+        ], 
+        "families": [
+            "Miscellaneous", 
+            "AbstractClasses"
+        ], 
+        "last_update": "2017-02-23 10:53:03.800940+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "DESY MSK", 
+            "none"
+        ], 
+        "name": "BunchUhr", 
+        "products": [
+            "Petra III Bunch Uhr", 
+            ""
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/OtherInstruments/BunchUhr", 
+        "status": "updated", 
+        "tag": "Release_1_1", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/220/update/", 
+        "updated_by_script": true
+    }
+}
