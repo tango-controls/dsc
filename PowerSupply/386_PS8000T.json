@@ -1,0 +1,41 @@
+{
+    "386": {
+        "buses": [
+            "Ethernet"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "PS8000T"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/386/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 440, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/PowerSupply/PS8000T/PS8000T.pdf"
+            }
+        ], 
+        "families": [
+            "PowerSupply"
+        ], 
+        "last_update": "2017-11-11 03:07:09.488355+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "Elektro-Automatic GmbH"
+        ], 
+        "name": "PS8000T", 
+        "products": [
+            ""
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/PowerSupply/PS8000T", 
+        "status": "updated", 
+        "tag": "Release_1_4", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/386/update/", 
+        "updated_by_script": true
+    }
+}
