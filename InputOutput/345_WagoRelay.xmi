@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="WagoRelay" pogoRevision="9.0">
+    <description description="A class to handle WAGO digital I/O modules." title="WagoRelay" sourcePath="/mntdirect/_segfs/tango/cppserver/IO/wago/WagoRelay/src" language="Cpp" filestogenerate="XMI   file,Code files" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_4Impl" sourcePath="/segfs/tango/templates/AbstractClasses"/>
+      <identification contact="at esrf.fr - chaize" author="chaize" emailDomain="esrf.fr" classFamily="InputOutput" siteSpecific="" platform="All Platforms" bus="Ethernet" manufacturer="none" reference=""/>
+    </description>
+    <deviceProperties name="Modbus_name" description="Name of the modbus device.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="Channel" description="Position index of the digital input or output. From 0 for the first&#xA;input (output) to nb_input_module (nb_output_module) - 1.">
+      <type xsi:type="pogoDsl:ShortType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="Init_position" description="Initial relay position wrote at startup : ``OPEN`` or ``CLOSE``&#xA;If the property is not set, nothing happens at startup.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="Type" description="Type of the digital I/O : ``INPUT`` or ``OUTPUT`` or ``INOUT``&#xA;&#xA;Where :&#xA;INPUT : Read only relay&#xA;OUTPUT : Write only relay&#xA;INOUT : Read write relay">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="Is_Pulsed" description="True to authorize this relay to be pulsed.">
+      <type xsi:type="pogoDsl:BooleanType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="State Code">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its &lt;i>device_status&lt;/i> data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Status description">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
+    </commands>
+    <commands name="Open" description="Open the relay." execMethod="open" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>MOVING</excludedStates>
+    </commands>
+    <commands name="Close" description="Close the relay." execMethod="close" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>MOVING</excludedStates>
+    </commands>
+    <commands name="Pulse" description="Make a pulse with the relay. It goes from currentPosition to !currentPosition and then&#xA;go back to currentPosition.&#xA;Only PULSED relay supports this command. Does not have effects in other case." execMethod="pulse" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="width of pulse (millisec)">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>MOVING</excludedStates>
+    </commands>
+    <commands name="changeState" description="changes the state of the relay to OPEN or CLOSE." execMethod="change_state" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Only OPEN( =  3) or CLOSE ( =  2)">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>MOVING</excludedStates>
+    </commands>
+    <states name="OPEN" description="The relay is OPEN. (Channel value=0)">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="CLOSE" description="The relay is closed. (Channel value=1)">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="MOVING" description="The device is executing a pulse.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="/segfs/tango/cppserver/env"/>
+    <additionalFiles name="Timer" path="/mntdirect/_segfs/tango/cppserver/IO/wago/WagoRelay/Timer.cpp"/>
+  </classes>
+</pogoDsl:PogoSystem>
