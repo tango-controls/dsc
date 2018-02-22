@@ -1,0 +1,41 @@
+{
+    "280": {
+        "buses": [
+            "Not Applicable"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "BSCryoTempControlP01"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/280/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 510, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Temperature/BSCryoTempControlP01/BSCryoTempControlP01.pdf"
+            }
+        ], 
+        "families": [
+            "Miscellaneous"
+        ], 
+        "last_update": "2018-01-05 15:18:31.222512+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "none"
+        ], 
+        "name": "BSCryoTempControlP01", 
+        "products": [
+            ""
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Temperature/BSCryoTempControlP01", 
+        "status": "updated", 
+        "tag": "Release_1_5", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/280/update/", 
+        "updated_by_script": true
+    }
+}
