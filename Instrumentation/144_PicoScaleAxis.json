@@ -1,0 +1,41 @@
+{
+    "144": {
+        "buses": [
+            "Not Applicable"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "PicoScaleAxis"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/144/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 289, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/MeasureInstruments/PicoScaleAxis/PicoScaleAxis.pdf"
+            }
+        ], 
+        "families": [
+            "Instrumentation"
+        ], 
+        "last_update": "2018-01-05 15:16:53.694894+00:00", 
+        "last_update_method": "url", 
+        "license": "GPL", 
+        "manufacturers": [
+            "SmarAct"
+        ], 
+        "name": "PicoScaleAxis", 
+        "products": [
+            "http://www.smaract.de/index.php/products/picoscale"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/MeasureInstruments/PicoScaleAxis", 
+        "status": "updated", 
+        "tag": "Release_1_1", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/144/update/", 
+        "updated_by_script": true
+    }
+}
