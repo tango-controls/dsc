@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="AttoCubeCtrl">
+    <description description="Controller class for AttoCube Positioners" title="AttoCube ontroller class" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/Motion/MotorControllers/Attocube/AttoCubeCtrl/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Makefile,html Pages" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_4Impl" sourcePath=""/>
+      <identification contact="at mai.desy.de - tnunez" author="tnunez" emailDomain="mai.desy.de" classFamily="Motion" siteSpecific="" platform="Unix Like" bus="Ethernet" manufacturer="AttoCube" reference="Positioner"/>
+      <comments commandsTable="//================================================================&#xA;//&#xA;//  The following table gives the correspondence&#xA;//  between command and method names.&#xA;//&#xA;//  Command name         |  Method name&#xA;//----------------------------------------------------------------&#xA;//  State                |  Inherited (no method)&#xA;//  Status               |  Inherited (no method)&#xA;//  ReadPosition         |  read_position&#xA;//  WritePosition        |  write_position&#xA;//  ReadAxisStatus       |  read_axis_status&#xA;//  MoveHome             |  move_home&#xA;//  GetReference         |  get_reference&#xA;//  ResetPosition        |  reset_position&#xA;//  ReadAxisState        |  read_axis_state&#xA;//  GetSpeed             |  get_speed&#xA;//  GetAmplitude         |  get_amplitude&#xA;//  GetStepWidth         |  get_step_width&#xA;//  SetAmplitude         |  set_amplitude&#xA;//  SetAmplitudeControl  |  set_amplitude_control&#xA;//  StopMove             |  stop_move&#xA;//  GetFrequency         |  get_frequency&#xA;//  SetFrequency         |  set_frequency&#xA;//  GetDCLevel           |  get_dclevel&#xA;//  SetDCLevel           |  set_dclevel&#xA;//  SetSingleCircleMode  |  set_single_circle_mode&#xA;//  SetStepCount         |  set_step_count&#xA;//  SetOutput            |  set_output&#xA;//  MoveRelative         |  move_relative&#xA;//  MoveSingleStep       |  move_single_step&#xA;//  MoveContinuous       |  move_continuous&#xA;//  LoadFile             |  load_file&#xA;//  GetRotCount          |  get_rot_count&#xA;//  SetStopDetection     |  set_stop_detection&#xA;//================================================================"/>
+    </description>
+    <deviceProperties name="HardwareId" description="HardwareId of the controller">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="State Code">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its &lt;i>device_status&lt;/i> data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Status description">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
+    </commands>
+    <commands name="ReadPosition" description="" execMethod="read_position" displayLevel="OPERATOR">
+      <argin description="Axis number">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="Position">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="WritePosition" description="" execMethod="write_position" displayLevel="OPERATOR">
+      <argin description="AxisNumber and Position">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ReadAxisStatus" description="" execMethod="read_axis_status" displayLevel="OPERATOR">
+      <argin description="AxisNumber">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="Status string">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="MoveHome" description="Move axis to reference position." execMethod="move_home" displayLevel="OPERATOR">
+      <argin description="Axis Number">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetReference" description="Get distance of reference mark to the origin" execMethod="get_reference" displayLevel="OPERATOR">
+      <argin description="Axis number">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="Position">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ResetPosition" description="Set origin to current position." execMethod="reset_position" displayLevel="OPERATOR">
+      <argin description="Axis Number">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ReadAxisState" description="Returns axis status in bits." execMethod="read_axis_state" displayLevel="OPERATOR">
+      <argin description="AxisNumber">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetSpeed" description="" execMethod="get_speed" displayLevel="OPERATOR">
+      <argin description="Axis number">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="Speed">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetAmplitude" description="" execMethod="get_amplitude" displayLevel="OPERATOR">
+      <argin description="Axis number">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="Amplitude">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetStepWidth" description="" execMethod="get_step_width" displayLevel="OPERATOR">
+      <argin description="Axis number">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="Step width">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SetAmplitude" description="" execMethod="set_amplitude" displayLevel="OPERATOR">
+      <argin description="axis number and amplitude">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SetAmplitudeControl" description="type of amplitude control: 0: Speed, 1: Amplitude, 2: Step Size" execMethod="set_amplitude_control" displayLevel="OPERATOR">
+      <argin description="axis number and control id">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="StopMove" description="" execMethod="stop_move" displayLevel="OPERATOR">
+      <argin description="Axis number">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetFrequency" description="" execMethod="get_frequency" displayLevel="OPERATOR">
+      <argin description="Axis number">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="Frequency">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SetFrequency" description="" execMethod="set_frequency" displayLevel="OPERATOR">
+      <argin description="axis number and frequency">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetDCLevel" description="" execMethod="get_dclevel" displayLevel="OPERATOR">
+      <argin description="Axis number">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="DCLevel">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SetDCLevel" description="" execMethod="set_dclevel" displayLevel="OPERATOR">
+      <argin description="axis number and DCLevel">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SetSingleCircleMode" description="Switches single circle mode (only for rotary actors): 1=on, 0=off" execMethod="set_single_circle_mode" displayLevel="OPERATOR">
+      <argin description="axis number and rotary mode">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SetStepCount" description="Configures the number of successive steps caused by external trigger, or manual&#xA;step request." execMethod="set_step_count" displayLevel="OPERATOR">
+      <argin description="axis number and rotary mode">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SetOutput" description="Activates or  Deactivates the output relais of the addressed axis." execMethod="set_output" displayLevel="OPERATOR">
+      <argin description="axis number and output state">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="MoveRelative" description="" execMethod="move_relative" displayLevel="OPERATOR">
+      <argin description="AxisNumber and relative position">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="MoveSingleStep" description="Starts a one step positioning. Direction for positioning (0: forward, 1: backward)." execMethod="move_single_step" displayLevel="OPERATOR">
+      <argin description="axis number and direction">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="MoveContinuous" description="Starts continuously positioning. Direction for positioning (0: forward, 1: backward)." execMethod="move_continuous" displayLevel="OPERATOR">
+      <argin description="axis number and direction">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="LoadFile" description="Loads a parameter file for actor configuration." execMethod="load_file" displayLevel="OPERATOR">
+      <argin description="axis number, configuration file">
+        <type xsi:type="pogoDsl:LongStringArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetRotCount" description="Number of rotations for a rotary motor." execMethod="get_rot_count" displayLevel="OPERATOR">
+      <argin description="Axis number">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="Number of rotations.">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SetStopDetection" description="Switches stop detection: 0 off, 1 on." execMethod="set_stop_detection" displayLevel="OPERATOR">
+      <argin description="axis number and stop detection mode">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <states name="ON" description="">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="FAULT" description="">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="/usr/share/pogo/preferences"/>
+  </classes>
+</pogoDsl:PogoSystem>
