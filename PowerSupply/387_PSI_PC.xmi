@@ -1,0 +1,567 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="PSI_PC">
+    <description description="&lt;pre>&#xA;Control of SR power supplies.. The Device Server is meant to provide control of&#xA;PSI Power Supply Controllers. The DS is basic/universal, it means that it can&#xA;be used as a base for developing Device Servers for PSI PSC intended for&#xA;specific usage which requires implementing additional functions (ex. upload/&#xA;download waveform).&#xA;&#xA;The Device Server can use two types of hardware connection to communicate with&#xA;PSI PSC: serial (RS232) or fiber. The connection type is determined by setting&#xA;the property: ConnectionType (0 for fiber and 1 for serial).&#xA;&#xA;For simplicity, PSC DS connected by serial connection will be called serial DS,&#xA;PSC DS connected by fiber connection will be called fiber DS.&#xA;&#xA;Serial connection is considered as local and 'service', it is not supposed to&#xA;be used on normal basis, just in extraordinary cases.&#xA;Fiber connection is considered a default connection meant to be used most of&#xA;the time.&#xA;&#xA;Fiber connection uses PCI/cPCI Carrier Card. Each card carries two Industrial&#xA;Pack (IP), each having two channels. Each channel of IP is connected to one&#xA;PSC. One IP is represented in /dev/ folder as node called pscipX (X is number).&#xA;If fiber connection is to be used, the property 'FODevice' needs to be set (ex&#xA;'/dev/pscip0') along with 'Channel' property (0 or 1).&#xA;&#xA;Serial connection uses PySerial Device Server. The property 'TangoDevice' needs&#xA;to be set inicating the Py Serial name and localization (ex. 'ws/pc-test/&#xA;ocem00-serial ').&#xA;&#xA;For the PySerial to work properly, the following attributes need to be set:&#xA;&#xA;       _________________________________________________________________&#xA;      |Attr_name|value__________________________________________________|&#xA;      |Bautrate_|115200_________________________________________________|&#xA;      |DataBits_|8______________________________________________________|&#xA;      |Parity___|odd____________________________________________________|&#xA;      |Port_____|Correct_port_to_which_PSC_is_connected_(ex._/dev/ttyR0)|&#xA;      |StopBits_|1______________________________________________________|&#xA;&#xA;&#xA;In theory, instead of PySerial DS, any DS can be used instead of PySerial&#xA;without any changes to PSI SD as long as the following commands are&#xA;implemented:&#xA;    * 'ReadLine' for reading data,&#xA;    * 'Write' for writing&#xA;    * 'Open'&#xA;    * 'Close'&#xA;    * 'State'&#xA;Both connections can be used simultaneously only for reading. When writing, a&#xA;priority is given to one of the Device Servers The priority can be only set&#xA;Serial DS. It means that DS connected by fiber cannot regain writing priority ,&#xA;it has to be granted priority. For safety reasons the priority is granted to&#xA;serial DS as long as it is connected to PSC. To be precise, the priority for&#xA;serial DS is granted as soon as it attempts the first write. The priority is&#xA;set to fiber DS only if serial DS is disconnected from PSC.&#xA;&#xA;CAUTION: If the priority is set to serial DS and an attempt to write is made by&#xA;fiber DS, the fiber DS gives no error message, it looks as if the operation was&#xA;successful, however, the value is not written.&#xA;&#xA;The following documentation is available, which can be useful for future&#xA;developers/users:&#xA;1) Communication_protocol.doc is adescription of communication protocol between&#xA;DS and PSC&#xA;2) DSP_SW_R4_User_Documentation_English.doc is a description of PSI Power&#xA;Supply Controller (all registers and their meaning, meaning of leds, etc)&#xA;3) Messages_Codes_en.xls explains meaning of error codes from PSC&#xA;4) DS_Specification Architecture and Design of the TANGO device server for the&#xA;Power supplies at ALBA&#xA;Detailed documentation describing hardware used is provided with the PSCIP&#xA;Linux Device Driver.&#xA;Commands, attributes and properties detailed description.&#xA;The following symbols are used:&#xA;                 _____________________________________________&#xA;                |Symbol_|meaning__________|Attribute_/property|&#xA;                |I______|current__________|Attribute__________|&#xA;                |I_ideal|current_setpoint_|Attribute__________|&#xA;                |I_ref__|current_reference|Attribute__________|&#xA;                |o______|offset___________|Attribute__________|&#xA;                |f______|current_factor___|Property___________|&#xA;In most of the cases the default values of 'offset' and 'current factor' should&#xA;be set:&#xA;o = 0&#xA;f = 1&#xA;Change of the default setting should be done only in the case User knows what&#xA;he/she is doing !!!!&#xA;Attributes:&#xA; _____________________________________________________________________________&#xA;|Name____________|Description_________________________________________________|&#xA;|Current         |current calculated out of measured ( by PSC ) current       |&#xA;|                |according to the following formula:                         |&#xA;|________________|__________I_=_I_ideal_+_(_I_ref_-_I_measured_)_/_f__________|&#xA;|CurrentSetpoint |the ideal current which is intended to be acquired, it is   |&#xA;|                |not the current set to the hardware, the current set in the |&#xA;|                |hardware is calculated according to the following formula:  |&#xA;|________________|(_I_ideal_+_o_)_____________________________________________|&#xA;|CurrentOffset   |a value added to the current written to the 'current        |&#xA;|________________|setpoint'_attribute_________________________________________|&#xA;|CurrentReference|the_current_value_written_to_the_hardware___________________|&#xA;|CurrentMeasured_|current_measurement_read_from_the_hardware__________________|&#xA;|Errors          |returns readable information about all the errors which have|&#xA;|                |occurred. If error occurs more then one time, it is not     |&#xA;|________________|duplicated_in_the_return_table______________________________|&#xA;|ErrorCodes      |returns codes of the latest errors detected according to    |&#xA;|________________|categories_stored_in_ErrorLabel_attribute___________________|&#xA;|ErrorLabel______|returns_the_categories_of_the_error_codes___________________|&#xA;|RemoteMode      |is glued to 1 (means remote mode) because PSC can only be   |&#xA;|________________|operated_remotely___________________________________________|&#xA;|State___________|returns_device_state_(short_message)________________________|&#xA;|Status__________|returns_human_readable,_textual_description_________________|&#xA;|Voltage_________|returns_voltage_measured_on_the_load________________________|&#xA;Properties:&#xA;       ________________________________________________________________&#xA;      |Name___________________|Description_____________________________|&#xA;      |Channel                |(0 or 1) defines IP channel used to     |&#xA;      |_______________________|connect_PSC_by_fiber____________________|&#xA;      |ConnectionType         |(0 - fiber; 1 - serial) determines which|&#xA;      |                       |hardware medium is used to connect      |&#xA;      |_______________________|industrial_PC_with_PSC__________________|&#xA;      |FODevice               |defines device used for fiber optic     |&#xA;      |_______________________|connection_(ex._/dev/pscip0)____________|&#xA;      |TangoDevice            |defines name and location of PySerial DS|&#xA;      |_______________________|used_for_serial_communication___________|&#xA;      |Current_factor_________|multiplier______________________________|&#xA;      |InterlockFlowBit       |'flow' interlock and 'temperature'      |&#xA;      |InterlockTemperatureBit|interlock signals are represented in    |&#xA;      |                       |'Digital_Input_Signals' register of PSC |&#xA;      |                       |as bits. The properties allow user to   |&#xA;      |                       |determine which bits of the PSC register|&#xA;      |                       |are associated with this interlocks. If |&#xA;      |                       |correctly defined, these properties     |&#xA;      |                       |enable DS to recognize Flow and         |&#xA;      |                       |Temperature interlocks and provide user |&#xA;      |_______________________|with_appropriate_error_message__________|&#xA;&#xA;Commands:&#xA; _____________________________________________________________________________&#xA;|Name______________|Description_______________________________________________|&#xA;|ClearError        |clear Disorder register in PSC, Error and ErrorCodes      |&#xA;|__________________|attributes_in_DS__________________________________________|&#xA;|Disable_interlocks|write Digital_Input_Signals_Mask with 0xE070 value. I     |&#xA;|                  |causes all the interlocks, except one, to be disabled. The|&#xA;|                  |not disabled interlock has input at the rear of PSC and   |&#xA;|                  |can be disabled hardware-wise. The change of Mask register|&#xA;|__________________|value_is_temporary._______________________________________|&#xA;|Enable_interlocks |write Digital_Input_Signals_Mask with 0xF877 value.       |&#xA;|__________________|Interlocks_are_enabled____________________________________|&#xA;|Interlocks_state  |shows the current value of Digital_Input_Signals_Mask,    |&#xA;|                  |Three states: 'Interlocks enabled', 'Interlocks disabled' |&#xA;|__________________|or_'Interlocks_customized'________________________________|&#xA;|Init              |default function which re-initialize Device Server not    |&#xA;|__________________|affecting_the_state_of_the_hardware_______________________|&#xA;|Off_______________|turns_off_the_device______________________________________|&#xA;|On________________|turns_on_the_device_______________________________________|&#xA;|Read_PSC_register |enable user to read any PSC register which is read-       |&#xA;|                  |enabled. The address and (optionally) format of output    |&#xA;|                  |data need to be specified. The default format is          |&#xA;|                  |hexadecimal. Example input data '0x00' will read register |&#xA;|                  |0x00 and output it data as hexadecimal, '0x00 f' will read|&#xA;|__________________|register_0x00_and_output_it_as_flaot______________________|&#xA;|Reset             |resets PSC by turning it off, an attempt to reestablish   |&#xA;|                  |connection with hardware is taken if it has been lost. It |&#xA;|__________________|also_calls_ClearErrors_command____________________________|&#xA;|State             |the same as attributes                                    |&#xA;|Status____________|__________________________________________________________|&#xA;&lt;/pre>" title="PSI power supplies" sourcePath="/home/jmoldes/workspace/PSCIP_PS/PSI_PSCIP2_PS" language="Cpp" filestogenerate="XMI   file,Code files,html Pages" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_4Impl" sourcePath=""/>
+      <identification contact="at cells.es - controls-software" author="controls-software" emailDomain="cells.es" classFamily="PowerSupply" siteSpecific="" platform="Unix Like" bus="PCI" manufacturer="OCEM" reference=""/>
+      <comments commandsTable="//================================================================&#xA;//&#xA;//  The following table gives the correspondence&#xA;//  between command and method names.&#xA;//&#xA;//  Command name           |  Method name&#xA;//----------------------------------------------------------------&#xA;//  State                  |  dev_state&#xA;//  Status                 |  dev_status&#xA;//  On                     |  on&#xA;//  Off                    |  off&#xA;//  Reset                  |  reset&#xA;//  ResetInterlocks        |  reset_interlocks&#xA;//  DisableInterlocks      |  disable_interlocks&#xA;//  EnableInterlocks       |  enable_interlocks&#xA;//  InterlockStatus        |  interlock_status&#xA;//  Read_PSC_register      |  read__psc_register&#xA;//  StopSoftwareWaveform   |  stop_software_waveform&#xA;//  StartSoftwareWaveform  |  start_software_waveform&#xA;//  Connect                |  connect&#xA;//  Update                 |  update&#xA;//  WVFStart               |  wvfstart&#xA;//  WVFStop                |  wvfstop&#xA;//  WVFTrigger             |  wvftrigger&#xA;//================================================================"/>
+    </description>
+    <classProperties name="Interlock1" description="">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>external interlock 1</DefaultPropValue>
+    </classProperties>
+    <classProperties name="Interlock2" description="message to be shown for external interlock 2">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>external interlock 2</DefaultPropValue>
+    </classProperties>
+    <classProperties name="Interlock3" description="message to be shown for External Interlock 3">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>External Interlock 3</DefaultPropValue>
+    </classProperties>
+    <classProperties name="Interlock4" description="message to be shown for external interlock 4">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>External Interlock 4</DefaultPropValue>
+    </classProperties>
+    <deviceProperties name="Channel" description="Channel used of PC">
+      <type xsi:type="pogoDsl:ShortType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="FODevice" description="BName of the Linux character / block device.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="Interlock1" description="Defines which bit of digital input register indicates temperature interlock">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>external interlock 1</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="Interlock2" description="message to be shown for external interlock 2">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>external interlock 2</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="TangoDevice" description="name of the python serial device server responisble for serial communication">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="ConnectionType" description="You can choose the kind of connection the DS ``talks`` with PSC:&#xA;0 -> fiber&#xA;1 -> serial (RS232)&#xA;&#xA;To run RS232 you need to create pySerial DS">
+      <type xsi:type="pogoDsl:ShortType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>0</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="CurrentFactor" description="scaling factor ( f ):&#xA;Iref = f * ( I_idal + o )">
+      <type xsi:type="pogoDsl:FloatType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>1</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="Interlock3" description="message to be shown for External Interlock 3">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>External Interlock 3</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="Interlock4" description="message to be shown for external interlock 4">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>External Interlock 4</DefaultPropValue>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="State Code">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its &lt;i>device_status&lt;/i> data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Status description">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="On" description="" execMethod="on" displayLevel="OPERATOR">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>OPEN</excludedStates>
+    </commands>
+    <commands name="Off" description="" execMethod="off" displayLevel="OPERATOR">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="Reset" description="" execMethod="reset" displayLevel="OPERATOR">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ResetInterlocks" description="" execMethod="reset_interlocks" displayLevel="OPERATOR">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>OPEN</excludedStates>
+    </commands>
+    <commands name="DisableInterlocks" description="" execMethod="disable_interlocks" displayLevel="OPERATOR">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>OPEN</excludedStates>
+    </commands>
+    <commands name="EnableInterlocks" description="" execMethod="enable_interlocks" displayLevel="OPERATOR">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>OPEN</excludedStates>
+    </commands>
+    <commands name="InterlockStatus" description="" execMethod="interlock_status" displayLevel="OPERATOR">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Interlocks Status">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>OPEN</excludedStates>
+    </commands>
+    <commands name="Read_PSC_register" description="" execMethod="read__psc_register" displayLevel="EXPERT">
+      <argin description="Register address and return format (f-float,i-integer,x-hex, by default x), ex input: 0x00 x - address 0, return value hex">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="Data, hexadecimal">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>OPEN</excludedStates>
+    </commands>
+    <commands name="StopSoftwareWaveform" description="" execMethod="stop_software_waveform" displayLevel="OPERATOR">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>OPEN</excludedStates>
+    </commands>
+    <commands name="StartSoftwareWaveform" description="" execMethod="start_software_waveform" displayLevel="OPERATOR">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>OPEN</excludedStates>
+    </commands>
+    <commands name="Connect" description="" execMethod="connect" displayLevel="OPERATOR">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>OPEN</excludedStates>
+    </commands>
+    <commands name="Update" description="" execMethod="update" displayLevel="EXPERT" polledPeriod="100">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>OPEN</excludedStates>
+    </commands>
+    <commands name="WVFStart" description="&lt;pre>&#xA;Starts the selected hardware waveform. WVFSelected attribute must be used to&#xA;select the waveform you want to start: it will be checked that it has a correct&#xA;value before starting the waveform.&#xA;&#xA;Note that the waveform may be triggered or not depending on if WVFAutoTrigger is&#xA;enabled or not:&#xA;&#xA;1. If WVFAutoTrigger is enabled then the waveform will inmediately be triggered&#xA;   and repeated forever until stopped.&#xA;&#xA;2. If WVFAutoTrigger is not enabled then the waveform will not be triggered: it&#xA;   will simply be set in ready state (ready to be triggered) but then you have&#xA;   to use WVFTrigger command (or wait for external optical trigger to be&#xA;   activated) in order to actually trigger it.&#xA;&#xA;3. The optional AutoTrigger parameter can be used to force situation 1 described&#xA;   above: WVFAutoTrigger will be set to true just before starting the waveform.&#xA;&#xA;&#xA;Important notes to take into account when working with waveforms:&#xA;&#xA;- AutoTrigger is automatically disabled by the hardware when stopping a waveform&#xA;- Start will immediately start playing the waveform if AutoTrigger is enabled&#xA;- After hardware restart WVFSelected is invalid and hence nor Start nor Trigger&#xA;  will have any effect. However WVFSelected is a memorized attribute and should&#xA;  restore the last selected waveform if the hardware is OK when device server is&#xA;  restart or initialized.&#xA;- Note that calling trigger when no waveform is started will have no effect.&#xA;- When waveform is stopped (with false argument) last written CurrentSetpoint is&#xA;  restored.&#xA;- When wvf is stopped(with true argument) then the last played waveform point is&#xA;  set as setpoint. Note that CurrentSepoint will be overwritten&#xA;- Note that after changing the selected waveform you will have to start it. If&#xA;  you trigger but didn`t start the new waveform then the latest selected&#xA;  waveform will be played. However, if WVFAutoTrigger is enabled then after you&#xA;  start then new waveform will be immediately played.&#xA;- Note that when a waveform is triggered then it will start to be played from&#xA;  the beginning regardless if the waveform was already been played or not.&#xA;&lt;/pre>" execMethod="wvfstart" displayLevel="OPERATOR">
+      <argin description="&lt;pre>&#xA;AutoTrigger parameter: if true then WVFAutoTrigger will be enabled just before&#xA;starting the waveform, what will start playing the waveform forever.&#xA;&lt;/pre>">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="WVFStop" description="&lt;pre>&#xA;Stops hardware waveform.&#xA;&#xA;Parameter meaning:&#xA;False: Stop&#xA;True:  Stop, but, the most recent waveform data value is however transmitted as&#xA;       an offset value. Note that CurrentSepoint will be overwritten&#xA;&lt;/pre>" execMethod="wvfstop" displayLevel="OPERATOR">
+      <argin description="&lt;pre>&#xA;False: Stop&#xA;True:  Stop, but, the most recent waveform data value is however transmitted as&#xA;       an offset value. Note that CurrentSepoint will be overwritten&#xA;&lt;/pre>">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="WVFTrigger" description="&lt;pre>&#xA;Manually Trigger the selected hardware waveform. The waveform should also be&#xA;automatically be triggered on hardware optical input trigger activation.&#xA;&#xA;Note that this command will have no effect if the waveform has not been prepared&#xA;using the WVFStart command (remember that WVFSelected attribute can be used to&#xA;select the waveform you want to start).&#xA;&#xA;See WVFStart command documentation for more information&#xA;&lt;/pre>" execMethod="wvftrigger" displayLevel="OPERATOR">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <attributes name="CurrentSetpoint" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="200" maxX="0" maxY="0">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="Current Setpoint" unit="A" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue="0.000001"/>
+      <readExcludedStates>OPEN</readExcludedStates>
+      <writeExcludedStates>OPEN</writeExcludedStates>
+    </attributes>
+    <attributes name="Voltage" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="200" maxX="0" maxY="0">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="" unit="V" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue="0.01"/>
+      <readExcludedStates>OPEN</readExcludedStates>
+    </attributes>
+    <attributes name="RemoteMode" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>OPEN</readExcludedStates>
+    </attributes>
+    <attributes name="Current" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="200" maxX="0" maxY="0">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="" unit="A" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue="0.01"/>
+      <readExcludedStates>OPEN</readExcludedStates>
+    </attributes>
+    <attributes name="CurrentOffset" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0" memorized="true" memorizedAtInit="true">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="Current Offset" unit="A" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>OPEN</readExcludedStates>
+      <writeExcludedStates>OPEN</writeExcludedStates>
+    </attributes>
+    <attributes name="I" attType="Scalar" rwType="READ_WRITE" displayLevel="EXPERT" polledPeriod="0" maxX="0" maxY="0">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="" unit="A" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>OPEN</readExcludedStates>
+      <writeExcludedStates>OPEN</writeExcludedStates>
+    </attributes>
+    <attributes name="V" attType="Scalar" rwType="READ" displayLevel="EXPERT" polledPeriod="0" maxX="0" maxY="0">
+      <dataType xsi:type="pogoDsl:FloatType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="" unit="V" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>OPEN</readExcludedStates>
+    </attributes>
+    <attributes name="ErrorCode" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
+      <dataType xsi:type="pogoDsl:IntType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>OPEN</readExcludedStates>
+    </attributes>
+    <attributes name="WVFAutoTrigger" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="&lt;pre>&#xA;Wavefrom will indefinitely repeat once triggered (True) or it will run only once (False)&#xA;See WVFStart command doc for more information&#xA;&lt;/pre>" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="WVFPartitionStart" attType="Scalar" rwType="READ" displayLevel="OPERATOR" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:IntType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="&lt;pre>&#xA;Indicates the start position of the current partition.&#xA;&lt;/pre>" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="WVFRamping" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="&lt;pre>&#xA;If true, then the end value of a waveform is taken over on encountering a new trigger signal as an offset value&#xA;&lt;/pre>" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="WVFScaling" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:FloatType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="&lt;pre>&#xA;Scaling factor of the waveform: data points are multiplied by this value (default is 1.0)&#xA;&lt;/pre>" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="WVFSelected" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:UShortType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="&lt;pre>&#xA;To select a waveform or read currently selected waveform.&#xA;&#xA;Note that number waveform 0 is RAM waveform (and hence it is volatile and gets&#xA;overwritten whenever an operation uses the temporary RAM). Waveforms 1..11 are&#xA;stored in a flash memory inside the hardware controller and hence they are non&#xA;volatile.&#xA;&#xA;NOTE that you cannot select RAM waveform: this is because the hadware will go to&#xA;alarm even if you don't immediately write WVF0 after selecting RAM waveform: in&#xA;order to select RAM waveform you have to write WVF0 with the target waveform and&#xA;then WVFSelected will automatically go to RAM.&#xA;&#xA;After hardware restart WVFSelected is invalid and hence neither Start nor Trigger&#xA;would have any effect. However WVFSelected is a memorized attribute and should&#xA;restore the last selected waveform (provided the hardware is OK).&#xA;&lt;/pre>" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="11" minValue="1" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="WVFStepSize" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:UIntType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="&lt;pre>&#xA;Time betweeen points in the waveform (default is 80 micro secs)&#xA;&#xA;NOTE. If you write when a waveform is active the waveform is restarted and&#xA;the change is applied. However it looks like there is some kind of bug in&#xA;the hardware: if you increase step size then it seems to work fine, but if&#xA;you decrease it then it does not.&#xA;&lt;/pre>" label="" unit="micro secs" standardUnit="" displayUnit="" format="" maxValue="100000" minValue="60" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="WVFStoppedFlag" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:IntType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="&lt;pre>&#xA;Read: Indicates when an existing stop flag is reached within a waveform. &#xA;&#xA;Write 1:  Jumps to the next partition in the waveform.&#xA;Write 0: Jumps back to the start of the waveform.&#xA;&lt;/pre>" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="DAC1Setting" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:IntType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="&lt;pre>&#xA;Address of displayed signal on DAC1&#xA;&lt;/pre>" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="DAC1Offset" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:FloatType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="&lt;pre>&#xA;DAC 1 signal offset&#xA;&lt;/pre>" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="DAC1Scaling" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:FloatType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="&lt;pre>&#xA;DAC 1 scaling factor (1/V)&#xA;&lt;/pre>" label="" unit="1/V" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="DAC2Setting" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:IntType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="&lt;pre>&#xA;Address of displayed signal on DAC2&#xA;&lt;/pre>" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="DAC2Offset" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:FloatType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="&lt;pre>&#xA;DAC 2 signal offset&#xA;&lt;/pre>" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="DAC2Scaling" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:FloatType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="&lt;pre>&#xA;DAC 2 scaling factor (1/V)&#xA;&lt;/pre>" label="" unit="1/V" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="SoftwareWaveform" attType="Spectrum" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="1000000" maxY="0">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>OPEN</readExcludedStates>
+      <writeExcludedStates>OPEN</writeExcludedStates>
+    </attributes>
+    <attributes name="ErrorCodes" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="5" maxY="0">
+      <dataType xsi:type="pogoDsl:ShortType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>OPEN</readExcludedStates>
+    </attributes>
+    <attributes name="ErrorLabel" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="5" maxY="0">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>OPEN</readExcludedStates>
+    </attributes>
+    <attributes name="Errors" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" maxX="20" maxY="0" allocReadMember="false">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>OPEN</readExcludedStates>
+    </attributes>
+    <attributes name="WVF0" attType="Spectrum" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="16383" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:FloatType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="&lt;pre>&#xA;Waveform stored in temporary RAM.&#xA;&#xA;NOTE that any operation that uses temporary RAM will overwrite this waveform!&#xA;This will happen for example when you start a waveform different than the RAM&#xA;one. The hardware also considers that RAM waveform is invalid after reading or&#xA;writing any other waveform or even simply writing WVFSelected attribute. I&#xA;checked that actually the RAM waveform only gets actually overwriten when a&#xA;different waveform is started, but since the hardware reports ALARM state and&#xA;``data not copied`` disorder then we follow the hardware rules.&#xA;&#xA;NOTE that prior writing RAM waveform we will set WVFSelected to RAM (see&#xA;WVFSelected documentation to find out why). We do not do that for waveforms&#xA;stored in flash memory.&#xA;&#xA;REMEMBER that FLASH memories have a limited number of write cycles, so do not&#xA;write them unless necessary. We recommend to test your new waveforms by&#xA;writting them to RAM (WVF0) and then, once you`re happy, write them to any&#xA;other free sector.&#xA;&#xA;PARTITIONS can be set inside a waveform. Datapoints with a NaN value are&#xA;interpreted as stop flags, hence allowing segmentation of a waveform into&#xA;several partitions.  When such a stop flag is reached, the waveform is stopped.&#xA;The next partition can be switched to with a corresponding write on the&#xA;WVFStoppedFlag attribute. Take into account that 2 consecutive NaN values are&#xA;considered as a partition.&#xA;&lt;/pre>" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="WVF1" attType="Spectrum" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="16383" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:FloatType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="&lt;pre>&#xA;Waveform 1 stored in flash memory.&#xA;&#xA;REMEMBER that FLASH memories have a limited number of write cycles, so do not&#xA;write them unless necessary. We recommend to test your new waveforms by&#xA;writting them to RAM (WVF0) and then, once you`re happy, write them to any&#xA;other free sector.&#xA;&#xA;PARTITIONS can be set inside a waveform. Datapoints with a NaN value are&#xA;interpreted as stop flags, hence allowing segmentation of a waveform into&#xA;several partitions.  When such a stop flag is reached, the waveform is stopped.&#xA;The next partition can be switched to with a corresponding write on the&#xA;WVFStoppedFlag attribute. Take into account that 2 consecutive NaN values are&#xA;considered as a partition.&#xA;&lt;/pre>" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="WVF2" attType="Spectrum" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="16383" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:FloatType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="&lt;pre>&#xA;Waveform 2 stored in flash memory.&#xA;&#xA;REMEMBER that FLASH memories have a limited number of write cycles, so do not&#xA;write them unless necessary. We recommend to test your new waveforms by&#xA;writting them to RAM (WVF0) and then, once you`re happy, write them to any&#xA;other free sector.&#xA;&#xA;PARTITIONS can be set inside a waveform. Datapoints with a NaN value are&#xA;interpreted as stop flags, hence allowing segmentation of a waveform into&#xA;several partitions.  When such a stop flag is reached, the waveform is stopped.&#xA;The next partition can be switched to with a corresponding write on the&#xA;WVFStoppedFlag attribute. Take into account that 2 consecutive NaN values are&#xA;considered as a partition.&#xA;&lt;/pre>" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="WVF3" attType="Spectrum" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="16383" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:FloatType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="&lt;pre>&#xA;Waveform 3 stored in flash memory.&#xA;&#xA;REMEMBER that FLASH memories have a limited number of write cycles, so do not&#xA;write them unless necessary. We recommend to test your new waveforms by&#xA;writting them to RAM (WVF0) and then, once you`re happy, write them to any&#xA;other free sector.&#xA;&#xA;PARTITIONS can be set inside a waveform. Datapoints with a NaN value are&#xA;interpreted as stop flags, hence allowing segmentation of a waveform into&#xA;several partitions.  When such a stop flag is reached, the waveform is stopped.&#xA;The next partition can be switched to with a corresponding write on the&#xA;WVFStoppedFlag attribute. Take into account that 2 consecutive NaN values are&#xA;considered as a partition.&#xA;&lt;/pre>" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="WVF4" attType="Spectrum" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="16383" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:FloatType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="&lt;pre>&#xA;Waveform 4 stored in flash memory.&#xA;&#xA;REMEMBER that FLASH memories have a limited number of write cycles, so do not&#xA;write them unless necessary. We recommend to test your new waveforms by&#xA;writting them to RAM (WVF0) and then, once you`re happy, write them to any&#xA;other free sector.&#xA;&#xA;PARTITIONS can be set inside a waveform. Datapoints with a NaN value are&#xA;interpreted as stop flags, hence allowing segmentation of a waveform into&#xA;several partitions.  When such a stop flag is reached, the waveform is stopped.&#xA;The next partition can be switched to with a corresponding write on the&#xA;WVFStoppedFlag attribute. Take into account that 2 consecutive NaN values are&#xA;considered as a partition.&#xA;&lt;/pre>" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="WVF5" attType="Spectrum" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="16383" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:FloatType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="&lt;pre>&#xA;Waveform 5 stored in flash memory.&#xA;&#xA;REMEMBER that FLASH memories have a limited number of write cycles, so do not&#xA;write them unless necessary. We recommend to test your new waveforms by&#xA;writting them to RAM (WVF0) and then, once you`re happy, write them to any&#xA;other free sector.&#xA;&#xA;PARTITIONS can be set inside a waveform. Datapoints with a NaN value are&#xA;interpreted as stop flags, hence allowing segmentation of a waveform into&#xA;several partitions.  When such a stop flag is reached, the waveform is stopped.&#xA;The next partition can be switched to with a corresponding write on the&#xA;WVFStoppedFlag attribute. Take into account that 2 consecutive NaN values are&#xA;considered as a partition.&#xA;&lt;/pre>" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="WVF6" attType="Spectrum" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="16383" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:FloatType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="&lt;pre>&#xA;Waveform 6 stored in flash memory.&#xA;&#xA;REMEMBER that FLASH memories have a limited number of write cycles, so do not&#xA;write them unless necessary. We recommend to test your new waveforms by&#xA;writting them to RAM (WVF0) and then, once you`re happy, write them to any&#xA;other free sector.&#xA;&#xA;PARTITIONS can be set inside a waveform. Datapoints with a NaN value are&#xA;interpreted as stop flags, hence allowing segmentation of a waveform into&#xA;several partitions.  When such a stop flag is reached, the waveform is stopped.&#xA;The next partition can be switched to with a corresponding write on the&#xA;WVFStoppedFlag attribute. Take into account that 2 consecutive NaN values are&#xA;considered as a partition.&#xA;&lt;/pre>" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="WVF7" attType="Spectrum" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="16383" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:FloatType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="&lt;pre>&#xA;Waveform 7 stored in flash memory.&#xA;&#xA;REMEMBER that FLASH memories have a limited number of write cycles, so do not&#xA;write them unless necessary. We recommend to test your new waveforms by&#xA;writting them to RAM (WVF0) and then, once you`re happy, write them to any&#xA;other free sector.&#xA;&#xA;PARTITIONS can be set inside a waveform. Datapoints with a NaN value are&#xA;interpreted as stop flags, hence allowing segmentation of a waveform into&#xA;several partitions.  When such a stop flag is reached, the waveform is stopped.&#xA;The next partition can be switched to with a corresponding write on the&#xA;WVFStoppedFlag attribute. Take into account that 2 consecutive NaN values are&#xA;considered as a partition.&#xA;&lt;/pre>" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="WVF8" attType="Spectrum" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="16383" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:FloatType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="&lt;pre>&#xA;Waveform 8 stored in flash memory.&#xA;&#xA;REMEMBER that FLASH memories have a limited number of write cycles, so do not&#xA;write them unless necessary. We recommend to test your new waveforms by&#xA;writting them to RAM (WVF0) and then, once you`re happy, write them to any&#xA;other free sector.&#xA;&#xA;PARTITIONS can be set inside a waveform. Datapoints with a NaN value are&#xA;interpreted as stop flags, hence allowing segmentation of a waveform into&#xA;several partitions.  When such a stop flag is reached, the waveform is stopped.&#xA;The next partition can be switched to with a corresponding write on the&#xA;WVFStoppedFlag attribute. Take into account that 2 consecutive NaN values are&#xA;considered as a partition.&#xA;&lt;/pre>" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="WVF9" attType="Spectrum" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="16383" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:FloatType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="&lt;pre>&#xA;Waveform 9 stored in flash memory.&#xA;&#xA;REMEMBER that FLASH memories have a limited number of write cycles, so do not&#xA;write them unless necessary. We recommend to test your new waveforms by&#xA;writting them to RAM (WVF0) and then, once you`re happy, write them to any&#xA;other free sector.&#xA;&#xA;PARTITIONS can be set inside a waveform. Datapoints with a NaN value are&#xA;interpreted as stop flags, hence allowing segmentation of a waveform into&#xA;several partitions.  When such a stop flag is reached, the waveform is stopped.&#xA;The next partition can be switched to with a corresponding write on the&#xA;WVFStoppedFlag attribute. Take into account that 2 consecutive NaN values are&#xA;considered as a partition.&#xA;&lt;/pre>" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="WVF10" attType="Spectrum" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="16383" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:FloatType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="&lt;pre>&#xA;Waveform 10 stored in flash memory.&#xA;&#xA;REMEMBER that FLASH memories have a limited number of write cycles, so do not&#xA;write them unless necessary. We recommend to test your new waveforms by&#xA;writting them to RAM (WVF0) and then, once you`re happy, write them to any&#xA;other free sector.&#xA;&#xA;PARTITIONS can be set inside a waveform. Datapoints with a NaN value are&#xA;interpreted as stop flags, hence allowing segmentation of a waveform into&#xA;several partitions.  When such a stop flag is reached, the waveform is stopped.&#xA;The next partition can be switched to with a corresponding write on the&#xA;WVFStoppedFlag attribute. Take into account that 2 consecutive NaN values are&#xA;considered as a partition.&#xA;&lt;/pre>" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="WVF11" attType="Spectrum" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="16383" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:FloatType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="&lt;pre>&#xA;Waveform 11 stored in flash memory.&#xA;&#xA;REMEMBER that FLASH memories have a limited number of write cycles, so do not&#xA;write them unless necessary. We recommend to test your new waveforms by&#xA;writting them to RAM (WVF0) and then, once you`re happy, write them to any&#xA;other free sector.&#xA;&#xA;PARTITIONS can be set inside a waveform. Datapoints with a NaN value are&#xA;interpreted as stop flags, hence allowing segmentation of a waveform into&#xA;several partitions.  When such a stop flag is reached, the waveform is stopped.&#xA;The next partition can be switched to with a corresponding write on the&#xA;WVFStoppedFlag attribute. Take into account that 2 consecutive NaN values are&#xA;considered as a partition.&#xA;&lt;/pre>" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <states name="UNKNOWN" description="&lt;pre>&#xA;No connection to the PC established yet.&#xA;Note that this applies only when the PC is first initalized,&#xA;if the connection is lost at a later point, a fault is generated.&#xA;Also if it could not be determined whether power is on or off.&#xA;&lt;/pre>">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="INIT" description="&lt;pre>&#xA;Some form of initialization is done&#xA;&lt;/pre>">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="ON" description="&lt;pre>&#xA;Power active&#xA;&lt;/pre>">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="OFF" description="&lt;pre>&#xA;PC does not supply power&#xA;&lt;/pre>">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="ALARM" description="&lt;pre>&#xA;Voltage or Current supplied significantly deviates from set point&#xA;Including supplying power when it shoul be off and not supplying power&#xA;when in on state.&#xA;Interlock triggered.&#xA;&lt;/pre>">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="FAULT" description="&lt;pre>&#xA;PC indicates a broken hardware, programming error detected or connection lost.&#xA;&lt;/pre>">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="RUNNING" description="&lt;pre>&#xA;Hardware waveform is active (it is actually been played)&#xA;&lt;/pre>">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="MOVING" description="&lt;pre>&#xA;Software waveform running&#xA;&lt;/pre>">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="OPEN" description="&lt;pre>&#xA;Hardware waveform reading/writing from/to hardware&#xA;&lt;/pre>">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="STANDBY" description="&lt;pre>&#xA;Hardware waveform has been started but not yet triggered&#xA;&lt;/pre>">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="$(TANGO_HOME)"/>
+  </classes>
+</pogoDsl:PogoSystem>
