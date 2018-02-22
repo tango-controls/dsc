@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="Wago" pogoRevision="8.2">
+    <description description="Device server for Wago 750 series Programable Fieldbus Controllers &#xA;and Fieldbus Couplers. The class supports reading and writing to a node&#xA;consisting of a number of Wago modules. It communicates with device over&#xA;Modbus TCP or RTU protocol by means of Modbus Tango class." title="Wago interface" sourcePath="/mntdirect/_segfs/tango/cppserver/instrumentation/Wago" language="Cpp" filestogenerate="XMI   file,Code files" license="GPL" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <identification contact="at at esrf.fr - pawel.kowaliszyn" author="pawel.kowaliszyn" emailDomain="at esrf.fr" classFamily="Controllers" siteSpecific="" platform="All Platforms" bus="Modbus" manufacturer="none" reference=""/>
+    </description>
+    <classProperties name="modulesCatalogue" description="List of know WAGO modules usable by the WAGO Device Server&#xA;SYNTAX: &#xA;   -the first item should be the date the list has been updated&#xA;   -then, for each module, you must supply:&#xA;          -module reference&#xA;          -number of digital  inputs&#xA;          -number of digital outputs&#xA;          -number of word     inputs&#xA;          -number of word    outputs&#xA;          -number of logical channels (typically SSI32bits==2 words)&#xA;          -string for special module  (``none``,``ssi``,``thc``,``thck``,etc)&#xA;          -string for description">
+      <type xsi:type="pogoDsl:StringVectorType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </classProperties>
+    <deviceProperties name="modbusDevName" description="Name of Modbus tango device server used for communication with&#xA; physical device.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="config" description="Configuration of physical modules in device and its projection&#xA; to LogicalDevices in server.">
+      <type xsi:type="pogoDsl:StringVectorType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="updatePeriod" description="Modbus process image cache update interval.">
+      <type xsi:type="pogoDsl:UShortType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>1000</DefaultPropValue>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device state">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its device_status data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device status">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="DevReadNoCachePhys" description="Read all physical values of the specified logical device and &#xA;//              return the values as a float array. Physical value are&#xA;//              calculated from module registers according to a predefined&#xA;//              algorithm deduced from the module type in the catalogue.&#xA;//              Read registers from the cache.&#xA;//&#xA;//              Note: not all the channels of the logical device are&#xA;//              returned but only the ones on modules marked as specials&#xA;//              in the catalogue." execMethod="dev_read_no_cache_phys" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Logical device index.">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="Array of values.">
+        <type xsi:type="pogoDsl:FloatArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="DevWritePhys" description="" execMethod="dev_write_phys" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Logical device key and values for write">
+        <type xsi:type="pogoDsl:FloatArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="DevReadPhys" description="Read physical values of LD" execMethod="dev_read_phys" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Logical device key">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="Placeholder for obtained values">
+        <type xsi:type="pogoDsl:FloatArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="DevWriteDigi" description="Write words and bits to output module registers." execMethod="dev_write_digi" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Logical device key, then pairs of channel,value.">
+        <type xsi:type="pogoDsl:ShortArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="DevReadDigi" description="Read all input and output word and bits of the specified logical &#xA;device and return the values as a short array (short per bit). &#xA;Read from the cache." execMethod="dev_read_digi" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Logical device">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="Array of bit values">
+        <type xsi:type="pogoDsl:ShortArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="DevReadNoCacheDigi" description="Read all input and output word and bits of the specified logical &#xA;device and return the values as a short array (short per bit). &#xA;Read from the cache." execMethod="dev_read_no_cache_digi" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Logical device">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="Array of bit values">
+        <type xsi:type="pogoDsl:ShortArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="DevGetKeys" description="Return all the numerical keys known by the server." execMethod="dev_get_keys" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Numerical keys">
+        <type xsi:type="pogoDsl:ShortArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="DevKey2Name" description="Return the logical device name associated to a numerical keys &#xA;name." execMethod="dev_key2_name" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Numerical key">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="Logical device name">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="DevLog2Hard" description="Return hardware information of a logical device/logical channel." execMethod="dev_log2_hard" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="[0] : logical device key&#xA;[1] : logical channel">
+        <type xsi:type="pogoDsl:ShortArrayType"/>
+      </argin>
+      <argout description="[0] : offset in wago controller memory (ex: 0x16)&#xA;[1] : MSB=I/O LSB=Bit/Word (ex: 0x4957 = (`I`&lt;&lt;8)+`W`)&#xA;[2] : module reference (ex: 469)&#xA;[3] : module number (1st is 0)&#xA;[4] : physical channel of the module (ex: 1 for the 2nd)">
+        <type xsi:type="pogoDsl:ShortArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="DevHard2Log" description="Returns the logical device/logical channel of a memory location &#xA;on wago controller" execMethod="dev_hard2_log" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="[0] : MSB=I/O LSB=Bit/Word (ex: 0x4957 = (`I`&lt;&lt;8)+`W`)&#xA;[1] : offset in wago controller memory (ex: 0x16)">
+        <type xsi:type="pogoDsl:ShortArrayType"/>
+      </argin>
+      <argout description="[0] : logical device key&#xA;[1] : logical channel">
+        <type xsi:type="pogoDsl:ShortArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="DevName2Key" description="Return the logical device name associated to a numerical keys name." execMethod="dev_name2_key" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Logical device name">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="Numerical key">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="DevWcComm" description="Executes a command in the wago controller programm. The communication is done using the ISG protocol." execMethod="dev_wc_comm" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="[0] : code of command to execute (ex: 0x010c for ILCK_RESET)&#xA;[1] : 1st parameter&#xA;[2] : 2nd parameter&#xA;etc">
+        <type xsi:type="pogoDsl:ShortArrayType"/>
+      </argin>
+      <argout description="[0] : 1st argout or error code&#xA;[1] : 2nd argout &#xA;etc">
+        <type xsi:type="pogoDsl:ShortArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <states name="INIT" description="Server startup is beeing performed.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="ON" description="Server is operational and running.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="FAULT" description="Invalid internal server state. Error in communication with device or invalid server configuration.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="/segfs/tango/cppserver/env"/>
+  </classes>
+</pogoDsl:PogoSystem>
