@@ -1,0 +1,41 @@
+{
+    "1637": {
+        "buses": [
+            "Modbus"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "AcromagXT1121"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/1637/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 577, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/InputOutput/AcromagXT1121/AcromagXT1121.pdf"
+            }
+        ], 
+        "families": [
+            "InputOutput"
+        ], 
+        "last_update": "2018-02-03 03:04:50.221329+00:00", 
+        "last_update_method": "url", 
+        "license": "GPL", 
+        "manufacturers": [
+            "Acromag"
+        ], 
+        "name": "AcromagXT1121", 
+        "products": [
+            "XT1121-00"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/InputOutput/AcromagXT1121", 
+        "status": "updated", 
+        "tag": "Release_1_4", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/1637/update/", 
+        "updated_by_script": true
+    }
+}
