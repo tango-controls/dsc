@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="Socket" pogoRevision="8.4">
+    <description description="This class implements basic socket IPC." title="Socket" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/Communication/DESY/Socket/trunk" language="Cpp" filestogenerate="XMI   file,Code files,html Pages" license="GPL" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+      <inheritances classname="Device_4Impl" sourcePath=""/>
+      <identification contact="at mail.desy.de - tnunez" author="tnunez" emailDomain="mail.desy.de" classFamily="Communication" siteSpecific="" platform="Unix Like" bus="Data Socket" manufacturer="none" reference=""/>
+    </description>
+    <deviceProperties name="Hostname" description="This is the hostname of the host to connect to.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="Port" description="This is the port number to connect to.">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="Readtimeout" description="Read timeout in milliseconds.">
+      <type xsi:type="pogoDsl:ShortType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="AutoReconnect" description="If true, the server try to re-create and re-connect to the socket after a failure.&#xA;NOTE : The default values is false.">
+      <type xsi:type="pogoDsl:BooleanType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>false</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="SimulationMode" description="0 if not simulation">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>0</DefaultPropValue>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="State Code">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its &lt;i>device_status&lt;/i> data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Status description">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
+    </commands>
+    <commands name="Write" description="Command used to send a string to the socket." execMethod="write" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>OFF</excludedStates>
+    </commands>
+    <commands name="Read" description="Command used to read a string from the socket." execMethod="read" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>OFF</excludedStates>
+    </commands>
+    <commands name="Reconnect" description="Attempts to re-establish the socket connection." execMethod="reconnect" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>ON</excludedStates>
+    </commands>
+    <commands name="WriteAndRead" description="Write to the socket and waits for the answer.&#xA;The end of the answer is triggered by the new line character!" execMethod="write_and_read" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Command string.">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="Answer string.">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>OFF</excludedStates>
+    </commands>
+    <commands name="Readln" description="Reads from a socket until a &quot;\n&quot; has been received." execMethod="readln" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="argout">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>OFF</excludedStates>
+    </commands>
+    <commands name="ReadUntil" description="This command read data from the socket until the terminator has been reached." execMethod="read_until" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="This is the terminator">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="This is the read string.">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>OFF</excludedStates>
+    </commands>
+    <commands name="WriteReadUntil" description="Write to the socket and waits for the answer.&#xA;The answer is triggered by select() which indicates that the the anser has arrived." execMethod="write_read_until" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="[0] = Command string to be send, [1] = end of message character">
+        <type xsi:type="pogoDsl:StringArrayType"/>
+      </argin>
+      <argout description="Answer string.">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>OFF</excludedStates>
+    </commands>
+    <commands name="WriteTwoBytes" description="Write two hardcoded bytes: &#xA;0 -> 0x1, 0x30&#xA;1 -> 0x1, 0x31&#xA;2 -> 0x1, 0x32" execMethod="write_two_bytes" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Pair ID">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <states name="ON" description="Normal state when everything is OK.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="OFF" description="Disconnected from socket (or not yet connected to).">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="/usr/share/pogo/preferences"/>
+  </classes>
+</pogoDsl:PogoSystem>
