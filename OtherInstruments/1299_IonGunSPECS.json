@@ -1,0 +1,41 @@
+{
+    "1299": {
+        "buses": [
+            "GPIB"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "IonGunSPECS"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/1299/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 397, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/OtherInstruments/IonGunSPECS/IonGunSPECS.pdf"
+            }
+        ], 
+        "families": [
+            "OtherInstruments"
+        ], 
+        "last_update": "2017-04-20 13:14:09.592425+00:00", 
+        "last_update_method": "file", 
+        "license": "None", 
+        "manufacturers": [
+            "SPECS"
+        ], 
+        "name": "IonGunSPECS", 
+        "products": [
+            "PU IQE 11/35"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/OtherInstruments/IonGunSPECS", 
+        "status": "updated", 
+        "tag": "release_1_0_2", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/1299/update/", 
+        "updated_by_script": true
+    }
+}
