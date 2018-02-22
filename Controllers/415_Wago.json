@@ -1,0 +1,41 @@
+{
+    "415": {
+        "buses": [
+            "Modbus"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "Wago"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/415/", 
+        "development_status": "new", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 225, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/InputOutput/Wago/Wago.pdf"
+            }
+        ], 
+        "families": [
+            "Controllers"
+        ], 
+        "last_update": "2017-02-23 10:11:45.025901+00:00", 
+        "last_update_method": "url", 
+        "license": "GPL", 
+        "manufacturers": [
+            "none"
+        ], 
+        "name": "Wago", 
+        "products": [
+            ""
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/InputOutput/RemoteIO/Wago", 
+        "status": "updated", 
+        "tag": "", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/415/update/", 
+        "updated_by_script": true
+    }
+}
