@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="LibXRay" pogoRevision="8.4">
+    <description description="Tango device server to interface to xraylib (https://github.com/tschoonj/xraylib/wiki)" title="LibXRay" sourcePath="/ssd/blume/src/TangoSvn/tango-ds/DeviceClasses/Calculation/LibXRay/trunk" language="Cpp" filestogenerate="XMI   file,Code files" license="GPL" hasMandatoryProperty="false" hasConcreteProperty="false" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <identification contact="at desy.de - johannes.blume" author="johannes.blume" emailDomain="desy.de" classFamily="Calculation" siteSpecific="" platform="Unix Like" bus="Not Applicable" manufacturer="https://github.com/tschoonj/xraylib/wiki" reference=""/>
+    </description>
+    <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device state">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its device_status data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device status">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="AtomicWeight" description="" execMethod="atomic_weight" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Atomic number of element">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="Atomic weight of element">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ElementDensity" description="" execMethod="element_density" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Element Number">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="density at room temperature in g/cm3">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="CrossSection" description="" execMethod="cross_section" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="0: element number&#xA;1: energy (keV)&#xA;2: mode,&#xA;   0 = total absorption cross section&#xA;   1 = photoionization cross section&#xA;   2 = Rayleigh scattering cross section&#xA;   3 = Compton scattering cross section&#xA;   4 - unit,  0 = cm2/g, 1 = barn/atom">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argin>
+      <argout description="cross section according to input">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="NameToNumber" description="Returns element number for element name" execMethod="name_to_number" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="NumberToName" description="Returns element name for element number" execMethod="number_to_name" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <preferences docHome="./doc_html" makefileHome="/usr/share/pogo/preferences"/>
+  </classes>
+</pogoDsl:PogoSystem>
