@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="SimMotor" pogoRevision="8.1">
+    <description description="This class simulates a motor compliant to the standard Motor abstract class" title="Standard motor simulator" sourcePath="/home/goetz/workspaces/tango/SimMotor" language="Cpp" filestogenerate="XMI   file,Code files" hasMandatoryProperty="false" hasConcreteProperty="false" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Motor" sourcePath="/usr/local/share/pogo/templates/AbstractClasses/Motor"/>
+      <identification contact="at esrf.eu - chaize" author="chaize" emailDomain="esrf.eu" classFamily="Motion" siteSpecific="" platform="All Platforms" bus="Not Applicable" manufacturer="none" reference=""/>
+    </description>
+    <deviceProperties name="Calibrated" description="When this property is different from 0, the motor is considered as calibrated&#xA;and a certain number of attributes cannot be changed anymore.( e.g. step_per_unit)&#xA;The goal is to avoid undesired change when the calibratiuon process has been&#xA;performed.">
+      <type xsi:type="pogoDsl:BooleanType"/>
+      <status abstract="false" inherited="true" concrete="true"/>
+    </deviceProperties>
+    <deviceProperties name="Auto_off" description="When different of 0, the motor will be automatically switched OFF  few minute&#xA;after the end of last movment. The value of the property define the number of minutes&#xA;) means no auto_off">
+      <type xsi:type="pogoDsl:UShortType"/>
+      <status abstract="false" inherited="true" concrete="true"/>
+      <DefaultPropValue>0</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="HighLimitPos" description="position of the high limit switch expressed in steps">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="true" concrete="true"/>
+      <DefaultPropValue>10001</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="LowLimitPos" description="Position of the low limit switch expressed in steps">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="true" concrete="true"/>
+      <DefaultPropValue>-10001</DefaultPropValue>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="State Code">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its &lt;i>device_status&lt;/i> data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Status description">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="On" description="Enable power on motor" execMethod="on" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="Off" description="Desable power on motor" execMethod="off" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GoHome" description="Move the motor to the home position given by a home switch." execMethod="go_home" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="Abort" description="Stop immediately the motor" execMethod="abort" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="StepUp" description="perform a relative motion of &quot;stepSize&quot; in the forward direction. StepSize is defined as an attribute of the device." execMethod="step_up" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="true" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="StepDown" description="perform a relative motion of &quot;stepSize&quot; in the backward direction. StepSize is defined as an attribute of the device." execMethod="step_down" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="true" concrete="true" concreteHere="true"/>
+    </commands>
+    <attributes name="Steps_per_unit" attType="Scalar" rwType="READ_WRITE" displayLevel="EXPERT" polledPeriod="0" maxX="0" maxY="0" memorized="true" memorizedAtInit="true">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
+      <properties description="" label="Steps per mm" unit="steps/mm" standardUnit="" displayUnit="" format="%7.1f" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="Steps" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0" memorized="true" memorizedAtInit="true">
+      <dataType xsi:type="pogoDsl:IntType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
+      <properties description="number of steps in the step counter\n" label="Steps" unit="steps" standardUnit="" displayUnit="" format="%6d" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="Position" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
+      <properties description="The actual motor position." label="position" unit="mm" standardUnit="" displayUnit="" format="%7.3f" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="Acceleration" attType="Scalar" rwType="READ_WRITE" displayLevel="EXPERT" polledPeriod="0" maxX="0" maxY="0" memorized="true" memorizedAtInit="true" allocReadMember="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
+      <properties description="The acceleration of the motor." label="Acceleration" unit="steps/s^2" standardUnit="" displayUnit="" format="%4d" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="Velocity" attType="Scalar" rwType="READ_WRITE" displayLevel="EXPERT" polledPeriod="0" maxX="0" maxY="0" memorized="true" memorizedAtInit="true" allocReadMember="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
+      <properties description="The constant velocity of the motor." label="Velocity" unit="steps/s" standardUnit="" displayUnit="" format="%4d" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="Backlash" attType="Scalar" rwType="READ_WRITE" displayLevel="EXPERT" polledPeriod="0" maxX="0" maxY="0" memorized="true" memorizedAtInit="true" allocReadMember="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
+      <properties description="Backlash to be applied to each motor movement" label="Backlash" unit="mm" standardUnit="" displayUnit="" format="%5.3f" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="Home_position" attType="Scalar" rwType="READ_WRITE" displayLevel="EXPERT" polledPeriod="0" maxX="0" maxY="0" memorized="true" memorizedAtInit="true" allocReadMember="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
+      <properties description="Position of the home switch" label="Home position" unit="mm" standardUnit="" displayUnit="" format="%7.3f" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="HardLimitLow" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
+      <properties description="" label="low limit switch state" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="HardLimitHigh" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
+      <properties description="" label="up limit switch state" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="PresetPosition" attType="Scalar" rwType="READ_WRITE" displayLevel="EXPERT" polledPeriod="0" maxX="0" maxY="0" allocReadMember="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
+      <properties description="preset the position in the step counter" label="Preset Position" unit="mm" standardUnit="" displayUnit="" format="%.3f" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="FirstVelocity" attType="Scalar" rwType="READ_WRITE" displayLevel="EXPERT" polledPeriod="0" maxX="0" maxY="0" memorized="true" memorizedAtInit="true" allocReadMember="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
+      <properties description="number of step/s for the first step and for the move reference" label="first step velocity" unit="steps/s" standardUnit="" displayUnit="" format="%4d" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="Home_side" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
+      <properties description="indicates if the axis is below or above the position of the home switch" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="StepSize" attType="Scalar" rwType="READ_WRITE" displayLevel="EXPERT" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="false" inherited="true" concrete="true" concreteHere="true"/>
+      <properties description="Size of the relative step performed by the StepUp and StepDown commands.\nThe StepSize is expressed in physical unit." label="StepSize" unit="mm" standardUnit="" displayUnit="" format="%.3f" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="InstantSpeed" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="false" inherited="true" concrete="true" concreteHere="true"/>
+      <properties description="Instantaneous speed expressed in user unit" label="Instantaneous speed" unit="mm/s" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <states name="ON" description="The motor powered on and is ready to move.">
+      <status abstract="false" inherited="true" concrete="true"/>
+    </states>
+    <states name="MOVING" description="The motor is moving">
+      <status abstract="false" inherited="true" concrete="true"/>
+    </states>
+    <states name="FAULT" description="The motor indicates a fault.">
+      <status abstract="false" inherited="true" concrete="true"/>
+    </states>
+    <states name="ALARM" description="The motor indicates an alarm state for example has reached&#xA;a limit switch.">
+      <status abstract="false" inherited="true" concrete="true"/>
+    </states>
+    <states name="OFF" description="The power on the moror drive is switched off.">
+      <status abstract="false" inherited="true" concrete="true"/>
+    </states>
+    <states name="DISABLE" description="The motor is in slave mode and disabled for normal use">
+      <status abstract="false" inherited="true" concrete="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="/usr/local/share/pogo/preferences"/>
+  </classes>
+</pogoDsl:PogoSystem>
