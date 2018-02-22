@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="Keithley6487">
+    <description description="Class for controlling the Keithley 6487 connecting to a GpibDeviceServer." title="Keithley 6487 " sourcePath="/home/tnunez/Tango_svn/Servers/Instrumentation/Keithley6487/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Makefile,html Pages" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <identification contact="at mail.desy.de - tnunez" author="tnunez" emailDomain="mail.desy.de" classFamily="Instrumentation" siteSpecific="" platform="Unix Like" bus="GPIB" manufacturer="Keithley" reference="6487"/>
+      <comments commandsTable="//================================================================&#xA;//&#xA;//  The following table gives the correspondence&#xA;//  between command and method names.&#xA;//&#xA;//  Command name  |  Method name&#xA;//----------------------------------------------------------------&#xA;//  State         |  Inherited (no method)&#xA;//  Status        |  Inherited (no method)&#xA;//================================================================"/>
+    </description>
+    <deviceProperties name="GpibDevice" description="Name of the GpibDeviceServer Tango Server to connect to">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device state">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its device_status data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device status">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <attributes name="Current" attType="Scalar" rwType="READ" displayLevel="OPERATOR" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Read current." label="" unit="A" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="Voltage" attType="Scalar" rwType="READ" displayLevel="OPERATOR" maxX="" maxY="" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Read voltage." label="" unit="V" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="SetVoltage" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" memorized="true" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Set Voltage value, read last set value." label="" unit="V" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="MaxOutputCurrent" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" memorized="true" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Set maximum output current, read last set value." label="" unit="mA" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="VoltageOutputActive" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="" maxY="" memorized="true" allocReadMember="true">
+      <dataType xsi:type="pogoDsl:IntType"/>
+      <changeEvent fire="false" libCheckCriteria="true"/>
+      <archiveEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Activate/deactivate Output Voltage." label="" unit="0->deactive, 1->active" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <states name="ON" description="">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="FAULT" description="">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="/usr/local/share/pogo/preferences"/>
+  </classes>
+</pogoDsl:PogoSystem>
