@@ -1,0 +1,41 @@
+{
+    "115": {
+        "buses": [
+            "Ethernet"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "Agilent33500B"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/115/", 
+        "development_status": "new", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 250, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/MeasureInstruments/Agilent33500B/Agilent33500B.pdf"
+            }
+        ], 
+        "families": [
+            "OtherInstruments"
+        ], 
+        "last_update": "2017-11-11 03:03:55.505104+00:00", 
+        "last_update_method": "url", 
+        "license": "GPL", 
+        "manufacturers": [
+            "none"
+        ], 
+        "name": "Agilent33500B", 
+        "products": [
+            ""
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/MeasureInstruments/Agilent/Agilent33500B", 
+        "status": "updated", 
+        "tag": "", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/115/update/", 
+        "updated_by_script": true
+    }
+}
