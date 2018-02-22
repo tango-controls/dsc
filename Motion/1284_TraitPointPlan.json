@@ -1,0 +1,41 @@
+{
+    "1284": {
+        "buses": [
+            "Not Applicable"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "TraitPointPlan"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/1284/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 383, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Motion/TraitPointPlan/TraitPointPlan.pdf"
+            }
+        ], 
+        "families": [
+            "Motion"
+        ], 
+        "last_update": "2017-04-20 13:13:59.607313+00:00", 
+        "last_update_method": "file", 
+        "license": "None", 
+        "manufacturers": [
+            "none"
+        ], 
+        "name": "TraitPointPlan", 
+        "products": [
+            ""
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Motion/TraitPointPlan", 
+        "status": "updated", 
+        "tag": "release_2_2_2", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/1284/update/", 
+        "updated_by_script": true
+    }
+}
