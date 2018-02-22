@@ -1,0 +1,41 @@
+{
+    "208": {
+        "buses": [
+            "Socket"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "PiezoJenaNV401CLE"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/208/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 360, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Motion/PiezoJenaNV401CLE/PiezoJenaNV401CLE.pdf"
+            }
+        ], 
+        "families": [
+            "Motion"
+        ], 
+        "last_update": "2017-02-23 10:46:33.943158+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "Jena"
+        ], 
+        "name": "PiezoJenaNV401CLE", 
+        "products": [
+            "NV40 1CLE"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Motion/MotorControllers/Piezosystem/PiezoJenaNV401CLE", 
+        "status": "updated", 
+        "tag": "Release_1_1", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/208/update/", 
+        "updated_by_script": true
+    }
+}
