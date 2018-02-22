@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="PressureGauge" pogoRevision="9.0">
+    <description description="This is the abstract class for pressure measuring gauges." title="Pressure gauge abstract class" sourcePath="/mntdirect/_segfs/tango/cppserver/vacuum/gauges/PressureGauge" language="Cpp" filestogenerate="XMI   file,Code files" license="GPL" hasMandatoryProperty="false" hasConcreteProperty="false" hasAbstractCommand="true" hasAbstractAttribute="true">
+      <inheritances classname="Device_4Impl" sourcePath=""/>
+      <identification contact="at esrf.fr - accelerator-control" author="accelerator-control" emailDomain="esrf.fr" classFamily="AbstractClasses" siteSpecific="" platform="All Platforms" bus="Not Applicable" manufacturer="none" reference="">
+        <keyWords>Vacuum</keyWords>
+        <keyWords>Gauge</keyWords>
+        <keyWords>Pressure</keyWords>
+        <keyWords>Interface</keyWords>
+      </identification>
+    </description>
+    <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="State Code">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its &lt;i>device_status&lt;/i> data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Status description">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
+    </commands>
+    <commands name="On" description="Sets the gauge ON." execMethod="on" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="true"/>
+    </commands>
+    <commands name="Off" description="Sets the gauge OFF." execMethod="off" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="true"/>
+    </commands>
+    <attributes name="Pressure" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <status abstract="true"/>
+      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>OFF</readExcludedStates>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <readExcludedStates>ALARM</readExcludedStates>
+      <readExcludedStates>DISABLE</readExcludedStates>
+      <readExcludedStates>UNKNOWN</readExcludedStates>
+    </attributes>
+    <states name="ON" description="This is the normal state when the gauge is ON and runs smoothly.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="OFF" description="This is the state when the gauge is OFF.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="FAULT" description="This is the state when the gauge has a fault.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="ALARM" description="This is the state when there is an alarm for the given gauge.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="DISABLE" description="This is the state when the gauge has been disabled.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="UNKNOWN" description="This is the state when the state can not be determined.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="/segfs/tango/cppserver/env"/>
+  </classes>
+</pogoDsl:PogoSystem>
