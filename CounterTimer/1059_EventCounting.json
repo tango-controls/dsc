@@ -1,0 +1,41 @@
+{
+    "1059": {
+        "buses": [
+            ""
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "EventCounting"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/1059/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 194, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/CounterTimer/EventCounting/EventCounting.pdf"
+            }
+        ], 
+        "families": [
+            "CounterTimer"
+        ], 
+        "last_update": "2018-02-22 14:32:54.707628+00:00", 
+        "last_update_method": "file", 
+        "license": "None", 
+        "manufacturers": [
+            ""
+        ], 
+        "name": "EventCounting", 
+        "products": [
+            ""
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/CounterTimer/NI/EventCounting", 
+        "status": "updated", 
+        "tag": "release_1_3_2", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/1059/update/", 
+        "updated_by_script": true
+    }
+}
