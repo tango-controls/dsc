@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="CenterThree">
-    <description description="" title="CenterThree" sourcePath="/tangosvn/blume/DeviceClasses/SampleEnvironment/CenterThree/tags/Release_1_5" language="Cpp" filestogenerate="XMI   file,Code files" hasAbstractCommand="false" hasAbstractAttribute="false">
+  <classes name="CenterThree" pogoRevision="9.4">
+    <description description="" title="CenterThree" sourcePath="/ssd/blume/src/TangoSvn/tango-ds/DeviceClasses/SampleEnvironment/CenterThree/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
       <inheritances classname="Device_4Impl" sourcePath=""/>
       <identification contact="at desy.de - johannes.blume" author="johannes.blume" emailDomain="desy.de" classFamily="Instrumentation" siteSpecific="" platform="Unix Like" bus="Not Applicable" manufacturer="none" reference=""/>
-      <comments commandsTable="//================================================================&#xA;//&#xA;//  The following table gives the correspondence&#xA;//  between command and method names.&#xA;//&#xA;//  Command name  |  Method name&#xA;//----------------------------------------------------------------&#xA;//  State         |  Inherited (no method)&#xA;//  Status        |  Inherited (no method)&#xA;//================================================================"/>
     </description>
     <deviceProperties name="Controller" description="The  CenterThreeCtrl device">
       <type xsi:type="pogoDsl:StringType"/>
@@ -14,7 +13,7 @@
       <type xsi:type="pogoDsl:IntType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </deviceProperties>
-    <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR">
+    <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="none.">
         <type xsi:type="pogoDsl:VoidType"/>
       </argin>
@@ -23,7 +22,7 @@
       </argout>
       <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
     </commands>
-    <commands name="Status" description="This command gets the device status (stored in its &lt;i>device_status&lt;/i> data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR">
+    <commands name="Status" description="This command gets the device status (stored in its &lt;i>device_status&lt;/i> data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="none.">
         <type xsi:type="pogoDsl:VoidType"/>
       </argin>
@@ -32,7 +31,7 @@
       </argout>
       <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
     </commands>
-    <attributes name="Pressure" attType="Scalar" rwType="READ" displayLevel="OPERATOR" maxX="0" maxY="0" allocReadMember="true">
+    <attributes name="Pressure" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0" allocReadMember="true">
       <dataType xsi:type="pogoDsl:DoubleType"/>
       <changeEvent fire="false" libCheckCriteria="false"/>
       <archiveEvent fire="false" libCheckCriteria="false"/>
@@ -41,7 +40,15 @@
       <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <readExcludedStates>FAULT</readExcludedStates>
     </attributes>
-    <attributes name="SP1" attType="Spectrum" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="3" maxY="" allocReadMember="true">
+    <attributes name="HVC" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="SP1" attType="Spectrum" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="3" maxY="" allocReadMember="true">
       <dataType xsi:type="pogoDsl:DoubleType"/>
       <changeEvent fire="false" libCheckCriteria="true"/>
       <archiveEvent fire="false" libCheckCriteria="true"/>
@@ -51,7 +58,7 @@
       <readExcludedStates>FAULT</readExcludedStates>
       <writeExcludedStates>FAULT</writeExcludedStates>
     </attributes>
-    <attributes name="SP2" attType="Spectrum" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="3" maxY="" allocReadMember="true">
+    <attributes name="SP2" attType="Spectrum" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="3" maxY="" allocReadMember="true">
       <dataType xsi:type="pogoDsl:DoubleType"/>
       <changeEvent fire="false" libCheckCriteria="true"/>
       <archiveEvent fire="false" libCheckCriteria="true"/>
@@ -61,7 +68,7 @@
       <readExcludedStates>FAULT</readExcludedStates>
       <writeExcludedStates>FAULT</writeExcludedStates>
     </attributes>
-    <attributes name="SP3" attType="Spectrum" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="3" maxY="" allocReadMember="true">
+    <attributes name="SP3" attType="Spectrum" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="3" maxY="" allocReadMember="true">
       <dataType xsi:type="pogoDsl:DoubleType"/>
       <changeEvent fire="false" libCheckCriteria="true"/>
       <archiveEvent fire="false" libCheckCriteria="true"/>
@@ -71,7 +78,7 @@
       <readExcludedStates>FAULT</readExcludedStates>
       <writeExcludedStates>FAULT</writeExcludedStates>
     </attributes>
-    <attributes name="SP4" attType="Spectrum" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="3" maxY="" allocReadMember="true">
+    <attributes name="SP4" attType="Spectrum" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="3" maxY="" allocReadMember="true">
       <dataType xsi:type="pogoDsl:DoubleType"/>
       <changeEvent fire="false" libCheckCriteria="true"/>
       <archiveEvent fire="false" libCheckCriteria="true"/>
@@ -81,7 +88,7 @@
       <readExcludedStates>FAULT</readExcludedStates>
       <writeExcludedStates>FAULT</writeExcludedStates>
     </attributes>
-    <attributes name="SP5" attType="Spectrum" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="3" maxY="" allocReadMember="true">
+    <attributes name="SP5" attType="Spectrum" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="3" maxY="" allocReadMember="true">
       <dataType xsi:type="pogoDsl:DoubleType"/>
       <changeEvent fire="false" libCheckCriteria="true"/>
       <archiveEvent fire="false" libCheckCriteria="true"/>
@@ -91,7 +98,7 @@
       <readExcludedStates>FAULT</readExcludedStates>
       <writeExcludedStates>FAULT</writeExcludedStates>
     </attributes>
-    <attributes name="SP6" attType="Spectrum" rwType="READ_WRITE" displayLevel="OPERATOR" maxX="3" maxY="" allocReadMember="true">
+    <attributes name="SP6" attType="Spectrum" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="3" maxY="" allocReadMember="true">
       <dataType xsi:type="pogoDsl:DoubleType"/>
       <changeEvent fire="false" libCheckCriteria="true"/>
       <archiveEvent fire="false" libCheckCriteria="true"/>
