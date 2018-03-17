@@ -285,6 +285,42 @@
       <excludedStates>FAULT</excludedStates>
       <excludedStates>RUNNING</excludedStates>
     </commands>
+    <commands name="GetTemperatures" description="Temperature of modules in degrees Celcius." execMethod="get_temperatures" displayLevel="EXPERT" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>RUNNING</excludedStates>
+    </commands>
+    <commands name="GetHumidities" description="Relative humidities of the modules." execMethod="get_humidities" displayLevel="EXPERT" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>RUNNING</excludedStates>
+    </commands>
+    <commands name="GetHighVoltages" description="High voltage at which the module is operated." execMethod="get_high_voltages" displayLevel="EXPERT" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>RUNNING</excludedStates>
+    </commands>
     <attributes name="nbModules" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0" allocReadMember="false" isDynamic="false">
       <dataType xsi:type="pogoDsl:IntType"/>
       <changeEvent fire="false" libCheckCriteria="false"/>
