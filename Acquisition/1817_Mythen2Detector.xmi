@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="Mythen2Detector" pogoRevision="8.1">
-    <description description="Device for Mythen2 detectors from DECTRIS company.&#xA;It connects to the Detector Control System (DCS4) which can manage four Mythen2 modules." title="Mythen2 dectector TANGO device." sourcePath="/media/sf_Partage/Mythen2Detector/trunk/src" language="Cpp" filestogenerate="XMI   file,Code files,html Pages" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+  <classes name="Mythen2Detector" pogoRevision="8.2">
+    <description description="Device for Mythen2 detectors from DECTRIS company.&#xA;It connects to the Detector Control System (DCS4) which can manage four Mythen2 modules." title="Mythen2 dectector TANGO device." sourcePath="/home/informatique/ica/noureddine/DeviceSources/Mythen2Detector/src" language="Cpp" filestogenerate="XMI   file,Code files" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
       <inheritances classname="Device_4Impl" sourcePath=""/>
       <identification contact="at synchrotron-soleil.fr - cedric.castel" author="cedric.castel" emailDomain="synchrotron-soleil.fr" classFamily="Acquisition" siteSpecific="" platform="Unix Like" bus="Data Socket" manufacturer="DECTRIS" reference=""/>
     </description>
@@ -149,6 +149,11 @@
       <type xsi:type="pogoDsl:IntType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>-1</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="DetectorType" description="Define the detectior type : &lt;br>&#xA;MYTHEN2&lt;br>&#xA;SIMULATOR&lt;br>">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>MYTHEN2</DefaultPropValue>
     </deviceProperties>
     <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="none.">
@@ -642,6 +647,6 @@
     <states name="RUNNING" description="">
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </states>
-    <preferences docHome="./doc_html" makefileHome="/usr/local/share/pogo/preferences"/>
+    <preferences docHome="../doc/doc_html" makefileHome="$(TANGO_HOME)"/>
   </classes>
 </pogoDsl:PogoSystem>
