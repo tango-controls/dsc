@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
   <classes name="SIS3302Master" pogoRevision="9.4">
-    <description description="This is a  master tango server for SIS3302 devices." title="SIS3302 Master Tango Server" sourcePath="/home/yuelong/src/TangoSVN/tango-ds-code/DeviceClasses/Acquisition/1D/SIS3302Master/trunk" language="Cpp" filestogenerate="XMI   file,Protected Regions,html Pages" license="GPL" copyright="" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+    <description description="This is a  master tango server for SIS3302 devices." title="SIS3302 Master Tango Server" sourcePath="/home/yuelong/src/TangoSVN/tango-ds-code/DeviceClasses/Acquisition/1D/SIS3302Master/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions,html Pages" license="GPL" copyright="" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
       <inheritances classname="Device_Impl" sourcePath=""/>
       <identification contact="at desy.de - yuelong.yu" author="yuelong.yu" emailDomain="desy.de" classFamily="Acquisition" siteSpecific="" platform="Unix Like" bus="Not Applicable" manufacturer="none" reference=""/>
     </description>
@@ -61,6 +61,9 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>MOVING</excludedStates>
+      <excludedStates>UNKNOWN</excludedStates>
+      <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="Stop" description="" execMethod="stop" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="">
@@ -70,6 +73,8 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>UNKNOWN</excludedStates>
+      <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="SaveConfig" description="Save current configuration to local file" execMethod="save_config" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="">
