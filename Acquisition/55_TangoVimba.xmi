@@ -1,22 +1,18 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
   <classes name="TangoVimba" pogoRevision="9.4">
-    <description description="Tango device server for genicam compatible GigE cameras" title="TangoVimba" sourcePath="/ssd/blume/src/TangoSvn/tango-ds/DeviceClasses/Acquisition/2D/TangoVimba/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions,html Pages" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+    <description description="Tango device server for Allied Vision GigE cameras" title="TangoVimba" sourcePath="/ssd/blume/src/TangoSvn/tango-ds/DeviceClasses/Acquisition/2D/TangoVimba/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" license="GPL" copyright="" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
       <inheritances classname="Device_Impl" sourcePath=""/>
-      <identification contact="at desy.de - johannes.blume" author="johannes.blume" emailDomain="desy.de" classFamily="Acquisition" siteSpecific="" platform="Unix Like" bus="Ethernet" manufacturer="none" reference=""/>
+      <identification contact="at desy.de - johannes.blume" author="johannes.blume" emailDomain="desy.de" classFamily="Acquisition" siteSpecific="" platform="Unix Like" bus="Ethernet" manufacturer="Allied Vision" reference="https://www.alliedvision.com"/>
     </description>
-    <deviceProperties name="HostName" description="host name or ip address of camera">
-      <type xsi:type="pogoDsl:StringType"/>
-      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <DefaultPropValue>&quot;&quot;</DefaultPropValue>
-    </deviceProperties>
     <deviceProperties name="DynAttrList" description="for internal use only">
       <type xsi:type="pogoDsl:StringVectorType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </deviceProperties>
-    <deviceProperties name="VisibleAttributes" mandatory="true" description="Since different cameras support different features (and the same&#xA;feature may even have different names on a different camera), camera&#xA;features are dynamically converted into device attributes.&#xA;&#xA;Converting all available camera features into attributes will&#xA;create a quite lengthy and cluttered list, so you can put those&#xA;features you want to see as device attributes into this list.&#xA;Only the features mentioned here will be shown as attributes.&#xA; &#xA;To find out about the available features of a camera either use a &#xA;program like VimbaViewer or leave this list empty. Then all features&#xA;will be shown as attributes.&#xA;&#xA;For features which are of type enumeration (e.g. PixelFormat)&#xA;an additional read-only attribute &lt;FeatureName>#Values will&#xA;be created. This shows the possible values for this feature on&#xA;this camera.">
+    <deviceProperties name="VisibleAttributes" description="Since different cameras support different features (and the same&#xA;feature may even have different names on different cameras), camera&#xA;features are dynamically converted into device attributes.&#xA;&#xA;Converting all available camera features into attributes will&#xA;create a quite lengthy and cluttered list, so you can put those&#xA;features you want to see as device attributes into this list.&#xA;Only the features mentioned here will be shown as attributes.&#xA; &#xA;To find out about the available features of a camera either use a &#xA;program like VimbaViewer or leave this list empty. Then all features&#xA;will be shown as attributes.&#xA;&#xA;For features which are of type enumeration (e.g. PixelFormat)&#xA;an additional read-only attribute &lt;FeatureName>#Values will&#xA;be created. This shows the possible values for this feature on&#xA;this camera.">
       <type xsi:type="pogoDsl:StringVectorType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>&quot;&quot;</DefaultPropValue>
     </deviceProperties>
     <deviceProperties name="FrameBuffers" description="Number of frame buffers for image acquistion (defaults to 4)">
       <type xsi:type="pogoDsl:UShortType"/>
@@ -27,12 +23,12 @@
       <type xsi:type="pogoDsl:StringType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </deviceProperties>
-    <deviceProperties name="DeviceID" description="Identifier of camera, this can be:&#xA;&#xA;- the IP address&#xA;&#xA;- the mac address (notation e.g. 000F3101C94A)&#xA;&#xA;- the ID as reported by Vimba (e.g. DEV_000F3101C94A)&#xA;&#xA;- the serial number (e.g. 02-2110A-07625)&#xA;&#xA;If DeviceID is given, property Hostname will be ignored.">
+    <deviceProperties name="DeviceID" description="Identifier of camera, this can be:&#xA;&#xA;- the mac address (notation e.g. 000F3101C94A, no `-` or `:` between digits)&#xA;&#xA;- the ID as reported by Vimba (e.g. DEV_000F3101C94A)&#xA;&#xA;- the serial number (e.g. 02-2110A-07625)&#xA;&#xA;(use of ip address as identifier is not supported - hot plugging&#xA;won`t work with ip address)">
       <type xsi:type="pogoDsl:StringType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>&quot;&quot;</DefaultPropValue>
     </deviceProperties>
-    <deviceProperties name="XMLTemplate" description="Here you can give the name of an xml file which you can use&#xA;to add static data e.g about your insxtrument to nexus&#xA;files. The file has at least to look&#xA;like this:&#xA;&#xA;-------------------------------------------------------&#xA;&lt;group name=``/`` type=``NXroot``>&#xA;    &lt;group name=``entry`` type=``NXentry``>&#xA;        &lt;group name=``instrument`` type=``NXinstrument``>&#xA;            &lt;group name=``detector`` type=``NXdetector``>&#xA;                &lt;field name=``model`` type=``string``> &lt;/field>&#xA;                &lt;field name=``serialnumber`` type=``string``> &lt;/field>&#xA;                &lt;field name=``comment`` type=``string``> &lt;/field>&#xA;                &lt;field name=``pixelformat`` type=``string``> &lt;/field>&#xA;                &lt;field name=``width`` type=``uint32``> &lt;/field>&#xA;                &lt;field name=``heigth`` type=``uint32``> &lt;/field>&#xA;                &lt;field name=``xoffset`` type=``uint32``> &lt;/field>&#xA;                &lt;field name=``yoffset`` type=``uint32``> &lt;/field>&#xA;                &lt;field name=``xbinning`` type=``uint32``> &lt;/field>&#xA;                &lt;field name=``ybinning`` type=``uint32``> &lt;/field>&#xA;                &lt;field name=``framerate`` type=``float32``> &lt;/field>&#xA;                &lt;field name=``gain`` type=``{{GAIN_TYPE}}``> &lt;/field>&#xA;                &lt;field name=``exposure`` type=``float32``>  &lt;/field>&#xA;                &lt;field name=``timestamps`` type=``uint64``>&#xA;                     &lt;dimensions rank=``2``>&#xA;                        &lt;dim index=``0`` value=``0``/>&#xA;                        &lt;dim index=``1`` value=``1``/>&#xA;                    &lt;/dimensions>&#xA;                &lt;/field>&#xA;                &lt;field name=``data`` type=``{{PIXEL_TYPE}}``>&#xA;                    &lt;dimensions rank=``3``>&#xA;                        &lt;dim index=``0`` value=``0``/>&#xA;                        &lt;dim index=``1`` value=``{{NX}}``/>&#xA;                        &lt;dim index=``2`` value=``{{NY}}``/>&#xA;                    &lt;/dimensions>&#xA;                &lt;/field>&#xA;            &lt;/group>&#xA;        &lt;/group>&#xA;    &lt;/group>&#xA;&lt;/group>&#xA;-----------------------------------------------------------&#xA;If the property is not set or empty a default template will&#xA;be used.">
+    <deviceProperties name="XMLTemplate" description="Here you can give the name of an xml file which you can use&#xA;to add static data e.g about your instrument to nexus&#xA;files. The file has at least to look&#xA;like this:&#xA;&#xA;-------------------------------------------------------&#xA;&lt;group name=``/`` type=``NXroot``>&#xA;    &lt;group name=``entry`` type=``NXentry``>&#xA;        &lt;group name=``instrument`` type=``NXinstrument``>&#xA;            &lt;group name=``detector`` type=``NXdetector``>&#xA;                &lt;field name=``model`` type=``string``> &lt;/field>&#xA;                &lt;field name=``serialnumber`` type=``string``> &lt;/field>&#xA;                &lt;field name=``comment`` type=``string``> &lt;/field>&#xA;                &lt;field name=``pixelformat`` type=``string``> &lt;/field>&#xA;                &lt;field name=``width`` type=``uint32``> &lt;/field>&#xA;                &lt;field name=``heigth`` type=``uint32``> &lt;/field>&#xA;                &lt;field name=``xoffset`` type=``uint32``> &lt;/field>&#xA;                &lt;field name=``yoffset`` type=``uint32``> &lt;/field>&#xA;                &lt;field name=``xbinning`` type=``uint32``> &lt;/field>&#xA;                &lt;field name=``ybinning`` type=``uint32``> &lt;/field>&#xA;                &lt;field name=``framerate`` type=``float32``> &lt;/field>&#xA;                &lt;field name=``gain`` type=``{{GAIN_TYPE}}``> &lt;/field>&#xA;                &lt;field name=``exposure`` type=``float32``>  &lt;/field>&#xA;                &lt;field name=``timestamps`` type=``uint64``>&#xA;                     &lt;dimensions rank=``2``>&#xA;                        &lt;dim index=``0`` value=``0``/>&#xA;                        &lt;dim index=``1`` value=``1``/>&#xA;                    &lt;/dimensions>&#xA;                &lt;/field>&#xA;                &lt;field name=``data`` type=``{{PIXEL_TYPE}}``>&#xA;                    &lt;dimensions rank=``3``>&#xA;                        &lt;dim index=``0`` value=``0``/>&#xA;                        &lt;dim index=``1`` value=``{{NX}}``/>&#xA;                        &lt;dim index=``2`` value=``{{NY}}``/>&#xA;                    &lt;/dimensions>&#xA;                &lt;/field>&#xA;            &lt;/group>&#xA;        &lt;/group>&#xA;    &lt;/group>&#xA;&lt;/group>&#xA;-----------------------------------------------------------&#xA;If the property is not set or empty a default template will&#xA;be used.">
       <type xsi:type="pogoDsl:StringType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>&quot;&quot;</DefaultPropValue>
@@ -93,7 +89,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="Directory to store image files in" label="Image File Path" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="directory path to store image files in&#xA;&#xA;- the directory must exist&#xA;&#xA;- the server will check if the user running the server has write permissions for this directory,&#xA;  if not, the device will to state fault&#xA;&#xA;- the attribute is memorized (last written value stored in tango db and read from there&#xA;  at server startup)" label="Image File Path" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <writeExcludedStates>FAULT</writeExcludedStates>
     </attributes>
     <attributes name="FilePrefix" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
@@ -102,7 +98,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="String prefixed to file names" label="Image File Prefix" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="String prefixed to file names (memorized attribute)" label="Image File Prefix" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <writeExcludedStates>FAULT</writeExcludedStates>
     </attributes>
     <attributes name="FileStartNum" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
@@ -111,7 +107,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="Start number for files" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="Start number for files:&#xA;&#xA;- not initialized&#xA;&#xA;- incremented after every file&#xA;&#xA;- range 0 - 999999" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <writeExcludedStates>FAULT</writeExcludedStates>
     </attributes>
     <attributes name="FilePostfix" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
@@ -120,8 +116,9 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="file postfix (determines file format). Supported file formats at time of writing are:&#xA;&#xA;bmp&#xA;jpg/jpeg&#xA;png&#xA;ppm&#xA;pbm&#xA;pgm&#xA;tif/tiff&#xA;xbm&#xA;xpm&#xA;&#xA;bin: raw data from camera&#xA;&#xA;mbin : raw data from camera + header containing some meta information:&#xA;byte 0-1:         header size&#xA;byte 2-9:         recording time in us since 1.1.1970&#xA;byte 10-13:     Image width&#xA;byte 14-17:     Image heigth&#xA;byte 18-21:     Horizontal offset&#xA;byte 22-25:     Vertical offset&#xA;byte 26-29:     BinningX (if supported by camera)&#xA;byte 30-33:     BinningY  (if supported by camera)&#xA;byte 34-37:     PixelFormat (cf. vimba doc) &#xA;byte 38-39:     length of serial number( = X)&#xA;byte 40-40+X: serial number of camera as string&#xA;after serial number: 2 bytes containing length of comment for file type mbin, cf. Attribute BinComment&#xA;after length of comment: comment as string&#xA;after comment: image data&#xA;&#xA;Format mbin is not supported on some older cameras due to missing timestamp feature (sometimes a camera firmware update helps).&#xA;&#xA;nx: nexus hdf5 files (see also property XMLTemplate)" label="Image file format" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="file postfix (determins file format). Supported file formats at time of writing are:&#xA;&#xA;bmp&#xA;jpg/jpeg&#xA;png&#xA;ppm&#xA;pbm&#xA;pgm&#xA;tif/tiff&#xA;xbm&#xA;xpm&#xA;nx&#xA;&#xA;bin: raw data from camera&#xA;&#xA;mbin : raw data from camera + header containing some meta information:&#xA;byte 0-1:         header size&#xA;byte 2-9:         recording time in us since 1.1.1970&#xA;byte 10-13:     Image width&#xA;byte 14-17:     Image heigth&#xA;byte 18-21:     Horizontal offset&#xA;byte 22-25:     Vertical offset&#xA;byte 26-29:     BinningX (if supported by camera)&#xA;byte 30-33:     BinningY  (if supported by camera)&#xA;byte 34-37:     PixelFormat (cf. vimba doc) &#xA;byte 38-39:     length of serial number( = X)&#xA;byte 40-40+X: serial number of camera as string&#xA;after serial number: 2 bytes containing length of comment for file type mbin, cf. Attribute BinComment&#xA;after length of comment: comment as string&#xA;after comment: image data&#xA;&#xA;Format mbin is not supported on some older cameras due to missing timestamp feature (sometimes a camera firmware update helps).&#xA;&#xA;nx: nexus hdf5 files (see also property XMLTemplate)" label="Image file format" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <writeExcludedStates>FAULT</writeExcludedStates>
+      <writeExcludedStates>RUNNING</writeExcludedStates>
     </attributes>
     <attributes name="FileSaving" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:BooleanType"/>
@@ -129,7 +126,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="if set to true, acquired images will be saved to files" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="if set to true, acquired images will be saved to files. Can be set / reset during acquisition. " label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <writeExcludedStates>FAULT</writeExcludedStates>
     </attributes>
     <attributes name="ReadMode" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
@@ -138,7 +135,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="How image data are processed before being written to Image attribute&#xA;- flat    : pixel    = pixel&#xA;- log10 : pixel    = log10(pixel)&#xA;- sqrt   :  pixel  = sqrt(pixel)&#xA;&#xA;This has no effect when reading to RawImage." label="Read mode" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="How image data are processed before being written to Image attribute&#xA;&#xA;- flat    : pixel    = pixel&#xA;- log10 : pixel    = log10(pixel)&#xA;- sqrt   :  pixel  = sqrt(pixel)&#xA;&#xA;This has no effect when reading to RawImage. Modified values are not written to files." label="Read mode" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <writeExcludedStates>FAULT</writeExcludedStates>
     </attributes>
     <attributes name="FramesProcessed" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
@@ -174,7 +171,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="How camera data are written to attributes:&#xA;&#xA;0 : nothing is written to any attributes&#xA;1: data are converted to 8-bit greyscale and written to Image8&#xA;2: data are converted to 16-bit greyscale and written to Image16&#xA;3: data are not converted and written to ImageRaw (ImageRaw dimensions will always&#xA;    be ImageSize (in bytes) x 1).&#xA;&#xA;Note 1: not all pixel formats can be converted to 16-bit greyscale. An exception will be thrown&#xA;if the current camera pxel format cannot be converted.&#xA;&#xA;Note 2: if you change the viewing mode while acquisition is running the acquisition has to be&#xA;restarted in the server process. This means that a file which is in the process of being written will&#xA;be closed." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="How camera data are written to attributes:&#xA;&#xA;0 : nothing is written to any attributes&#xA;1: data are converted to 8-bit greyscale and written to Image8&#xA;2: data are converted to 16-bit greyscale and written to Image16&#xA;3: data are not converted and written to ImageRaw (ImageRaw dimensions will always&#xA;    be ImageSize (in bytes) x 1).&#xA;&#xA;Note: not all pixel formats can be converted to 16-bit greyscale. An exception will be thrown&#xA;if the current camera pixel format cannot be converted." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <writeExcludedStates>FAULT</writeExcludedStates>
     </attributes>
     <attributes name="BinComment" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
@@ -183,7 +180,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="This goes as a comment into files of type mbin (c.f FilePostfix). Max. length 256 chars." label="Comment for binary file" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="This goes as a comment into files of type mbin or nx (c.f FilePostfix). Max. length 256 chars." label="Comment for binary file" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <writeExcludedStates>FAULT</writeExcludedStates>
     </attributes>
     <attributes name="Image8" attType="Image" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="16000" maxY="16000" allocReadMember="false" isDynamic="false">
@@ -192,7 +189,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="true" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="Array of unsigned char representing the acquired image(s).&#xA;Pixel data will be converted to 8-bit greyscale." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="Array of unsigned char representing the acquired image(s).&#xA;Pixel data are converted to 8-bit greyscale.&#xA;Attribute is written if ViewingMode is set to 1." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <readExcludedStates>FAULT</readExcludedStates>
     </attributes>
     <attributes name="Image16" attType="Image" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="16000" maxY="16000" allocReadMember="false" isDynamic="false">
@@ -201,7 +198,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="true" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="Array of unsigned short representing the acquired image(s).&#xA;Pixel data will be converted to 16-bit greyscale." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="Array of unsigned short representing the acquired image(s).&#xA;Pixel data will be converted to 16-bit greyscale.&#xA;Attribute is written if ViewingMode is set to 2." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <readExcludedStates>FAULT</readExcludedStates>
     </attributes>
     <attributes name="ImageRaw" attType="Image" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="1024000000" maxY="1" allocReadMember="false" isDynamic="false">
@@ -210,7 +207,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="true" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="Array of unsigned char representing the acquired image(s).&#xA;Pixel data will be converted to 8-bit greyscale to&#xA;maximize transfer speed." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="Array of unsigned char representing the acquired raw image date.&#xA;&#xA;ImageRaw dimensions will always be ImageSize (in bytes) x 1)&#xA;&#xA;Attribute is written if ViewingMode is set to 3." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <readExcludedStates>FAULT</readExcludedStates>
     </attributes>
     <dynamicAttributes name="DoubleDynAttr" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="true">
