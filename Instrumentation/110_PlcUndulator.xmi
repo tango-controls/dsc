@@ -5,7 +5,7 @@
       <inheritances classname="Device_Impl" sourcePath=""/>
       <identification contact="at desy.de - andrea.parenti" author="andrea.parenti" emailDomain="desy.de" classFamily="Instrumentation" siteSpecific="" platform="Unix Like" bus="Not Applicable" manufacturer="none" reference=""/>
     </description>
-    <deviceProperties name="PlcServer" description="The server which exports the undulator PLC.">
+    <deviceProperties name="PlcServer" description="The server which exports the plc">
       <type xsi:type="pogoDsl:StringType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </deviceProperties>
@@ -14,7 +14,7 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>0</DefaultPropValue>
     </deviceProperties>
-    <deviceProperties name="FlagPU04" description="1 if pu04">
+    <deviceProperties name="FlagPU04" description="1 if pu04 or pu23">
       <type xsi:type="pogoDsl:IntType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>0</DefaultPropValue>
@@ -248,33 +248,37 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="Unused." label="Unused" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
-    <attributes name="CurrentShift" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
+    <attributes name="CurrentShift" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0" allocReadMember="false" isDynamic="false">
       <dataType xsi:type="pogoDsl:IntType"/>
       <changeEvent fire="false" libCheckCriteria="false"/>
       <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="The current Shift in um (only valid for pu04, 0 in other cases)" label="" unit="um" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="The current Shift in um (only valid for pu04 and pu23, 0 in other cases)" label="" unit="um" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
-    <attributes name="DesiredShift" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
+    <attributes name="DesiredShift" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0" allocReadMember="false" isDynamic="false">
       <dataType xsi:type="pogoDsl:IntType"/>
       <changeEvent fire="false" libCheckCriteria="false"/>
       <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="The desired Shift in um (only valid for pu04, 0 in other cases)." label="" unit="um" standardUnit="" displayUnit="" format="" maxValue="32800" minValue="-32800" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="The desired Shift in um (only valid for pu04 and pu23, 0 in other cases)." label="" unit="um" standardUnit="" displayUnit="" format="" maxValue="32800" minValue="-32800" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
-    <attributes name="CurrentShiftMode" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
+    <attributes name="CurrentShiftMode" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0" allocReadMember="false" isDynamic="false">
       <dataType xsi:type="pogoDsl:IntType"/>
       <changeEvent fire="false" libCheckCriteria="false"/>
       <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="The current shift mode (only valid for pu04, 0 in other cases)" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="3" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="The current shift mode (only valid for pu04 and pu23, 0 in other cases)" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="3" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
-    <attributes name="DesiredShiftMode" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
+    <attributes name="DesiredShiftMode" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0" allocReadMember="false" isDynamic="false">
       <dataType xsi:type="pogoDsl:IntType"/>
       <changeEvent fire="false" libCheckCriteria="false"/>
       <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="Desired shift mode (only valid for pu04, 0 in other cases)" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="3" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="Desired shift mode (only valid for pu04 and pu23, 0 in other cases)" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="3" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <attributes name="RecentWrites" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="100" maxY="0">
       <dataType xsi:type="pogoDsl:StringType"/>
