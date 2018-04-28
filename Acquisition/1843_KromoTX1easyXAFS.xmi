@@ -40,6 +40,11 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>-1</DefaultPropValue>
     </deviceProperties>
+    <deviceProperties name="AnalysisMode" description="If 1, it works without detector, only loading files.">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>0</DefaultPropValue>
+    </deviceProperties>
     <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="none">
         <type xsi:type="pogoDsl:VoidType"/>
@@ -178,7 +183,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="RoI for computing counts" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="255" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="RoI for computing counts" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="300" minValue="1" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <attributes name="RoI1Max" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:IntType"/>
@@ -186,7 +191,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="RoI for computing counts" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="255" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="RoI for computing counts" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="300" minValue="1" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <attributes name="RoI2Min" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:IntType"/>
@@ -194,7 +199,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="RoI for computing counts" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="255" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="RoI for computing counts" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="300" minValue="1" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <attributes name="RoI2Max" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:IntType"/>
@@ -202,7 +207,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="RoI for computing counts" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="255" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="RoI for computing counts" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="300" minValue="1" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <attributes name="RoI1Counts" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:DoubleType"/>
@@ -220,7 +225,15 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="Counts in RoI2" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
-    <attributes name="Data" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="255" maxY="" allocReadMember="true" isDynamic="false">
+    <attributes name="PixelSize" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Resize the pixel. If -1 is not used." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="-1" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="Data" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="300" maxY="" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:DoubleType"/>
       <changeEvent fire="false" libCheckCriteria="false"/>
       <archiveEvent fire="false" libCheckCriteria="false"/>
@@ -235,6 +248,14 @@
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="Depends on PhotonValue" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="ResizedFrame" attType="Image" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="2000" maxY="2000" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Resized frame using PixelSize attribute." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <states name="ON" description="">
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
