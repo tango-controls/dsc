@@ -81,7 +81,7 @@
       <type xsi:type="pogoDsl:StringType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </deviceProperties>
-    <deviceProperties name="ZMXDevice" description="Name of the zmx device corresponding to the ZMX hardware connected to this motor.">
+    <deviceProperties name="ZMXDevice" description="Name of the zmx device connected to this motor.&#xA;If this property is set:&#xA;  - the connection will be tested during server startup. &#xA;     FlagCheckZMX == -1 if the connection fails&#xA;  - Before moves are executed:&#xA;    + FlagCheckZMX != -1 is tested&#xA;    + the state() of the ZMX is tested">
       <type xsi:type="pogoDsl:StringType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </deviceProperties>
@@ -348,6 +348,15 @@
         <type xsi:type="pogoDsl:StringArrayType"/>
       </argin>
       <argout description="1, if the setup was OK and the move could be started">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="MoveLoop" description="The input string is sent to a MaxV card, the state() is set to MOVING &#xA;and the MoveThread takes control." execMethod="move_loop" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="A command containing a loop, e.g.&#xA;AA;LS10;MA0;GO;MA10000;GO;MR,5000;GO;LE;MA0;ID&#xA;- X is moved to 0 then to 10000&#xA;- Y is rel-moved by 5000&#xA;- X is moved to 0 after the loop expired&#xA;- teh DONE flag is set at the end">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="1 for success">
         <type xsi:type="pogoDsl:IntType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
@@ -775,6 +784,14 @@
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="represents the status of the home switch bits" label="homeSwitchStatusBits" unit="statusBits" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="FlagCheckZMXActivated" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0" memorized="true" memorizedAtInit="true" allocReadMember="false" isDynamic="false">
+      <dataType xsi:type="pogoDsl:IntType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="if the property ZMXDevice is defined and FlagCheckZMXActivated == 1: &#xA;before each move (also vvc) it is asserted that the Deactivation ZMX attribute is 0. " label="" unit="flag" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <attributes name="RecentWrites" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="500" maxY="0">
       <dataType xsi:type="pogoDsl:StringType"/>
