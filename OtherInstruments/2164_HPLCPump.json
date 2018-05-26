@@ -1,0 +1,33 @@
+{
+    "2164": {
+        "buses": [
+            "Serial Line"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "HPLCPump"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/2164/", 
+        "development_status": "released", 
+        "documentation": [], 
+        "families": [
+            "OtherInstruments"
+        ], 
+        "last_update": "2018-05-26 04:01:31.149151+00:00", 
+        "last_update_method": "url", 
+        "license": "GPL", 
+        "manufacturers": [
+            "Scientific Systems, Inc. (SSI)"
+        ], 
+        "name": "HPLCPump", 
+        "products": [
+            "https://ssihplc.com/product-category/hplc-pumps/ld-class/"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/OtherInstruments/HPLCPump", 
+        "status": "new", 
+        "tag": "Release_1_0", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/2164/update/", 
+        "updated_by_script": true
+    }
+}
