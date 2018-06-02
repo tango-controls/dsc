@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
   <classes name="HPLCPump" pogoRevision="9.4">
-    <description description="Tango device server for Teledyne SSI LD Class HPLC pump" title="HPLCPump" sourcePath="/ssd/blume/src/TangoSvn/tango-ds/DeviceClasses/OtherInstruments/HPLCPump/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" license="GPL" copyright="" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+    <description description="Tango device server for Teledyne SSI LD Class HPLC pump" title="HPLCPump" sourcePath="/ssd/blume/src/TangoSvn/tango-ds/DeviceClasses/OtherInstruments/HPLCPump/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions,html Pages" license="GPL" copyright="" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
       <inheritances classname="Device_Impl" sourcePath=""/>
       <identification contact="at desy.de - johannes.blume" author="johannes.blume" emailDomain="desy.de" classFamily="OtherInstruments" siteSpecific="" platform="Unix Like" bus="Serial Line" manufacturer="Scientific Systems, Inc. (SSI)" reference="https://ssihplc.com/product-category/hplc-pumps/ld-class/"/>
     </description>
@@ -34,14 +34,14 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>24.0</DefaultPropValue>
     </deviceProperties>
-    <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+    <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="none">
         <type xsi:type="pogoDsl:VoidType"/>
       </argin>
       <argout description="Device state">
         <type xsi:type="pogoDsl:StateType"/>
       </argout>
-      <status abstract="true" inherited="true" concrete="true"/>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
     </commands>
     <commands name="Status" description="This command gets the device status (stored in its device_status data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="none">
@@ -60,9 +60,9 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <excludedStates>MOVING</excludedStates>
-      <excludedStates>RUNNING</excludedStates>
       <excludedStates>FAULT</excludedStates>
+      <excludedStates>RUNNING</excludedStates>
+      <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="Stop" description="Stop the pump" execMethod="stop" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="">
@@ -72,7 +72,8 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <excludedStates>ON</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="Prime" description="Prime the pump. The controller has no command for this, so we do&#xA;it in software as follows:&#xA;&#xA;- set the flow rate to value given in property PrimeFlowRate (default 24.0)&#xA;&#xA;- set the upper pressure limit to value given in property PrimePressure (default 350)&#xA;&#xA;- start the pump&#xA;&#xA;- wait until upper pressure limit is reached, i.e. the corresponding fault flag is set&#xA;&#xA;- reset flow rate and upper pressure limit to what they were before" execMethod="prime" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="">
@@ -82,9 +83,9 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <excludedStates>MOVING</excludedStates>
-      <excludedStates>RUNNING</excludedStates>
       <excludedStates>FAULT</excludedStates>
+      <excludedStates>RUNNING</excludedStates>
+      <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="Reset" description="Clear all faults" execMethod="reset" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="">
@@ -94,7 +95,6 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <excludedStates>MOVING</excludedStates>
       <excludedStates>RUNNING</excludedStates>
     </commands>
     <attributes name="FlowRate" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
@@ -105,9 +105,8 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="Flow rate in ml/min" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <readExcludedStates>FAULT</readExcludedStates>
-      <writeExcludedStates>MOVING</writeExcludedStates>
-      <writeExcludedStates>RUNNING</writeExcludedStates>
       <writeExcludedStates>FAULT</writeExcludedStates>
+      <writeExcludedStates>OFF</writeExcludedStates>
     </attributes>
     <attributes name="LowerPressureLimit" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:IntType"/>
@@ -117,9 +116,8 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="Lower pressure limit in psi" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <readExcludedStates>FAULT</readExcludedStates>
-      <writeExcludedStates>MOVING</writeExcludedStates>
-      <writeExcludedStates>RUNNING</writeExcludedStates>
       <writeExcludedStates>FAULT</writeExcludedStates>
+      <writeExcludedStates>OFF</writeExcludedStates>
     </attributes>
     <attributes name="UpperPressureLimit" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:IntType"/>
@@ -129,9 +127,8 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="Upper pressure limit in psi" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <readExcludedStates>FAULT</readExcludedStates>
-      <writeExcludedStates>MOVING</writeExcludedStates>
-      <writeExcludedStates>RUNNING</writeExcludedStates>
       <writeExcludedStates>FAULT</writeExcludedStates>
+      <writeExcludedStates>OFF</writeExcludedStates>
     </attributes>
     <attributes name="PressureUnits" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:StringType"/>
@@ -142,16 +139,32 @@
       <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <readExcludedStates>FAULT</readExcludedStates>
     </attributes>
+    <attributes name="Pressure" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:IntType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Current operating pressure in psi" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="PumpFaults" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:UShortType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Shows the pump fault state:&#xA;&#xA;0 = no fault&#xA;1 = motor stalled&#xA;2 = upper pressure limit fault&#xA;4 = lower pressure limit fault&#xA;&#xA;combinations of faults will be represented as the sum of the single fault values" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
     <states name="ON" description="Device ready, pump stopped">
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </states>
-    <states name="MOVING" description="Device ready, pump working">
+    <states name="FAULT" description="Something went wrong, check status">
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </states>
-    <states name="RUNNING" description="Device ready and priming">
+    <states name="OFF" description="Pump has been turned off because of a set fault. Check PumpFaults attribute,&#xA;and if it is safe to go on call Reset to clear the faults.">
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </states>
-    <states name="FAULT" description="Soemthing went wrong, check status">
+    <states name="MOVING" description="Device ok, pump is working">
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </states>
     <preferences docHome="./doc_html" makefileHome="/usr/share/pogo/preferences"/>
