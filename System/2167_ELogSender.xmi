@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="ELogSender" pogoRevision="9.6">
+    <description description="Integration of PANIC/PyALarm or any Tango Controls compeonents with eLog." title="PANIC-eLog integration" sourcePath="/home/tango-cs/work/solaris-panic/src/ds-s2i-elog-sender" language="PythonHL" filestogenerate="XMI   file,Code files,Python Package,Protected Regions" license="none" copyright="(c) by S2Innovation Sp. z o. o. [ltd.], 2018" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <identification contact="at s2innovation.com - contact" author="contact" emailDomain="s2innovation.com" classFamily="System" siteSpecific="" platform="All Platforms" bus="Not Applicable" manufacturer="none" reference=""/>
+    </description>
+    <classProperties name="MaxQueueSize" description="Defines limit of number of entries pending. If it is reached the entries are not accepted and special substitution string ` {%MaxQueueMessage%}` is set on the last entry waiting in a queue.">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>10</DefaultPropValue>
+    </classProperties>
+    <classProperties name="MaxQueueMessage" description="Message to indicate that there may be missing entries.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>There are {%NumberOfRejectedEntries%} entries skipped to avoid flooding.</DefaultPropValue>
+    </classProperties>
+    <classProperties name="ArgumentsParsers" description="List of RegEx to parse an argument provided with the create_entry command.&#xA;Items of this property are applied to related items of the command DevVarStringArray argument (first item to the first item, second to second...).&#xA;If the regular expression contains named group (`(?P&lt;group_name>...)`) this group is provided dynamically to be used in other properites as replacement of `{%group_name%}` string.&#xA;See also the AttributeFields property.">
+      <type xsi:type="pogoDsl:StringVectorType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </classProperties>
+    <classProperties name="ELogCommand" description="Command to be invoked as eLog">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>elog</DefaultPropValue>
+    </classProperties>
+    <classProperties name="ELogHost" description="IP address or DNS name of the logbook host">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </classProperties>
+    <classProperties name="ELogPort" description="TCP port number on which the logbook is listening">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>80</DefaultPropValue>
+    </classProperties>
+    <classProperties name="ELogPath" description="Path part of a logbook URL.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>logbook</DefaultPropValue>
+    </classProperties>
+    <classProperties name="ELogAdditionalArgs" description="Additional arguments to be passed to elog command">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </classProperties>
+    <deviceProperties name="EntryAttributes" description="Attributes of the eLong entry formatted as: `name=``value```, where value&#xA;may contain `{%index%}`, `{%group_name%}`, `{%attribute_name%}` in its text.&#xA;These will be replaced dynamicaly with values  based on&#xA;an input argument create_entry, named group parsed and this device attributes (read just before sending message to server).">
+      <type xsi:type="pogoDsl:StringVectorType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="EntryMessage" description="Message to be logged. It may contain `{%index%}`, `{%group_name%}`, `{%attribute_name%}` in its text.&#xA;These will be replaced dynamicaly with values (valid on time of sending to eLog) based on&#xA;an input argument create_entry, named gropu parsed and this device attributes.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>{%0%}</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="EntryTitle" description="Title of the entries. It may contain `{%index%}`, `{%group_name%}`, `{%attribute_name%}` in its text.&#xA;These will be replaced dynamicaly with values (valid on time of sending to eLog) based on&#xA;an input argument create_entry, named gropu parsed and this device attributes.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>{%1%}</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="LogbookName" description="Name of a logbook to create entries.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device state">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its device_status data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device status">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="create_entry" description="Commands prepare a filed form and put it into que. The entries are sent by the send_entry command which is polled by default." execMethod="create_entry" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="List of values for entry creation. &#xA;Each value is accessed as {%index%} in properties configuration.">
+        <type xsi:type="pogoDsl:StringArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="send_entry" description="This command is used to send pending entries. Each call sends one entry and remove it from the queue.&#xA;This mechanism is to avoid flooding of the server." execMethod="send_entry" displayLevel="OPERATOR" polledPeriod="3000" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <attributes name="NumberOfPendingEntries" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:UIntType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Number of entries pending in a queue" label="Pending entries" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="NumberOfRejectedEntries" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:UIntType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Number of rejected entries (not accepted in queue). This counter is reset when its value used to be logged into eLog." label="Rejected entries" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="TotalNumberOfRejectedEntries" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:UIntType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Total number of rejected entries (not accepted in a queue) since device is started." label="Rejected entries since devcie start" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <states name="STANDBY" description="No entries pending in queue">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="RUNNING" description="There are entries waiting to be sent.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="FAULT" description="The device is in fault state (probably due to misconfiguration issue).">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="/usr/local/share/pogo/preferences"/>
+  </classes>
+</pogoDsl:PogoSystem>
