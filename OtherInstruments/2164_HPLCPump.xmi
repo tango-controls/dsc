@@ -61,7 +61,6 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <excludedStates>FAULT</excludedStates>
-      <excludedStates>RUNNING</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="Stop" description="Stop the pump" execMethod="stop" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -84,7 +83,6 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <excludedStates>FAULT</excludedStates>
-      <excludedStates>RUNNING</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="Reset" description="Clear all faults" execMethod="reset" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -95,7 +93,7 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <excludedStates>RUNNING</excludedStates>
+      <excludedStates>FAULT</excludedStates>
     </commands>
     <attributes name="FlowRate" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:DoubleType"/>
@@ -108,7 +106,7 @@
       <writeExcludedStates>FAULT</writeExcludedStates>
       <writeExcludedStates>OFF</writeExcludedStates>
     </attributes>
-    <attributes name="LowerPressureLimit" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+    <attributes name="LowerPressureLimit" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:IntType"/>
       <changeEvent fire="false" libCheckCriteria="false"/>
       <archiveEvent fire="false" libCheckCriteria="false"/>
@@ -119,7 +117,7 @@
       <writeExcludedStates>FAULT</writeExcludedStates>
       <writeExcludedStates>OFF</writeExcludedStates>
     </attributes>
-    <attributes name="UpperPressureLimit" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+    <attributes name="UpperPressureLimit" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:IntType"/>
       <changeEvent fire="false" libCheckCriteria="false"/>
       <archiveEvent fire="false" libCheckCriteria="false"/>
@@ -137,6 +135,7 @@
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="Current operating pressure in psi" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
     </attributes>
     <attributes name="PumpFaults" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:UShortType"/>
@@ -145,6 +144,7 @@
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="Shows the pump fault state:&#xA;&#xA;0 = no fault&#xA;1 = motor stalled&#xA;2 = upper pressure limit fault&#xA;4 = lower pressure limit fault&#xA;&#xA;combinations of faults will be represented as the sum of the single fault values" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
     </attributes>
     <states name="ON" description="Device ready, pump stopped">
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
