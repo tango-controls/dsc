@@ -25,7 +25,7 @@
     </commands>
     <commands name="WriteFPGA" description="Write data to FPGA." execMethod="write_fpga" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="FPGA address and data.">
-        <type xsi:type="pogoDsl:UIntArrayType"/>
+        <type xsi:type="pogoDsl:IntArrayType"/>
       </argin>
       <argout description="">
         <type xsi:type="pogoDsl:VoidType"/>
@@ -55,7 +55,7 @@
         <type xsi:type="pogoDsl:IntType"/>
       </argin>
       <argout description="Output">
-        <type xsi:type="pogoDsl:UIntType"/>
+        <type xsi:type="pogoDsl:IntType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
@@ -68,12 +68,12 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
-    <commands name="WriteReadIOBoard" description="Write data to IOBoard and read" execMethod="write_read_ioboard" displayLevel="OPERATOR" polledPeriod="0">
+    <commands name="WriteIOBoard" description="Write data to IOBoard" execMethod="write_ioboard" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="Command and data (red, green, blue).">
         <type xsi:type="pogoDsl:IntArrayType"/>
       </argin>
-      <argout description="Output">
-        <type xsi:type="pogoDsl:IntType"/>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
@@ -113,9 +113,9 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
-    <commands name="EPCSProgram" description="Reprogram FPGA. Information read from external files:&#xA;output_file.rbf&#xA;epcs_output.hex&#xA;PiLC is restarted at the end." execMethod="epcsprogram" displayLevel="OPERATOR" polledPeriod="0">
-      <argin description="">
-        <type xsi:type="pogoDsl:VoidType"/>
+    <commands name="EPCSProgram" description="Reprogram FPGA. Information read from external files:&#xA;argument name&#xA;epcs_output.hex&#xA;PiLC is restarted at the end." execMethod="epcsprogram" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Program file name">
+        <type xsi:type="pogoDsl:StringType"/>
       </argin>
       <argout description="">
         <type xsi:type="pogoDsl:VoidType"/>
@@ -221,9 +221,9 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
-    <commands name="RPIShutdown" description="" execMethod="rpishutdown" displayLevel="OPERATOR" polledPeriod="0">
-      <argin description="Time to shutdown">
-        <type xsi:type="pogoDsl:IntType"/>
+    <commands name="USVUpdate" description="Shutdown the system in if the second argument is 1. &#xA;Third argument is the time to shutdown.&#xA;If first argument is 1 info is printed out." execMethod="usvupdate" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Show flag, shutdown flag, time to shutdown">
+        <type xsi:type="pogoDsl:IntArrayType"/>
       </argin>
       <argout description="">
         <type xsi:type="pogoDsl:VoidType"/>
@@ -239,9 +239,72 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
-    <commands name="IOLedsUpdate" description="Update LEDs" execMethod="ioleds_update" displayLevel="OPERATOR" polledPeriod="0">
+    <commands name="PiLCDeinit" description="Finalize PiLC" execMethod="pi_lcdeinit" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="">
         <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetIOCardIDArray" description="Get IOCardID for modules from 0 to 15" execMethod="get_iocard_idarray" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="IOCardID array">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="LEDsUpdate" description="" execMethod="leds_update" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="EventUpdateLib" description="" execMethod="event_update_lib" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="FPGAReadBurst" description="Read registers from a burst" execMethod="fpgaread_burst" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Start address, number of registers">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argin>
+      <argout description="Readout from registers">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ReadIOBoard" description="Read data from IOBoard" execMethod="read_ioboard" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Command to send.">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="Output">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="FPGAReadSDRAM" description="Read data from SDRAM" execMethod="fpgaread_sdram" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Number of registers to read">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="Data">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="WriteArraysFPGA" description="Write arrays to FPGA alternatively" execMethod="write_arrays_fpga" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Nb of arrays, array length, and array data (adress + data, adress + data, ...)">
+        <type xsi:type="pogoDsl:IntArrayType"/>
       </argin>
       <argout description="">
         <type xsi:type="pogoDsl:VoidType"/>
