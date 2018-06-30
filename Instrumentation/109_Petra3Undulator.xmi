@@ -15,7 +15,7 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>none</DefaultPropValue>
     </deviceProperties>
-    <deviceProperties name="Beamline" description="Beamline number">
+    <deviceProperties name="Beamline" description="Beamline number (for beamline 1, set to 0 for undulator A and to 1 for undulator B)">
       <type xsi:type="pogoDsl:IntType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </deviceProperties>
@@ -23,6 +23,11 @@
       <type xsi:type="pogoDsl:FloatType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>100</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="Branch" description="Property for distinguish undulator A or B for beamlines with boths.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>A</DefaultPropValue>
     </deviceProperties>
     <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="none.">
