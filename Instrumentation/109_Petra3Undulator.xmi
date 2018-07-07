@@ -15,7 +15,7 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>none</DefaultPropValue>
     </deviceProperties>
-    <deviceProperties name="Beamline" description="Beamline number (for beamline 1, set to 0 for undulator A and to 1 for undulator B)">
+    <deviceProperties name="Beamline" description="Beamline number. Set in Branch property A or B if there are two undulators, by default A">
       <type xsi:type="pogoDsl:IntType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </deviceProperties>
