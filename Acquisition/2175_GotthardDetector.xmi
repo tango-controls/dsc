@@ -18,7 +18,7 @@
       <type xsi:type="pogoDsl:IntType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </deviceProperties>
-    <deviceProperties name="ExpertReadoutTime" description="Only an expert User could change this property.&lt;br>&#xA;This is the readout time in seconds of the camera.&lt;BR>">
+    <deviceProperties name="ExpertReadoutTimeAllADC" description="Only an expert User could change this property.&lt;br>&#xA;This is the readout time in seconds of the camera.&lt;BR>">
       <type xsi:type="pogoDsl:DoubleType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </deviceProperties>
@@ -96,9 +96,23 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>True</DefaultPropValue>
     </deviceProperties>
-    <deviceProperties name="ExpertReadoutTimeRoi" description="Only an expert User could change this property.&lt;br>&#xA;This is the readout time in seconds of the camera using Roi.&lt;BR>">
+    <deviceProperties name="ExpertReadoutTimeSingleADC" description="Only an expert User could change this property.&lt;br>&#xA;This is the readout time in seconds of the camera using ADC Roi.&lt;BR>">
       <type xsi:type="pogoDsl:DoubleType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="ExpertBurstModeMaxFrames" description="Only an expert User could change this property.&lt;br>&#xA;This is the maximum number of frames which can be set with a BURST acquisition mode.&lt;BR>">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="MemorizedAcquisitionMode" description="Only the device could modify this property &lt;br>&#xA;The User should never change this property&lt;br>">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>NORMAL</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="MemorizedAcquisitionADC" description="Only the device could modify this property &lt;br>&#xA;The User should never change this property&lt;br>">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>ALL</DefaultPropValue>
     </deviceProperties>
     <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="none.">
@@ -250,7 +264,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="Set/Get exposure time (in ms).&lt;br>&#xA;&lt;br>&#xA;Only relevant for these trigger modes :&lt;br>&#xA;NTERNAL_SINGLE&lt;br>&#xA;EXTERNAL_SINGLE&lt;br>&#xA;EXTERNAL_MULTIPLE&lt;br>" label="" unit="ms" standardUnit="ms" displayUnit="ms" format="%7.4f" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="Set/Get exposure time (in ms).&lt;br>&#xA;&lt;br>&#xA;Only relevant for these trigger modes :&lt;br>&#xA;INTERNAL_SINGLE&lt;br>&#xA;EXTERNAL_SINGLE&lt;br>&#xA;EXTERNAL_MULTIPLE&lt;br>" label="" unit="ms" standardUnit="ms" displayUnit="ms" format="%7.4f" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <readExcludedStates>INIT</readExcludedStates>
       <readExcludedStates>FAULT</readExcludedStates>
       <writeExcludedStates>INIT</writeExcludedStates>
@@ -263,7 +277,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="Set/Get latency time (in ms).&lt;br>&#xA;&lt;br>&#xA;Only relevant for these trigger modes :&lt;br>&#xA;NTERNAL_SINGLE&lt;br>&#xA;EXTERNAL_SINGLE&lt;br>&#xA;EXTERNAL_MULTIPLE&lt;br>" label="" unit="ms" standardUnit="ms" displayUnit="ms" format="%7.4f" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="Set/Get latency time (in ms).&lt;br>&#xA;&lt;br>&#xA;Only relevant for these trigger modes :&lt;br>&#xA;INTERNAL_SINGLE&lt;br>&#xA;EXTERNAL_SINGLE&lt;br>&#xA;EXTERNAL_MULTIPLE&lt;br>" label="" unit="ms" standardUnit="ms" displayUnit="ms" format="%7.4f" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <readExcludedStates>INIT</readExcludedStates>
       <readExcludedStates>FAULT</readExcludedStates>
       <writeExcludedStates>INIT</writeExcludedStates>
@@ -276,7 +290,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="set/get delay after trigger in ms." label="" unit="ms" standardUnit="ms" displayUnit="ms" format="%7.4f" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="set/get delay after trigger in ms.&#xA;&lt;br>&#xA;Only relevant for these trigger modes :&lt;br>&#xA;EXTERNAL_SINGLE&lt;br>&#xA;EXTERNAL_MULTIPLE&lt;br>" label="" unit="ms" standardUnit="ms" displayUnit="ms" format="%7.4f" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <readExcludedStates>INIT</readExcludedStates>
       <readExcludedStates>FAULT</readExcludedStates>
       <writeExcludedStates>INIT</writeExcludedStates>
@@ -289,7 +303,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="Avalaible stream types :&lt;br>&#xA;NO_STREAM&lt;br>&#xA;LOG_STREAM&#x9;&lt;br>&#xA;CSV_STREAM&#x9;&lt;br>&#xA;NEXUS_STREAM&lt;br>" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="Avalaible stream types:&lt;br>&#xA;NO_STREAM&lt;br>&#xA;LOG_STREAM&#x9;&lt;br>&#xA;CSV_STREAM&#x9;&lt;br>&#xA;NEXUS_STREAM&lt;br>" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <readExcludedStates>INIT</readExcludedStates>
       <readExcludedStates>FAULT</readExcludedStates>
       <writeExcludedStates>INIT</writeExcludedStates>
@@ -381,7 +395,7 @@
       <readExcludedStates>INIT</readExcludedStates>
       <readExcludedStates>FAULT</readExcludedStates>
     </attributes>
-    <attributes name="enableGain" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="false" isDynamic="false">
+    <attributes name="enableGain" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" allocReadMember="false" isDynamic="false">
       <dataType xsi:type="pogoDsl:BooleanType"/>
       <changeEvent fire="false" libCheckCriteria="false"/>
       <archiveEvent fire="false" libCheckCriteria="false"/>
@@ -393,6 +407,22 @@
       <writeExcludedStates>INIT</writeExcludedStates>
       <writeExcludedStates>FAULT</writeExcludedStates>
       <writeExcludedStates>RUNNING</writeExcludedStates>
+    </attributes>
+    <attributes name="acquisitionMode" attType="Scalar" rwType="READ_WRITE" displayLevel="EXPERT" polledPeriod="0" maxX="" maxY="" memorized="true" allocReadMember="false" isDynamic="false">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Avalaible acqusiition modes:&lt;br>&#xA;NORMAL&lt;br>&#xA;BURST&lt;br>&#xA;&#xA;In BURST mode, the number of frames is limited to reach the highest frame rate." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="acquisitionADC" attType="Scalar" rwType="READ_WRITE" displayLevel="EXPERT" polledPeriod="0" maxX="" maxY="" memorized="true" allocReadMember="false" isDynamic="false">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="The detector can acquire data from all ADC or a single ADC.&lt;br>&#xA;Avalaible values:&lt;br>&#xA;ALL&lt;br>&#xA;1&lt;br>&#xA;2&lt;br>&#xA;3&lt;br>&#xA;4&lt;br>&#xA;5&lt;br>" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <attributes name="frame" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="1280" maxY="0" allocReadMember="false" isDynamic="false">
       <dataType xsi:type="pogoDsl:IntType"/>
