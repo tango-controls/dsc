@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="HVisegMPODCtrl">
-    <description description="Class for the MPOD Ctrl for HV Powe Supplies from iseg" title="MPOD Ctrl for iseg HV" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/PowerSupply/HVisegMPODCtrl/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Makefile,html Pages" hasAbstractCommand="false" hasAbstractAttribute="false">
+  <classes name="HVisegMPODCtrl" pogoRevision="8.4">
+    <description description="Class for the MPOD Ctrl for HV Powe Supplies from iseg" title="MPOD Ctrl for iseg HV" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/PowerSupply/HVisegMPODCtrl/trunk" language="Cpp" filestogenerate="XMI   file,Code files,html Pages" license="GPL" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
       <inheritances classname="Device_4Impl" sourcePath=""/>
       <identification contact="at mail.desy.de - tnunez" author="tnunez" emailDomain="mail.desy.de" classFamily="PowerSupply" siteSpecific="" platform="Unix Like" bus="Ethernet" manufacturer="Iseg" reference="MpodC"/>
-      <comments commandsTable="//================================================================&#xA;//&#xA;//  The following table gives the correspondence&#xA;//  between command and method names.&#xA;//&#xA;//  Command name  |  Method name&#xA;//----------------------------------------------------------------&#xA;//  State         |  Inherited (no method)&#xA;//  Status        |  Inherited (no method)&#xA;//  SetValue      |  set_value&#xA;//  GetValue      |  get_value&#xA;//================================================================"/>
     </description>
     <deviceProperties name="IpAddr" description="IP Address for the MPOD controller">
       <type xsi:type="pogoDsl:StringType"/>
@@ -19,7 +18,7 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>WIENER-CRATE-MIB</DefaultPropValue>
     </deviceProperties>
-    <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR">
+    <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="none.">
         <type xsi:type="pogoDsl:VoidType"/>
       </argin>
@@ -28,7 +27,7 @@
       </argout>
       <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
     </commands>
-    <commands name="Status" description="This command gets the device status (stored in its &lt;i>device_status&lt;/i> data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR">
+    <commands name="Status" description="This command gets the device status (stored in its &lt;i>device_status&lt;/i> data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="none.">
         <type xsi:type="pogoDsl:VoidType"/>
       </argin>
@@ -37,7 +36,7 @@
       </argout>
       <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
     </commands>
-    <commands name="SetValue" description="Set a value." execMethod="set_value" displayLevel="OPERATOR">
+    <commands name="SetValue" description="Set a value." execMethod="set_value" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="Variable name and value to set">
         <type xsi:type="pogoDsl:DoubleStringArrayType"/>
       </argin>
@@ -46,7 +45,7 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
-    <commands name="GetValue" description="Read the given OID variable" execMethod="get_value" displayLevel="OPERATOR">
+    <commands name="GetValue" description="Read the given OID variable" execMethod="get_value" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="OID name">
         <type xsi:type="pogoDsl:StringType"/>
       </argin>
