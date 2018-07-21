@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="HVisegEHS80">
-    <description description="Class for HV Power Supply EHS 80 vvx from iseg" title="HV from iseg model EHS 80" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/PowerSupply/HVisegEHS80/trunk" language="Cpp" filestogenerate="XMI   file,Code files,html Pages" hasAbstractCommand="false" hasAbstractAttribute="false">
+  <classes name="HVisegEHS80" pogoRevision="8.4">
+    <description description="Class for HV Power Supply EHS 80 vvx from iseg" title="HV from iseg model EHS 80" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/PowerSupply/HVisegEHS80/trunk" language="Cpp" filestogenerate="XMI   file,Code files,html Pages" license="GPL" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
       <inheritances classname="Device_4Impl" sourcePath=""/>
       <identification contact="at mail.desy.de - tnunez" author="tnunez" emailDomain="mail.desy.de" classFamily="PowerSupply" siteSpecific="" platform="All Platforms" bus="Not Applicable" manufacturer="iseg" reference="EHS80"/>
-      <comments commandsTable="//================================================================&#xA;//&#xA;//  The following table gives the correspondence&#xA;//  between command and method names.&#xA;//&#xA;//  Command name     |  Method name&#xA;//----------------------------------------------------------------&#xA;//  State            |  Inherited (no method)&#xA;//  Status           |  Inherited (no method)&#xA;//  SafetyLoopReset  |  safety_loop_reset&#xA;//================================================================"/>
     </description>
     <deviceProperties name="HVisegMPODCtrlDevice" description="Name of the HVisegMPODCtrl device making the Ethernet connection.">
       <type xsi:type="pogoDsl:StringType"/>
@@ -24,7 +23,7 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>0</DefaultPropValue>
     </deviceProperties>
-    <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR">
+    <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="none.">
         <type xsi:type="pogoDsl:VoidType"/>
       </argin>
@@ -33,7 +32,7 @@
       </argout>
       <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
     </commands>
-    <commands name="Status" description="This command gets the device status (stored in its &lt;i>device_status&lt;/i> data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR">
+    <commands name="Status" description="This command gets the device status (stored in its &lt;i>device_status&lt;/i> data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="none.">
         <type xsi:type="pogoDsl:VoidType"/>
       </argin>
@@ -42,7 +41,7 @@
       </argout>
       <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
     </commands>
-    <commands name="SafetyLoopReset" description="Reset module after Safetyloop error." execMethod="safety_loop_reset" displayLevel="OPERATOR">
+    <commands name="SafetyLoopReset" description="Reset module after Safetyloop error." execMethod="safety_loop_reset" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="">
         <type xsi:type="pogoDsl:VoidType"/>
       </argin>
@@ -128,7 +127,7 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="Voltage Fall Slew Rate [V/s].\n" label="" unit="V/s" standardUnit="V/s" displayUnit="V/s" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
-    <attributes name="Resistance" attType="Scalar" rwType="READ" displayLevel="OPERATOR" maxX="" maxY="" allocReadMember="true">
+    <attributes name="Resistance" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true">
       <dataType xsi:type="pogoDsl:DoubleType"/>
       <changeEvent fire="false" libCheckCriteria="true"/>
       <archiveEvent fire="false" libCheckCriteria="true"/>
