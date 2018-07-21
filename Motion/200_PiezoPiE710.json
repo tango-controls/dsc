@@ -1,0 +1,41 @@
+{
+    "200": {
+        "buses": [
+            "Socket"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "PiezoPiE710"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/200/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 352, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Motion/PiezoPiE710/PiezoPiE710.pdf"
+            }
+        ], 
+        "families": [
+            "Motion"
+        ], 
+        "last_update": "2018-07-21 03:53:55.409319+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "PI"
+        ], 
+        "name": "PiezoPiE710", 
+        "products": [
+            "E710"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Motion/MotorControllers/PI/PiezoPiE710", 
+        "status": "updated", 
+        "tag": "Release_1_8", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/200/update/", 
+        "updated_by_script": true
+    }
+}
