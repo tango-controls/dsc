@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="UHFLIAmplifier" pogoRevision="8.4">
-    <description description="Class for controlling the UHFLI Lock-in amplifier from Zurich Instruments" title="UHFLI Lock-in Amplifier" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/MeasureInstruments/UHFLIAmplifier/trunk" language="Cpp" filestogenerate="XMI   file,Code files,html Pages" license="GPL" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+  <classes name="UHFLIAmplifier" pogoRevision="9.4">
+    <description description="Class for controlling the UHFLI Lock-in amplifier from Zurich Instruments" title="UHFLI Lock-in Amplifier" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/MeasureInstruments/UHFLIAmplifier/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions,html Pages" license="GPL" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
       <inheritances classname="Device_Impl" sourcePath=""/>
       <identification contact="at mail.desy.de - tnunez" author="tnunez" emailDomain="mail.desy.de" classFamily="MeasureInstruments" siteSpecific="" platform="Unix Like" bus="Ethernet" manufacturer="Zurich Instruments" reference="UHFLI Lock-in amplifier"/>
     </description>
@@ -30,6 +30,24 @@
     <commands name="StartAcquisition" description="Start polling data" execMethod="start_acquisition" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="">
         <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetValueD" description="Read double value from hardware" execMethod="get_value_d" displayLevel="EXPERT" polledPeriod="0" isDynamic="false">
+      <argin description="Path of the varialbel to read">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SetValueD" description="Set double value to hardware" execMethod="set_value_d" displayLevel="EXPERT" polledPeriod="0" isDynamic="false">
+      <argin description="Path of the variable to set, value to set">
+        <type xsi:type="pogoDsl:DoubleStringArrayType"/>
       </argin>
       <argout description="">
         <type xsi:type="pogoDsl:VoidType"/>
