@@ -60,6 +60,11 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>None</DefaultPropValue>
     </deviceProperties>
+    <deviceProperties name="InputImpedance" description="0 -> High Impedance, 1 -> 50 Ohms (both TTL inputs)">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>1</DefaultPropValue>
+    </deviceProperties>
     <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="none">
         <type xsi:type="pogoDsl:VoidType"/>
