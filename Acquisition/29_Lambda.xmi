@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
   <classes name="Lambda" pogoRevision="9.4">
-    <description description="This is a tango server project for lambda detetor." title="Lambda Detector Tango Server" sourcePath="/home/yuelong/src/gitrepo/tango.ds/lambda" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions,html Pages" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+    <description description="This is a tango server project for lambda detetor." title="Lambda Detector Tango Server" sourcePath="/home/yuelong/src/TangoSVN/tango-ds-code/DeviceClasses/Acquisition/2D/Lambda/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions,html Pages" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
       <inheritances classname="Device_Impl" sourcePath=""/>
       <identification contact="at desy.de - yuelong.yu" author="yuelong.yu" emailDomain="desy.de" classFamily="Acquisition" siteSpecific="" platform="Unix Like" bus="Ethernet" manufacturer="DESY(FS-DS)" reference=""/>
     </description>
@@ -525,6 +525,22 @@
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="append data to old file. This is useful when it only takes one image at each scan point during scan." label="AppendData" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="CompressionMethod" attType="Scalar" rwType="READ" displayLevel="EXPERT" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:IntType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="0:no compression&#xA;1:software compression(deflate)" label="CompressionMethod" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="OpMode" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:IntType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="operation mode&#xA;1:ContinuousReadWrite&#xA;2:TwentyFourBit" label="OpMode" unit="" standardUnit="" displayUnit="" format="" maxValue="2" minValue="1" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <attributes name="LiveLastImageData" attType="Image" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="4096" maxY="4096" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:IntType"/>
