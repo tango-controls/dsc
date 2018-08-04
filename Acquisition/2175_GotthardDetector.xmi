@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
   <classes name="GotthardDetector" pogoRevision="8.1">
-    <description description="Device for Gotthard detectors from PSI company." title="Gotthard detector TANGO device." sourcePath="/media/sf_Partage/GotthardDetector/trunk/src" language="Cpp" filestogenerate="XMI   file,Code files,html Pages" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+    <description description="Device for Gotthard detectors from PSI company." title="Gotthard detector TANGO device." sourcePath="/media/sf_Partage/GotthardDetector/trunk/src" language="Cpp" filestogenerate="XMI   file,Code files" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
       <inheritances classname="Device_4Impl" sourcePath=""/>
       <identification contact="at synchrotron-soleil.fr - cedric.castel" author="cedric.castel" emailDomain="synchrotron-soleil.fr" classFamily="Acquisition" siteSpecific="" platform="Unix Like" bus="Data Socket" manufacturer="DECTRIS" reference=""/>
     </description>
@@ -158,18 +158,7 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <excludedStates>INIT</excludedStates>
-    </commands>
-    <commands name="Start" description="Start the acquisition." execMethod="start" displayLevel="OPERATOR" polledPeriod="0">
-      <argin description="">
-        <type xsi:type="pogoDsl:VoidType"/>
-      </argin>
-      <argout description="">
-        <type xsi:type="pogoDsl:VoidType"/>
-      </argout>
-      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <excludedStates>INIT</excludedStates>
       <excludedStates>FAULT</excludedStates>
-      <excludedStates>RUNNING</excludedStates>
     </commands>
     <commands name="GetDataStreams" description="Returns the flyscan data streams associated with this device formatted as below :&lt;br>" execMethod="get_data_streams" displayLevel="EXPERT" polledPeriod="0">
       <argin description="">
@@ -429,7 +418,7 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="The detector can acquire data from all ADC or a single ADC.&lt;br>&#xA;Avalaible values:&lt;br>&#xA;ALL&lt;br>&#xA;1&lt;br>&#xA;2&lt;br>&#xA;3&lt;br>&#xA;4&lt;br>&#xA;5&lt;br>" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
-    <attributes name="frame" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="1280" maxY="0" allocReadMember="false" isDynamic="false">
+    <attributes name="frame" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="2560" maxY="0" allocReadMember="false" isDynamic="false">
       <dataType xsi:type="pogoDsl:IntType"/>
       <changeEvent fire="false" libCheckCriteria="false"/>
       <archiveEvent fire="false" libCheckCriteria="false"/>
@@ -439,7 +428,7 @@
       <readExcludedStates>INIT</readExcludedStates>
       <readExcludedStates>FAULT</readExcludedStates>
     </attributes>
-    <attributes name="gain" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="1280" maxY="" allocReadMember="false" isDynamic="false">
+    <attributes name="gain" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="2560" maxY="" allocReadMember="false" isDynamic="false">
       <dataType xsi:type="pogoDsl:IntType"/>
       <changeEvent fire="false" libCheckCriteria="false"/>
       <archiveEvent fire="false" libCheckCriteria="false"/>
