@@ -1,26 +1,31 @@
 {
     "2149": {
         "buses": [
+            "Socket", 
             "Socket"
         ], 
         "certified": "False", 
         "class_names": [
+            "PhyMotionDIOM", 
             "PhyMotionDIOM"
         ], 
         "detail_url": "http://www.tango-controls.org/developers/dsc/ds/2149/", 
         "development_status": "released", 
         "documentation": [], 
         "families": [
+            "InputOutput", 
             "InputOutput"
         ], 
-        "last_update": "2018-08-18 03:30:15.730314+00:00", 
+        "last_update": "2018-08-18 03:30:31.029679+00:00", 
         "last_update_method": "url", 
         "license": "GPL", 
         "manufacturers": [
+            "Pythron", 
             "Pythron"
         ], 
         "name": "PhyMotionDIOM", 
         "products": [
+            "PhyMotion", 
             "PhyMotion"
         ], 
         "repository_contact_email": "", 
