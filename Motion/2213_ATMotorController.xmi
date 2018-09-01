@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="ATMotorController" pogoRevision="9.4">
-    <description description="Aerotech Motor controller tango server" title="Aerotech Motor controller" sourcePath="/home/yuelong/src/TangoSVN/tango-ds-code/DeviceClasses/Motion/MotorControllers/AerotechMotorController/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions,html Pages" license="GPL" copyright="" hasMandatoryProperty="false" hasConcreteProperty="false" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+  <classes name="ATMotorController" pogoRevision="9.1">
+    <description description="Aerotech Motor controller tango server" title="Aerotech Motor controller" sourcePath="D:\Src\AerotechMotorController\trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions,html Pages" license="GPL" copyright="" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
       <inheritances classname="Device_Impl" sourcePath=""/>
       <identification contact="at desy.de - yuelong.yu" author="yuelong.yu" emailDomain="desy.de" classFamily="Motion" siteSpecific="" platform="Windows" bus="Not Applicable" manufacturer="Aerotech" reference=""/>
     </description>
+    <deviceProperties name="ControllerName" description="name of the controller">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>none</DefaultPropValue>
+    </deviceProperties>
     <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="none">
         <type xsi:type="pogoDsl:VoidType"/>
@@ -23,42 +28,6 @@
       </argout>
       <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
     </commands>
-    <commands name="ProgramRun" description="" execMethod="program_run" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
-      <argin description="[program path][task id]">
-        <type xsi:type="pogoDsl:LongStringArrayType"/>
-      </argin>
-      <argout description="">
-        <type xsi:type="pogoDsl:VoidType"/>
-      </argout>
-      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-    </commands>
-    <commands name="ProgramStop" description="" execMethod="program_stop" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
-      <argin description="task id">
-        <type xsi:type="pogoDsl:IntType"/>
-      </argin>
-      <argout description="">
-        <type xsi:type="pogoDsl:VoidType"/>
-      </argout>
-      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-    </commands>
-    <commands name="ProgramLoad" description="" execMethod="program_load" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
-      <argin description="[program][task id]">
-        <type xsi:type="pogoDsl:LongStringArrayType"/>
-      </argin>
-      <argout description="">
-        <type xsi:type="pogoDsl:VoidType"/>
-      </argout>
-      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-    </commands>
-    <commands name="ProgramStart" description="" execMethod="program_start" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
-      <argin description="task id">
-        <type xsi:type="pogoDsl:IntType"/>
-      </argin>
-      <argout description="">
-        <type xsi:type="pogoDsl:VoidType"/>
-      </argout>
-      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-    </commands>
     <commands name="AcknowledgeAll" description="" execMethod="acknowledge_all" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="">
         <type xsi:type="pogoDsl:VoidType"/>
@@ -74,6 +43,24 @@
       </argin>
       <argout description="">
         <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetStatusItem" description="" execMethod="get_status_item" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="[axis index] [item code]">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="MotionAbort" description="" execMethod="motion_abort" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="axis mask">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
@@ -104,15 +91,6 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
-    <commands name="MotionMoveInc" description="before running this command. The distance and speed attributes need&#xA;to be set." execMethod="motion_move_inc" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
-      <argin description="axis mask">
-        <type xsi:type="pogoDsl:IntType"/>
-      </argin>
-      <argout description="">
-        <type xsi:type="pogoDsl:VoidType"/>
-      </argout>
-      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-    </commands>
     <commands name="MotionMoveAbs" description="before running this command. The distance and speed attributes need&#xA;to be set." execMethod="motion_move_abs" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="axis mask">
         <type xsi:type="pogoDsl:IntType"/>
@@ -122,7 +100,7 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
-    <commands name="MotionAbort" description="" execMethod="motion_abort" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+    <commands name="MotionMoveInc" description="before running this command. The distance and speed attributes need&#xA;to be set." execMethod="motion_move_inc" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="axis mask">
         <type xsi:type="pogoDsl:IntType"/>
       </argin>
@@ -131,12 +109,57 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
-    <commands name="GetStatusItem" description="" execMethod="get_status_item" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
-      <argin description="[axis index] [item code]">
+    <commands name="MotionSetupServo" description="input parameters, length is 2&#xA;[axis index],[on/off]&#xA;0:off&#xA;1:on&#xA;e.g. 1,1" execMethod="motion_setup_servo" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="[axis index],[on/off]">
         <type xsi:type="pogoDsl:IntArrayType"/>
       </argin>
       <argout description="">
-        <type xsi:type="pogoDsl:DoubleType"/>
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ProgramLoad" description="" execMethod="program_load" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="[program][task id]">
+        <type xsi:type="pogoDsl:LongStringArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ProgramPause" description="" execMethod="program_pause" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="task id">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ProgramRun" description="" execMethod="program_run" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="[program path][task id]">
+        <type xsi:type="pogoDsl:LongStringArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ProgramStart" description="" execMethod="program_start" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="task id">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ProgramStop" description="" execMethod="program_stop" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="task id">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
@@ -197,6 +220,6 @@
     <states name="FAULT" description="">
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </states>
-    <preferences docHome="./doc_html" makefileHome="/usr/share/pogo/preferences"/>
+    <preferences docHome="./doc_html" makefileHome="/home/taurel/tmp/tango_install/share/pogo/preferences"/>
   </classes>
 </pogoDsl:PogoSystem>
