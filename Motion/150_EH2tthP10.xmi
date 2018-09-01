@@ -1,24 +1,44 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="EH2tthP10" pogoRevision="8.4">
-    <description description="Virtual motor to make the large flightpath in EH2 to a 2theta motion around the sample." title="2theta motion around the sample" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/Motion/EH2tthP10/trunk" language="Python" filestogenerate="XMI   file,Code files,html Pages" license="GPL" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+  <classes name="EH2tthP10" pogoRevision="9.4">
+    <description description="Virtual motor to make the large flightpath in EH2 to a 2theta motion around the sample." title="2theta motion around the sample" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/Motion/EH2tthP10/trunk" language="Python" filestogenerate="XMI   file,Code files,Protected Regions,html Pages" license="GPL" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
       <inheritances classname="Device_Impl" sourcePath=""/>
       <identification contact="at mail.desy.de - tnunez" author="tnunez" emailDomain="mail.desy.de" classFamily="Motion" siteSpecific="" platform="Unix Like" bus="Not Applicable" manufacturer="none" reference=""/>
     </description>
-    <deviceProperties name="r0" mandatory="true" description="distance [mm] from sample to the center of rotation of det-table">
+    <deviceProperties name="r0" description="distance [mm] from sample to the center of rotation of det-table">
       <type xsi:type="pogoDsl:DoubleType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </deviceProperties>
-    <deviceProperties name="s0" mandatory="true" description="calculation constant">
+    <deviceProperties name="s0" description="calculation constant">
       <type xsi:type="pogoDsl:DoubleType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </deviceProperties>
-    <deviceProperties name="TiltDeg" mandatory="true" description="tilt angle [deg] between standard and detector coordinate systems">
+    <deviceProperties name="TiltDeg" description="tilt angle [deg] between standard and detector coordinate systems">
       <type xsi:type="pogoDsl:DoubleType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </deviceProperties>
-    <deviceProperties name="TiltOffset" mandatory="true" description="Offset [deg]">
+    <deviceProperties name="TiltOffset" description="Offset [deg]">
       <type xsi:type="pogoDsl:DoubleType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="tsamyDeviceName" description="Name of the tango device for the tsamy motor">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="dety1DeviceName" description="Name of the tango device for the dety1 motor">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="detxDeviceName" description="Name of the tango device for the detx motor">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="detrzDeviceName" description="Name of the tango device for the detrz motor">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="fpyDeviceName" description="Name of the tango device for the fpy motor">
+      <type xsi:type="pogoDsl:StringType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </deviceProperties>
     <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
