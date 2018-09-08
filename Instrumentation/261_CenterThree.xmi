@@ -40,14 +40,6 @@
       <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <readExcludedStates>FAULT</readExcludedStates>
     </attributes>
-    <attributes name="HVC" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
-      <dataType xsi:type="pogoDsl:BooleanType"/>
-      <changeEvent fire="false" libCheckCriteria="false"/>
-      <archiveEvent fire="false" libCheckCriteria="false"/>
-      <dataReadyEvent fire="false" libCheckCriteria="true"/>
-      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
-    </attributes>
     <attributes name="SP1" attType="Spectrum" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="3" maxY="" allocReadMember="true">
       <dataType xsi:type="pogoDsl:DoubleType"/>
       <changeEvent fire="false" libCheckCriteria="true"/>
@@ -107,6 +99,22 @@
       <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <readExcludedStates>FAULT</readExcludedStates>
       <writeExcludedStates>FAULT</writeExcludedStates>
+    </attributes>
+    <attributes name="SPS" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="6" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Read switching function status:&#xA;&#xA;0: status of switching function 1&#xA;1: status of switching function 2&#xA;2: status of switching function 3&#xA;3: status of switching function 4&#xA;4: status of switching function 5&#xA;5: status of switching function 6&#xA;&#xA;0 = off, 1 = on" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="HVC" attType="Spectrum" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="3" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="High vacuum circuit status:&#xA;&#xA;0: status of sensor 1&#xA;1: status of sensor 2&#xA;2: status of sensor 3&#xA;&#xA;0 = off, 1 = on" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <states name="ON" description="Everything ok">
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
