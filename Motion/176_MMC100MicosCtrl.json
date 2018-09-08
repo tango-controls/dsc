@@ -1,12 +1,10 @@
 {
     "176": {
         "buses": [
-            "Not Applicable", 
             "Not Applicable"
         ], 
         "certified": "False", 
         "class_names": [
-            "MMC100MicosCtrl", 
             "MMC100MicosCtrl"
         ], 
         "detail_url": "http://www.tango-controls.org/developers/dsc/ds/176/", 
@@ -21,25 +19,22 @@
             }
         ], 
         "families": [
-            "Motion", 
             "Motion"
         ], 
-        "last_update": "2017-02-23 10:39:51.581283+00:00", 
+        "last_update": "2018-09-08 03:49:36.590928+00:00", 
         "last_update_method": "url", 
         "license": "None", 
         "manufacturers": [
-            "Micos", 
             "Micos"
         ], 
         "name": "MMC100MicosCtrl", 
         "products": [
-            "MMC-100", 
             "MMC-100"
         ], 
         "repository_contact_email": "", 
         "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Motion/MotorControllers/Micos/MMC100MicosCtrl", 
         "status": "updated", 
-        "tag": "Release_1_6", 
+        "tag": "Release_1_7", 
         "update_url": "http://www.tango-controls.org/developers/dsc/ds/176/update/", 
         "updated_by_script": true
     }
