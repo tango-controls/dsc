@@ -1,12 +1,10 @@
 {
     "265": {
         "buses": [
-            "Ethernet", 
             "Ethernet"
         ], 
         "certified": "False", 
         "class_names": [
-            "RamanOptics", 
             "RamanOptics"
         ], 
         "detail_url": "http://www.tango-controls.org/developers/dsc/ds/265/", 
@@ -21,25 +19,22 @@
             }
         ], 
         "families": [
-            "Instrumentation", 
             "Instrumentation"
         ], 
-        "last_update": "2017-02-23 11:12:22.005836+00:00", 
+        "last_update": "2018-09-15 04:12:53.697308+00:00", 
         "last_update_method": "url", 
         "license": "GPL", 
         "manufacturers": [
-            "Fento", 
             "Fento"
         ], 
         "name": "RamanOptics", 
         "products": [
-            "Ventil", 
             "Ventil"
         ], 
         "repository_contact_email": "", 
         "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/SampleEnvironment/RamanOptics", 
         "status": "updated", 
-        "tag": "Release_1_0", 
+        "tag": "Release_1_1", 
         "update_url": "http://www.tango-controls.org/developers/dsc/ds/265/update/", 
         "updated_by_script": true
     }
