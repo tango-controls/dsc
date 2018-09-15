@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
   <classes name="GotthardDetector" pogoRevision="8.1">
-    <description description="Device for Gotthard detectors from PSI company." title="Gotthard detector TANGO device." sourcePath="/media/sf_Partage/GotthardDetector/trunk/src" language="Cpp" filestogenerate="XMI   file,Code files" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+    <description description="Device for Gotthard detectors from PSI company." title="Gotthard detector TANGO device." sourcePath="/media/sf_Partage/GotthardDetector/trunk/src" language="Cpp" filestogenerate="XMI   file,Code files,html Pages" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
       <inheritances classname="Device_4Impl" sourcePath=""/>
       <identification contact="at synchrotron-soleil.fr - cedric.castel" author="cedric.castel" emailDomain="synchrotron-soleil.fr" classFamily="Acquisition" siteSpecific="" platform="Unix Like" bus="Data Socket" manufacturer="DECTRIS" reference=""/>
     </description>
@@ -278,18 +278,34 @@
       <writeExcludedStates>FAULT</writeExcludedStates>
       <writeExcludedStates>RUNNING</writeExcludedStates>
     </attributes>
-    <attributes name="delayAfterTrigger" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" allocReadMember="false" isDynamic="false">
+    <attributes name="delayAfterTrigger" attType="Scalar" rwType="WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" allocReadMember="false" isDynamic="false">
       <dataType xsi:type="pogoDsl:DoubleType"/>
       <changeEvent fire="false" libCheckCriteria="false"/>
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="set/get delay after trigger in ms.&#xA;&lt;br>&#xA;Only relevant for these trigger modes :&lt;br>&#xA;EXTERNAL_SINGLE&lt;br>&#xA;EXTERNAL_MULTIPLE&lt;br>" label="" unit="ms" standardUnit="ms" displayUnit="ms" format="%7.4f" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="set delay after trigger in ms for all modules.&#xA;&lt;br>&#xA;Only relevant for these trigger modes :&lt;br>&#xA;EXTERNAL_SINGLE&lt;br>&#xA;EXTERNAL_MULTIPLE&lt;br>" label="" unit="ms" standardUnit="ms" displayUnit="ms" format="%7.4f" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <readExcludedStates>INIT</readExcludedStates>
       <readExcludedStates>FAULT</readExcludedStates>
       <writeExcludedStates>INIT</writeExcludedStates>
       <writeExcludedStates>FAULT</writeExcludedStates>
       <writeExcludedStates>RUNNING</writeExcludedStates>
+    </attributes>
+    <attributes name="delayAfterTrigger1" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="false" isDynamic="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="get delay after trigger in ms of the first module.&#xA;&lt;br>&#xA;Only relevant for these trigger modes :&lt;br>&#xA;EXTERNAL_SINGLE&lt;br>&#xA;EXTERNAL_MULTIPLE&lt;br>" label="" unit="ms" standardUnit="ms" displayUnit="ms" format="%7.4f" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="delayAfterTrigger2" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="false" isDynamic="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="get delay after trigger in ms of the second module.&#xA;&lt;br>&#xA;Only relevant for these trigger modes :&lt;br>&#xA;EXTERNAL_SINGLE&lt;br>&#xA;EXTERNAL_MULTIPLE&lt;br>" label="" unit="ms" standardUnit="ms" displayUnit="ms" format="%7.4f" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <attributes name="streamType" attType="Scalar" rwType="READ_WRITE" displayLevel="EXPERT" polledPeriod="0" maxX="" maxY="" memorized="true" allocReadMember="false" isDynamic="false">
       <dataType xsi:type="pogoDsl:StringType"/>
@@ -372,7 +388,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="Set/Get gain mode.&lt;br>&#xA;&lt;br>&#xA;Available gain modes are :&lt;br>&#xA;DYNAMIC&lt;br>&#xA;LOW&lt;br>&#xA;MEDIUM&lt;br>&#xA;HIGH&lt;br>&#xA;VERYHIGH&lt;br>" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="Set/Get gain mode.&lt;br>&#xA;&lt;br>&#xA;Available gain modes are :&lt;br>&#xA;DYNAMIC&lt;br>&#xA;LOW&lt;br>&#xA;MEDIUM&lt;br>&#xA;HIGH&lt;br>&#xA;VERY_HIGH&lt;br>" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <readExcludedStates>INIT</readExcludedStates>
       <readExcludedStates>FAULT</readExcludedStates>
       <writeExcludedStates>INIT</writeExcludedStates>
