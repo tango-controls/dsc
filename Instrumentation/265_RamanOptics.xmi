@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="RamanOptics" pogoRevision="8.4">
-    <description description="Class for writting/reading on the valves of the Fento Ventil" title="Fento Ventil" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/SampleEnvironment/RamanOptics/trunk" language="Cpp" filestogenerate="XMI   file,Code files,html Pages" license="GPL" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+  <classes name="RamanOptics" pogoRevision="9.4">
+    <description description="Class for writting/reading on the valves of the Fento Ventil.&#xA;Communication is implemented via ADS protocol of Beckhoff. In the default&#xA;implementation we are using the address 0x4020 and address index offset&#xA;logic for reading and writing the values of the Beckhoff controller. Index&#xA;offset for Valve1 is 1, for the Valve2 is 2 and etc." title="Fento Ventil" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/SampleEnvironment/RamanOptics/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions,html Pages" license="GPL" copyright="" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
       <inheritances classname="Device_Impl" sourcePath=""/>
       <identification contact="at mail.desy.de - tnunez" author="tnunez" emailDomain="mail.desy.de" classFamily="Instrumentation" siteSpecific="" platform="Unix Like" bus="Ethernet" manufacturer="Fento" reference="Ventil"/>
     </description>
