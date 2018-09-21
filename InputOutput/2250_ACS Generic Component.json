@@ -1,0 +1,41 @@
+{
+    "2250": {
+        "buses": [
+            "Ethernet"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "ACS_Component"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/2250/", 
+        "development_status": "new", 
+        "documentation": [
+            {
+                "documentation_type": "README", 
+                "pk": 609, 
+                "title": "ACS Library", 
+                "updated_by_script": false, 
+                "url": "https://drive.google.com/open?id=1XFv-83tVr6cXRL58ILOWHggIJe-1io8E"
+            }
+        ], 
+        "families": [
+            "InputOutput"
+        ], 
+        "last_update": "2018-09-21 10:58:23.615835+00:00", 
+        "last_update_method": "file", 
+        "license": "GPL", 
+        "manufacturers": [
+            "none"
+        ], 
+        "name": "ACS Generic Component", 
+        "products": [
+            ""
+        ], 
+        "repository_contact_email": "matteo.dicarlo@inaf.it", 
+        "repository_url": "", 
+        "status": "new", 
+        "tag": "Beta", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/2250/update/", 
+        "updated_by_script": false
+    }
+}
