@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
   <classes name="Tango2Epics" pogoRevision="9.6">
-    <description description="A device can be integrated in Tango control system by developing a &#xA;specific Tango device server software for the device. In situations when&#xA;the Tango device server software is not available for the device, &#xA;but software support for the EPICS control system is available instead, &#xA;it is possible to use the Tango2Epics Tango device server to expose &#xA;the device in Tango system. It serves as a bridge, in form of a Tango device, &#xA;to EPICS control system. PVaccess device exposes the existing EPICS &#xA;Process Variables (PVs) of the device in form of Tango device attributes, &#xA;states, and emulates a preconfigured set of Tango device commands by &#xA;using the appropriate EPICS PVs. By using the Tango2Epics Tango device, &#xA;integration can be achieved through configuration only, with no development &#xA;required. More information can be found in the user manual, located: &#xA;http://sourceforge.net/p/tango-ds/code/HEAD/tree/DeviceClasses/Communication/Tango2Epics/trunk/doc/Tango2EpicsGateway.pdf." title="Tango2Epics Tango Device" sourcePath="/mntdirect/_segfs/tango/cppserver/communication/Tango2Epics/src" language="Cpp" filestogenerate="XMI   file,CMakeLists,Protected Regions" license="GPL" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+    <description description="A device can be integrated in Tango control system by developing a &#xA;specific Tango device server software for the device. In situations when&#xA;the Tango device server software is not available for the device, &#xA;but software support for the EPICS control system is available instead, &#xA;it is possible to use the Tango2Epics Tango device server to expose &#xA;the device in Tango system. It serves as a bridge, in form of a Tango device, &#xA;to EPICS control system. PVaccess device exposes the existing EPICS &#xA;Process Variables (PVs) of the device in form of Tango device attributes, &#xA;states, and emulates a preconfigured set of Tango device commands by &#xA;using the appropriate EPICS PVs. By using the Tango2Epics Tango device, &#xA;integration can be achieved through configuration only, with no development &#xA;required. More information can be found in the user manual, located: &#xA;http://sourceforge.net/p/tango-ds/code/HEAD/tree/DeviceClasses/Communication/Tango2Epics/trunk/doc/Tango2EpicsGateway.pdf." title="Tango2Epics Tango Device" sourcePath="/mntdirect/_segfs/tango/cppserver/communication/Tango2Epics/src" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" license="GPL" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
       <inheritances classname="Device_Impl" sourcePath=""/>
       <identification contact="at cosylab.com - vid.juvan" author="vid.juvan" emailDomain="cosylab.com" classFamily="Application" siteSpecific="" platform="Unix Like" bus="Not Applicable" manufacturer="none" reference=""/>
     </description>
@@ -61,6 +61,15 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
     <commands name="Reset" description="Allegedly represents a command for reseting the device. &#xA;It changes the values of specified PVs to the specified value. &#xA;Specifications about these actions are read from the Variable &#xA;device property. See the user manual for details on &#xA;configuration." execMethod="reset" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ResetSetpoint" description="Force setpoint update (for Read_Write attribute)" execMethod="reset_setpoint" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="">
         <type xsi:type="pogoDsl:VoidType"/>
       </argin>
