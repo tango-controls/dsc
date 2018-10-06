@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="Daresbury" pogoRevision="9.4">
-    <description description="Handle PSS crate hardware" title="Daresbury" sourcePath="/mntdirect/_segfs/tango/cppserver/safety/Daresbury/src" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" license="GPL" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+  <classes name="Daresbury" pogoRevision="9.6">
+    <description description="Handle PSS crate hardware" title="Daresbury" sourcePath="/mntdirect/_segfs/tango/cppserver/safety/Daresbury/src" language="Cpp" filestogenerate="XMI   file,Code files,CMakeLists,Protected Regions" license="GPL" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
       <inheritances classname="Device_Impl" sourcePath=""/>
       <identification contact="at esrf.fr - pons" author="pons" emailDomain="esrf.fr" classFamily="Security" siteSpecific="" platform="Unix Like" bus="Not Applicable" manufacturer="ESRF" reference="REL1_0"/>
     </description>
@@ -61,12 +61,12 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
-    <commands name="GetHistoryInfo" description="Returns a list of known logs." execMethod="get_history_info" displayLevel="OPERATOR" polledPeriod="0">
+    <commands name="GetHistoryInfo" description="Returns a list of known logs." execMethod="get_history_info" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="">
         <type xsi:type="pogoDsl:VoidType"/>
       </argin>
-      <argout description="Return a list of interlock logs ,by date">
-        <type xsi:type="pogoDsl:IntArrayType"/>
+      <argout description="Return a list of interlock logs [date,reason]">
+        <type xsi:type="pogoDsl:LongStringArrayType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
@@ -151,5 +151,6 @@
       <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <preferences docHome="./doc_html" makefileHome="/segfs/tango/cppserver/env"/>
+    <additionalFiles name="MailSender" path="/mntdirect/_segfs/tango/cppserver/safety/Daresbury/src/MailSender.cpp"/>
   </classes>
 </pogoDsl:PogoSystem>
