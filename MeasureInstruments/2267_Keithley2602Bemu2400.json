@@ -1,31 +1,36 @@
 {
     "2267": {
         "buses": [
+            "Ethernet", 
             "Ethernet"
         ], 
         "certified": "False", 
         "class_names": [
+            "Keithley2602Bemu2400", 
             "Keithley2602B"
         ], 
         "detail_url": "http://www.tango-controls.org/developers/dsc/ds/2267/", 
         "development_status": "new", 
         "documentation": [], 
         "families": [
+            "MeasureInstruments", 
             "MeasureInstruments"
         ], 
-        "last_update": "2018-10-13 03:38:37.099515+00:00", 
+        "last_update": "2018-10-13 03:38:53.388379+00:00", 
         "last_update_method": "url", 
         "license": "GPL", 
         "manufacturers": [
+            "Keithley", 
             "Keithley"
         ], 
         "name": "Keithley2602Bemu2400", 
         "products": [
+            "2602B", 
             "2602B"
         ], 
         "repository_contact_email": "", 
         "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/MeasureInstruments/Keithley/Keithley2602Bemu2400", 
-        "status": "new", 
+        "status": "updated", 
         "tag": "", 
         "update_url": "http://www.tango-controls.org/developers/dsc/ds/2267/update/", 
         "updated_by_script": true
