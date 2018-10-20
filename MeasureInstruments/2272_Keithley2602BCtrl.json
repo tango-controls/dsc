@@ -1,0 +1,33 @@
+{
+    "2272": {
+        "buses": [
+            "Ethernet"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "Keithley2602BCtrl"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/2272/", 
+        "development_status": "new", 
+        "documentation": [], 
+        "families": [
+            "MeasureInstruments"
+        ], 
+        "last_update": "2018-10-20 03:37:53.323268+00:00", 
+        "last_update_method": "url", 
+        "license": "GPL", 
+        "manufacturers": [
+            "Keithley"
+        ], 
+        "name": "Keithley2602BCtrl", 
+        "products": [
+            "2602B"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/MeasureInstruments/Keithley/Keithley2602BCtrl", 
+        "status": "new", 
+        "tag": "", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/2272/update/", 
+        "updated_by_script": true
+    }
+}
