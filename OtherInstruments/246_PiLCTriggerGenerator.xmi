@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="PiLCTriggerGenerator" pogoRevision="8.4">
-    <description description="Trigger generator using the PiLC" title="PiLC Trigger Generator" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/OtherInstruments/PiLCTriggerGenerator/trunk" language="Cpp" filestogenerate="XMI   file,Code files,html Pages" license="GPL" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+  <classes name="PiLCTriggerGenerator" pogoRevision="9.4">
+    <description description="Trigger generator using the PiLC" title="PiLC Trigger Generator" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/OtherInstruments/PiLCTriggerGenerator/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions,html Pages" license="GPL" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
       <inheritances classname="Device_Impl" sourcePath=""/>
       <identification contact="at mail.desy.de - tnunez" author="tnunez" emailDomain="mail.desy.de" classFamily="OtherInstruments" siteSpecific="" platform="Unix Like" bus="Not Applicable" manufacturer="none" reference=""/>
     </description>
@@ -122,7 +122,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="Trigger Mode: start and step in:  1 -> position, 2 -> time, 3 -> position-time , 4 -> time-position, 5 -> external signal, 6-> zig-zag mode, triggers generated in postions between two limits, 7-> zig-zag mode, triggers generated in time intervals between two positions" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="7" minValue="1" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="Trigger Mode: start and step in:  1 -> position, 2 -> time, 3 -> position-time , 4 -> time-position, 5 -> external signal, 6-> zig-zag mode, triggers generated in postions between two limits, 7-> zig-zag mode, triggers generated in time intervals between two positions" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="8" minValue="1" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <writeExcludedStates>MOVING</writeExcludedStates>
     </attributes>
     <attributes name="TimeTriggerStart" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
