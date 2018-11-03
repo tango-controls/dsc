@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
   <classes name="GotthardDetector" pogoRevision="8.1">
-    <description description="Device for Gotthard detectors from PSI company." title="Gotthard detector TANGO device." sourcePath="/media/sf_Partage/GotthardDetector/trunk/src" language="Cpp" filestogenerate="XMI   file,Code files,html Pages" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+    <description description="Device for Gotthard detectors from PSI company." title="Gotthard detector TANGO device." sourcePath="/media/sf_Partage/new-Gotthard/trunk/src" language="Cpp" filestogenerate="XMI   file,Code files,html Pages" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
       <inheritances classname="Device_4Impl" sourcePath=""/>
       <identification contact="at synchrotron-soleil.fr - cedric.castel" author="cedric.castel" emailDomain="synchrotron-soleil.fr" classFamily="Acquisition" siteSpecific="" platform="Unix Like" bus="Data Socket" manufacturer="DECTRIS" reference=""/>
     </description>
@@ -15,6 +15,10 @@
       <DefaultPropValue>TO_BE_DEFINED</DefaultPropValue>
     </deviceProperties>
     <deviceProperties name="ExpertFramePacketNumber" description="Only an expert User could change this property.&lt;br>&#xA;This is the number of packet for each received frame part.&lt;BR>">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="ExpertAdcFramePacketNumber" description="Only an expert User could change this property.&lt;br>&#xA;This is the number of packet for each received frame part when an ADC was selected.&lt;BR>">
       <type xsi:type="pogoDsl:IntType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </deviceProperties>
