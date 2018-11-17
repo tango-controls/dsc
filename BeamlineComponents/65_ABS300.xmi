@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="ABS300" pogoRevision="8.1">
-    <description description="Server to control ABS300 Precision attenuator" title="ABS300" sourcePath="/ssd/blume/src/TangoSvn/tango-ds/DeviceClasses/BeamlineComponents/ABS300/trunk" language="Cpp" filestogenerate="XMI   file,Code files" license="GPL" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+  <classes name="ABS300" pogoRevision="9.4">
+    <description description="Server to control ABS300 Precision attenuator" title="ABS300" sourcePath="/ssd/blume/src/TangoSvn/tango-ds/DeviceClasses/BeamlineComponents/ABS300/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" license="GPL" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
       <inheritances classname="Device_Impl" sourcePath=""/>
       <identification contact="at desy.de - johannes.blume" author="johannes.blume" emailDomain="desy.de" classFamily="BeamlineComponents" siteSpecific="" platform="Unix Like" bus="Modbus" manufacturer="www.adc9001.com" reference="www.adc9001.com/products/view/637"/>
     </description>
@@ -27,7 +27,7 @@
       <type xsi:type="pogoDsl:DoubleVectorType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </deviceProperties>
-    <deviceProperties name="KeepAlivePoll" description="The PAC CPU ( = the controller ) closes the conection after approx. 30 secs&#xA;of no activity on the TCP connction.&#xA;To avoid this a thread is running which request the state of&#xA;Slide01 every KeepAlivePoll secs. Decrease this value if you&#xA;experience connection losses.">
+    <deviceProperties name="KeepAlivePoll" description="The PAC CPU ( = the controller ) closes the connection after approx. 30 secs&#xA;of no activity on the TCP connction.&#xA;To avoid this a thread is running which request the state of&#xA;Slide01 every KeepAlivePoll secs. Decrease this value if you&#xA;experience connection losses.">
       <type xsi:type="pogoDsl:UShortType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>25</DefaultPropValue>
