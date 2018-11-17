@@ -1,0 +1,41 @@
+{
+    "195": {
+        "buses": [
+            "Not Applicable"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "PIE709Motor"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/195/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 345, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Motion/PIE709Motor/PIE709Motor.pdf"
+            }
+        ], 
+        "families": [
+            "Motion"
+        ], 
+        "last_update": "2018-11-17 03:53:19.656791+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "Physik Instrumente (PI) GmbH & Co. KG"
+        ], 
+        "name": "PIE709Motor", 
+        "products": [
+            "http://www.physikinstrumente.de/de/produkte/prdetail.php?sortnr=605200"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Motion/MotorControllers/PI/PIE709Motor", 
+        "status": "updated", 
+        "tag": "Release_1_1", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/195/update/", 
+        "updated_by_script": true
+    }
+}
