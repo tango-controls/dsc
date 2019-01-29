@@ -1,0 +1,33 @@
+{
+    "2327": {
+        "buses": [
+            "Ethernet"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "WienerMpodLvHvCtrl"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/2327/", 
+        "development_status": "released", 
+        "documentation": [], 
+        "families": [
+            "PowerSupply"
+        ], 
+        "last_update": "2019-01-29 09:43:01.365652+00:00", 
+        "last_update_method": "file", 
+        "license": "GPL", 
+        "manufacturers": [
+            "Wiener"
+        ], 
+        "name": "WienerMpodLvHvCtrl", 
+        "products": [
+            "MpodC"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "https://github.com/gerard-af/tango-controls-wiener-mpod-server", 
+        "status": "new", 
+        "tag": "1.0", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/2327/update/", 
+        "updated_by_script": false
+    }
+}
