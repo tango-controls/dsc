@@ -1,0 +1,932 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="WienerMpodLvHvCtrl" pogoRevision="9.6">
+    <description description="Device Server controlling the Wiener MPOD and it`s power modules such as &#xA;- Wiener LV power supplies&#xA;- iseg HV power supplies&#xA;&#xA;It contains low level access functions for directly accessing the&#xA;SNMP protocol.&#xA;These functions are named `snmp...`.&#xA;&#xA;It also contains high level access functions for controlling:&#xA;&#xA;- the crate functionality. The functions are named `crate...`.&#xA;The `crateGet...` functions don`t take arguments. &#xA;The `crateSet...` functions need the new value as argument.&#xA;&#xA;- the module functionality. The functions are named `module...`.&#xA;The `moduleGet...` functions need the `slot_index` as argument. &#xA;The `moduleSet...` functions need the `slot_index` and the new value as argument.&#xA;&#xA;- the channel functionality. The functions are named `channel...`.&#xA;The `channelGet...` functions need the `slot_index` and the `channel_index` as arguments. &#xA;The `channelSet...` functions need the `slot_index`, the `channel_index` and new value as arguments.&#xA;&#xA;- the group functionality. The functions are named `group...`.&#xA;The `groupGet...` functions requires the `group_index` as argument. &#xA;The `groupSet...` functions need the `group_index` ant the new value as argument.&#xA;&#xA;Further information can be found on the manufacturer`s web sites &#xA;and in the user manuals for MPOD and the inserted modules." title="MPOD Ctrl for iseg HV" sourcePath="/home/work/shared/WienerMpodLvHvCtrl" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions,html Pages" license="GPL" copyright="This program is free software: you can redistribute it and/or modify&#xA;it under the terms of the GNU General Public License as published by&#xA;the Free Software Foundation, either version 3 of the License, or&#xA;(at your option) any later version." hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+      <inheritances classname="Device_4Impl" sourcePath=""/>
+      <identification contact="at analogflavor.com - gerard" author="gerard" emailDomain="analogflavor.com" classFamily="PowerSupply" siteSpecific="" platform="Unix Like" bus="Ethernet" manufacturer="Wiener" reference="MpodC">
+        <keyWords>iseg</keyWords>
+        <keyWords>EHS</keyWords>
+      </identification>
+    </description>
+    <deviceProperties name="IpAddr" description="IP Address for the MPOD controller.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="SnmpCommunityName" description="Used SNMP community. This property can limit the access to SNMP variables.&#xA;By default `guru` defines the read-write community.&#xA;The community `public` prohibits write operations.&#xA;These default settings can be changed.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>guru</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="SnmpTimeout" description="This value is passed to the net-snmp library. For values&#xA;&lt;= 0 the library default is used. The value is given in ms.&#xA;Appropriate values are 500 ... 2000.">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>-1</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="ThreadPollingIntervalMsFast" description="The communication to the MPOD can be run in a thread.&#xA;This property defines a time intarval for periodic &#xA;polling of all data in milliseconds. The defined interval&#xA;should be 200 ms or greater.&#xA;If the value of this property is 0, the thread is not started, &#xA;all commands are directly sent to the MPOD, the device &#xA;server waits for the response from the MPOD.&#xA;&#xA;The property ThreadPollingIntervalMsFast concerns the &#xA;measured voltages and currents.">
+      <type xsi:type="pogoDsl:UIntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>500</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="ThreadPollingIntervalMsIntermediate" description="Like ThreadPollingIntervalMsFast.&#xA;&#xA;The property ThreadPollingIntervalMsIntermediate concerns the &#xA;polling for status flags and most other SNMP variables.">
+      <type xsi:type="pogoDsl:UIntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>1000</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="ThreadPollingIntervalMsSlow" description="Like ThreadPollingIntervalMsFast.&#xA;&#xA;The property ThreadPollingIntervalMsSlow concerns the &#xA;polling of SNMP variables that are set by the user.&#xA;&#xA;These variables are read if ThreadPollingIntervalMsSlow &#xA;has expired or a value has been set. This represents an&#xA;important speedup for the communication with the MPOD.">
+      <type xsi:type="pogoDsl:UIntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>2000</DefaultPropValue>
+    </deviceProperties>
+    <commands name="Status" description="This command gets the device status (stored in its &lt;i>device_status&lt;/i> data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Status description">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
+    </commands>
+    <commands name="ChannelGetConfigMaxCurrent" description="" execMethod="channel_get_config_max_current" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelGetConfigMaxSenseVoltage" description="" execMethod="channel_get_config_max_sense_voltage" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelGetConfigMaxTerminalVoltage" description="" execMethod="channel_get_config_max_terminal_voltage" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelGetCurrent" description="Returns the output current for the specified channel. &#xA;It this current is reached, the channel operates in current regulation mode.&#xA;The corresponding flag is set in the channel status.&#xA;If current trips are enbled for HV modules, the returned current&#xA;defines the trip current." execMethod="channel_get_current" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argin>
+      <argout description="Output current or trip current (HV).">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelGetCurrentFallRate" description="" execMethod="channel_get_current_fall_rate" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelGetCurrentRiseRate" description="" execMethod="channel_get_current_rise_rate" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelGetIndex" description="" execMethod="channel_get_index" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelGetMeasurementCurrent" description="" execMethod="channel_get_measurement_current" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelGetMeasurementSenseVoltage" description="" execMethod="channel_get_measurement_sense_voltage" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelGetMeasurementTemperature" description="" execMethod="channel_get_measurement_temperature" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelGetMeasurementTerminalVoltage" description="" execMethod="channel_get_measurement_terminal_voltage" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelGetStatus" description="Return the channel status as integer for a given module slot and channel index." execMethod="channel_get_status" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argin>
+      <argout description="ChannelStatus">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelGetStatusAsString" description="" execMethod="channel_get_status_as_string" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelGetSupervisionBehavior" description="" execMethod="channel_get_supervision_behavior" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelGetSupervisionMaxCurrent" description="" execMethod="channel_get_supervision_max_current" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelGetSupervisionMaxPower" description="" execMethod="channel_get_supervision_max_power" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelGetSupervisionMaxTerminalVoltage" description="" execMethod="channel_get_supervision_max_terminal_voltage" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelGetSupervisionMinSenseVoltage" description="" execMethod="channel_get_supervision_min_sense_voltage" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelGetSwitch" description="" execMethod="channel_get_switch" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelGetTripTime" description="" execMethod="channel_get_trip_time" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelGetUserConfig" description="" execMethod="channel_get_user_config" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelGetVoltage" description="" execMethod="channel_get_voltage" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelGetVoltageFallRate" description="" execMethod="channel_get_voltage_fall_rate" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelGetVoltageRiseRate" description="" execMethod="channel_get_voltage_rise_rate" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelSetCurrent" description="" execMethod="channel_set_current" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex, Value">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelSetCurrentFallRate" description="" execMethod="channel_set_current_fall_rate" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex, Value">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelSetCurrentRiseRate" description="" execMethod="channel_set_current_rise_rate" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex, Value">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelSetSupervisionBehavior" description="" execMethod="channel_set_supervision_behavior" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex, Value">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelSetSupervisionMaxCurrent" description="" execMethod="channel_set_supervision_max_current" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex, Value">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelSetSupervisionMaxTerminalVoltage" description="" execMethod="channel_set_supervision_max_terminal_voltage" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex, Value">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelSetSupervisionMinSenseVoltage" description="" execMethod="channel_set_supervision_min_sense_voltage" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex, Value">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelSetSwitch" description="" execMethod="channel_set_switch" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex, Value">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelSetTripTime" description="" execMethod="channel_set_trip_time" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex, Value">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelSetUserConfig" description="" execMethod="channel_set_user_config" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex, Value">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelSetVoltage" description="" execMethod="channel_set_voltage" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex, Value">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelSetVoltageFallRate" description="" execMethod="channel_set_voltage_fall_rate" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex, Value">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelSetVoltageRiseRate" description="" execMethod="channel_set_voltage_rise_rate" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex, Value">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="CrateGetFanSpeed" description="" execMethod="crate_get_fan_speed" displayLevel="EXPERT" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="CrateGetNumberOfChannels" description="" execMethod="crate_get_number_of_channels" displayLevel="EXPERT" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="CrateGetNumberOfGroups" description="" execMethod="crate_get_number_of_groups" displayLevel="EXPERT" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="State Code">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
+    </commands>
+    <commands name="CrateGetNumberOfModules" description="" execMethod="crate_get_number_of_modules" displayLevel="EXPERT" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="CrateGetOccupiedSlots" description="Returns the slot indices of the slots occupied by a HV or a LV module." execMethod="crate_get_occupied_slots" displayLevel="EXPERT" polledPeriod="0" isDynamic="false">
+      <argin description="Value">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="CrateGetSerialNumber" description="" execMethod="crate_get_serial_number" displayLevel="EXPERT" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="CrateGetSysDescr" description="" execMethod="crate_get_sys_descr" displayLevel="EXPERT" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="CrateGetSysMainSwitch" description="" execMethod="crate_get_sys_main_switch" displayLevel="EXPERT" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="CrateGetSysStatus" description="" execMethod="crate_get_sys_status" displayLevel="EXPERT" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="CrateGetSysStatusAsString" description="" execMethod="crate_get_sys_status_as_string" displayLevel="EXPERT" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="CrateSetFanSpeed" description="" execMethod="crate_set_fan_speed" displayLevel="EXPERT" polledPeriod="0" isDynamic="false">
+      <argin description="Value">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="CrateSetSysHardwareReset" description="" execMethod="crate_set_sys_hardware_reset" displayLevel="EXPERT" polledPeriod="0" isDynamic="false">
+      <argin description="Value">
+        <type xsi:type="pogoDsl:UIntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="CrateSetSysMainSwitch" description="" execMethod="crate_set_sys_main_switch" displayLevel="EXPERT" polledPeriod="0" isDynamic="false">
+      <argin description="Value">
+        <type xsi:type="pogoDsl:UIntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GroupGetIndex" description="" execMethod="group_get_index" displayLevel="EXPERT" polledPeriod="0" isDynamic="false">
+      <argin description="Group index">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GroupSetSwitch" description="" execMethod="group_set_switch" displayLevel="EXPERT" polledPeriod="0" isDynamic="false">
+      <argin description="Group index, Value">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ModuleGetAuxiliaryMeasurementVoltage0" description="" execMethod="module_get_auxiliary_measurement_voltage0" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Slot index">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ModuleGetAuxiliaryMeasurementVoltage1" description="" execMethod="module_get_auxiliary_measurement_voltage1" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Slot index">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ModuleGetDescription" description="" execMethod="module_get_description" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Slot index">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ModuleGetEventChannelStatus" description="" execMethod="module_get_event_channel_status" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Slot index">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ModuleGetEventStatus" description="" execMethod="module_get_event_status" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Slot index">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ModuleGetEventStatusAsString" description="" execMethod="module_get_event_status_as_string" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Slot index">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ModuleGetHardwareLimitCurrent" description="" execMethod="module_get_hardware_limit_current" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Slot index">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ModuleGetHardwareLimitVoltage" description="" execMethod="module_get_hardware_limit_voltage" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Slot index">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ModuleGetIndex" description="" execMethod="module_get_index" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Slot index">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ModuleGetIsHvModule" description="This command returns true if the module in `slot index` is a HV module." execMethod="module_get_is_hv_module" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Slot index">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ModuleGetMeasurementTemperature0" description="" execMethod="module_get_measurement_temperature0" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Slot index">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ModuleGetMeasurementTemperature1" description="" execMethod="module_get_measurement_temperature1" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Slot index">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ModuleGetMeasurementTemperature2" description="" execMethod="module_get_measurement_temperature2" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Slot index">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ModuleGetMeasurementTemperature3" description="" execMethod="module_get_measurement_temperature3" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Slot index">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ModuleGetNumberOfChannels" description="This command returns the number of channels for the module&#xA;in slot `slot index`." execMethod="module_get_number_of_channels" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Slot index">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ModuleGetRampSpeedCurrent" description="" execMethod="module_get_ramp_speed_current" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Slot index">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ModuleGetRampSpeedVoltage" description="" execMethod="module_get_ramp_speed_voltage" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Slot index">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ModuleGetStatus" description="" execMethod="module_get_status" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Slot index">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ModuleGetStatusAsString" description="" execMethod="module_get_status_as_string" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Slot index">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ModuleSetDoClear" description="" execMethod="module_set_do_clear" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Slot index, Value">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ModuleSetRampSpeedCurrent" description="" execMethod="module_set_ramp_speed_current" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Slot index, Value">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ModuleSetRampSpeedVoltage" description="" execMethod="module_set_ramp_speed_voltage" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Slot index, Value">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SnmpGetDescription" description="This function simplifies debugging when working with the low level snmp functions. &#xA;It returns a description for a given OID or the corresponding human readable string." execMethod="snmp_get_description" displayLevel="EXPERT" polledPeriod="0" isDynamic="false">
+      <argin description="OID as string">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="Description from MIB file.">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SnmpGetNextOID" description="For a given OID variable the next OID is returned.&#xA;Rhis allows to iterate over all OIDs exposed by the MPOD controler.&#xA;This is mostly a debug function.&#xA;It can be used to implement a functionality similar to ``snmpwalk``." execMethod="snmp_get_next_oid" displayLevel="EXPERT" polledPeriod="0" isDynamic="false">
+      <argin description="CurrentOID">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="NextOID">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SnmpGetValueDouble" description="Reads the SNMP variable defined by an OID or an equivalent &#xA;human readable string. Returns a double value." execMethod="snmp_get_value_double" displayLevel="EXPERT" polledPeriod="0" isDynamic="false">
+      <argin description="OID name">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="Double value">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SnmpGetValueInt" description="Reads the SNMP variable defined by an OID or an equivalent &#xA;human readable string. Returns an unsigned integer value." execMethod="snmp_get_value_int" displayLevel="EXPERT" polledPeriod="0" isDynamic="false">
+      <argin description="OID name">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SnmpGetValueString" description="Reads the SNMP variable defined by an OID or an equivalent &#xA;human readable string. Returns a string value." execMethod="snmp_get_value_string" displayLevel="EXPERT" polledPeriod="0" isDynamic="false">
+      <argin description="OID name">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="String variable value">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SnmpSetValueDouble" description="Set a SNMP variable defined by an OID to the double &#xA;value passed as an argument." execMethod="snmp_set_value_double" displayLevel="EXPERT" polledPeriod="0" isDynamic="false">
+      <argin description="Variable name (string) and value to set (double).">
+        <type xsi:type="pogoDsl:DoubleStringArrayType"/>
+      </argin>
+      <argout description="True on success, false otherwise.">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SnmpSetValueInt" description="Set a SNMP variable defined by an OID to the integer &#xA;value passed as an argument." execMethod="snmp_set_value_int" displayLevel="EXPERT" polledPeriod="0" isDynamic="false">
+      <argin description="Variable name and value to set">
+        <type xsi:type="pogoDsl:LongStringArrayType"/>
+      </argin>
+      <argout description="True on success, false otherwise.">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SnmpTranslateFromOID" description="For a given OID variable the human readable form of the &#xA;variable is returned such as defined in the file WIENER-CRATE-MIB.txt" execMethod="snmp_translate_from_oid" displayLevel="EXPERT" polledPeriod="0" isDynamic="false">
+      <argin description="OID as string">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="Human readable string">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SnmpTranslateToOID" description="Inverses TranslateFromOID." execMethod="snmp_translate_to_oid" displayLevel="EXPERT" polledPeriod="0" isDynamic="false">
+      <argin description="Human readable string">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="OID as string">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelGetMeasurementCurrentVector" description="" execMethod="channel_get_measurement_current_vector" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelGetMeasurementSenseVoltageVector" description="" execMethod="channel_get_measurement_sense_voltage_vector" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelGetMeasurementTerminalVoltageVector" description="" execMethod="channel_get_measurement_terminal_voltage_vector" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="ModuleSlotIndex, ChannelIndex">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChannelGetMeasurementTimeVector" description="" execMethod="channel_get_measurement_time_vector" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <attributes name="IsMibFileLoaded" attType="Scalar" rwType="READ" displayLevel="EXPERT" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="This value is set when th device server is initialized. It is true if the file WIENER-CRATE-MIB.txt&#xA;was found. The functionality of the device server will be restricted without this file." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="SysDescr" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="The system description. This string also contains the firmware version." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="SysMainSwitch" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:UIntType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="The crate`s main switch. Possible values are 0 (off) or 1 (on)." label="Crate main switch" unit="" standardUnit="" displayUnit="" format="" maxValue="1" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="SysStatus" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:UIntType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="The crate`s status. Possible values are: &#xA;        mainOn (0) ,&#xA;        mainInhibit (1) ,&#xA;        localControlOnly (2) ,&#xA;        inputFailure (3) ,&#xA;        outputFailure (4) ,&#xA;        fantrayFailure (5) ,&#xA;        sensorFailure (6),&#xA;        vmeSysfail (7),&#xA;        plugAndPlayIncompatible (8),&#xA;        busReset (9),&#xA;        supplyDerating (10),&#xA;        supplyFailure (11),&#xA;        supplyDerating2 (12),&#xA;        supplyFailure2 (13)" label="System Status" unit="" standardUnit="" displayUnit="" format="%xX" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="SysStatusAsString" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="The crate`s status as string. Only the most important flag of SysStatus is reported." label="System Status (string)" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="SerialNumber" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="The crate's serial number." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="FanSpeed" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:UIntType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="The crate`s fan speed. For most crates the allowed values are 0 or 1200 - 5000." label="" unit="RPM" standardUnit="RPM" displayUnit="RPM" format="" maxValue="10000" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="NumberOfModules" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:UIntType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="The number of modules inserted and recognized. This is only valid when the crate has been switched on." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="NumberOfChannels" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:UIntType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="The number of detected HV and LV channels. Requires that the crate has been switched on." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="NumberOfGroups" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:UIntType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="The number of groups defined for HV and LV channels. Requires that thecrate has been switched on." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <states name="ON" description="The connection to the crate is established.&#xA;The crate is switched on.&#xA;All channels and modules are visible.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="FAULT" description="Problems in connection.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="OFF" description="The connection to the crate is established.&#xA;The crate is switched off.&#xA;The channel and module information is not accessible.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="$(TANGO_HOME)"/>
+  </classes>
+</pogoDsl:PogoSystem>
