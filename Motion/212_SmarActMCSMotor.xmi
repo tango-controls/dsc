@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="SmarActMCSMotor" pogoRevision="8.1">
-    <description description="Motor class for smaract mcs controller" title="" sourcePath="/ssd/blume/src/TangoSvn/tango-ds/DeviceClasses/Motion/MotorControllers/Smaract/SmarActMCSMotor/trunk" language="Cpp" filestogenerate="XMI   file,Code files" license="GPL" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+  <classes name="SmarActMCSMotor" pogoRevision="9.4">
+    <description description="Motor class for smaract mcs controller" title="" sourcePath="/ssd/blume/src/TangoSvn/tango-ds/DeviceClasses/Motion/MotorControllers/Smaract/SmarActMCSMotor/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" license="GPL" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
       <inheritances classname="Device_Impl" sourcePath=""/>
       <identification contact="at desy.de - johannes.blume" author="johannes.blume" emailDomain="desy.de" classFamily="Motion" siteSpecific="" platform="Unix Like" bus="Not Applicable" manufacturer="Smaract" reference="http://www.smaract.de/index.php/products/controlsystems/mcs"/>
     </description>
@@ -32,7 +32,7 @@
       </argout>
       <status abstract="true" inherited="true" concrete="true"/>
     </commands>
-    <commands name="Calibrate" description="" execMethod="calibrate" displayLevel="OPERATOR" polledPeriod="0">
+    <commands name="Calibrate" description="This will set the current position to teh value of argin." execMethod="calibrate" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="Calibrate axis to argin">
         <type xsi:type="pogoDsl:DoubleType"/>
       </argin>
