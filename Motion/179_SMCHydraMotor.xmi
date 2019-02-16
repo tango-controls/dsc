@@ -13,7 +13,12 @@
       <type xsi:type="pogoDsl:IntType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </deviceProperties>
-    <deviceProperties name="FlagPegasus" description="1 if Pegasus detector instead of Hydra.">
+    <deviceProperties name="FlagPegasus" description="0 if Hydra (default)&#xA;1 if Pegasus controller with position feedback control&#xA;2 if Pegasus controller withtout position feedback control">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>0</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="AutomaticSwitchControl" description="Set to 1 for automatic activation/deactivation of the end&#xA;switches before/after homing.">
       <type xsi:type="pogoDsl:IntType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>0</DefaultPropValue>
