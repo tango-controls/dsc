@@ -153,7 +153,7 @@
       <archiveEvent fire="false" libCheckCriteria="true"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="set energy threshold. &#xA;If the energy is above this threshold, the photon is counted." label="EnergyThreshold" unit="" standardUnit="eV" displayUnit="" format="%5.2f" maxValue="300000" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="set energy threshold. &#xA;If the energy is above this threshold, the photon is counted." label="EnergyThreshold" unit="eV" standardUnit="eV" displayUnit="" format="%5.2f" maxValue="300000" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <readExcludedStates>FAULT</readExcludedStates>
       <readExcludedStates>DISABLE</readExcludedStates>
       <readExcludedStates>UNKNOWN</readExcludedStates>
@@ -162,6 +162,14 @@
       <writeExcludedStates>DISABLE</writeExcludedStates>
       <writeExcludedStates>UNKNOWN</writeExcludedStates>
       <writeExcludedStates>MOVING</writeExcludedStates>
+    </attributes>
+    <attributes name="BeamEnergy" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="used to decide which flatfield and pixel mask to take" label="BeamEnergy" unit="eV" standardUnit="" displayUnit="" format="" maxValue="600000" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <attributes name="OperatingMode" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:StringType"/>
