@@ -1,0 +1,33 @@
+{
+    "2350": {
+        "buses": [
+            "Serial Line"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "MKSGauge"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/2350/", 
+        "development_status": "new", 
+        "documentation": [], 
+        "families": [
+            "Vacuum"
+        ], 
+        "last_update": "2019-03-07 20:32:21.072981+00:00", 
+        "last_update_method": "file", 
+        "license": "GPL", 
+        "manufacturers": [
+            "MKS"
+        ], 
+        "name": "MKSGauge", 
+        "products": [
+            "901P"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "https://github.com/markamato/MKSGauge", 
+        "status": "new", 
+        "tag": "Initial.   Setpoint commands stubbed, not functional.", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/2350/update/", 
+        "updated_by_script": false
+    }
+}
