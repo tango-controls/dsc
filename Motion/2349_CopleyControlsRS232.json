@@ -1,0 +1,33 @@
+{
+    "2349": {
+        "buses": [
+            "CAN/RS232"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "CopleyControlsRS232"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/2349/", 
+        "development_status": "new", 
+        "documentation": [], 
+        "families": [
+            "Motion"
+        ], 
+        "last_update": "2019-03-07 20:28:42.543434+00:00", 
+        "last_update_method": "file", 
+        "license": "GPL", 
+        "manufacturers": [
+            "Copley Controls"
+        ], 
+        "name": "CopleyControlsRS232", 
+        "products": [
+            "Accelnet"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "https://github.com/markamato/copleydeviceserver", 
+        "status": "new", 
+        "tag": "Initial", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/2349/update/", 
+        "updated_by_script": false
+    }
+}
