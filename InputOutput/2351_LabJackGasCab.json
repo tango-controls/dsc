@@ -1,0 +1,33 @@
+{
+    "2351": {
+        "buses": [
+            "USB"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "LabJackGasCab"
+        ], 
+        "detail_url": "http://www.tango-controls.org/developers/dsc/ds/2351/", 
+        "development_status": "new", 
+        "documentation": [], 
+        "families": [
+            "InputOutput"
+        ], 
+        "last_update": "2019-03-07 20:35:53.516355+00:00", 
+        "last_update_method": "file", 
+        "license": "GPL", 
+        "manufacturers": [
+            "LabJack"
+        ], 
+        "name": "LabJackGasCab", 
+        "products": [
+            "U3"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "https://github.com/markamato/labjackdeviceserver", 
+        "status": "new", 
+        "tag": "Initial.  Specific to rareRF project, but framework can be used for any U3 device.", 
+        "update_url": "http://www.tango-controls.org/developers/dsc/ds/2351/update/", 
+        "updated_by_script": false
+    }
+}
