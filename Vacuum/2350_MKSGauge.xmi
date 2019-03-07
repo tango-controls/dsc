@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="MKSGauge" pogoRevision="9.4">
+    <description description="Simple MKS Gauge class.  Allows configuration of setpoint parameters, and allows readback of pressure attributes. &#xA;By default uses PR3 combined pressure reading and reports as float." title="rareRF" sourcePath="/home/clocktower/mksgauge" language="Python" filestogenerate="XMI   file,Code files,Protected Regions" license="GPL" copyright="" hasMandatoryProperty="false" hasConcreteProperty="false" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <identification contact="at clocktowerengineering.com - mark.amato" author="mark.amato" emailDomain="clocktowerengineering.com" classFamily="Vacuum" siteSpecific="" platform="All Platforms" bus="Serial Line" manufacturer="MKS" reference="901P">
+        <keyWords>MKS</keyWords>
+        <keyWords>901P</keyWords>
+        <keyWords>RS232</keyWords>
+        <keyWords>Gauge</keyWords>
+        <keyWords>Piezo</keyWords>
+        <keyWords>Pirani</keyWords>
+      </identification>
+    </description>
+    <classProperties name="setpoint1Enable" description="Enable or disables setpoint">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>ABS</DefaultPropValue>
+    </classProperties>
+    <classProperties name="setpoint2Enable" description="Enable or disables setpoint">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>ABS</DefaultPropValue>
+    </classProperties>
+    <classProperties name="setpoint3Enable" description="Enable or disables setpoint">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>ABS</DefaultPropValue>
+    </classProperties>
+    <classProperties name="setpoint1Direction" description="Direction of setpoint.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>BELOW</DefaultPropValue>
+    </classProperties>
+    <classProperties name="setpoint2Direction" description="Direction of setpoint.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>ABOVE</DefaultPropValue>
+    </classProperties>
+    <classProperties name="setpoint3Direction" description="Direction of setpoint.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>BELOW</DefaultPropValue>
+    </classProperties>
+    <classProperties name="setpoint1Hysteresis" description="setpoint hysteresis">
+      <type xsi:type="pogoDsl:FloatType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>0.01</DefaultPropValue>
+    </classProperties>
+    <classProperties name="setpoint2Hysteresis" description="setpoint hysteresis">
+      <type xsi:type="pogoDsl:FloatType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>710</DefaultPropValue>
+    </classProperties>
+    <classProperties name="setpoint3Hysteresis" description="setpoint hysteresis">
+      <type xsi:type="pogoDsl:FloatType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </classProperties>
+    <classProperties name="setpoint1Value" description="setpoint in torr">
+      <type xsi:type="pogoDsl:FloatType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>0.01</DefaultPropValue>
+    </classProperties>
+    <classProperties name="setpoint2Value" description="setpoint in torr">
+      <type xsi:type="pogoDsl:FloatType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>700</DefaultPropValue>
+    </classProperties>
+    <classProperties name="setpoint3Value" description="setpoint in torr">
+      <type xsi:type="pogoDsl:FloatType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>700</DefaultPropValue>
+    </classProperties>
+    <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device state">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its device_status data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device status">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="SendSerial" description="Allows an arbitrary serial command to be sent to the gauge" execMethod="send_serial" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SetSetPoint" description="Commands a setpoint using the parameters in the system" execMethod="set_set_point" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <attributes name="gaugePressure" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="1000" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:FloatType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="gaugeSP1Status" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="gaugeSP2Status" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="gaugeSP3Status" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <preferences docHome="./doc_html" makefileHome="/usr/local/share/pogo/preferences"/>
+  </classes>
+</pogoDsl:PogoSystem>
