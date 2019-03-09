@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="DelGen645" pogoRevision="8.4">
-    <description description="Controlling the Digital Delay Generator DG645" title="Digital Delay Generator DG645" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/CounterTimer/DelGen645/trunk" language="Cpp" filestogenerate="XMI   file,Code files,html Pages" license="GPL" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+  <classes name="DelGen645" pogoRevision="9.4">
+    <description description="Controlling the Digital Delay Generator DG645" title="Digital Delay Generator DG645" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/CounterTimer/DelGen645/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions,html Pages" license="GPL" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
       <inheritances classname="Device_Impl" sourcePath=""/>
       <identification contact="at mail.desy.de - tnunez" author="tnunez" emailDomain="mail.desy.de" classFamily="CounterTimer" siteSpecific="" platform="Unix Like" bus="GPIB" manufacturer="Standford Research Systems" reference="DG645"/>
     </description>
     <deviceProperties name="GpibDevice" description="Name of the Gpib Tango device connecting to the hardware">
       <type xsi:type="pogoDsl:StringType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="GpibAddress" description="GPIB primary device address. Only need if the communication is done via PrologixGpib.&#xA;In other case it has to be kept as -1 (default value).">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>-1</DefaultPropValue>
     </deviceProperties>
     <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="none">
