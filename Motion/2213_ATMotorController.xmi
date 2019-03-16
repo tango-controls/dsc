@@ -50,6 +50,8 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>MOVING</excludedStates>
+      <excludedStates>FAULT</excludedStates>
     </commands>
     <commands name="CommandExecute" description="" execMethod="command_execute" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="">
@@ -59,6 +61,8 @@
         <type xsi:type="pogoDsl:DoubleArrayType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>MOVING</excludedStates>
+      <excludedStates>FAULT</excludedStates>
     </commands>
     <commands name="GetStatusItem" description="" execMethod="get_status_item" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="item code">
@@ -68,6 +72,8 @@
         <type xsi:type="pogoDsl:DoubleType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>MOVING</excludedStates>
+      <excludedStates>FAULT</excludedStates>
     </commands>
     <commands name="StopMove" description="" execMethod="stop_move" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="">
@@ -77,6 +83,7 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
     </commands>
     <commands name="MotionDisable" description="" execMethod="motion_disable" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="">
@@ -86,6 +93,8 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>MOVING</excludedStates>
+      <excludedStates>FAULT</excludedStates>
     </commands>
     <commands name="MotionEnable" description="" execMethod="motion_enable" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="">
@@ -95,6 +104,8 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>MOVING</excludedStates>
+      <excludedStates>FAULT</excludedStates>
     </commands>
     <commands name="MotionHome" description="" execMethod="motion_home" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="">
@@ -104,6 +115,8 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>MOVING</excludedStates>
+      <excludedStates>FAULT</excludedStates>
     </commands>
     <commands name="MotionMoveAbs" description="before running this command. The distance and speed attributes need&#xA;to be set." execMethod="motion_move_abs" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="">
@@ -113,6 +126,8 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>MOVING</excludedStates>
+      <excludedStates>FAULT</excludedStates>
     </commands>
     <commands name="MotionMoveInc" description="before running this command. The distance and speed attributes need&#xA;to be set." execMethod="motion_move_inc" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="">
@@ -122,6 +137,8 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>MOVING</excludedStates>
+      <excludedStates>FAULT</excludedStates>
     </commands>
     <commands name="MotionSetupServo" description="on/off&#xA;0:off&#xA;1:on" execMethod="motion_setup_servo" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="on/off">
@@ -131,6 +148,8 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>MOVING</excludedStates>
+      <excludedStates>FAULT</excludedStates>
     </commands>
     <commands name="ProgramLoad" description="[task id[program]]&#xA;e.g.&#xA;[1][``D:\\trajectories\\sinus_x.ab``]" execMethod="program_load" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="[task id][program]">
@@ -140,6 +159,8 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>MOVING</excludedStates>
+      <excludedStates>FAULT</excludedStates>
     </commands>
     <commands name="ProgramPause" description="" execMethod="program_pause" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="task id">
@@ -149,6 +170,8 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>MOVING</excludedStates>
+      <excludedStates>FAULT</excludedStates>
     </commands>
     <commands name="ProgramRun" description="[task id][program path]&#xA;e.g.&#xA;[1][``D:\\trajectories\\sinus_x.ab``]" execMethod="program_run" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="[task id][program path]">
@@ -158,6 +181,8 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>MOVING</excludedStates>
+      <excludedStates>FAULT</excludedStates>
     </commands>
     <commands name="ProgramStart" description="" execMethod="program_start" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="task id">
@@ -167,6 +192,8 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>MOVING</excludedStates>
+      <excludedStates>FAULT</excludedStates>
     </commands>
     <commands name="ProgramStop" description="" execMethod="program_stop" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="task id">
@@ -176,6 +203,7 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
     </commands>
     <attributes name="CommunicationType" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:StringType"/>
@@ -184,6 +212,7 @@
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="either USB or Ethernet" label="CommunicationType" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
     </attributes>
     <attributes name="ControllerName" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:StringType"/>
@@ -192,6 +221,7 @@
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="the name of the controller" label="ControllerName" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
     </attributes>
     <attributes name="Distance" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="16" maxY="" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:DoubleType"/>
@@ -200,6 +230,9 @@
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="This needs to be set before run MotionMoveInc and MotionMoveAbs" label="Distance" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>MOVING</writeExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
     </attributes>
     <attributes name="ExistAxis" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:IntType"/>
@@ -208,6 +241,7 @@
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="Which axes exist on the controller" label="ExistAxis" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
     </attributes>
     <attributes name="LibraryVersion" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:StringType"/>
@@ -216,6 +250,7 @@
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
     </attributes>
     <attributes name="Position" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:DoubleType"/>
@@ -224,6 +259,9 @@
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="position." label="Position" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>MOVING</writeExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
     </attributes>
     <attributes name="SlewRate" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="16" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:DoubleType"/>
@@ -232,6 +270,9 @@
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="This needs to be set before run MotionMoveInc and MotionMoveAbs" label="SlewRate" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>MOVING</writeExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
     </attributes>
     <attributes name="UnitLimitMin" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:DoubleType"/>
@@ -240,6 +281,9 @@
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="" label="UnitLimitMin" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>MOVING</writeExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
     </attributes>
     <attributes name="UnitLimitMax" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:DoubleType"/>
@@ -248,6 +292,9 @@
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="" label="UnitLimitMax" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>MOVING</writeExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
     </attributes>
     <attributes name="GlobalInteger" attType="Spectrum" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="131072" maxY="" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:IntType"/>
@@ -256,6 +303,9 @@
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="" label="GlobalInteger" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>MOVING</writeExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
     </attributes>
     <attributes name="GlobalDouble" attType="Spectrum" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="131072" maxY="" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:DoubleType"/>
@@ -264,6 +314,9 @@
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="" label="GlobalDouble" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>MOVING</writeExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
     </attributes>
     <states name="ON" description="">
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
