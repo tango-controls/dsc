@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
   <classes name="Keithley428" pogoRevision="8.4">
-    <description description="Class for controlling the Keithley428 current amplifier." title="Keithley428 Current Amplifier" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/MeasureInstruments/Keithley/Keithley428/trunk" language="Cpp" filestogenerate="XMI   file,Code files,html Pages" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+    <description description="Class for controlling the Keithley428 current amplifier." title="Keithley428 Current Amplifier" sourcePath="/ssd/blume/src/TangoSvn/tango-ds/DeviceClasses/MeasureInstruments/Keithley/Keithley428/trunk" language="Cpp" filestogenerate="XMI   file,Code files" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
       <inheritances classname="Device_4Impl" sourcePath=""/>
       <identification contact="at mail.desy.de - tnunez" author="tnunez" emailDomain="mail.desy.de" classFamily="Instrumentation" siteSpecific="" platform="Unix Like" bus="GPIB" manufacturer="Keithley" reference="428"/>
     </description>
@@ -9,10 +9,15 @@
       <type xsi:type="pogoDsl:StringType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </deviceProperties>
-    <deviceProperties name="GpibDeviceType" description="Type of the Gpib device used to communicate with the Keithley.&#xA;this can be:&#xA;1 -> Desy GpibDevice (default value)&#xA;2 -> Soleil GpibDeviceServer">
+    <deviceProperties name="GpibDeviceType" description="Type of the Gpib device used to communicate with the Keithley.&#xA;this can be:&#xA;1 -> Desy GpibDevice (default value)&#xA;2 -> Soleil GpibDeviceServer&#xA;3-> Prologix GPIB network adapter. In this case&#xA;     the included GpibDevice will be ignored and&#xA;    GpibDeviceId has to be set correctly. The Prologix&#xA;    device server has to be configured and started&#xA;    separatly.">
       <type xsi:type="pogoDsl:UShortType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>1</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="GpibDeviceId" description="Gpib device ID if this is to be used with a prologix network&#xA;adapter.">
+      <type xsi:type="pogoDsl:ShortType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>-1</DefaultPropValue>
     </deviceProperties>
     <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="none.">
@@ -40,6 +45,7 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
     </commands>
     <commands name="FilterOn" description="Turn the filter ON" execMethod="filter_on" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="">
@@ -88,6 +94,7 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="0, 1, 2, 3 -> 10e3 V/A\n4 -> 10e4 V/A\n5 -> 10e5 V/A\n6 -> 10e6 V/A\n7 -> 10e7 V/A\n8 -> 10e8 V/A\n9 -> 10e9 V/A\n10 -> 10e10 V/A\n11 -> 10e11 V/A" label="" unit=" " standardUnit="" displayUnit="" format="%d" maxValue="11" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
     </attributes>
     <attributes name="GainStr" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
       <dataType xsi:type="pogoDsl:StringType"/>
@@ -111,6 +118,8 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="0 -> zero check off, 1 -> zero check on, 2 (only read) zero correction last selected." label="" unit=" " standardUnit="" displayUnit="" format="%d" maxValue="2" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
     </attributes>
     <attributes name="filterState" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
       <dataType xsi:type="pogoDsl:StringType"/>
@@ -135,6 +144,7 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="0 -> 10e-6 sec\n1 -> 30e-6 sec\n2 -> 100e-6 sec\n3 -> 300e-6 sec\n4 -> 1e-3 sec\n5 -> 3e-3 sec\n6 -> 10e-3 sec\n7 -> 30e-3 sec\n8 -> 100e-3 sec\n9 -> 300e-3 sec\n" label="" unit=" " standardUnit="" displayUnit="" format="%d" maxValue="9" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
     </attributes>
     <attributes name="RiseTimeStr" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
       <dataType xsi:type="pogoDsl:StringType"/>
