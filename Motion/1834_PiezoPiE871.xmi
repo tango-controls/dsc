@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="PiezoPiE871" pogoRevision="8.4">
-    <description description="Class for controlling Piezo Pi controllers from the serie E871, E873" title="Piezo Pi E871" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/Motion/MotorControllers/PI/PiezoPiE871/trunk" language="Cpp" filestogenerate="XMI   file,Code files,html Pages" license="GPL" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+  <classes name="PiezoPiE871" pogoRevision="9.4">
+    <description description="Class for controlling Piezo Pi controllers from the serie E871, E873" title="Piezo Pi E871" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/Motion/MotorControllers/PI/PiezoPiE871/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions,html Pages" license="GPL" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
       <inheritances classname="Device_Impl" sourcePath=""/>
       <identification contact="at mail.desy.de - tnunez" author="tnunez" emailDomain="mail.desy.de" classFamily="Motion" siteSpecific="" platform="Unix Like" bus="Not Applicable" manufacturer="Physik Instrumente (PI)" reference="E871"/>
     </description>
@@ -102,6 +102,15 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
+    <commands name="Calibrate" description="Set current position to the value given as argument." execMethod="calibrate" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Value to be set as current position">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
     <attributes name="Position" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true">
       <dataType xsi:type="pogoDsl:DoubleType"/>
       <changeEvent fire="false" libCheckCriteria="true"/>
@@ -174,6 +183,14 @@
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="Notch Filter Edge" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="10" minValue="0.1" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="UnitCalibration" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Offset to be added to the hardware position," label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <states name="ON" description="">
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
