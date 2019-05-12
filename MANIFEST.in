@@ -1,0 +1,4 @@
+include README.md
+recursive-include static *
+recursive-include templates *
+recursive-include tests *.xmi
