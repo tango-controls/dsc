@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="FMBOxfDCMEnergy" pogoRevision="8.4">
-    <description description="Class for controlling the FMB Oxford Double Crystal Monochromator" title="Class for controlling the FMB Oxford Double Crystal Monochromator" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/BeamlineComponents/Monochromators/FMBOxfDCMEnergy/trunk" language="Cpp" filestogenerate="XMI   file,Code files,html Pages" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+  <classes name="FMBOxfDCMEnergy" pogoRevision="9.4">
+    <description description="Class for controlling the FMB Oxford Double Crystal Monochromator" title="Class for controlling the FMB Oxford Double Crystal Monochromator" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/BeamlineComponents/Monochromators/FMBOxfDCMEnergy/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions,html Pages" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
       <inheritances classname="Device_4Impl" sourcePath=""/>
       <identification contact="at desy.de - maria-teresa.nunez-pardo-de-vera" author="maria-teresa.nunez-pardo-de-vera" emailDomain="desy.de" classFamily="Motion" siteSpecific="" platform="Unix Like" bus="Serial Line" manufacturer="none" reference=""/>
     </description>
@@ -306,7 +306,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="Select the crystal type for the energy move. &#xA; 0 -> CrystalSi111&#xA; 1 -> CrystalSi311&#xA; 2->Si111 ChannelCut&#xA; 3-> Si311 as Si111" label="" unit="0->Si111,1->Si311,2->Si111 ChannelCut,3->Si3111 as Si111" standardUnit="0->Si111,1->Si311,2->Si111 ChannelCut,3->Si3111 as Si111" displayUnit="0->Si111,1->Si311,2->Si111 ChannelCut,3->Si3111 as Si111" format="" maxValue="3" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="Select the crystal type for the energy move. &#xA; 0 -> CrystalSi111&#xA; 1 -> CrystalSi311&#xA; 2 ->Si111 ChannelCut&#xA; 3 -> Si311 as Si111 (P01), Si111 as Si311 (P06)" label="" unit="0->Si111,1->Si311,2->Si111 ChannelCut,3->Si3111 as Si111 (P01), Si111 as Si311 (P06)" standardUnit="0->Si111,1->Si311,2->Si111 ChannelCut,3->Si3111 as Si111 (P01), Si111 as Si311 (P06)" displayUnit="0->Si111,1->Si311,2->Si111 ChannelCut,3->Si3111 as Si111 (P01), Si111 as Si311 (P06)" format="" maxValue="3" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <attributes name="Position" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0">
       <dataType xsi:type="pogoDsl:DoubleType"/>
@@ -392,7 +392,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="Value to be restored in BraggOffset if crystal is changed to Si111 - crystal 0 (only for p01)." label="" unit="Degrees" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="Value to be restored in BraggOffset if crystal is changed to Si111 - crystal 0 (only for p01 and p06)." label="" unit="Degrees" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <attributes name="BraggOffset1" attType="Scalar" rwType="READ_WRITE" displayLevel="EXPERT" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:DoubleType"/>
@@ -400,7 +400,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="Value to be restored in BraggOffset if crystal is changed to Si311 - crystal 1 (only for p01)." label="" unit="Degrees" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="Value to be restored in BraggOffset if crystal is changed to Si311 - crystal 1 (only for p01 and p06)." label="" unit="Degrees" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <attributes name="BraggOffset3" attType="Scalar" rwType="READ_WRITE" displayLevel="EXPERT" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:DoubleType"/>
@@ -408,7 +408,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="Value to be restored in BraggOffset if crystal is changed to Si311 as Si111 - crystal 3 (only for p01)." label="" unit="Degrees" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="Value to be restored in BraggOffset if crystal is changed to Si311 as Si111 - crystal 3 (only for p01 and p06)." label="" unit="Degrees" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <attributes name="ResultSim" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="20" maxY="0">
       <dataType xsi:type="pogoDsl:StringType"/>
