@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="TangoVimba" pogoRevision="9.4">
-    <description description="Tango device server for Allied Vision GigE cameras" title="TangoVimba" sourcePath="/ssd/blume/src/TangoSvn/tango-ds/DeviceClasses/Acquisition/2D/TangoVimba/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" license="GPL" copyright="" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+  <classes name="TangoVimba" pogoRevision="9.6">
+    <description description="Tango device server for Allied Vision GigE cameras" title="TangoVimba" sourcePath="/data/janmeyer/workspace/TangoVimba/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" license="GPL" copyright="" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
       <inheritances classname="Device_Impl" sourcePath=""/>
       <identification contact="at desy.de - johannes.blume" author="johannes.blume" emailDomain="desy.de" classFamily="Acquisition" siteSpecific="" platform="Unix Like" bus="Ethernet" manufacturer="Allied Vision" reference="https://www.alliedvision.com"/>
     </description>
@@ -171,7 +171,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="How camera data are written to attributes:&#xA;&#xA;0 : nothing is written to any attributes&#xA;1: data are converted to 8-bit greyscale and written to Image8&#xA;2: data are converted to 16-bit greyscale and written to Image16&#xA;3: data are not converted and written to ImageRaw (ImageRaw dimensions will always&#xA;    be ImageSize (in bytes) x 1).&#xA;&#xA;Note: &#xA;- not all pixel formats can be converted to 16-bit greyscale. An exception will be thrown&#xA;  if the current camera pixel format cannot be converted.&#xA;- pixel formats Mono10/12/14 (unpacked) will not be converted at all when ViewingMode is 2. &#xA;  Data are written to the attribute 'as is'." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="How camera data are written to attributes:&#xA;&#xA;0 : nothing is written to any attributes&#xA;1: data are converted to 8-bit greyscale and written to Image8&#xA;2: data are converted to 16-bit greyscale and written to Image16&#xA;3: data are not converted and written to ImageRaw (ImageRaw dimensions will always&#xA;    be ImageSize (in bytes) x 1).&#xA;4: data are converted to RGB-JPEG and written to ImageEnc&#xA;&#xA;Note: &#xA;- not all pixel formats can be converted to 16-bit greyscale. An exception will be thrown&#xA;  if the current camera pixel format cannot be converted.&#xA;- pixel formats Mono10/12/14 (unpacked) will not be converted at all when ViewingMode is 2. &#xA;  Data are written to the attribute 'as is'." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <writeExcludedStates>FAULT</writeExcludedStates>
     </attributes>
     <attributes name="BinComment" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
@@ -182,6 +182,15 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="This goes as a comment into files of type mbin or nx (c.f FilePostfix). Max. length 256 chars." label="Comment for binary file" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <writeExcludedStates>FAULT</writeExcludedStates>
+    </attributes>
+    <attributes name="ImageEnc" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="16000" maxY="16000" allocReadMember="false" isDynamic="false">
+      <dataType xsi:type="pogoDsl:EncodedType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="true" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="JPEG encoded representation of the acquired image(s).&#xA;Attribute is written if ViewingMode is set to 4." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
     </attributes>
     <attributes name="Image8" attType="Image" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="16000" maxY="16000" allocReadMember="false" isDynamic="false">
       <dataType xsi:type="pogoDsl:UCharType"/>
@@ -298,6 +307,6 @@
     <states name="ALARM" description="Something is not ok, generally problems with saving image files&#xA;like e.g. a full disk.">
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </states>
-    <preferences docHome="./doc_html" makefileHome="/usr/share/pogo/preferences"/>
+    <preferences docHome="./doc_html" makefileHome="$(TANGO_HOME)"/>
   </classes>
 </pogoDsl:PogoSystem>
