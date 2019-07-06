@@ -47,6 +47,69 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
+    <commands name="ProgramLoad" description="[task id[program]]&#xA;e.g.&#xA;[1][``D:\\trajectories\\sinus_x.ab``]" execMethod="program_load" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="[task id][program]">
+        <type xsi:type="pogoDsl:LongStringArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>MOVING</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="ProgramPause" description="" execMethod="program_pause" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="task id">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>MOVING</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="ProgramRun" description="[task id][program path]&#xA;e.g.&#xA;[1][``D:\\trajectories\\sinus_x.ab``]" execMethod="program_run" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="[task id][program path]">
+        <type xsi:type="pogoDsl:LongStringArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>MOVING</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="ProgramStart" description="" execMethod="program_start" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="task id">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>MOVING</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="ProgramStop" description="" execMethod="program_stop" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="task id">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="GetTaskStatus" description="get status of tasks" execMethod="get_task_status" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="task id">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="TASKSTATE_Inactive = 0&#xA;TASKSTATE_Idle = 1&#xA;TASKSTATE_ProgramReady = 2&#xA;TASKSTATE_ProgramRunning = 3&#xA;TASKSTATE_ProgramPaused = 4&#xA;TASKSTATE_ProgramComplete = 5&#xA;TASKSTATE_Error = 6&#xA;TASKSTATE_RunningPlugin = 10">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
     <attributes name="CommunicationType" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:StringType"/>
       <changeEvent fire="false" libCheckCriteria="false"/>
