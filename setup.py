@@ -18,13 +18,13 @@ setup(
 	author_email="contact@tango-controls.org",
 	url="http://www.tango-controls.org/developers/dsc/",
 	packages=[
-		"tango_dsc",
-		"tango_dsc.migrations",
-		"tango_dsc.scripts",
-		"tango_dsc.templatetags",
-		"tango_dsc.tests"
+		"dsc",
+		"dsc.migrations",
+		"dsc.scripts",
+		"dsc.templatetags",
+		"dsc.tests"
 	],
-	package_dir={"tango_dsc": "."},
+	package_dir={"dsc": "."},
 	include_package_data=True,
 	zip_safe=False
 )
