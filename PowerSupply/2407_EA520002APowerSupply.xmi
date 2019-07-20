@@ -115,6 +115,14 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="1 if active" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="1" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
+    <attributes name="RegulationMode" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:IntType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="0 -> cv&#xA;1 -> cc&#xA;2 -> cp" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
     <states name="ON" description="">
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </states>
