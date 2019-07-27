@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="ATMotorControllerGlobal" pogoRevision="9.4">
-    <description description="Aerotech Motor controller tango server" title="Aerotech Motor controller for global parameters" sourcePath="/home/yuelong/src/TangoSVN/tango-ds-code/DeviceClasses/Motion/MotorControllers/AerotechMotorControllerGlobal/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions,html Pages" license="GPL" copyright="" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+  <classes name="ATMotorControllerGlobal" pogoRevision="9.1">
+    <description description="Aerotech Motor controller tango server" title="Aerotech Motor controller for global parameters" sourcePath="D:\Src\AerotechMotorControllerGlobal\trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions,html Pages" license="GPL" copyright="" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
       <inheritances classname="Device_Impl" sourcePath=""/>
       <identification contact="at desy.de - yuelong.yu" author="yuelong.yu" emailDomain="desy.de" classFamily="Motion" siteSpecific="" platform="Windows" bus="Not Applicable" manufacturer="Aerotech" reference=""/>
     </description>
@@ -19,6 +19,11 @@
       <type xsi:type="pogoDsl:IntType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>1</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="SimulationMode" description="">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>0</DefaultPropValue>
     </deviceProperties>
     <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="none">
@@ -38,12 +43,39 @@
       </argout>
       <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
     </commands>
-    <commands name="ReadGlobalInt" description="" execMethod="read_global_int" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+    <commands name="AcknowledgeAll" description="" execMethod="acknowledge_all" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="">
         <type xsi:type="pogoDsl:VoidType"/>
       </argin>
       <argout description="">
         <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="CommandExecute" description="" execMethod="command_execute" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ExecuteCommandForAxis" description="The ATMotorController use this command to talk with the harware via ATMotorControllerGlobal." execMethod="execute_command_for_axis" displayLevel="EXPERT" polledPeriod="0" isDynamic="false">
+      <argin description="[command][axis][other args...]">
+        <type xsi:type="pogoDsl:StringArrayType"/>
+      </argin>
+      <argout description="[true/false][value]">
+        <type xsi:type="pogoDsl:StringArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetTaskStatus" description="get status of tasks" execMethod="get_task_status" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="task id">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="TASKSTATE_Inactive = 0&#xA;TASKSTATE_Idle = 1&#xA;TASKSTATE_ProgramReady = 2&#xA;TASKSTATE_ProgramRunning = 3&#xA;TASKSTATE_ProgramPaused = 4&#xA;TASKSTATE_ProgramComplete = 5&#xA;TASKSTATE_Error = 6&#xA;TASKSTATE_RunningPlugin = 10">
+        <type xsi:type="pogoDsl:IntType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
@@ -100,12 +132,12 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <excludedStates>FAULT</excludedStates>
     </commands>
-    <commands name="GetTaskStatus" description="get status of tasks" execMethod="get_task_status" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
-      <argin description="task id">
-        <type xsi:type="pogoDsl:IntType"/>
+    <commands name="ReadGlobalInt" description="" execMethod="read_global_int" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
       </argin>
-      <argout description="TASKSTATE_Inactive = 0&#xA;TASKSTATE_Idle = 1&#xA;TASKSTATE_ProgramReady = 2&#xA;TASKSTATE_ProgramRunning = 3&#xA;TASKSTATE_ProgramPaused = 4&#xA;TASKSTATE_ProgramComplete = 5&#xA;TASKSTATE_Error = 6&#xA;TASKSTATE_RunningPlugin = 10">
-        <type xsi:type="pogoDsl:IntType"/>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
@@ -174,6 +206,6 @@
     <states name="FAULT" description="">
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </states>
-    <preferences docHome="./doc_html" makefileHome="/usr/share/pogo/preferences"/>
+    <preferences docHome="./doc_html" makefileHome="/home/taurel/tmp/tango_install/share/pogo/preferences"/>
   </classes>
 </pogoDsl:PogoSystem>
