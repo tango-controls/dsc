@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="TangoSnmp" pogoRevision="8.1">
+    <description description="This class is  a bridge between Tango and SNMP. It allows the user to get/set&#xA;snmp data to/from a snmp agent. It is built on top of the &lt;a href=&quot;http://www.net-snmp.org&quot; target=&quot;_top&quot;>net-snmp&lt;/a> library.&#xA;You can get/set SNMP data using generic commands or you can configure&#xA;this Tango class to create  dynamic attributes which are the Tango part of SNMP data.&#xA;See the definition of the device properties to find out how this can be achieved.&#xA;To communicate with the SNMP agent, this class uses SNMP v2c." title="Tango&lt;-->Snmp link" sourcePath="/segfs/tango/cppserver/protocols/snmp" language="Cpp" filestogenerate="XMI   file,Code files,html Pages" license="GPL" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <identification contact="at esrf.fr - taurel" author="taurel" emailDomain="esrf.fr" classFamily="Communication" siteSpecific="" platform="Unix Like" bus="Not Applicable" manufacturer="none" reference=""/>
+    </description>
+    <deviceProperties name="community" description="The comunity string used to build the connection to the agent">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>public</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="timeout" description="Timeout (uS) for the agent communication">
+      <type xsi:type="pogoDsl:UIntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>500000</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="MIBFile" description="List of MIB file to be loaded by the Tango class">
+      <type xsi:type="pogoDsl:StringVectorType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="AgentIpAddr" mandatory="true" description="The host IP address where the SNMP agent is running">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="DynamicAttributes" description="List of dynamic attributes to be instanciated by this device.&#xA;Each string in the array defined one attribute with the following syntax:&#xA;att_name=SNMP data name, Tango data type, READ or READ_WRITE,[label],[unit],[format]&#xA;The last three are optionals but if you omit one, the comma separator has to be used for proper string parsing. &#xA;If the MIB file is available to the software, the SNMP data name can be expressed using MIB OID notation. &#xA;It is not necessary to add the last .0 for simple data. &#xA;The attribute format will be automatically deduced from the information retrieved from SNMP.&#xA;If the defnition of the Tango attribute is incoherent with the MIB OID definition, the device state switches to ALARM&#xA;and the device status gives you which attribute(s) aer wrongly defined.">
+      <type xsi:type="pogoDsl:StringVectorType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device state">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its device_status data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device status">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="GetSnmpData" description="Get some data from the SNMP agent. The data to be retrieved&#xA;is given to the command as input argument. The SNMP data are&#xA;returned to the caller as string(s) or double(s). It is up to the&#xA;client to convert them in the required data type." execMethod="get_snmp_data" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="The SNMP data name">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="The SNMP data as string(s) or double(s) according to  the&#xA;SNMP data type">
+        <type xsi:type="pogoDsl:DoubleStringArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SetSnmpData" description="Write a new value into a SNMP data. The snmp data name is given&#xA;as the first string. Value to be written is passed to the command&#xA;as the second string or as the first double." execMethod="set_snmp_data" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="s[0] = Snmp data name, s[1] = value to be written (for string data type)&#xA;d[0] = value to be written (for number data type)">
+        <type xsi:type="pogoDsl:DoubleStringArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <attributes name="MIBFileDirs" attType="Spectrum" rwType="READ" displayLevel="EXPERT" polledPeriod="0" maxX="128" maxY="" allocReadMember="false" isDynamic="false">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="This attribute is the list of directories where the sofwtare will look for MIB files." label="MIB files directories" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="LoadedMIBModules" attType="Spectrum" rwType="READ" displayLevel="EXPERT" polledPeriod="0" maxX="1024" maxY="" allocReadMember="false" isDynamic="false">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="This is the list of the MIB modules loaded in the Tango server" label="Loaded MIB modules" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <states name="ON" description="The device is ON and it`s possible to communicate with the SNMP agent">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="FAULT" description="Impossible to create a connection to the snmp agent">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="ALARM" description="The device is in ALARM state for one of the following reasons:&#xA;- Impossible to load the MIB file specified in the property&#xA;- One of dynamic attribute definition is incoherent with what is found in MIB file">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="/segfs/tango/cppserver/env"/>
+  </classes>
+</pogoDsl:PogoSystem>
