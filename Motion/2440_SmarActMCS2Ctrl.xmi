@@ -436,6 +436,15 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <excludedStates>OFF</excludedStates>
     </commands>
+    <commands name="StartStreaming" description="Start trajectoy streaming. A file with trajectory data must exist and it`s&#xA;path/name supplied as argument to this command." execMethod="start_streaming" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="trajectory data file name">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
     <dynamicCommands name="CmdGetDouble" description="For internal use only" execMethod="cmd_get_double" displayLevel="OPERATOR" polledPeriod="0" isDynamic="true">
       <argin description="0: channel idx&#xA;1: source idx">
         <type xsi:type="pogoDsl:IntArrayType"/>
@@ -466,6 +475,14 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <excludedStates>OFF</excludedStates>
     </dynamicCommands>
+    <attributes name="StreamBaseRate" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:IntType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Stream base rate for trajectory streaming.&#xA;Range: 10 - 1000 hz" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
     <dynamicAttributes name="I32Property" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="true">
       <dataType xsi:type="pogoDsl:IntType"/>
       <changeEvent fire="false" libCheckCriteria="false"/>
