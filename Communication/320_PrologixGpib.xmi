@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
   <classes name="PrologixGpib" pogoRevision="9.4">
-    <description description="Tango device server for the PrologixGpib LAN adapter" title="PrologixGpib" sourcePath="/ssd/blume/src/TangoSvn/tango-ds.bak/DeviceClasses/Communication/PrologixGpib/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+    <description description="Tango device server for the PrologixGpib LAN adapter" title="PrologixGpib" sourcePath="/ssd/blume/src/TangoSvn/tango-ds/DeviceClasses/Communication/PrologixGpib/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
       <inheritances classname="Device_Impl" sourcePath=""/>
       <identification contact="at desy.de - johannes.blume" author="johannes.blume" emailDomain="desy.de" classFamily="Communication" siteSpecific="" platform="Unix Like" bus="Ethernet" manufacturer="Prologix" reference="http://prologix.biz/gpib-ethernet-controller.html"/>
     </description>
-    <deviceProperties name="HostName" description="hotsname or ip address">
+    <deviceProperties name="HostName" mandatory="true" description="Hostname or IP address">
       <type xsi:type="pogoDsl:StringType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="DefaultConfig" description="Default config for prologix communication settings:&#xA;&#xA;0: auto:              (0 |1)&#xA;1: eoi                  (0|1)&#xA;2. eos                 (0|1|2|3)&#xA;3: eot_enable    (0|1)&#xA;4: eot_char         (ascii value)&#xA;5: read_tmo_ms  (1-3000)&#xA;&#xA;Check Prologix docs for details.">
+      <type xsi:type="pogoDsl:IntVectorType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>0</DefaultPropValue>
+      <DefaultPropValue>1</DefaultPropValue>
+      <DefaultPropValue>2</DefaultPropValue>
+      <DefaultPropValue>0</DefaultPropValue>
+      <DefaultPropValue>0</DefaultPropValue>
+      <DefaultPropValue>500</DefaultPropValue>
     </deviceProperties>
     <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="none">
@@ -27,9 +37,9 @@
       </argout>
       <status abstract="true" inherited="true" concrete="true"/>
     </commands>
-    <commands name="GPIBWrite" description="Write string to connected gpib device" execMethod="gpibwrite" displayLevel="OPERATOR" polledPeriod="0">
-      <argin description="">
-        <type xsi:type="pogoDsl:StringType"/>
+    <commands name="GPIBWrite" description="Write string to connected gpib device" execMethod="gpibwrite" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="long[0]: gpib address&#xA;string[0]: command">
+        <type xsi:type="pogoDsl:LongStringArrayType"/>
       </argin>
       <argout description="">
         <type xsi:type="pogoDsl:VoidType"/>
@@ -37,9 +47,9 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <excludedStates>FAULT</excludedStates>
     </commands>
-    <commands name="GPIBWriteRead" description="Write string to connected gpib device and return reply" execMethod="gpibwrite_read" displayLevel="OPERATOR" polledPeriod="0">
-      <argin description="">
-        <type xsi:type="pogoDsl:StringType"/>
+    <commands name="GPIBWriteRead" description="Write string to connected gpib device and return reply" execMethod="gpibwrite_read" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="long[0]; gpib address&#xA;string[0]: command">
+        <type xsi:type="pogoDsl:LongStringArrayType"/>
       </argin>
       <argout description="">
         <type xsi:type="pogoDsl:StringType"/>
@@ -47,30 +57,20 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <excludedStates>FAULT</excludedStates>
     </commands>
-    <attributes name="Mode" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
-      <dataType xsi:type="pogoDsl:BooleanType"/>
-      <changeEvent fire="false" libCheckCriteria="true"/>
-      <archiveEvent fire="false" libCheckCriteria="true"/>
-      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+    <commands name="RegisterDevice" description="Parameters for a device connected to the prologix. This will tell&#xA;the server which communication settings to use with the&#xA;device server you are calling the command from.&#xA;The values are: &#xA;&#xA;0: gpib address&#xA;1: auto: (0|1)&#xA;2: eoi (0|1)&#xA;3. eos (0|1|2|3)&#xA;4: eot_enable (0|1)&#xA;5: eot_char (ascii value)&#xA;6: read_tmo_ms (1-3000)&#xA;&#xA;For details check the prologix docs.&#xA;&#xA;If you do not call this function from your device server  default&#xA;settings will be used. You can overwrite those with property&#xA;DefaultConfig, if you don`t, they are:&#xA;&#xA;auto:             0&#xA;eoi:                1&#xA;eos:               2&#xA;eot_enable:   0&#xA;eot_char:       0&#xA;read_tmo_ms: 500" execMethod="register_device" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="true: controller mode, the prologix box acts as controller-in-charge on the GPIB bus&#xA;&#xA;false: device mode, the prologix box acts as another peripheral on the GPIB bus" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
-      <readExcludedStates>FAULT</readExcludedStates>
-      <writeExcludedStates>FAULT</writeExcludedStates>
-    </attributes>
-    <attributes name="ReadTimeout" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
-      <dataType xsi:type="pogoDsl:UIntType"/>
-      <changeEvent fire="false" libCheckCriteria="false"/>
-      <archiveEvent fire="false" libCheckCriteria="false"/>
-      <dataReadyEvent fire="false" libCheckCriteria="true"/>
-      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="read timeout in ms" label="" unit="ms" standardUnit="ms" displayUnit="ms" format="" maxValue="3000" minValue="1" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
-      <readExcludedStates>FAULT</readExcludedStates>
-      <writeExcludedStates>FAULT</writeExcludedStates>
-    </attributes>
-    <states name="ON" description="">
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <states name="ON" description="Everything ok, device ready to operate">
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </states>
-    <states name="FAULT" description="">
+    <states name="FAULT" description="Something went wrong, check status">
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </states>
     <preferences docHome="./doc_html" makefileHome="/usr/share/pogo/preferences"/>
