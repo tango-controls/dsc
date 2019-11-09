@@ -1,17 +1,27 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="PiezoPiE710" pogoRevision="8.4">
-    <description description="" title="" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/Motion/MotorControllers/PI/PiezoPiE710/trunk" language="Cpp" filestogenerate="XMI   file,Code files,html Pages" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+  <classes name="PiezoPiE710" pogoRevision="9.4">
+    <description description="" title="" sourcePath="/ssd/blume/src/TangoSvn/tango-ds/DeviceClasses/Motion/MotorControllers/PI/PiezoPiE710/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
       <inheritances classname="Device_4Impl" sourcePath=""/>
       <identification contact="at mail.desy.de - tnunez" author="tnunez" emailDomain="mail.desy.de" classFamily="Motion" siteSpecific="" platform="Unix Like" bus="Socket" manufacturer="PI" reference="E710"/>
     </description>
-    <deviceProperties name="SocketDS" description="">
+    <deviceProperties name="SocketDS" description="Name of the PiezoPiCtrl device if connecting&#xA;via terminal server (mutually exclusive with GpibCtrl)">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>&quot;&quot;</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="AxisNumber" mandatory="true" description="Axis Number (from 1 to 3)">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="GpibCtrl" description="Name of gpib controller device if conncting via GPIB. Mutually&#xA;exclusive with SocketDS.">
       <type xsi:type="pogoDsl:StringType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </deviceProperties>
-    <deviceProperties name="AxisNumber" description="Axis Number (from 1 to 3)">
-      <type xsi:type="pogoDsl:IntType"/>
+    <deviceProperties name="GpibAddress" description="GpibAddress. Only needs to be set if the GpibCtrl device&#xA;is a Prologix controller.">
+      <type xsi:type="pogoDsl:ShortType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>0</DefaultPropValue>
     </deviceProperties>
     <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="none.">
