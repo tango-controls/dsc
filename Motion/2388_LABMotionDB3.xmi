@@ -52,9 +52,9 @@
       </argout>
       <status abstract="true" inherited="true" concrete="true"/>
     </commands>
-    <commands name="Home" description="Drive axis to the reference mark. You must make sure the axis&#xA;can move to the reference mark, i.e. does not crash into something." execMethod="home" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
-      <argin description="arg[0] : Speed in unit/secs when doing reference search&#xA;arg[1]: Value to set counter to after reference mark was found">
-        <type xsi:type="pogoDsl:DoubleArrayType"/>
+    <commands name="Home" description="Drive axis to the reference mark. Check HomeSpeed/HomePosition&#xA;before running this command." execMethod="home" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
       </argin>
       <argout description="">
         <type xsi:type="pogoDsl:VoidType"/>
@@ -62,9 +62,9 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <excludedStates>MOVING</excludedStates>
     </commands>
-    <commands name="Jog" description="Let axis move continuously. Unit limits are ignored." execMethod="jog" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
-      <argin description="Movement speed in units/sec,&#xA;sign determins direction&#xA;For rotation: CW/CCW (`+ `= CCW, `- `= CW)">
-        <type xsi:type="pogoDsl:DoubleType"/>
+    <commands name="Jog" description="Let axis move continuously. Velocity / direction is set via Attribute JogSpeed." execMethod="jog" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
       </argin>
       <argout description="">
         <type xsi:type="pogoDsl:VoidType"/>
@@ -91,6 +91,17 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
+    <commands name="Calibrate" description="Define current position as position given in input argument" execMethod="calibrate" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="new position">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>MOVING</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
     <attributes name="Conversion" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:DoubleType"/>
       <changeEvent fire="false" libCheckCriteria="false"/>
@@ -99,6 +110,22 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="Conversion factor encoder steps => units&#xA;&#xA;For rotation axes this sets the number of units for one rotation (e.g. setting this to 360&#xA;units will be degrees).&#xA;&#xA;When changing the sign of the conversion (to swap movement direction) UnitLimitMin/Max&#xA;will not be adjusted auromatically, you will have to do that yourself." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <writeExcludedStates>MOVING</writeExcludedStates>
+    </attributes>
+    <attributes name="PositionKnown" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Returns true, if the axis was referenced after controller power on, otherwise false.&#xA;This makes use of the fact that the controllers UI[n] variables are set to default 0&#xA;after powerup. The server will write 666 to  UI[1] after a successful run of the Home command.&#xA;If this value is found in UI[1] at server startup the server assumes the axis to be referenced.&#xA;&#xA;If for some reason you cannot reach the reference mark safely (e.g. because something would crash)&#xA;and have to move the motor, you can write `true` to this attribute to make the axis&#xA;moveable. But generally this is not a good idea, rather change things so you can safely&#xA;run the Home command. And this will only hold until the controller is power-cycled." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="MoveUnhomed" attType="Scalar" rwType="READ_WRITE" displayLevel="EXPERT" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="If set to true, it is possible to move the axis even if&#xA;it was not referenced (i.i. PositionKnow = false)" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <attributes name="Position" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:DoubleType"/>
@@ -134,6 +161,8 @@
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="Velocity in units/sec normally reached at the end of the acceleration ramp during&#xA;a profiled motion (i.e. by writing the position attribute)" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="2147483647" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
     </attributes>
     <attributes name="Acceleration" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:DoubleType"/>
@@ -142,6 +171,8 @@
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="maximum allowed acceleration in units/s^2" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="2147483647" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
     </attributes>
     <attributes name="Deceleration" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:DoubleType"/>
@@ -150,6 +181,8 @@
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="maximum allowed deceleration in units/s^2" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="2147483647" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
     </attributes>
     <attributes name="StepLimitMin" attType="Scalar" rwType="READ_WRITE" displayLevel="EXPERT" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:IntType"/>
@@ -159,6 +192,7 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="This makes use of the controllers ability to store limit settings (command VH[3]).&#xA;Has to be set in encoder steps, no conversion is applied.&#xA;&#xA;Consider this a safety catch to prevent things bumping." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
     </attributes>
     <attributes name="StepLimitMax" attType="Scalar" rwType="READ_WRITE" displayLevel="EXPERT" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:IntType"/>
@@ -167,6 +201,8 @@
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="This makes use of the controllers ability to store limit settings (command VH[3]).&#xA;Has to be set in encoder steps, no conversion is applied.&#xA;&#xA;Consider this a safety catch to prevent things bumping." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
     </attributes>
     <attributes name="MotorState" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:BooleanType"/>
@@ -203,14 +239,6 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="State of reverse limit switch (true = hit)" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
-    <attributes name="PositionKnown" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
-      <dataType xsi:type="pogoDsl:BooleanType"/>
-      <changeEvent fire="false" libCheckCriteria="false"/>
-      <archiveEvent fire="false" libCheckCriteria="false"/>
-      <dataReadyEvent fire="false" libCheckCriteria="true"/>
-      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="Returns true, if the axis was referenced after controller power on, otherwise false.&#xA;This makes use of the fact that the controllers UI[n] variables are set to default 0&#xA;after powerup. The server will write 666 to  UI[1] after a successful run of the Home command.&#xA;If this value is found in UI[1] at server startup the server assumes the axis to be referenced.&#xA;&#xA;If for some reason you cannot reach the reference mark safely (e.g. because something would crash)&#xA;and have to move the motor, you can write `true` to this attribute to make the axis&#xA;moveable. But generally this is not a good idea, rather change things so you can safely&#xA;run the Home command. And this will only hold until the controller is power-cycled." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
-    </attributes>
     <attributes name="StepPosition" attType="Scalar" rwType="READ_WRITE" displayLevel="EXPERT" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:LongType"/>
       <changeEvent fire="false" libCheckCriteria="false"/>
@@ -221,6 +249,30 @@
       <readExcludedStates>FAULT</readExcludedStates>
       <writeExcludedStates>MOVING</writeExcludedStates>
       <writeExcludedStates>FAULT</writeExcludedStates>
+    </attributes>
+    <attributes name="HomeSpeed" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Velocity in units/sec used when running a home sequence. Sign defines the direction." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="HomePosition" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Position value in units which will be set when reference mark is hit when running Home." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="JogSpeed" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Velocity in units/sec used when running the Jog command. Sign defines the direction." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <states name="ON" description="The device is ready to move">
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
