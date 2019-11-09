@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="Keithley428" pogoRevision="8.4">
-    <description description="Class for controlling the Keithley428 current amplifier." title="Keithley428 Current Amplifier" sourcePath="/ssd/blume/src/TangoSvn/tango-ds/DeviceClasses/MeasureInstruments/Keithley/Keithley428/trunk" language="Cpp" filestogenerate="XMI   file,Code files" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+  <classes name="Keithley428" pogoRevision="9.4">
+    <description description="Class for controlling the Keithley428 current amplifier." title="Keithley428 Current Amplifier" sourcePath="/ssd/blume/src/TangoSvn/tango-ds/DeviceClasses/MeasureInstruments/Keithley/Keithley428/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
       <inheritances classname="Device_4Impl" sourcePath=""/>
       <identification contact="at mail.desy.de - tnunez" author="tnunez" emailDomain="mail.desy.de" classFamily="Instrumentation" siteSpecific="" platform="Unix Like" bus="GPIB" manufacturer="Keithley" reference="428"/>
     </description>
     <deviceProperties name="GpibDevice" description="Name of the gpib device connected to the hardware.">
       <type xsi:type="pogoDsl:StringType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-    </deviceProperties>
-    <deviceProperties name="GpibDeviceType" description="Type of the Gpib device used to communicate with the Keithley.&#xA;this can be:&#xA;1 -> Desy GpibDevice (default value)&#xA;2 -> Soleil GpibDeviceServer&#xA;3-> Prologix GPIB network adapter. In this case&#xA;     the included GpibDevice will be ignored and&#xA;    GpibDeviceId has to be set correctly. The Prologix&#xA;    device server has to be configured and started&#xA;    separatly.">
-      <type xsi:type="pogoDsl:UShortType"/>
-      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <DefaultPropValue>1</DefaultPropValue>
     </deviceProperties>
     <deviceProperties name="GpibDeviceId" description="Gpib device ID if this is to be used with a prologix network&#xA;adapter.">
       <type xsi:type="pogoDsl:ShortType"/>
