@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="JtecKBCtrl" pogoRevision="9.4">
+    <description description="Controller class for JtecKB mirror controller" title="" sourcePath="/ssd/blume/src/TangoSvn/tango-ds/DeviceClasses/Motion/MotorControllers/JtecKBCtrl/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" license="GPL" copyright="" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <identification contact="at desy.de - johannes.blume" author="johannes.blume" emailDomain="desy.de" classFamily="Motion" siteSpecific="" platform="Unix Like" bus="Ethernet" manufacturer="none" reference=""/>
+    </description>
+    <deviceProperties name="HostName" mandatory="true" description="Hostname / IP address of controller PC">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="PortNumber" description="port number of service on controller PC">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>50000</DefaultPropValue>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device state">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its device_status data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device status">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="SetPosition" description="For internal use only" execMethod="set_position" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="svalue[0]: axis name&#xA;dvalue[0]: position&#xA;1: position">
+        <type xsi:type="pogoDsl:DoubleStringArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetPosition" description="For internal use only" execMethod="get_position" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="axis name">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="current position">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="Stop" description="If motor name is an empty string, all movements will be stopped." execMethod="stop" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="motor name">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="Home" description="For internal use only" execMethod="home" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="axis name">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="Moving" description="for internal use only" execMethod="moving" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="axis name">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="true = moving, false = stoppped">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="Homed" description="For internal use only" execMethod="homed" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="axis name">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="MotorStatus" description="Reports sensor status:&#xA;0: -HL&#xA;1: +HL&#xA;2: -SL&#xA;3: +SL" execMethod="motor_status" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="sensor status">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="0: -HL&#xA;1: +HL&#xA;2: -SL&#xA;3: +SL">
+        <type xsi:type="pogoDsl:ShortArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <preferences docHome="./doc_html" makefileHome="/usr/share/pogo/preferences"/>
+  </classes>
+</pogoDsl:PogoSystem>
