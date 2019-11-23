@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="SIS3302" pogoRevision="8.1">
-    <description description="This is a  tango server for SIS3302." title="SIS3302 Tango Server" sourcePath="/home/kracht/tango-ds/DeviceClasses/Acquisition/1D/SIS3302/trunk" language="Cpp" filestogenerate="XMI   file,Code files" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+  <classes name="SIS3302" pogoRevision="9.4">
+    <description description="This is a  tango server for SIS3302." title="SIS3302 Tango Server" sourcePath="/home/yuelong/src/TangoSVN/tango-ds-code/DeviceClasses/Acquisition/1D/SIS3302/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions,html Pages" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
       <inheritances classname="Device_Impl" sourcePath=""/>
       <identification contact="at desy.de - yuelong.yu" author="yuelong.yu" emailDomain="desy.de" classFamily="Acquisition" siteSpecific="" platform="Unix Like" bus="VME" manufacturer="none" reference=""/>
     </description>
     <deviceProperties name="Base" description="Base address">
-      <type xsi:type="pogoDsl:IntType"/>
+      <type xsi:type="pogoDsl:UIntType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </deviceProperties>
     <deviceProperties name="Channel" description="">
