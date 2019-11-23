@@ -1,10 +1,12 @@
 {
     "13": {
         "buses": [
+            "VME", 
             "VME"
         ], 
         "certified": "False", 
         "class_names": [
+            "SIS3302", 
             "SIS3302"
         ], 
         "detail_url": "https://www.tango-controls.org/developers/dsc/ds/13/", 
@@ -19,16 +21,19 @@
             }
         ], 
         "families": [
+            "Acquisition", 
             "Acquisition"
         ], 
-        "last_update": "2019-11-23 03:00:52.519002+00:00", 
+        "last_update": "2019-11-23 03:01:08.936518+00:00", 
         "last_update_method": "url", 
         "license": "None", 
         "manufacturers": [
+            "none", 
             "none"
         ], 
         "name": "SIS3302", 
         "products": [
+            "", 
             ""
         ], 
         "repository_contact_email": "", 
