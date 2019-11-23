@@ -54,7 +54,6 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <excludedStates>ON</excludedStates>
       <excludedStates>FAULT</excludedStates>
       <excludedStates>DISABLE</excludedStates>
       <excludedStates>UNKNOWN</excludedStates>
