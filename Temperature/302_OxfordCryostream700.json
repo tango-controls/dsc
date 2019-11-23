@@ -1,0 +1,38 @@
+{
+    "302": {
+        "buses": [
+            "Serial Line", 
+            "Serial Line"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "OxfordCryostream700", 
+            "DeviceSerial"
+        ], 
+        "detail_url": "https://www.tango-controls.org/developers/dsc/ds/302/", 
+        "development_status": "released", 
+        "documentation": [], 
+        "families": [
+            "Temperature", 
+            "AbstractClasses"
+        ], 
+        "last_update": "2019-11-23 04:29:33.240881+00:00", 
+        "last_update_method": "url", 
+        "license": "GPL", 
+        "manufacturers": [
+            "Oxford Cryosystems", 
+            "none"
+        ], 
+        "name": "OxfordCryostream700", 
+        "products": [
+            "700er Series Cryostream Cooler", 
+            ""
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Temperature/OxfordCryostream700", 
+        "status": "updated", 
+        "tag": "Release_1_4", 
+        "update_url": "https://www.tango-controls.org/developers/dsc/ds/302/update/", 
+        "updated_by_script": true
+    }
+}
