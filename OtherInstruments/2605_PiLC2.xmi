@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="PiLC2" pogoRevision="9.4">
+    <description description="Class for talking to the PiLC generation 2" title="PiLC 2" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/OtherInstruments/PiLC2/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions,html Pages" license="GPL" copyright="" hasMandatoryProperty="false" hasConcreteProperty="false" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <identification contact="at mail.desy.de - tnunez" author="tnunez" emailDomain="mail.desy.de" classFamily="OtherInstruments" siteSpecific="" platform="Unix Like" bus="Not Applicable" manufacturer="DESY" reference="PiLC2"/>
+    </description>
+    <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device state">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its device_status data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device status">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="InitFPGA" description="Initialize FPGA.&#xA;Called when the Tango Device is started." execMethod="init_fpga" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="WriteFPGA" description="Write data to FPGA." execMethod="write_fpga" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="FPGA address and data.">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ReadFPGA" description="Read data from FPGA." execMethod="read_fpga" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="FPGA address.">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="Output">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <states name="ON" description="">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="FAULT" description="">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="/usr/share/pogo/preferences"/>
+  </classes>
+</pogoDsl:PogoSystem>
