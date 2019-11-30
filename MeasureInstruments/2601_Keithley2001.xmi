@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="Keithley2001" pogoRevision="8.2">
+    <description description="Class to monitor the temperature from a Keithley2001" title="Keithley 2001" sourcePath="/home/operateur/GrpICA/elattaoui/devSrc/ALIMs/Keithley2001/src" language="Cpp" filestogenerate="XMI   file,Code files,html Pages" license="GPL" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <identification contact="at synchrotron-soleil.fr - xavier.elattaoui" author="xavier.elattaoui" emailDomain="synchrotron-soleil.fr" classFamily="MeasureInstruments" siteSpecific="" platform="All Platforms" bus="GPIB" manufacturer="Keithley" reference="2001"/>
+    </description>
+    <deviceProperties name="CommunicationLink" description="Device which handles the communication protocol (here GPIB)">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="Configuration" description="List of commands to configure the Keithley">
+      <type xsi:type="pogoDsl:StringVectorType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device state">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its device_status data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device status">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="SaveConfig" description="This command saves the current Keithley configuration in an available memory slot. &lt;Br>&#xA;- No extended memory : slot 0 only                     &lt;Br>&#xA;- Model 2001-MEME1 : from 0 to 4                     &lt;Br>&#xA;- Model 2001-MEME2 : from 0 to 9                     &lt;Br>&#xA;&lt;Br>&#xA;NOTE : the current model has no extended memory (only slot0 is available)." execMethod="save_config" displayLevel="EXPERT" polledPeriod="0">
+      <argin description="no argin">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="no argout">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="RestoreConfig" description="This command restores the previously saved Keithley configuration from an available memory slot. &lt;Br>&#xA;- No extended memory : slot 0 only                     &lt;Br>&#xA;- Model 2001-MEME1 : from 0 to 4                     &lt;Br>&#xA;- Model 2001-MEME2 : from 0 to 9                     &lt;Br>&#xA;&lt;Br>&#xA;NOTE : the current model has no extended memory (only slot0 is available)." execMethod="restore_config" displayLevel="EXPERT" polledPeriod="0">
+      <argin description="no argin">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="no argout">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <attributes name="temperature" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="false" isDynamic="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="The measured temperature value in degre Celsius" label="temperature" unit="&#xb0;C" standardUnit="&#xb0;C" displayUnit="&#xb0;C" format="%6.4f" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <states name="ON" description="Device is up and running">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="OFF" description="Communication link state is OFF">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="ALARM" description="An error occurs">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="FAULT" description="Device initialization failed">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="../doc/doc_html" makefileHome="$(TANGO_HOME)"/>
+  </classes>
+</pogoDsl:PogoSystem>
