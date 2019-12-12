@@ -320,7 +320,7 @@ class DeviceServer(DscManagedModel):
         else:
             return 'invalidated-%s' % self.name
 
-    def get_absolute_url(self, pk):
+    def get_absolute_url(self, pk=None):
         return reverse('deviceserver_detail', kwargs={'pk': self.pk})
 
     def no_downloads(self):

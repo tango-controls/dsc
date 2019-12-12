@@ -9,7 +9,7 @@ from django.conf import settings
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('cms', '0013_auto_20160404_1908'),
+        ('cms', '0012_auto_20150607_2207'),
         ('dsc', '0002_auto_20160715_1536'),
     ]
 

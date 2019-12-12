@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from django.conf.urls import patterns, url, include
+from django.conf.urls import url, include
 from django.core.urlresolvers import reverse_lazy
 from dsc.views import DeviceServerDetailView, DeviceServerAddView, search_view, \
     DeviceServerManufacturerAutocomplete, DeviceServerProductAutocomplete, \
@@ -11,8 +11,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 
 from tango.cms_urls import content_action_urls #TODO do przemyślenia i implementacji w DSc potrzebne akcje albo kopia i włąśne
 
-urlpatterns = patterns(
-    '',
+urlpatterns = (
     # url(
     #     r'^/$',
     #     DeviceServerListView.as_view(),
@@ -109,4 +108,3 @@ urlpatterns = patterns(
     url(r'^comments/', include('fluent_comments.urls'))
 
 )
-

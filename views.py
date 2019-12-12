@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 import os.path
 
 from django.core.urlresolvers import reverse
-from django.shortcuts import render_to_response, RequestContext
+from django.shortcuts import render
 from django.views.generic import TemplateView, FormView, UpdateView
 from django.db import transaction
 from django.contrib.auth.decorators import login_required
@@ -12,7 +12,7 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 
 from webu.custom_models.views import CustomModelDetailView
-from webu.views import CMSDetailView
+from webu.views import WebuDetailView
 from tango.views import BreadcrumbMixinDetailView
 
 from django_tables2 import RequestConfig
@@ -32,7 +32,7 @@ import github_backup
 # Create your views here
 
 
-class DeviceServerDetailView(BreadcrumbMixinDetailView, CustomModelDetailView, CMSDetailView):
+class DeviceServerDetailView(BreadcrumbMixinDetailView, CustomModelDetailView, WebuDetailView):
     """View that displays details of device server."""
     model = dsc_models.DeviceServer
     template_name = 'dsc/deviceserver_detail.html'
@@ -236,7 +236,7 @@ def device_servers_list(request):
 
 def search_view(request):
     """Search is done with function """
-    context = RequestContext(request)
+    context = {}
 
     search_text = request.GET.get('search', '')
     family = request.GET.get('family', None)
@@ -255,15 +255,13 @@ def search_view(request):
     if 'breadcrumb_extra_ancestors' not in context:
         context['breadcrumb_extra_ancestors'] = []
     context['breadcrumb_extra_ancestors'].append((request.get_full_path(),'Search'))
-
-    return render_to_response('dsc/deviceserver_search.html', {'device_servers': table,
-                                                               'search': search_text,
-                                                               }, context)
+    context.update({'device_servers': table, 'search': search_text, })
+    return render(request, 'dsc/deviceserver_search.html', context)
 
 
 def advanced_search_view(request):
     """Search is done with function """
-    context = RequestContext(request)
+    context = {}
     table_config = RequestConfig(request, paginate={'per_page': 30})
     table = None
     man = ''
@@ -301,20 +299,20 @@ def advanced_search_view(request):
     if 'breadcrumb_extra_ancestors' not in context:
         context['breadcrumb_extra_ancestors'] = []
     context['breadcrumb_extra_ancestors'].append((request.get_full_path(),'Search'))
+    context.update({'form': form, 'table': table,
+                    'manufacturer': man,
+                    'product': prod,
+                    'family': family,
+                    'bus': bus,
+                    'key_words': key_words,
+                    'dsc_user': user, })
 
-    return render_to_response('dsc/deviceserver_advanced_search.html', {'form': form, 'table': table,
-                                                               'manufacturer': man,
-                                                               'product': prod,
-                                                               'family': family,
-                                                               'bus': bus,
-                                                               'key_words': key_words,
-                                                               'dsc_user': user,
-                                                               }, context)
+    return render(request, 'dsc/deviceserver_advanced_search.html', context)
 
 
 def families_view(request):
     """Families is done with function """
-    context = RequestContext(request)
+    context = {}
 
     # prepare list of families
     families = dsc_models.DeviceClassInfo.objects.filter(invalidate_activity=None).order_by('class_family'). \
@@ -347,14 +345,13 @@ def families_view(request):
     if 'breadcrumb_extra_ancestors' not in context:
         context['breadcrumb_extra_ancestors'] = []
     context['breadcrumb_extra_ancestors'].append((request.get_full_path(),'Families'))
-
-    return render_to_response('dsc/deviceserver_families.html', {'device_servers': table,
-                                                                 'search': search_text,
-                                                                 'family': family,
-                                                                 'families': families,
-                                                                 'families_count': families_count,
-                                                                 'count_all': count_all
-                                                                }, context)
+    context.update({'device_servers': table,
+                    'search': search_text,
+                    'family': family,
+                    'families': families,
+                    'families_count': families_count,
+                    'count_all': count_all})
+    return render(request, 'dsc/deviceserver_families.html', context)
 
 
 class DeviceServerManufacturerAutocomplete(dal.autocomplete.Select2ListView):
@@ -584,7 +581,7 @@ class DeviceServerUpdateView(BreadcrumbMixinDetailView, UpdateView):
 @login_required
 def deviceserver_delete_view(request, pk):
 
-    context = RequestContext(request)
+    context = {}
     if 'breadcrumb_extra_ancestors' not in context:
         context['breadcrumb_extra_ancestors'] = []
     context['breadcrumb_extra_ancestors'].append((request.get_full_path(),'Device Server/Class delete'))
@@ -595,13 +592,12 @@ def deviceserver_delete_view(request, pk):
         clqf = device_server.device_classes.filter(pk=device_class)
         if clqf.count()==1:
             context['device_class']=clqf.first()
-
+    context['deviceserver'] = device_server
     if request.user != device_server.created_by and not request.user.has_perm('dsc.admin_deviceserver'):
-        return render_to_response('dsc/deviceserver_notauthorized.html',
-                                  {'operation': 'delete', 'deviceserver': device_server}, context)
+        context['operation'] = 'delete'
+        return render(request, 'dsc/deviceserver_notauthorized.html', context)
     if request.method == 'GET':
-        return render_to_response('dsc/deviceserver_delete_question.html',
-                                      {'deviceserver': device_server}, context)
+        return render(request, 'dsc/deviceserver_delete_question.html', context)
     else:
         with transaction.atomic():
             if device_class is None:
@@ -640,15 +636,13 @@ def deviceserver_delete_view(request, pk):
                     cl.invalidate_activity = activity
                     cl.save()
                 else:
-                    return render_to_response('dsc/deviceserver_delete_question.html',
-                                              {'deviceserver': device_server}, context)
+                    return render('dsc/deviceserver_delete_question.html', context)
 
-        return render_to_response('dsc/deviceserver_delete_confirmed.html',
-                                      {'deviceserver': device_server}, context)
+        return render('dsc/deviceserver_delete_confirmed.html',  context)
 
 
 def deviceserver_verify_view(request, pk):
-    context = RequestContext(request)
+    context = {}
     if 'breadcrumb_extra_ancestors' not in context:
         context['breadcrumb_extra_ancestors'] = []
     context['breadcrumb_extra_ancestors'].append((request.get_full_path(),'Device Server verification'))
@@ -740,7 +734,7 @@ class DeviceServerAddView(BreadcrumbMixinDetailView, FormView):
 def deviceserver_extended_json_view(request, pk):
     """ Render JSON with ds details including xmi files"""
 
-    context = RequestContext(request)
+    context = {}
 
     device_server = dsc_models.DeviceServer.objects.get(pk=pk)
     device_class = request.GET.get('device_class')
