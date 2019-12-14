@@ -25,6 +25,18 @@ setup(
 		"dsc.tests"
 	],
 	package_dir={"dsc": "."},
+	# package_data={"dsc": [
+	# 	"README.md",
+	# 	"static/*/*",
+	# 	"templates/*/*",
+	# 	"tests/*.xmi"
+	# ]},
+	# data_files={"dsc": [
+	# 	"README.md",
+	# 	"static/*",
+	# 	"templates/*",
+	# 	"tests/*.xmi"
+	# ]},
 	include_package_data=True,
 	zip_safe=False
 )
