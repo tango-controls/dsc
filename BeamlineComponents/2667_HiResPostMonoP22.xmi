@@ -9,6 +9,16 @@
       <type xsi:type="pogoDsl:StringType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </deviceProperties>
+    <deviceProperties name="BraggOffsetC0" description="Bragg Offset for crystals 0, 2 and 4">
+      <type xsi:type="pogoDsl:DoubleType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>-9999.</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="BraggOffsetC1" description="Bragg Offset for crystals 1 and 3">
+      <type xsi:type="pogoDsl:DoubleType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>-9999.</DefaultPropValue>
+    </deviceProperties>
     <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="none">
         <type xsi:type="pogoDsl:VoidType"/>
@@ -39,6 +49,15 @@
     <commands name="Calibrate" description="Calibrate the motor: current position is calibrated to be the value given as an argument" execMethod="calibrate" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="New position value">
         <type xsi:type="pogoDsl:DoubleType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ChangeCrystalAndRecalibrate" description="Change the crystal and recalibrate the motors with hardcoded constants." execMethod="change_crystal_and_recalibrate" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Crystal number">
+        <type xsi:type="pogoDsl:IntType"/>
       </argin>
       <argout description="">
         <type xsi:type="pogoDsl:VoidType"/>
@@ -107,7 +126,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="" label="" unit="(0->Si(111),1->Si(220),2->Si(333),3->Si(440),4->Si(444))" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <attributes name="ResultSim" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="20" maxY="" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:StringType"/>
