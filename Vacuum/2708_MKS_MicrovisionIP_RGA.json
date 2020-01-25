@@ -1,0 +1,41 @@
+{
+    "2708": {
+        "buses": [
+            "Socket"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "MKS_MicrovisionIP_RGA"
+        ], 
+        "detail_url": "https://www.tango-controls.org/developers/dsc/ds/2708/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 619, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Vacuum/MKS_MicrovisionIP_RGA/MKS_MicrovisionIP_RGA.pdf"
+            }
+        ], 
+        "families": [
+            "Vacuum"
+        ], 
+        "last_update": "2020-01-25 04:32:22.664068+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "MKS"
+        ], 
+        "name": "MKS_MicrovisionIP_RGA", 
+        "products": [
+            "microvision"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Vacuum/MKS_MicrovisionIP_RGA", 
+        "status": "new", 
+        "tag": "release_3_1_4", 
+        "update_url": "https://www.tango-controls.org/developers/dsc/ds/2708/update/", 
+        "updated_by_script": true
+    }
+}
