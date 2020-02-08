@@ -1,10 +1,12 @@
 {
     "320": {
         "buses": [
+            "Ethernet", 
             "Ethernet"
         ], 
         "certified": "False", 
         "class_names": [
+            "PrologixGpib", 
             "PrologixGpib"
         ], 
         "detail_url": "https://www.tango-controls.org/developers/dsc/ds/320/", 
@@ -19,16 +21,19 @@
             }
         ], 
         "families": [
+            "Communication", 
             "Communication"
         ], 
-        "last_update": "2020-02-08 03:21:05.760692+00:00", 
+        "last_update": "2020-02-08 03:21:20.928140+00:00", 
         "last_update_method": "url", 
         "license": "None", 
         "manufacturers": [
+            "Prologix", 
             "Prologix"
         ], 
         "name": "PrologixGpib", 
         "products": [
+            "http://prologix.biz/gpib-ethernet-controller.html", 
             "http://prologix.biz/gpib-ethernet-controller.html"
         ], 
         "repository_contact_email": "", 
