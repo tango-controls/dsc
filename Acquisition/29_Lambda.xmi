@@ -549,11 +549,19 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="operation mode&#xA;1:ContinuousReadWrite&#xA;2:TwentyFourBit" label="OpMode" unit="" standardUnit="" displayUnit="" format="" maxValue="2" minValue="1" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
+    <attributes name="Translation" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="3" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:FloatType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="translation(x,y,z) for multi module system" label="Translation" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
     <attributes name="LiveLastImageData" attType="Image" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="4096" maxY="4096" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:IntType"/>
       <changeEvent fire="false" libCheckCriteria="false"/>
       <archiveEvent fire="false" libCheckCriteria="false"/>
-      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <dataReadyEvent fire="true" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="provide last image data for the live mode" label="LiveLastImageData" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <readExcludedStates>FAULT</readExcludedStates>
