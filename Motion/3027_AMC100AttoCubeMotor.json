@@ -1,0 +1,33 @@
+{
+    "3027": {
+        "buses": [
+            "Ethernet"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "AMC100AttoCubeMotor"
+        ], 
+        "detail_url": "https://www.tango-controls.org/developers/dsc/ds/3027/", 
+        "development_status": "new", 
+        "documentation": [], 
+        "families": [
+            "Motion"
+        ], 
+        "last_update": "2020-05-16 03:48:31.054596+00:00", 
+        "last_update_method": "url", 
+        "license": "GPL", 
+        "manufacturers": [
+            "AttoCube"
+        ], 
+        "name": "AMC100AttoCubeMotor", 
+        "products": [
+            "AMC100"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Motion/MotorControllers/Attocube/AMC100AttoCubeMotor", 
+        "status": "new", 
+        "tag": null, 
+        "update_url": "https://www.tango-controls.org/developers/dsc/ds/3027/update/", 
+        "updated_by_script": true
+    }
+}
