@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="HexaSmarUnit" pogoRevision="8.1">
-    <description description="Class controlling one Smaract Hexapod rack module&#xA;(for units using ascii interface and controlled via&#xA;SmarAct Embedded Controller Module (ECM))" title="HexaSmarMCSUnit" sourcePath="/ssd/blume/src/TangoSvn/tango-ds/DeviceClasses/Motion/Hexapods/HexaSmarUnit/trunk" language="Cpp" filestogenerate="XMI   file,html Pages" license="GPL" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+  <classes name="HexaSmarUnit" pogoRevision="9.6">
+    <description description="Class controlling one Smaract Hexapod rack module&#xA;(for units using ascii interface and controlled via&#xA;SmarAct Embedded Controller Module (ECM))" title="HexaSmarMCSUnit" sourcePath="/ssd/blume/src/TangoSvn/tango-ds/DeviceClasses/Motion/Hexapods/HexaSmarUnit/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" license="GPL" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
       <inheritances classname="Device_Impl" sourcePath=""/>
       <identification contact="at desy.de - johannes.blume" author="johannes.blume" emailDomain="desy.de" classFamily="Motion" siteSpecific="" platform="Unix Like" bus="Not Applicable" manufacturer="Smaract" reference="http://www.smaract.de/index.php/products/smarpod"/>
     </description>
@@ -163,6 +163,14 @@
       <readExcludedStates>INIT</readExcludedStates>
       <writeExcludedStates>INIT</writeExcludedStates>
     </attributes>
+    <dynamicAttributes name="CoordinateSystem" attType="Spectrum" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="6" maxY="" allocReadMember="true" isDynamic="true">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Read/Write coordinate system values" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </dynamicAttributes>
     <states name="ON" description="Device is ready to move">
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </states>
