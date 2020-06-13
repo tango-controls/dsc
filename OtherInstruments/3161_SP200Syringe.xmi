@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="SP200Syringe" pogoRevision="9.6">
+    <description description="Tango device server for World Precision Instruments syringe pumps.&#xA;SP200i, SP220i, SP250i," title="" sourcePath="/ssd/blume/src/TangoSvn/tango-ds/DeviceClasses/OtherInstruments/SP200Syringe/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" license="GPL" copyright="" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <identification contact="at desy.de - johannes.blume" author="johannes.blume" emailDomain="desy.de" classFamily="OtherInstruments" siteSpecific="" platform="Unix Like" bus="Serial Line" manufacturer="World Precision Instruments" reference="https://www.wpiinc.com/var-3434-two-syringe-infusion-pump"/>
+    </description>
+    <deviceProperties name="DeviceFile" mandatory="true" description="ttyusb device file name">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="BaudRate" description="Baud rate for serial connection (defaults to 9600)">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>9600</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="ConnectType" mandatory="true" description="`net` or `serial` (use `net if connecting via terminal server)">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="HostName" description="Hostname or IP Address (of terminal server if connecting that way)">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>&quot;&quot;</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="PortNumber" description="Port number (of terminal server if connecting that way)">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="Address" description="If more than one pump is connected, the pump has to be assigned&#xA;an address (check manual). Default is 0 (just one pump connected)">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>0</DefaultPropValue>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device state">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its device_status data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device status">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="RunPump" description="Run the pump" execMethod="run_pump" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="StopPump" description="Stop the pump" execMethod="stop_pump" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <attributes name="Diameter" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Syringe diameter (00.00 - > 99.99)" label="" unit="mm" standardUnit="mm" displayUnit="mm" format="" maxValue="99.99" minValue="0.0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>RUNNING</writeExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
+    </attributes>
+    <attributes name="InfusionRate" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Infusion rate in ml/m" label="" unit="ml/m" standardUnit="ml/m" displayUnit="ml/m" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>RUNNING</writeExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
+    </attributes>
+    <attributes name="InfusionVolume" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Infusion volume in ml" label="" unit="ml" standardUnit="ml" displayUnit="ml" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <writeExcludedStates>RUNNING</writeExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
+    </attributes>
+    <attributes name="DeliveredVolume" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Delivered volume in ml" label="" unit="ml" standardUnit="ml" displayUnit="ml" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+    </attributes>
+    <states name="RUNNING" description="Pump is running">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="ON" description="Device ok, pump stopped">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="FAULT" description="Something went wrong, check status">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="/usr/share/pogo/preferences"/>
+  </classes>
+</pogoDsl:PogoSystem>
