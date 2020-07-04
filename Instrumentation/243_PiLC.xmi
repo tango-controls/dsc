@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="PiLC" pogoRevision="8.4">
-    <description description="PiLC control class" title="PiLC control" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/OtherInstruments/PiLC/trunk" language="Cpp" filestogenerate="XMI   file,Code files,html Pages" hasMandatoryProperty="false" hasConcreteProperty="false" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+  <classes name="PiLC" pogoRevision="9.4">
+    <description description="PiLC control class" title="PiLC control" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/OtherInstruments/PiLC/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions,html Pages" hasMandatoryProperty="false" hasConcreteProperty="false" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
       <inheritances classname="Device_Impl" sourcePath=""/>
       <identification contact="at mail.desy.de - tnunez" author="tnunez" emailDomain="mail.desy.de" classFamily="Instrumentation" siteSpecific="" platform="Unix Like" bus="Not Applicable" manufacturer="none" reference=""/>
     </description>
@@ -304,6 +304,15 @@
     </commands>
     <commands name="WriteArraysFPGA" description="Write arrays to FPGA alternatively" execMethod="write_arrays_fpga" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="Nb of arrays, array length, and array data (adress + data, adress + data, ...)">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="PiLCTimeWrite" description="" execMethod="pi_lctime_write" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Time, Offset">
         <type xsi:type="pogoDsl:IntArrayType"/>
       </argin>
       <argout description="">
