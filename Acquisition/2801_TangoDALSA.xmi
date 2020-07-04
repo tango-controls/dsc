@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
   <classes name="TangoDALSA" pogoRevision="9.6">
-    <description description="Tango Device server for GigEVision cameras from teledyne dalsa&#xA;&#xA;Remarks:&#xA;&#xA;- if you want to use atk panel (or other java programs) to view the&#xA;  ImageXX attributes make sure to start java with a sufficiently&#xA;  big -mx&lt;memsize> switch" title="" sourcePath="/ssd/blume/src/TangoSvn/tango-ds/DeviceClasses/Acquisition/2D/TangoDALSA/trunk.new" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" license="GPL" copyright="" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+    <description description="Tango Device server for GigEVision cameras from teledyne dalsa&#xA;&#xA;Remarks:&#xA;&#xA;- if you want to use atk panel (or other java programs) to view the&#xA;  ImageXX attributes make sure to start java with a sufficiently&#xA;  big -mx&lt;memsize> switch" title="" sourcePath="/ssd/blume/src/TangoSvn/tango-ds/DeviceClasses/Acquisition/2D/TangoDALSA/trunk" language="Cpp" filestogenerate="XMI   file,Protected Regions,html Pages" license="GPL" copyright="" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
       <inheritances classname="Device_Impl" sourcePath=""/>
       <identification contact="at desy.de - johannes.blume" author="johannes.blume" emailDomain="desy.de" classFamily="Acquisition" siteSpecific="" platform="Unix Like" bus="Ethernet" manufacturer="https://www.teledynedalsa.com/" reference=""/>
     </description>
@@ -13,7 +13,7 @@
       <type xsi:type="pogoDsl:StringVectorType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </deviceProperties>
-    <deviceProperties name="VisibleAttributes" description="Since different cameras support different features (and the same&#xA;feature may even have different names on different cameras), camera&#xA;features are dynamically converted into device attributes.&#xA;&#xA;Converting all available camera features into attributes will&#xA;create a quite lengthy and cluttered list, so you can put those&#xA;features you want to see as device attributes into this list.&#xA;Only the features mentioned here will be shown as attributes.&#xA; &#xA;To find out about the available features of a camera either use a &#xA;program like VimbaViewer or leave this list empty. Then all features&#xA;will be shown as attributes.&#xA;&#xA;For features which are of type enumeration (e.g. PixelFormat)&#xA;an additional read-only attribute &lt;FeatureName>#Values will&#xA;be created. This shows the possible values for this feature on&#xA;this camera.">
+    <deviceProperties name="VisibleAttributes" description="Since different cameras support different features (and the same&#xA;feature may even have different names on different cameras), camera&#xA;features are dynamically converted into device attributes.&#xA;&#xA;Converting all available camera features into attributes will&#xA;create a quite lengthy and cluttered list, so you can put those&#xA;features you want to see as device attributes into this list.&#xA;Only the features mentioned here will be shown as attributes.&#xA; &#xA;To find out about the available features of a camera put an empty string (````) here. Then all features&#xA;will be shown as attributes.&#xA;&#xA;For features which are of type enumeration (e.g. PixelFormat)&#xA;an additional read-only attribute &lt;FeatureName>_Values will&#xA;be created. This shows the possible values for this feature on&#xA;this camera.">
       <type xsi:type="pogoDsl:StringVectorType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>&quot;&quot;</DefaultPropValue>
@@ -63,7 +63,7 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <excludedStates>EXTRACT</excludedStates>
     </commands>
-    <commands name="StartSingleAcquisition" description="" execMethod="start_single_acquisition" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+    <commands name="StartSingleAcquisition" description="Acquire a single image. Acquisition stops after image was acquired, do not&#xA;call StopAcquisition." execMethod="start_single_acquisition" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="">
         <type xsi:type="pogoDsl:VoidType"/>
       </argin>
@@ -90,7 +90,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="directory path to store image files in&#xA;&#xA;- strings containing any of ' .,\': are considered invalid.&#xA;&#xA;- the directory must exist&#xA;&#xA;- the server will check if the user running the server has write permissions for this directory,&#xA;  if not, the device will go to state fault / throw an exception&#xA;&#xA;- the attribute is memorized (last written value stored in tango db and read from there&#xA;  at server startup)" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="directory path to store image files in&#xA;&#xA;- strings containing any of ` .,\`: are considered invalid.&#xA;&#xA;- the directory must exist&#xA;&#xA;- the server will check if the user running the server has write permissions for this directory,&#xA;  if not, the device will go to state fault / throw an exception&#xA;&#xA;- the attribute is memorized (last written value stored in tango db and read from there&#xA;  at server startup)" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <attributes name="FilePrefix" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:StringType"/>
@@ -146,7 +146,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="The camera I'm using for development cannot give us the framerate. So this is&#xA;calculated form the time elapsing from the arrival of one frame to the next (and thus only&#xA;gives a value when Acquistion is running).&#xA;Might need some code fixing for other camera types.&#xA;" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="The camera I`m using for development cannot give us the framerate. So this is&#xA;calculated form the time elapsing from the arrival of one frame to the next (and thus only&#xA;gives a value when Acquistion is running).&#xA;Might need some code fixing for other camera types." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <attributes name="FramesPerNXFile" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:UIntType"/>
@@ -154,7 +154,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="Max. number of frames written to one file if file format is nx. A new file will be created whenever this value is surpassed." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="Max. number of frames written to one file if file format is nx. A new file will be created whenever this value is surpassed. When set to 0 all frames&#xA;are written to one file." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <attributes name="NXFileCompression" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:ShortType"/>
@@ -178,7 +178,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="Turbo mode setting of camera" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <attributes name="ImageEnc" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="false" isDynamic="false">
       <dataType xsi:type="pogoDsl:EncodedType"/>
