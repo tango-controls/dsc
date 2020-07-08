@@ -8,7 +8,15 @@ try:
 except ImportError:
 	print "Cannot find setuptools; dependencies will not be installed."
 	from distutils.core import setup
+import os 
+def gen_data_files(*dirs):
+    results = []
 
+    for src_dir in dirs:
+        for root,dirs,files in os.walk(src_dir):
+            for f in files:
+            	results.append(root + "/" + f)
+    return {'': results}
 
 setup(
 	name="tango-website-plugin-dsc",
@@ -25,6 +33,7 @@ setup(
 		"dsc.tests"
 	],
 	package_dir={"dsc": "."},
+        package_data=gen_data_files('templates', 'static'),
 	# package_data={"dsc": [
 	# 	"README.md",
 	# 	"static/*/*",
