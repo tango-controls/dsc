@@ -16,7 +16,7 @@ def gen_data_files(*dirs):
     for src_dir in dirs:
         for root, dirs, files in os.walk(src_dir):
             for file_name in files:
-                results.append(root + "/" + file_name)
+                results.append(os.path.join(root, file_name))
     return {'': results}
 
 
