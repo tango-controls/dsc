@@ -311,12 +311,12 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
-    <commands name="PiLCTimeWrite" description="" execMethod="pi_lctime_write" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
-      <argin description="Time, Offset">
-        <type xsi:type="pogoDsl:IntArrayType"/>
+    <commands name="PiLCTimeWrite" description="Read a time from the ntp-server and write the value to the fpga.&#xA;The return value is the time written." execMethod="pi_lctime_write" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="NTP-sever name, config">
+        <type xsi:type="pogoDsl:LongStringArrayType"/>
       </argin>
-      <argout description="">
-        <type xsi:type="pogoDsl:VoidType"/>
+      <argout description="Time written to FPGA (as feedback)">
+        <type xsi:type="pogoDsl:IntType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
