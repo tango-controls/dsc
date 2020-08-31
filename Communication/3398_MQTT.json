@@ -8,12 +8,12 @@
             "MQTTAccess"
         ], 
         "detail_url": "https://www.tango-controls.org/developers/dsc/ds/3398/", 
-        "development_status": "new", 
+        "development_status": "released", 
         "documentation": [], 
         "families": [
             "Communication"
         ], 
-        "last_update": "2020-08-31 13:00:05.051330+00:00", 
+        "last_update": "2020-08-31 13:05:17.595453+00:00", 
         "last_update_method": "file", 
         "license": "Custom", 
         "manufacturers": [
@@ -26,7 +26,7 @@
         "repository_contact_email": "", 
         "repository_url": "https://gitlab.com/s2innovation-partners/device-services/mqtt", 
         "status": "updated", 
-        "tag": null, 
+        "tag": "docker, east-c, gce, git-annex, linux, mongo, mysql, postgres, ruby, shared", 
         "update_url": "https://www.tango-controls.org/developers/dsc/ds/3398/update/", 
         "updated_by_script": true
     }
