@@ -1,0 +1,33 @@
+{
+    "3404": {
+        "buses": [
+            ""
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "MQTTAccess"
+        ], 
+        "detail_url": "https://www.tango-controls.org/developers/dsc/ds/3404/", 
+        "development_status": "released", 
+        "documentation": [], 
+        "families": [
+            "Communication"
+        ], 
+        "last_update": "2020-09-01 07:50:36.904620+00:00", 
+        "last_update_method": "file", 
+        "license": "Custom", 
+        "manufacturers": [
+            "S2Innovation"
+        ], 
+        "name": "MQTT", 
+        "products": [
+            "MQTT Device Server"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "https://gitlab.com/s2innovation-partners/device-services/mqtt", 
+        "status": "new", 
+        "tag": "1.0.0", 
+        "update_url": "https://www.tango-controls.org/developers/dsc/ds/3404/update/", 
+        "updated_by_script": true
+    }
+}
