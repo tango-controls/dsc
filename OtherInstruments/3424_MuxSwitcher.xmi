@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="MuxSwitcher" pogoRevision="8.2">
+    <description description="This device is a Device Multiplexer SWitcher .&#xA;Switching the Mux is done through a Socket Server TCP/IP embeded in a RasperryPI3 board" title="Multiplexer Controller - Project Matrix" sourcePath="/home/informatique/ica/noureddine/DeviceSources/MuxSwitcher/src" language="Cpp" filestogenerate="XMI   file,Code files,html Pages" license="GPL" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <identification contact="at synchrotron-soleil.fr - arafat.noureddine" author="arafat.noureddine" emailDomain="synchrotron-soleil.fr" classFamily="OtherInstruments" siteSpecific="" platform="Unix Like" bus="TCP/UDP" manufacturer="SOLEIL" reference=""/>
+    </description>
+    <deviceProperties name="ServerIP" description="The Address of the Server TCP/IP embeded on Rasperry board">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>127.0.0.1</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="ServerPort" description="The port of the Server TCP/IP embeded on Rasperry board">
+      <type xsi:type="pogoDsl:UShortType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>6666</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="RcvEOL" description="Define the EOL of messages received from Server Tcp/Ip &lt;CR>&#xA;available values :&lt;CR>&#xA;CR&lt;CR>&#xA;LF&lt;CR>&#xA;FF&lt;CR>&#xA;HT&lt;CR>&#xA;VT&lt;CR>&#xA;SPACE&lt;CR>&#xA;NUL&lt;CR>">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>NUL</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="SendEOL" description="Define the EOL of messages sent to Server Tcp/Ip &lt;CR>&#xA;available values :&lt;CR>&#xA;CR&lt;CR>&#xA;LF&lt;CR>&#xA;FF&lt;CR>&#xA;HT&lt;CR>&#xA;VT&lt;CR>&#xA;SPACE&lt;CR>&#xA;NUL&lt;CR>">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>NUL</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="MuxNumMin" description="Define the minimum muxNum value">
+      <type xsi:type="pogoDsl:UShortType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>1</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="MuxNumMax" description="Define the maximum muxNum value">
+      <type xsi:type="pogoDsl:UShortType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>40</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="AutoConnect" description="Auto Connect at Init">
+      <type xsi:type="pogoDsl:BooleanType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>false</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="RefreshAlwaysMuxNum" description="Define if muxNum must be always refreshed from the Server IP.&lt;CR>&#xA;Otherwise, refresh is done only when user write at muxNum attribute.">
+      <type xsi:type="pogoDsl:BooleanType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>True</DefaultPropValue>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device state">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its device_status data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device status">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
+    </commands>
+    <commands name="Connect" description="Connect to Server TCP/IP" execMethod="connect" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>RUNNING</excludedStates>
+      <excludedStates>ON</excludedStates>
+      <excludedStates>INIT</excludedStates>
+    </commands>
+    <commands name="Disconnect" description="Disconnect from Server TCP/IP" execMethod="disconnect" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>RUNNING</excludedStates>
+      <excludedStates>OFF</excludedStates>
+      <excludedStates>INIT</excludedStates>
+    </commands>
+    <commands name="SendAnyCmd" description="Send any command (string) to Server TCP/IP" execMethod="send_any_cmd" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>OFF</excludedStates>
+      <excludedStates>INIT</excludedStates>
+    </commands>
+    <commands name="ClearHistory" description="Clear MuxNumHistory attribute" execMethod="clear_history" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>RUNNING</excludedStates>
+      <excludedStates>INIT</excludedStates>
+    </commands>
+    <attributes name="muxNum" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:UShortType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="The Mux number ." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>OFF</readExcludedStates>
+      <readExcludedStates>INIT</readExcludedStates>
+      <writeExcludedStates>RUNNING</writeExcludedStates>
+      <writeExcludedStates>OFF</writeExcludedStates>
+      <writeExcludedStates>INIT</writeExcludedStates>
+    </attributes>
+    <attributes name="muxNumHistory" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="100000" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:UShortType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="History of values of the muxNum" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <states name="RUNNING" description="Action in progress">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="FAULT" description="Error occured">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="ON" description="Connected to Server TCP/IP">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="OFF" description="Not Connected to Server TCP/IP">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="INIT" description="Fatal Fault at start device">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="../doc/doc_html" makefileHome="$(TANGO_HOME)"/>
+  </classes>
+</pogoDsl:PogoSystem>
