@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="TangoOpcUa" pogoRevision="9.1">
+    <description description="This class aims to integrate OpcUa Objects into Tango Control system.&#xA;The OpcUa objects are represented by related dynamic attributes (see *OpcTags* property).  &#xA;It does not depend on *OpcUaAccess* device." title="TangoOpcUaObject class" sourcePath="C:\Users\piotr\OneDrive\src\ds-3c-opcua" language="PythonHL" filestogenerate="XMI   file" license="none" copyright="&#x141;ukasz Dudek/AGH for 3Controls" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <identification contact="at 3-controls.com - piotr.goryl" author="piotr.goryl" emailDomain="3-controls.com" classFamily="Communication" siteSpecific="" platform="All Platforms" bus="Ethernet" manufacturer="none" reference="">
+        <keyWords>OPC OpcUa communication</keyWords>
+        <keyWords>OPC OpcUa communication</keyWords>
+        <keyWords>OPC OpcUa communication</keyWords>
+        <keyWords>OPC OpcUa communication</keyWords>
+        <keyWords>OPC OpcUa communication</keyWords>
+        <keyWords>OPC OpcUa communication</keyWords>
+        <keyWords>OPC OpcUa communication</keyWords>
+        <keyWords>OPC OpcUa communication</keyWords>
+      </identification>
+    </description>
+    <deviceProperties name="StateDefinition" description="Define the state behaviour with an OpcUa tag.&#xA;&lt;tag_name>![&lt;value>:&lt;state>!]&#xA;&#xA;Example:&#xA;MyDevice.StateInt!1:OFF!2:ON!3:FAULT">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="OpcTags" mandatory="true" description="Tags for creating Tango attributes. Format is as the following:&#xA;first_attr_name!Scalar!Double!READ!first_tag_name&#xA;snd_attr_name!Scalar!Boolean!READ_WRITE!snd_tag_read_name!snd_tag_write_name&#xA;Arrays are not supported.">
+      <type xsi:type="pogoDsl:StringVectorType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="OpcUaServerAddress" mandatory="true" description="OPC UA server address&#xA;Given as: ``opc.tcp://hostname:port``">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device state">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its device_status data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device status">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="Connect" description="Connect to the OPC UA server.&#xA;Reinitialise all event subscriptions." execMethod="connect" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="Disconnect" description="Disconnect from the OPC UA server.&#xA;State will be UNKNOWN from now on." execMethod="disconnect" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <states name="UNKNOWN" description="Unless it hasn`t been configured, this state indicates one of the following:&#xA;- the device is disconnected from the OPC UA server&#xA;- StateDefinition property is unfilled or filled wrongly">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="/home/taurel/tmp/tango_install/share/pogo/preferences"/>
+  </classes>
+</pogoDsl:PogoSystem>
