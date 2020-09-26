@@ -1,26 +1,31 @@
 {
     "2320": {
         "buses": [
+            "Ethernet", 
             "Ethernet"
         ], 
         "certified": "False", 
         "class_names": [
+            "StanfordDG645Control", 
             "StanfordDG645Channel"
         ], 
         "detail_url": "https://www.tango-controls.org/developers/dsc/ds/2320/", 
         "development_status": "released", 
         "documentation": [], 
         "families": [
+            "CounterTimer", 
             "CounterTimer"
         ], 
-        "last_update": "2020-09-26 03:27:38.519047+00:00", 
+        "last_update": "2020-09-26 03:27:54.055288+00:00", 
         "last_update_method": "url", 
         "license": "GPL", 
         "manufacturers": [
+            "Stanford Research Systems", 
             "Stanford Research Systems"
         ], 
         "name": "StanfordDG645", 
         "products": [
+            "DG645", 
             "DG645"
         ], 
         "repository_contact_email": "", 
