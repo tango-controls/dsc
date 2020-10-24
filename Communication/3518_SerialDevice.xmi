@@ -49,8 +49,8 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>100</DefaultPropValue>
     </deviceProperties>
-    <deviceProperties name="EndOfLine" description="End of line string in used in communication">
-      <type xsi:type="pogoDsl:StringType"/>
+    <deviceProperties name="EndOfLine" mandatory="true" description="End of line string in used in communication:&#xA;&#xA;0 = LF&#xA;1 = CR&#xA;2 = CR/LF">
+      <type xsi:type="pogoDsl:IntType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </deviceProperties>
     <deviceProperties name="ConnectType" mandatory="true" description="`net` for tcp/ip connection or `serial` for rs232 connection">
