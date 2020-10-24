@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="TangoVimba" pogoRevision="9.6">
-    <description description="Tango device server for Allied Vision GigE cameras" title="TangoVimba" sourcePath="/ssd/blume/src/TangoSvn/tango-ds/DeviceClasses/Acquisition/2D/TangoVimba/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" license="GPL" copyright="" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+  <classes name="TangoVimba" pogoRevision="9.7">
+    <description description="Tango device server for Allied Vision GigE cameras" title="TangoVimba" sourcePath="/home/hannes/src/tangovimba/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" license="GPL" copyright="" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
       <inheritances classname="Device_Impl" sourcePath=""/>
       <identification contact="at desy.de - johannes.blume" author="johannes.blume" emailDomain="desy.de" classFamily="Acquisition" siteSpecific="" platform="Unix Like" bus="Ethernet" manufacturer="Allied Vision" reference="https://www.alliedvision.com"/>
     </description>
@@ -28,7 +28,7 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>&quot;&quot;</DefaultPropValue>
     </deviceProperties>
-    <deviceProperties name="QueueSizeMax" description="Maximum number of frames which will be stored in the servers&#xA;internal queue.&#xA;If frames arrive when this limit is hit they will be discarded.&#xA;Setting value to 0 disables internal queue size restriction (but&#xA;watch out for process memeory usage).">
+    <deviceProperties name="QueueSizeMax" description="Maximum number of frames which will be stored in the servers&#xA;internal queue.&#xA;If frames arrive when this limit is hit they will be discarded.&#xA;Setting value to 0 disables internal queue size restriction (but&#xA;watch out for process memory usage).">
       <type xsi:type="pogoDsl:UShortType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>128</DefaultPropValue>
@@ -94,6 +94,30 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <excludedStates>ON</excludedStates>
+      <excludedStates>EXTRACT</excludedStates>
+    </commands>
+    <commands name="SaveNextImage" description="Will save the next frame coming in from the camera while the acquisition is running and without interrupting it.&#xA;Settings of FileDir/FilePrefix/FilePostfix are taken into respect.&#xA;If input argument is true, FileStartNum will be incremented and an index number will be appended to the filename.&#xA;Otherwise not." execMethod="save_next_image" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="true: increment FileStartNum, append index number to filename&#xA;false: do not increment FileStartNum, do not append index number to filename">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>ON</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>EXTRACT</excludedStates>
+    </commands>
+    <commands name="SoftTrigger" description="Generate a software trigger. To make use of this command&#xA;- add `TriggerSource` to the VisibleAttributes property&#xA;- restart the server&#xA;- set attribute `TriggerSource` to `Software`&#xA;- run StartAcquisition&#xA;&#xA;If you then call this command, the camera will send an image which will&#xA;be processed by the server according to the setting of `FileSaving` and&#xA;`ViewingMode`." execMethod="soft_trigger" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>ON</excludedStates>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>EXTRACT</excludedStates>
     </commands>
     <attributes name="FileDir" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
@@ -220,7 +244,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="Number of frames stored in the servers queue which have not been processed (i.e. written to file&#xA;or to attribute).&#xA;Normally this value should be small (while acquisition is running it will never go below 1)&#xA;It may fluctate a little, but should not be constantly increasing.&#xA;If this is the case, the server will use up memory and eventually be killed by the OS.&#xA;To remedy this, your options are&#xA;&#xA;- lower the framerate&#xA;- buy a faster computer&#xA;" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="Number of frames stored in the servers queue which have not been processed (i.e. written to file&#xA;or to attribute).&#xA;Normally this value should be small (while acquisition is running it will never go below 1)&#xA;It may fluctate a little, but should not be constantly increasing.&#xA;If this is the case, the server will use up memory and eventually be killed by the OS.&#xA;To remedy this, your options are&#xA;&#xA;- lower the framerate&#xA;- or set property QueueSizeMax to a value > 0 (and read the docs)&#xA;- or buy a faster computer" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <attributes name="MaxQueuedFrames" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:ULongType"/>
@@ -228,7 +252,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="Maximum number of frames stored in the servers queue which had not been processed (i.e. written to file&#xA;or to attribute).&#xA;If this value keeps on increasing while acquisition is running make things run slower. Otherwise the server will use&#xA;up all the memory there is.&#xA;&#xA;" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="Maximum number of frames stored in the servers queue which had not been processed (i.e. written to file&#xA;or to attribute).&#xA;If this value keeps on increasing while acquisition is running make things run slower. Otherwise the server will use&#xA;up all the memory there is.&#xA;The servers maximum queue size can be limited with property  QueueSizeMax." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <attributes name="DiscardedFrames" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:ULongType"/>
@@ -236,7 +260,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="Maximum number of frames not put into the servers queue because the queue was&#xA;bigger then value set in property QueueSizeMax." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="Number of frames not put into the servers. Discarding frames may happen&#xA;if the servers internal queue size was limited with property QueueSizeMax and the&#xA;queue is filled up to this size when a frame arrives from the camera." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <attributes name="FramesProcessed" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:ULongType"/>
