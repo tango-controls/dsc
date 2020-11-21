@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
   <classes name="TangoVimba" pogoRevision="9.7">
-    <description description="Tango device server for Allied Vision GigE cameras" title="TangoVimba" sourcePath="/home/hannes/src/tangovimba/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" license="GPL" copyright="" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+    <description description="Tango device server for Allied Vision GigE cameras" title="TangoVimba" sourcePath="/home/blume/src/TangoSvn/tango-ds/DeviceClasses/Acquisition/2D/TangoVimba/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions,html Pages" license="GPL" copyright="" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
       <inheritances classname="Device_Impl" sourcePath=""/>
       <identification contact="at desy.de - johannes.blume" author="johannes.blume" emailDomain="desy.de" classFamily="Acquisition" siteSpecific="" platform="Unix Like" bus="Ethernet" manufacturer="Allied Vision" reference="https://www.alliedvision.com"/>
     </description>
@@ -28,10 +28,10 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>&quot;&quot;</DefaultPropValue>
     </deviceProperties>
-    <deviceProperties name="QueueSizeMax" description="Maximum number of frames which will be stored in the servers&#xA;internal queue.&#xA;If frames arrive when this limit is hit they will be discarded.&#xA;Setting value to 0 disables internal queue size restriction (but&#xA;watch out for process memory usage).">
+    <deviceProperties name="QueueSizeMax" description="Maximum memory siz of the servers internal queue in megabyte..&#xA;&#xA;If frames arrive when this limit is hit they will be discarded.&#xA;&#xA;Setting value to 0 disables internal queue size restriction (but&#xA;watch out for process memory usage).">
       <type xsi:type="pogoDsl:UShortType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <DefaultPropValue>128</DefaultPropValue>
+      <DefaultPropValue>16</DefaultPropValue>
     </deviceProperties>
     <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="none">
