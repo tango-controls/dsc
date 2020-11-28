@@ -146,10 +146,10 @@
     </commands>
     <commands name="GetPosition" description="" execMethod="get_position" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="Axis number">
-        <type xsi:type="pogoDsl:IntType"/>
+        <type xsi:type="pogoDsl:DoubleType"/>
       </argin>
       <argout description="Positioner position (nm)">
-        <type xsi:type="pogoDsl:IntType"/>
+        <type xsi:type="pogoDsl:DoubleType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
