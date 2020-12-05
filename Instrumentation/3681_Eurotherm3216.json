@@ -1,0 +1,33 @@
+{
+    "3681": {
+        "buses": [
+            "Modbus"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "Eurotherm3216"
+        ], 
+        "detail_url": "https://www.tango-controls.org/developers/dsc/ds/3681/", 
+        "development_status": "released", 
+        "documentation": [], 
+        "families": [
+            "Instrumentation"
+        ], 
+        "last_update": "2020-12-05 04:31:42.593183+00:00", 
+        "last_update_method": "url", 
+        "license": "None", 
+        "manufacturers": [
+            "Invensys Systems GmbH"
+        ], 
+        "name": "Eurotherm3216", 
+        "products": [
+            "http://www.eurotherm.com/products/controllers/single-loop/2100/3216/"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Temperature/Eurotherm3216", 
+        "status": "new", 
+        "tag": "Release_1_1", 
+        "update_url": "https://www.tango-controls.org/developers/dsc/ds/3681/update/", 
+        "updated_by_script": true
+    }
+}
