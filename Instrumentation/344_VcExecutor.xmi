@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="VcExecutor" pogoRevision="8.4">
-    <description description="This class is an implementation of virtual counters." title="TANGO Device Server" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/CounterTimer/VcExecutor/trunk" language="Python" filestogenerate="XMI   file,Code files,html Pages" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+  <classes name="VcExecutor" pogoRevision="9.4">
+    <description description="This class is an implementation of virtual counters." title="TANGO Device Server" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/CounterTimer/VcExecutor/trunk.tests" language="Python" filestogenerate="XMI   file,Code files,Protected Regions,html Pages" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
       <inheritances classname="Device_4Impl" sourcePath=""/>
       <identification contact="at desy.de - thorsten.kracht" author="thorsten.kracht" emailDomain="desy.de" classFamily="Instrumentation" siteSpecific="" platform="Unix Like" bus="Not Applicable" manufacturer="none" reference=""/>
     </description>
@@ -20,7 +20,7 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>None</DefaultPropValue>
     </deviceProperties>
-    <deviceProperties name="DynamicAttributes" description="Array of strings: AttributeName, type, rd">
+    <deviceProperties name="DynamicAttributes" description="Array of strings: AttributeName, type, rd, dimension (if not scalar), dimension (if image)">
       <type xsi:type="pogoDsl:StringVectorType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>None</DefaultPropValue>
@@ -75,6 +75,14 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="use case: background that has to be subtracted " label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
+    <dynamicAttributes name="DynAttr" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="true">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </dynamicAttributes>
     <states name="ON" description="">
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </states>
