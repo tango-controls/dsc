@@ -9,11 +9,19 @@
         ], 
         "detail_url": "https://www.tango-controls.org/developers/dsc/ds/3682/", 
         "development_status": "new", 
-        "documentation": [], 
+        "documentation": [
+            {
+                "documentation_type": "Manual", 
+                "pk": 622, 
+                "title": "Instructions", 
+                "updated_by_script": false, 
+                "url": "https://confluence.desy.de/display/FSP23/LMAnalysis+server"
+            }
+        ], 
         "families": [
             "BeamDiagnostics"
         ], 
-        "last_update": "2020-12-07 16:38:58.823731+00:00", 
+        "last_update": "2020-12-07 17:01:39.355862+00:00", 
         "last_update_method": "file", 
         "license": "GPL", 
         "manufacturers": [
