@@ -4,6 +4,7 @@
 {% load staticfiles %}
 {% load markup_tags %}
 {% load dsc_tags %}
+{% load search_regx %}
 {% load ratings %}
 {% load comments %}
 
@@ -153,7 +154,11 @@
 {% if deviceserver.description %}
 <h4>Description</h4>
 <hr />
-<p>{{ deviceserver.description|apply_markup:"restructuredtext"}}</p>
+{% if deviceserver.description|find_match:'.*:.*:.*' %}
+<p>{{ deviceserver.description|apply_markup:"restructuredtext" }}</p>
+{% else %}
+<p>{{ deviceserver.description|apply_markup:"markdown" }}</p>
+{% endif %}
 {% endif %}
 <hr /> <br />
 

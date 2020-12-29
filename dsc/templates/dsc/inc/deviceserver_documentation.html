@@ -1,5 +1,6 @@
 {% load markup_tags %}
 {% load dsc_tags %}
+{% load search_regx %}
 
 {% for doc in deviceserver.documentation.all %}
     {% if doc.is_valid or doc.invalidate_activity.pk == deviceserver.invalidate_activity.pk %}
@@ -46,15 +47,13 @@
 {% if readme or readme_link %}
     <div style="word-wrap: break-word;">
         <h4>README</h4>
-        {% if rst %}
-            {{ readme|apply_markup:"restructuredtext" }}
-        { % elif md %}
-            {{readme|apply_markup:"markdown"}}
+        {% if rst or deviceserver.description|find_match:'.*:.*:.*'%}
+            {{ readme|apply_markup:"restructuredtext" }}           
         {% else %}
             {% if not readme %}
                 <a href="{{readme_link}}" target="_blank"> Download </a>
             {% else %}
-                {{readme|linebreaks}}
+                {{readme|apply_markup:"markdown"}}
             {% endif %}
         {% endif %}
     </div>
