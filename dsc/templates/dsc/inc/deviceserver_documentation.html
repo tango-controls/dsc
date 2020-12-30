@@ -47,7 +47,7 @@
 {% if readme or readme_link %}
     <div style="word-wrap: break-word;">
         <h4>README</h4>
-        {% if rst or deviceserver.description|find_match:'.*:.*:.*'%}
+        {% if rst or readme|find_match:'.*:.*:.*'%}
             {{ readme|apply_markup:"restructuredtext" }}           
         {% else %}
             {% if not readme %}
