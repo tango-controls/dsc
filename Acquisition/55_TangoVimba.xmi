@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="TangoVimba" pogoRevision="9.7">
-    <description description="Tango device server for Allied Vision GigE cameras" title="TangoVimba" sourcePath="/home/hannes/src/tangovimba/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions,html Pages" license="GPL" copyright="" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+  <classes name="TangoVimba" pogoRevision="9.6">
+    <description description="Tango device server for Allied Vision GigE cameras" title="TangoVimba" sourcePath="/ssd/blume/src/TangoSvn/tango-ds/DeviceClasses/Acquisition/2D/TangoVimba/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" license="GPL" copyright="" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
       <inheritances classname="Device_Impl" sourcePath=""/>
       <identification contact="at desy.de - johannes.blume" author="johannes.blume" emailDomain="desy.de" classFamily="Acquisition" siteSpecific="" platform="Unix Like" bus="Ethernet" manufacturer="Allied Vision" reference="https://www.alliedvision.com"/>
     </description>
@@ -63,7 +63,7 @@
       <excludedStates>MOVING</excludedStates>
       <excludedStates>EXTRACT</excludedStates>
     </commands>
-    <commands name="StartSingleAcquisition" description="Acquire single image" execMethod="start_single_acquisition" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+    <commands name="StartSingleAcquisition" description="Start single acquisition. Acquisition will stop automatically after number&#xA;of requested images (c.f. attribute FramesPerSingleAcquisition) is collected." execMethod="start_single_acquisition" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="">
         <type xsi:type="pogoDsl:VoidType"/>
       </argin>
@@ -85,7 +85,7 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <excludedStates>ON</excludedStates>
     </commands>
-    <commands name="StopAcquisition" description="Stop continous image acquisition. Frames in the buffer tagged for writing&#xA;to files will bw written, while this happens the device is in state EXTRACT." execMethod="stop_acquisition" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+    <commands name="StopAcquisition" description="Stop continous image acquisition. Frames in the buffer tagged for writing&#xA;to files will be written, while this happens the device is in state EXTRACT." execMethod="stop_acquisition" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="">
         <type xsi:type="pogoDsl:VoidType"/>
       </argin>
@@ -96,7 +96,7 @@
       <excludedStates>ON</excludedStates>
       <excludedStates>EXTRACT</excludedStates>
     </commands>
-    <commands name="SaveNextImage" description="Will save the next frame coming in from the camera while the acquisition is running and without interrupting it.&#xA;Settings of FileDir/FilePrefix/FilePostfix are taken into respect.&#xA;If input argument is true, FileStartNum will be incremented and an index number will be appended to the filename.&#xA;Otherwise not." execMethod="save_next_image" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+    <commands name="SaveNextImage" description="Will save the next frame coming in from the camera while the acquisition is running and without interrupting it.&#xA;Settings of FileDir/FilePrefix/FilePostfix are taken into respect.&#xA;If input argument is true, FileStartNum will be incremented and an index number will be appended to the filename.&#xA;Otherwise not.&#xA;Use this to take a `snapshot` if you run acquisition without FileSaving&#xA;set to true." execMethod="save_next_image" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="true: increment FileStartNum, append index number to filename&#xA;false: do not increment FileStartNum, do not append index number to filename">
         <type xsi:type="pogoDsl:BooleanType"/>
       </argin>
@@ -108,7 +108,7 @@
       <excludedStates>FAULT</excludedStates>
       <excludedStates>EXTRACT</excludedStates>
     </commands>
-    <commands name="SoftTrigger" description="Generate a software trigger. To make use of this command&#xA;- add `TriggerSource` to the VisibleAttributes property&#xA;- restart the server&#xA;- set attribute `TriggerSource` to `Software`&#xA;- run StartAcquisition&#xA;&#xA;If you then call this command, the camera will send an image which will&#xA;be processed by the server according to the setting of `FileSaving` and&#xA;`ViewingMode`." execMethod="soft_trigger" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+    <commands name="SoftTrigger" description="Generate a software trigger. To make use of this command&#xA;- add `TriggerSource` to the VisibleAttributes property&#xA;- add `TriggerMode` to the VisibleAttributes property&#xA;&#xA;- restart the server&#xA;- set attribute `TriggerSource` to `Software`&#xA;- set attribute `TriggerMode` to `On`&#xA;- run StartAcquisition&#xA;&#xA;If you then call this command, the camera will send an image which will&#xA;be processed by the server according to the setting of `FileSaving` and&#xA;`ViewingMode`." execMethod="soft_trigger" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="">
         <type xsi:type="pogoDsl:VoidType"/>
       </argin>
@@ -162,7 +162,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="if set to true, acquired images will be saved to files. Can be set / reset during acquisition. " label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="if set to true, acquired images will be saved to files. Can be set / reset during acquisition." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <writeExcludedStates>FAULT</writeExcludedStates>
       <writeExcludedStates>EXTRACT</writeExcludedStates>
     </attributes>
@@ -252,7 +252,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="Maximum number of frames stored in the servers queue which had not been processed (i.e. written to file&#xA;or to attribute).&#xA;If this value keeps on increasing while acquisition is running make things run slower. Otherwise the server will use&#xA;up all the memory there is.&#xA;The servers maximum queue size can be limited with property  QueueSizeMax." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="Maximum number of frames stored in the servers queue which had not been processed (i.e. written to file&#xA;or to attribute).&#xA;If this value keeps on increasing while acquisition is running make things run slower. Otherwise the server will use&#xA;up all the memory there is.&#xA;The servers maximum queue size can be set with property  QueueSizeMax." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <attributes name="DiscardedFrames" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:ULongType"/>
@@ -268,7 +268,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="Number of frames stored in and removed from the servers internal queue" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="Number of frames written to file / attribute and removed from the servers internal queue" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <attributes name="MaxFramesPerQueue" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:ULongType"/>
@@ -278,13 +278,41 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="Maximum number of frames which can be stored in the servers queue. The number depends on &#xA;&#xA;- the size you set for property QueueSizeMax&#xA;- the selected pixelformat&#xA;- the size of the image" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
-    <attributes name="FramesPerSingleAcquisition" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
+    <attributes name="FramesPerSingleAcquisition" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:UIntType"/>
       <changeEvent fire="false" libCheckCriteria="false"/>
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="Max. number of frNumber of frames to collect for a call of StartSingleAcquisition" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="1" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="Max. number of frames to collect for a call of StartSingleAcquisition" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="1" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="BrokenFrames" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:ULongType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Number of invalid frames received from the camera. The value will be 0 at server start.&#xA;It`s writable so you can reset it." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="DisplayBrokenFrames" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="If set to true, broken frames (where the image data are all set to 0, i.e. a black image)&#xA;will be written to the Image&lt;X> attribute during acquisition. The attribute quality will be&#xA;set to INVALID.&#xA;Otherwise they will be skipped." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <writeExcludedStates>FAULT</writeExcludedStates>
+      <writeExcludedStates>EXTRACT</writeExcludedStates>
+    </attributes>
+    <attributes name="StoreBrokenFrames" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="If set to true, broken frames will be written files.&#xA;In nx files, the value in `validity` will contain a value &lt; 0, the image data will be set to 0.&#xA;In other files, only this value will be written to the file, the file will contain no image data.&#xA;If set to false, broken frames will be skipped." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <writeExcludedStates>FAULT</writeExcludedStates>
+      <writeExcludedStates>EXTRACT</writeExcludedStates>
     </attributes>
     <attributes name="Image8" attType="Image" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="16000" maxY="16000" allocReadMember="false" isDynamic="false">
       <dataType xsi:type="pogoDsl:UCharType"/>
