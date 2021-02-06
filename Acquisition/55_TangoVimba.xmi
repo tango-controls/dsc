@@ -284,7 +284,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="Max. number of frames to collect for a call of StartSingleAcquisition" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="1" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="Max. number of frames to collect for a call of StartSingleAcquisition.&#xA;&#xA;The server will reset this value to 1 if you run  StartAcquisition." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="1" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <attributes name="BrokenFrames" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:ULongType"/>
