@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
   <classes name="QudisAxis" pogoRevision="9.7">
-    <description description="Tango device for qudis interferometer axis" title="" sourcePath="/home/hannes/src/QudisAxis/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" license="GPL" copyright="" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+    <description description="Tango device for qudis interferometer axis" title="" sourcePath="/home/blume/src/TangoSvn/tango-ds/DeviceClasses/MeasureInstruments/QudisAxis/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" license="GPL" copyright="" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
       <inheritances classname="Device_Impl" sourcePath=""/>
       <identification contact="at desy.de - johannes.blume" author="johannes.blume" emailDomain="desy.de" classFamily="MeasureInstruments" siteSpecific="" platform="Unix Like" bus="Not Applicable" manufacturer="https://www.qutools.com/" reference="https://www.qutools.com/qudis/"/>
     </description>
