@@ -465,6 +465,26 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <excludedStates>OFF</excludedStates>
     </commands>
+    <commands name="GetSensorName" description="Get description of sensor type number, check with hardware doc" execMethod="get_sensor_name" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="axis number">
+        <type xsi:type="pogoDsl:UIntType"/>
+      </argin>
+      <argout description="Sensor type name">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>OFF</excludedStates>
+    </commands>
+    <commands name="GetSensorReferenceType" description="Get sensor reference mark type:&#xA;&#xA;no reference mark: 0&#xA;end stop:                1&#xA;single mark:            2&#xA;distance coded:      3" execMethod="get_sensor_reference_type" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="axis number">
+        <type xsi:type="pogoDsl:UIntType"/>
+      </argin>
+      <argout description="Sensor reference mark type">
+        <type xsi:type="pogoDsl:UIntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>OFF</excludedStates>
+    </commands>
     <dynamicCommands name="CmdGetDouble" description="For internal use only" execMethod="cmd_get_double" displayLevel="OPERATOR" polledPeriod="0" isDynamic="true">
       <argin description="0: channel idx&#xA;1: source idx">
         <type xsi:type="pogoDsl:IntArrayType"/>
@@ -502,6 +522,14 @@
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="Stream base rate for trajectory streaming.&#xA;Range: 10 - 1000 hz" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="EventInfo" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="3" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:UIntType"/>
+      <changeEvent fire="true" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Used to propagate events from hardware to axis devices:&#xA;0: axis index&#xA;1: event type&#xA;2: further event description" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <dynamicAttributes name="I32Property" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="true">
       <dataType xsi:type="pogoDsl:IntType"/>
