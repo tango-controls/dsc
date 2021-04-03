@@ -5,21 +5,8 @@
       <inheritances classname="Device_4Impl" sourcePath="/segfs/tango/templates/AbstractClasses"/>
       <identification contact="at esrf.fr - chaize" author="chaize" emailDomain="esrf.fr" classFamily="RadioProtection" siteSpecific="" platform="All Platforms" bus="Serial Line" manufacturer="none" reference=""/>
     </description>
-    <classProperties name="PeriodicResetTimes" description="list of hours at which the device server will reset the dose of the &#xA;neutron monitor. If this property is not set, no reset will be performed">
-      <type xsi:type="pogoDsl:StringType"/>
-      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-    </classProperties>
-    <classProperties name="GammaGain" description="gain on the measurment to add the gamma contribution to the &#xA;dose and the dose rate. If you want Neutrons only, let this gain&#xA; to 1. If you want the total dose including gamma contribution,&#xA;then set it to 1.56">
-      <type xsi:type="pogoDsl:DoubleType"/>
-      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <DefaultPropValue>1.0</DefaultPropValue>
-    </classProperties>
     <deviceProperties name="SerialProxyName" description="The name of the Serial DServer used">
       <type xsi:type="pogoDsl:StringType"/>
-      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-    </deviceProperties>
-    <deviceProperties name="PeriodicResetTimes" description="list of hours at which we want an automatic reset of the dose.&#xA;If this property is not set, no reset will be done">
-      <type xsi:type="pogoDsl:ShortVectorType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </deviceProperties>
     <deviceProperties name="GammaGain" description="gain on the measurment to add the gamma contribution to the &#xA;dose and the dose rate. If you want Neutrons only, let this gain&#xA; to 1. If you want the total dose including gamma contribution,&#xA;then set it to 1.56">
