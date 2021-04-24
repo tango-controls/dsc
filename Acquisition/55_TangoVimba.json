@@ -1,12 +1,10 @@
 {
     "55": {
         "buses": [
-            "Ethernet", 
             "Ethernet"
         ], 
         "certified": "False", 
         "class_names": [
-            "TangoVimba", 
             "TangoVimba"
         ], 
         "detail_url": "https://www.tango-controls.org/developers/dsc/ds/55/", 
@@ -21,25 +19,22 @@
             }
         ], 
         "families": [
-            "Acquisition", 
             "Acquisition"
         ], 
-        "last_update": "2021-04-10 03:10:34.296356+00:00", 
+        "last_update": "2021-04-24 03:10:09.736427+00:00", 
         "last_update_method": "url", 
         "license": "GPL", 
         "manufacturers": [
-            "Allied Vision", 
             "Allied Vision"
         ], 
         "name": "TangoVimba", 
         "products": [
-            "https://www.alliedvision.com", 
             "https://www.alliedvision.com"
         ], 
         "repository_contact_email": "", 
         "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Acquisition/2D/TangoVimba", 
         "status": "updated", 
-        "tag": "Release_4_2", 
+        "tag": "Release_4_3", 
         "update_url": "https://www.tango-controls.org/developers/dsc/ds/55/update/", 
         "updated_by_script": true
     }
