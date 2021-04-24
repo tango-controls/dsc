@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="SerialDevice" pogoRevision="9.6">
-    <description description="Device server to communicate with RS232 devices; this eas written at DESY&#xA;with DESY beamlines in mind, where we quite have have the situation&#xA;that for testing / evaluation purposes devices are connected directly&#xA;to a computer, but will lateron be driven via a terminal server.&#xA;&#xA;This server supports both way, you can switch by setting properties." title="" sourcePath="/ssd/blume/src/TangoSvn/tango-ds/DeviceClasses/Communication/SerialDevice/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" license="GPL" copyright="" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+  <classes name="SerialDevice" pogoRevision="9.7">
+    <description description="Device server to communicate with RS232 devices; this eas written at DESY&#xA;with DESY beamlines in mind, where we quite have have the situation&#xA;that for testing / evaluation purposes devices are connected directly&#xA;to a computer, but will lateron be driven via a terminal server.&#xA;&#xA;This server supports both way, you can switch by setting properties." title="" sourcePath="/home/blume/src/TangoSvn/tango-ds/DeviceClasses/Communication/SerialDevice/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" license="GPL" copyright="" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
       <inheritances classname="Device_Impl" sourcePath=""/>
       <identification contact="at desy.de - johannes.blume" author="johannes.blume" emailDomain="desy.de" classFamily="Communication" siteSpecific="" platform="Unix Like" bus="Not Applicable" manufacturer="none" reference=""/>
     </description>
@@ -99,6 +99,15 @@
       </argin>
       <argout description="">
         <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="WriteRaw" description="Write string given in argin to device without adding a line terminator" execMethod="write_raw" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
