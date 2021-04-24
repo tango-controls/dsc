@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="TangoDALSA" pogoRevision="9.6">
-    <description description="Tango Device server for GigEVision cameras from teledyne dalsa&#xA;&#xA;Remarks:&#xA;&#xA;- if you want to use atk panel (or other java programs) to view the&#xA;  ImageXX attributes make sure to start java with a sufficiently&#xA;  big -mx&lt;memsize> switch" title="" sourcePath="/ssd/blume/src/TangoSvn/tango-ds/DeviceClasses/Acquisition/2D/TangoDALSA/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" license="GPL" copyright="" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+  <classes name="TangoDALSA" pogoRevision="9.7">
+    <description description="Tango Device server for GigEVision cameras from teledyne dalsa&#xA;&#xA;Remarks:&#xA;&#xA;- if you want to use atk panel (or other java programs) to view the&#xA;  ImageXX attributes make sure to start java with a sufficiently&#xA;  big -mx&lt;memsize> switch" title="" sourcePath="/home/blume/src/TangoSvn/tango-ds/DeviceClasses/Acquisition/2D/TangoDALSA/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" license="GPL" copyright="" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
       <inheritances classname="Device_Impl" sourcePath=""/>
       <identification contact="at desy.de - johannes.blume" author="johannes.blume" emailDomain="desy.de" classFamily="Acquisition" siteSpecific="" platform="Unix Like" bus="Ethernet" manufacturer="https://www.teledynedalsa.com/" reference=""/>
     </description>
@@ -76,6 +76,15 @@
       <excludedStates>EXTRACT</excludedStates>
     </commands>
     <commands name="DeviceReset" description="" execMethod="device_reset" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SoftTrigger" description="To make use of this command:&#xA;&#xA;- make sure TriggerMode is included in the VisibleAttributes list&#xA;- if not, add it and restart the server&#xA;- set TriggerMode to ExtTrigger&#xA;- run StartAcquisition&#xA;- if you now call this command, the detector will generate a frame" execMethod="soft_trigger" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="">
         <type xsi:type="pogoDsl:VoidType"/>
       </argin>
