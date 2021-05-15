@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="Agilent33500B" pogoRevision="9.6">
-    <description description="A class to control the Agilent 33500B waveform generator" title="Agilent33500B" sourcePath="/mntdirect/_segfs/tango/cppserver/instrumentation/SignalGenerator/Agilent33500B" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" license="GPL" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+  <classes name="Agilent33500B" pogoRevision="9.7">
+    <description description="A class to control the Agilent 33500B waveform generator" title="Agilent33500B" sourcePath="/mnt/multipath-shares/segfs/tango/cppserver/instrumentation/SignalGenerator/Agilent33500B" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" license="GPL" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
       <inheritances classname="Device_Impl" sourcePath=""/>
       <identification contact="at esrf.fr - pons" author="pons" emailDomain="esrf.fr" classFamily="OtherInstruments" siteSpecific="" platform="Unix Like" bus="Ethernet" manufacturer="none" reference=""/>
     </description>
@@ -32,6 +32,11 @@
     <deviceProperties name="TrackModeSupport" description="true if Track mode is supported">
       <type xsi:type="pogoDsl:BooleanType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="SaveInternalConfig" description="Save settings (if true) to internal reboot memory after &#xA;each parameter change.">
+      <type xsi:type="pogoDsl:BooleanType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>false</DefaultPropValue>
     </deviceProperties>
     <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="1000" isDynamic="false">
       <argin description="none">
@@ -143,7 +148,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="" label="" unit="K.Sa/s" standardUnit="" displayUnit="" format="%9.3f" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="" label="" unit="Sa/s" standardUnit="" displayUnit="" format="%9.3f" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <writeExcludedStates>MOVING</writeExcludedStates>
     </attributes>
     <attributes name="TriggerMode" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" allocReadMember="true" isDynamic="false">
