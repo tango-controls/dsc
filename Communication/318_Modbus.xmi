@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="Modbus" pogoRevision="9.4">
-    <description description="A Class to handle the modbus protocol over TCP/IP or Serial (RTU)." title="Modbus" sourcePath="/mntdirect/_users/tappret/Modbus/src" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" license="GPL" copyright="" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+  <classes name="Modbus" pogoRevision="9.7">
+    <description description="A Class to handle the modbus protocol over TCP/IP or Serial (RTU)." title="Modbus" sourcePath="/mnt/multipath-shares/segfs/tango/cppserver/protocols/Modbus/src" language="Cpp" filestogenerate="XMI   file,CMakeLists,Protected Regions" license="GPL" copyright="" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
       <inheritances classname="Device_Impl" sourcePath=""/>
       <identification contact="at esrf.fr - pons" author="pons" emailDomain="esrf.fr" classFamily="Communication" siteSpecific="" platform="All Platforms" bus="Modbus" manufacturer="none" reference=""/>
     </description>
@@ -65,6 +65,16 @@
       <type xsi:type="pogoDsl:ShortType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>100</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="TCPKeepAlive" description="Allow to enable/disable the TCP Keep Alive socket option.&#xA;Defaults to False.">
+      <type xsi:type="pogoDsl:BooleanType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>False</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="Port" description="The port of the host modbus connection for the TCP protocol. Defaults to 502">
+      <type xsi:type="pogoDsl:ShortType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>502</DefaultPropValue>
     </deviceProperties>
     <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="none">
