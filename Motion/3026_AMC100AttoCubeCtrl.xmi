@@ -146,7 +146,7 @@
     </commands>
     <commands name="GetPosition" description="" execMethod="get_position" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="Axis number">
-        <type xsi:type="pogoDsl:DoubleType"/>
+        <type xsi:type="pogoDsl:IntType"/>
       </argin>
       <argout description="Positioner position (nm)">
         <type xsi:type="pogoDsl:DoubleType"/>
@@ -204,6 +204,15 @@
       </argin>
       <argout description="">
         <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetReferencePosition" description="" execMethod="get_reference_position" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Axis number">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="Reference position (nm)">
+        <type xsi:type="pogoDsl:DoubleType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
