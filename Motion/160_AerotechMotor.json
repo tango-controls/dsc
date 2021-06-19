@@ -1,0 +1,41 @@
+{
+    "160": {
+        "buses": [
+            "Ethernet"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "AerotechMotor"
+        ], 
+        "detail_url": "https://www.tango-controls.org/developers/dsc/ds/160/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 310, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Motion/AerotechMotor/AerotechMotor.pdf"
+            }
+        ], 
+        "families": [
+            "Motion"
+        ], 
+        "last_update": "2021-06-19 03:50:46.974781+00:00", 
+        "last_update_method": "url", 
+        "license": "GPL", 
+        "manufacturers": [
+            "Aerotech"
+        ], 
+        "name": "AerotechMotor", 
+        "products": [
+            "Ensemble QLAB"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Motion/MotorControllers/AerotechMotor", 
+        "status": "updated", 
+        "tag": "Release_1_2", 
+        "update_url": "https://www.tango-controls.org/developers/dsc/ds/160/update/", 
+        "updated_by_script": true
+    }
+}
