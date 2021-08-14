@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
   <classes name="SmarActMCS2Motor" pogoRevision="9.6">
-    <description description="Motor class for smaract mcs controller.&#xA;&#xA;The server supports using a Picoscale interferometer as encoder.&#xA;If you don`t want or need this call `make PICOSCALESUPPORT=no`." title="" sourcePath="/ssd/blume/src/TangoSvn/tango-ds/DeviceClasses/Motion/MotorControllers/Smaract/SmarActMCS2Motor/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" license="GPL" copyright="" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+    <description description="Motor class for smaract mcs controller.&#xA;&#xA;The server supports using a Picoscale interferometer as encoder.&#xA;If you don`t want or need this call `make PICOSCALESUPPORT=no`.&#xA;&#xA;If your controller has an IO module added, you will see some additional&#xA;attributes on the motor devices&#xA;&#xA;OutputTriggerMode: &#xA;This attribute specifies the output trigger mode of a motor channel.&#xA;Valid values are:&#xA;0: constant mode (output trigger does not change)&#xA;1: position compare (output trigger will change when the position&#xA;   changes by a defines increment, cf. attribute PositionCompareIncrement)&#xA;2: target reached (output trigger will change when the motor has reached it`s target position)&#xA;3: active move (utput trigger will change when the motor starts/stops)&#xA;&#xA;PositionCompareDirection:&#xA;This attribute specifies the position compare direction when having set OutputTriggerMode to 2.&#xA;Valid values are:&#xA;0: forward direction, the trigger pulse is output when the position value passes the threshold from below.&#xA;1: backward direction, the trigger pulse is output when the position value passes the threshold from above.&#xA;2: either direction, the trigger pulse is output when the position value passes the threshold from below or above.&#xA;&#xA;OutputTriggerPolarity:&#xA;This attribute specifies the output trigger polarity.&#xA;Valid values are:&#xA;0: active low (the idle levelis high and a low pulse is generated when the trigger occurs)&#xA;1: active high (he idle levelis low and a high pulse is generated when the trigger occurs)&#xA;&#xA;OutputTriggerPulseWidth:&#xA;This attribute specifies the output trigger pulse width.&#xA;Valid range is:&#xA;&#xA;100 ns ... 4 &#xd7; 10^9 ns&#xA;&#xA;PositionCompareStartThreshold:&#xA;This attribute specifies the position compare start threshold when having set OutputTriggerMode to 2.&#xA;As soon as the position passes this threshold in the configured direction (cf. attribute PositionCompareDirection)&#xA;an output pulse is generated. Additionally the threshold is incremented by&#xA;the value of the atribute PositionCompareIncrement to define the next trigger threshold.&#xA;&#xA;PositionCompareIncrement:&#xA;This attribute specifies the position compare output trigger increment.&#xA;Valid range is 1 ... 1 &#xd7; 10^12 pm or n&#xb0; (watch out, attribute conversion is taken into account)&#xA;&#xA;PositionCompareLimitMin:&#xA;This attribute specifies the lower limit for the position compare output trigger. The limits&#xA;act as an additional gate for the generation of output pulses. Output pulses are only generated&#xA;when the current position lies between the configured minimum and maximum limits. Note that&#xA;the maximum limit must be configured to a higher value than the minimum limit for the limit&#xA;checks to be active. If both limits are set to the same value the checks are disabled and output&#xA;pulses are generated according to the configured start threshold, increment and direction.&#xA;&#xA;PositionCompareLimitMax:&#xA;This attribute specifies the upper limit for the position compare output trigger in pm or n&#xb0;. The&#xA;limits act as an additional gate for the generation of output pulses. Output pulses are only gener-&#xA;ated when the current position lies between the configured minimum and maximum limits. Note&#xA;that the maximum limit must be configured to a higher value than the minimum limit for the limit&#xA;checks to be active. If both limits are set to the same value the checks are disabled and output&#xA;pulses are generated according to the configured start threshold, increment and direction.&#xA;&#xA;&#xA;For more detailed information on the use of trajectory streaming and the IO modules check the smaract documentation." title="" sourcePath="/ssd/blume/src/TangoSvn/tango-ds/DeviceClasses/Motion/MotorControllers/Smaract/SmarActMCS2Motor/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions,html Pages" license="GPL" copyright="" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
       <inheritances classname="Device_Impl" sourcePath=""/>
       <identification contact="at desy.de - johannes.blume" author="johannes.blume" emailDomain="desy.de" classFamily="Motion" siteSpecific="" platform="Unix Like" bus="Not Applicable" manufacturer="Smaract" reference="http://www.smaract.de/index.php/products/controlsystems/mcs2"/>
     </description>
@@ -13,10 +13,15 @@
       <type xsi:type="pogoDsl:UIntType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </deviceProperties>
-    <deviceProperties name="PicoScaleEncoded" description="Set to true, if this axis uses a picoscale interferometer&#xA;as encoder.">
+    <deviceProperties name="PicoScaleEncoded" description="Set to true, if this axis uses a picoscale interferometer&#xA;as encoder (may need server code recompile&#xA;with `make PICOSCALESUPPORT=yes`)">
       <type xsi:type="pogoDsl:BooleanType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>false</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="SensorType" description="Normally the sensor type will be configured by Smaract for&#xA;the positioners the controller was ordered/delivered with. If&#xA;this property is 0 (the default value) we assume that this&#xA;is still the case, no modification to the controller-stored&#xA;sensor type will be done.&#xA;&#xA;&#xA;If you ever change to a different type of positioner its sensor type&#xA;code has to be given to the controller. Check out the type&#xA;code from the smaract docs (MCS2PositionerTypes.pdf.gz)&#xA;and enter it here. It will be written to the controller at server&#xA;start.">
+      <type xsi:type="pogoDsl:UIntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>0</DefaultPropValue>
     </deviceProperties>
     <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="none">
@@ -78,7 +83,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="Get/Set move mode. This might mofify meaning and behaviour of Position attribute&#xA;&#xA;0 : closed loop absolute&#xA;1 : closed loop relative&#xA;2 : scan mode absolute&#xA;3 : scan mode relative&#xA; 4 : step mode&#xA;&#xA;When mode is set to 4, settings for speed are ignored. Set stepwidth with StepAmplitude&#xA;and speed with StepFrequency." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="Get/Set move mode. This might mofify meaning and behaviour of Position attribute&#xA;&#xA;0 : closed loop absolute&#xA;1 : closed loop relative&#xA;2 : scan mode absolute&#xA;3 : scan mode relative&#xA; 4 : step mode" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <attributes name="StepAmplitude" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:IntType"/>
@@ -287,6 +292,22 @@
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="Counter clockwise end stop state, true = end stop hit;attribute will only be present if stage with end stop is connected." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </dynamicAttributes>
+    <dynamicAttributes name="DevLongDynamicAttribute" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="true">
+      <dataType xsi:type="pogoDsl:IntType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </dynamicAttributes>
+    <dynamicAttributes name="DevDoubleDynamicAttribute" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="true">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </dynamicAttributes>
     <states name="MOVING" description="Axis is moving">
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
