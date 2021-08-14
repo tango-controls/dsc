@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="SmarActMCS2Ctrl" pogoRevision="9.6">
-    <description description="Controller device server for MCS2 Smaract Control System.&#xA;&#xA;Commands / attributes of this class should never be called directly,&#xA;they are meant to be called from the SmarActMCS2Motor devices." title="" sourcePath="/ssd/blume/src/TangoSvn/tango-ds/DeviceClasses/Motion/MotorControllers/Smaract/SmarActMCS2Ctrl/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" license="GPL" copyright="" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+  <classes name="SmarActMCS2Ctrl" pogoRevision="9.7">
+    <description description="Controller device server for MCS2 Smaract Control System.&#xA;&#xA;Commands / attributes of this class should never be called directly,&#xA;they are meant to be called from the SmarActMCS2Motor devices.&#xA;&#xA;If your controller is equipped with an IO module, you will see&#xA;an additional attribute:&#xA;&#xA;IoModuleOutputVoltage:&#xA;This attribute specifies the IO module output voltage for the digital outputs.&#xA;Valid value are:&#xA;0: 3V&#xA;1: 5V" title="" sourcePath="/home/blume/src/TangoSvn/tango-ds/DeviceClasses/Motion/MotorControllers/Smaract/SmarActMCS2Ctrl/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" license="GPL" copyright="" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
       <inheritances classname="Device_Impl" sourcePath=""/>
       <identification contact="at desy.de - johannes.blume" author="johannes.blume" emailDomain="desy.de" classFamily="Motion" siteSpecific="" platform="Unix Like" bus="Not Applicable" manufacturer="Smaract" reference="http://www.smaract.com/products/control-systems/mcs2"/>
     </description>
@@ -64,6 +64,7 @@
         <type xsi:type="pogoDsl:UShortType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="GetPosition" description="returns current position in encoder steps" execMethod="get_position" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -74,6 +75,7 @@
         <type xsi:type="pogoDsl:LongType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="SetMoveMode" description="set move mode&#xA;&#xA;0 : closed loop absolute&#xA;1 : closed loop relative&#xA;2 : scan mode absolute&#xA;3 : scan mode relative&#xA;4 : step mode" execMethod="set_move_mode" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -84,6 +86,7 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="GetMoveMode" description="get move mode&#xA;&#xA;0 : closed loop absolute&#xA;1 : closed loop relative&#xA;2 : scan mode absolute&#xA;3 : scan mode relative&#xA;4 : step mode" execMethod="get_move_mode" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -94,6 +97,7 @@
         <type xsi:type="pogoDsl:IntType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="GetStepAmplitude" description="Gets step amplitude for open-loop movements.&#xA;Value range: 1 - 65535&#xA;65535 corresponds to 100V" execMethod="get_step_amplitude" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -104,6 +108,7 @@
         <type xsi:type="pogoDsl:IntType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="SetStepAmplitude" description="Sets step amplitude for open-loop movements.&#xA;Value range: 1 - 65535&#xA;65535 corresponds to 100V" execMethod="set_step_amplitude" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -114,6 +119,7 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="GetStepFrequency" description="Gets step frequency for open-loop movements.&#xA;&#xA;Value range: 1 - 20000 Hz" execMethod="get_step_frequency" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -124,6 +130,7 @@
         <type xsi:type="pogoDsl:IntType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="SetStepFrequency" description="Sets step frequency for open-loop movements.&#xA;Value range: 1 - 20000 Hz" execMethod="set_step_frequency" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -134,6 +141,7 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="SetPosition" description="moves axis&#xA;&#xA;the effect of writing a position value depends on the set move mode" execMethod="set_position" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -144,6 +152,7 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="SetAutoZero" description="sets auto zero property" execMethod="set_auto_zero" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -154,6 +163,7 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="GetAutoZero" description="gets auto zero property" execMethod="get_auto_zero" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -164,6 +174,7 @@
         <type xsi:type="pogoDsl:BooleanType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="GetVelocity" description="Gets closed loop velocity." execMethod="get_velocity" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -174,6 +185,7 @@
         <type xsi:type="pogoDsl:LongType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="SetVelocity" description="Sets closed loop velocity&#xA;Value range: 0 - 100000000000" execMethod="set_velocity" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -184,6 +196,7 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="GetHoldTime" description="Gets hold time for closed -loop movements." execMethod="get_hold_time" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -194,6 +207,7 @@
         <type xsi:type="pogoDsl:UIntType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="SetHoldTime" description="Sets hold time (time in ms the position is actively held after reaching the&#xA;target posi-tion) for closed-loop movements.&#xA;Value range: 0 - 4294967295 (0 disables holding,&#xA;max value is for infinite, i.e. hold until motor is stopped)" execMethod="set_hold_time" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -204,6 +218,7 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="GetPositionKnown" description="Finds out whether the physical position of this axis is known.&#xA;If false and the motor has an encoder with reference mark,&#xA;run command `Home`." execMethod="get_position_known" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -214,6 +229,7 @@
         <type xsi:type="pogoDsl:BooleanType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="GetAxisType" description="" execMethod="get_axis_type" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -224,6 +240,7 @@
         <type xsi:type="pogoDsl:UIntType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="GetMaxFrequency" description="Gets maximumfrequency for closed-loop movements." execMethod="get_max_frequency" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -234,6 +251,7 @@
         <type xsi:type="pogoDsl:IntType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="SetMaxFrequency" description="Sets maximum frequency for closed-loop movements.&#xA;Value range: 50 - 20000 Hz" execMethod="set_max_frequency" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -244,6 +262,7 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="GetSensorType" description="Get sensor type number, check with hardware doc" execMethod="get_sensor_type" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -254,6 +273,7 @@
         <type xsi:type="pogoDsl:UIntType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="GetMaxStepLimit" description="" execMethod="get_max_step_limit" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -264,6 +284,7 @@
         <type xsi:type="pogoDsl:LongType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="GetMinStepLimit" description="" execMethod="get_min_step_limit" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -274,6 +295,7 @@
         <type xsi:type="pogoDsl:LongType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="SetMaxStepLimit" description="" execMethod="set_max_step_limit" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -284,6 +306,7 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="SetMinStepLimit" description="" execMethod="set_min_step_limit" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -294,6 +317,7 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="Calibrate" description="Perform calibration for channnel &lt;axis number>. Should only be necessary&#xA;if setup was changed (e.g. new / different positioner connected).&#xA;Requires encoded positioner, encoder has to be enabled." execMethod="calibrate" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -304,6 +328,7 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="SetCalibrationOptions" description="Set calibration option (used with Calibrate command)&#xA;&#xA;bit 0: Direction&#xA;bit 1: Detect Distance Code Inversion&#xA;bit 2: Advanced Sensor Correction&#xA;bit 8: Limited Travel Range&#xA;&#xA;all other bits are reserved" execMethod="set_calibration_options" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -314,6 +339,7 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="GetCalibrationOptions" description="Get calibration option (used with Calibrate command)&#xA;&#xA;bit 0: Direction&#xA;bit 1: Detect Distance Code Inversion&#xA;bit 2: Advanced Sensor Correction&#xA;bit 8: Limited Travel Range&#xA;&#xA;all other bits are reserved" execMethod="get_calibration_options" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -324,6 +350,7 @@
         <type xsi:type="pogoDsl:UIntType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="HoldPosition" description="Enables holding the current position by setting the move mode to&#xA;closed loop relative movement and then driving by 0 encoder steps.&#xA;(c.f. programmer manual, 2.6.4)" execMethod="hold_position" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -334,6 +361,7 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="Stop" description="Stop movement on axis &lt;axis number>" execMethod="stop" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -344,6 +372,7 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="SetSensorMode" description="" execMethod="set_sensor_mode" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -354,6 +383,7 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="GetSensorMode" description="" execMethod="get_sensor_mode" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -364,6 +394,7 @@
         <type xsi:type="pogoDsl:IntType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="GetAcceleration" description="Gets closed loop acceleration" execMethod="get_acceleration" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -374,6 +405,7 @@
         <type xsi:type="pogoDsl:LongType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="SetAcceleration" description="Sets closed loop acceleration" execMethod="set_acceleration" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -384,6 +416,7 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="GetActuatorMode" description="Gets currently set actuator mode" execMethod="get_actuator_mode" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -394,6 +427,7 @@
         <type xsi:type="pogoDsl:IntType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="SetActuatorMode" description="" execMethod="set_actuator_mode" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -404,6 +438,7 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="Home" description="" execMethod="home" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -414,6 +449,7 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="GetFollowingErrorLimit" description="Gets currently set following error limit" execMethod="get_following_error_limit" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -424,6 +460,7 @@
         <type xsi:type="pogoDsl:LongType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="SetFollowingErrorLimit" description="Sets following error limit&#xA;Value range: 0 - 100000000000000" execMethod="set_following_error_limit" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -434,16 +471,19 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
-    <commands name="StartStreaming" description="Start trajectoy streaming. A file with trajectory data must exist and it`s&#xA;path/name supplied as argument to this command." execMethod="start_streaming" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
-      <argin description="trajectory data file name">
-        <type xsi:type="pogoDsl:StringType"/>
+    <commands name="StartStreaming" description="Start trajectory streaming.&#xA;&#xA;Make sure attribute TrajectoryData has been written before calling this." execMethod="start_streaming" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
       </argin>
       <argout description="">
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="SetSearchDirection" description="sets search direction property" execMethod="set_search_direction" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="0: axis number&#xA;1: toggling true / false will reverse search direction on reference mark search">
@@ -453,6 +493,7 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="GetSearchDirection" description="gets search direction property" execMethod="get_search_direction" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -463,6 +504,7 @@
         <type xsi:type="pogoDsl:BooleanType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="GetSensorName" description="Get description of sensor type number, check with hardware doc" execMethod="get_sensor_name" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -473,6 +515,7 @@
         <type xsi:type="pogoDsl:StringType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="GetSensorReferenceType" description="Get sensor reference mark type:&#xA;&#xA;no reference mark: 0&#xA;end stop:                1&#xA;single mark:            2&#xA;distance coded:      3" execMethod="get_sensor_reference_type" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
@@ -483,6 +526,40 @@
         <type xsi:type="pogoDsl:UIntType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>OFF</excludedStates>
+    </commands>
+    <commands name="SetConversion" description="Internal use only" execMethod="set_conversion" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="0: axis number&#xA;1: conversion factor if this axis">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>OFF</excludedStates>
+    </commands>
+    <commands name="AbortStreaming" description="Immediately abort trajectory streaming." execMethod="abort_streaming" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>OFF</excludedStates>
+    </commands>
+    <commands name="SetSensorType" description="Sets sensort type code (use with care!)" execMethod="set_sensor_type" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="0: axis number&#xA;1: sensor type code (cf. Smaract docs). Use with care, setting a wrong sensortype&#xA;may damagage hardware">
+        <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
     <dynamicCommands name="CmdGetDouble" description="For internal use only" execMethod="cmd_get_double" displayLevel="OPERATOR" polledPeriod="0" isDynamic="true">
@@ -493,6 +570,7 @@
         <type xsi:type="pogoDsl:DoubleType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </dynamicCommands>
     <dynamicCommands name="CmdGetUShort" description="For internal use only" execMethod="cmd_get_ushort" displayLevel="OPERATOR" polledPeriod="0" isDynamic="true">
@@ -503,6 +581,7 @@
         <type xsi:type="pogoDsl:UShortType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </dynamicCommands>
     <dynamicCommands name="CmdGetI32Property" description="For internal use only" execMethod="cmd_get_i32_property" displayLevel="OPERATOR" polledPeriod="0" isDynamic="true">
@@ -513,6 +592,51 @@
         <type xsi:type="pogoDsl:IntType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>OFF</excludedStates>
+    </dynamicCommands>
+    <dynamicCommands name="CmdLongLong" description="" execMethod="cmd_long_long" displayLevel="OPERATOR" polledPeriod="0" isDynamic="true">
+      <argin description="">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>OFF</excludedStates>
+    </dynamicCommands>
+    <dynamicCommands name="CmdLongArrayVoid" description="" execMethod="cmd_long_array_void" displayLevel="OPERATOR" polledPeriod="0" isDynamic="true">
+      <argin description="">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>OFF</excludedStates>
+    </dynamicCommands>
+    <dynamicCommands name="CmdLongLong64" description="" execMethod="cmd_long_long64" displayLevel="OPERATOR" polledPeriod="0" isDynamic="true">
+      <argin description="">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:LongType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>OFF</excludedStates>
+    </dynamicCommands>
+    <dynamicCommands name="CmdLong64ArrayVoid" description="" execMethod="cmd_long64_array_void" displayLevel="OPERATOR" polledPeriod="0" isDynamic="true">
+      <argin description="">
+        <type xsi:type="pogoDsl:LongArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </dynamicCommands>
     <attributes name="StreamBaseRate" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
@@ -522,6 +646,74 @@
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="Stream base rate for trajectory streaming.&#xA;Range: 10 - 1000 hz" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <readExcludedStates>OFF</readExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
+      <writeExcludedStates>OFF</writeExcludedStates>
+    </attributes>
+    <attributes name="StreamTriggerMode" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:IntType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Stream trigger mode for trajectory streaming:&#xA;&#xA;0: Direct Mode&#xA;1: External Once Mode&#xA;2: External Synchronization Mode&#xA;3: External&#xA;&#xA;Check the Smaract docs on the specific meaning of these modes" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="3" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <readExcludedStates>OFF</readExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
+      <writeExcludedStates>OFF</writeExcludedStates>
+    </attributes>
+    <attributes name="ExternalSyncRate" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:IntType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="External stream synchronization rate in Hz for the trajectory streaming.&#xA;May be used to synchronize the internal position streaming clock to an external clock signal.&#xA;StreamBaseRate must be a whole-number multiple of the external sync rate.&#xA;&#xA;Value is ony used when trigger mode is set to external sync ( = 2)." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="1" maxAlarm="1000" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <readExcludedStates>OFF</readExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
+      <writeExcludedStates>OFF</writeExcludedStates>
+    </attributes>
+    <attributes name="StreamLoadMax" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:IntType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Shows the maximum load generated by the current stream in percent. It acts like a peak&#xA;detector. The highest load level generated by the currently running stream is&#xA;shown. When starting the trajectory streaming  the load value is reset to zero." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <readExcludedStates>OFF</readExcludedStates>
+    </attributes>
+    <attributes name="StreamReady" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="true" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Will change to true when sufficient trajectory stream data have been transmitted&#xA;to the controller so streaming an be started.&#xA;A change event with value true when the stream is ready and with value&#xA;false when the stream is started will be emitted." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <readExcludedStates>OFF</readExcludedStates>
+    </attributes>
+    <attributes name="StreamStarted" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="true" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Will change to true when the trajectory stream is started and to false&#xA;when the stream is finished.&#xA;A change event with value true when the stream is started and with value&#xA;false when the stream is finished will be emitted." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <readExcludedStates>OFF</readExcludedStates>
+    </attributes>
+    <attributes name="IOModulePresent" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="True, if io module is installed in the controller" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <readExcludedStates>OFF</readExcludedStates>
     </attributes>
     <attributes name="EventInfo" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="3" maxY="" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:UIntType"/>
@@ -530,6 +722,8 @@
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="Used to propagate events from hardware to axis devices:&#xA;0: axis index&#xA;1: event type&#xA;2: further event description" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <readExcludedStates>OFF</readExcludedStates>
     </attributes>
     <dynamicAttributes name="I32Property" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="true">
       <dataType xsi:type="pogoDsl:IntType"/>
@@ -538,7 +732,9 @@
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="For internal use only" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
       <readExcludedStates>OFF</readExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
       <writeExcludedStates>OFF</writeExcludedStates>
     </dynamicAttributes>
     <dynamicAttributes name="F64Property" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="true">
@@ -548,7 +744,9 @@
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
       <readExcludedStates>OFF</readExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
       <writeExcludedStates>OFF</writeExcludedStates>
     </dynamicAttributes>
     <dynamicAttributes name="I32Event" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="2" maxY="" allocReadMember="true" isDynamic="true">
@@ -558,7 +756,20 @@
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
       <readExcludedStates>OFF</readExcludedStates>
+    </dynamicAttributes>
+    <dynamicAttributes name="ImageWriteDynAttr" attType="Image" rwType="WRITE" displayLevel="OPERATOR" polledPeriod="1000" maxX="30" maxY="100000000" allocReadMember="false" isDynamic="true">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Data for trajectory movement, must be organized like this:&#xA;&#xA;axis_X position axis_Y position axis_Z position ...&#xA;axis_X position axis_Y position axis_Z position ...&#xA;axis_X position axis_Y position axis_Z position ...&#xA;axis_X position axis_Y position axis_Z position ...&#xA;..." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <readExcludedStates>OFF</readExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
+      <writeExcludedStates>OFF</writeExcludedStates>
     </dynamicAttributes>
     <states name="ON" description="Everything ok.">
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
