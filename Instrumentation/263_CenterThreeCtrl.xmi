@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="CenterThreeCtrl" pogoRevision="8.4">
-    <description description="" title="CenterThreeCtrl" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/SampleEnvironment/CenterThreeCtrl/trunk" language="Cpp" filestogenerate="XMI   file,Code files,html Pages" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+  <classes name="CenterThreeCtrl" pogoRevision="9.7">
+    <description description="" title="CenterThreeCtrl" sourcePath="/home/blume/src/TangoSvn/tango-ds/DeviceClasses/SampleEnvironment/CenterThreeCtrl/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
       <inheritances classname="Device_4Impl" sourcePath=""/>
       <identification contact="at desy.de - johannes.blume" author="johannes.blume" emailDomain="desy.de" classFamily="Instrumentation" siteSpecific="" platform="Unix Like" bus="Ethernet" manufacturer="none" reference=""/>
     </description>
@@ -37,6 +37,16 @@
       <type xsi:type="pogoDsl:IntType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>0</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="TalkContinously" description="If set to true, the server will send a COM to the controller&#xA;at server start (making the controller send measurement data&#xA;continuously).&#xA;Set this to true, if you use this controller device with the&#xA;CenterThreeCOM class. Otherwise leave it at false.">
+      <type xsi:type="pogoDsl:BooleanType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>false</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="TalkContinouslyRate" description="Time interval of the controller sending measurement data if&#xA;TalkContinously is set to true.&#xA;0: 100 milliseconds&#xA;1: one second (default)&#xA;2: 1 minute">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>1</DefaultPropValue>
     </deviceProperties>
     <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="none.">
