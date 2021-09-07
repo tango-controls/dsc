@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="K2Modulator" pogoRevision="8.4">
+    <description description="Test description" language="Python" filestogenerate="XMI   file,Code files" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <identification contact="at s2innovation.com - mateusz.nabywaniec" author="Mateusz Nabywaniec" emailDomain="s2innovation.com" classFamily="Testing" siteSpecific="" platform="All Platforms" bus="Socket" manufacturer="S2Innovation" reference="cataloguetest"/>
+    </description>
+    <deviceProperties name="IP" description="IP address">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>127.0.0.1</DefaultPropValue>
+    </deviceProperties>
+  </classes>
+</pogoDsl:PogoSystem>
