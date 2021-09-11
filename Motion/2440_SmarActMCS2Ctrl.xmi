@@ -38,6 +38,11 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>&quot;&quot;</DefaultPropValue>
     </deviceProperties>
+    <deviceProperties name="GlobalInputPresent" description="Set this to true if your device sits in a MCS2 19``-rack-housing&#xA;with a global input">
+      <type xsi:type="pogoDsl:BooleanType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>false</DefaultPropValue>
+    </deviceProperties>
     <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="none">
         <type xsi:type="pogoDsl:VoidType"/>
@@ -474,7 +479,7 @@
       <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
-    <commands name="StartStreaming" description="Start trajectory streaming.&#xA;&#xA;Make sure attribute TrajectoryData has been written before calling this." execMethod="start_streaming" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+    <commands name="StartStreaming" description="Start trajectory streaming.&#xA;&#xA;Make sure attribute TrajectoryData has been written before calling this.&#xA;&#xA;Smaract commands: SA_CTL_OpenStream/SA_CTL_StreamFrame/SA_CTL_CloseStream" execMethod="start_streaming" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="">
         <type xsi:type="pogoDsl:VoidType"/>
       </argin>
@@ -540,7 +545,7 @@
       <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </commands>
-    <commands name="AbortStreaming" description="Immediately abort trajectory streaming." execMethod="abort_streaming" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+    <commands name="AbortStreaming" description="Immediately abort trajectory streaming.&#xA;&#xA;Smaract command: SA_CTL_AbortStream" execMethod="abort_streaming" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="">
         <type xsi:type="pogoDsl:VoidType"/>
       </argin>
@@ -606,8 +611,8 @@
       <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </dynamicCommands>
-    <dynamicCommands name="CmdLongArrayVoid" description="" execMethod="cmd_long_array_void" displayLevel="OPERATOR" polledPeriod="0" isDynamic="true">
-      <argin description="">
+    <dynamicCommands name="CmdLongArrayVoid" description="Internal use only" execMethod="cmd_long_array_void" displayLevel="OPERATOR" polledPeriod="0" isDynamic="true">
+      <argin description="0: axis number&#xA;1: property key&#xA;2: value">
         <type xsi:type="pogoDsl:IntArrayType"/>
       </argin>
       <argout description="">
@@ -639,13 +644,24 @@
       <excludedStates>FAULT</excludedStates>
       <excludedStates>OFF</excludedStates>
     </dynamicCommands>
+    <dynamicCommands name="CmdLongArrayLong" description="Internal use only" execMethod="cmd_long_array_long" displayLevel="OPERATOR" polledPeriod="0" isDynamic="true">
+      <argin description="0: axis number&#xA;1: property key">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argin>
+      <argout description="property value">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>OFF</excludedStates>
+    </dynamicCommands>
     <attributes name="StreamBaseRate" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:IntType"/>
       <changeEvent fire="false" libCheckCriteria="false"/>
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="Stream base rate for trajectory streaming.&#xA;Range: 10 - 1000 hz" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="Stream base rate for trajectory streaming.&#xA;Range: 10 - 1000 hz&#xA;&#xA;Smaract property: SA_CTL_PKEY_STREAM_BASE_RATE" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <readExcludedStates>FAULT</readExcludedStates>
       <readExcludedStates>OFF</readExcludedStates>
       <writeExcludedStates>FAULT</writeExcludedStates>
@@ -657,7 +673,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="Stream trigger mode for trajectory streaming:&#xA;&#xA;0: Direct Mode&#xA;1: External Once Mode&#xA;2: External Synchronization Mode&#xA;3: External&#xA;&#xA;Check the Smaract docs on the specific meaning of these modes" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="3" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="Stream trigger mode for trajectory streaming:&#xA;&#xA;0: Direct Mode&#xA;1: External Once Mode&#xA;2: External Synchronization Mode&#xA;3: External&#xA;&#xA;Check the Smaract docs on the specific meaning of these modes&#xA;&#xA;Smaract command: SA_CTL_OpenStream" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="3" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <readExcludedStates>FAULT</readExcludedStates>
       <readExcludedStates>OFF</readExcludedStates>
       <writeExcludedStates>FAULT</writeExcludedStates>
@@ -669,7 +685,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="External stream synchronization rate in Hz for the trajectory streaming.&#xA;May be used to synchronize the internal position streaming clock to an external clock signal.&#xA;StreamBaseRate must be a whole-number multiple of the external sync rate.&#xA;&#xA;Value is ony used when trigger mode is set to external sync ( = 2)." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="1" maxAlarm="1000" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="External stream synchronization rate in Hz for the trajectory streaming.&#xA;May be used to synchronize the internal position streaming clock to an external clock signal.&#xA;StreamBaseRate must be a whole-number multiple of the external sync rate.&#xA;&#xA;Value is ony used when trigger mode is set to external sync ( = 2).&#xA;&#xA;Smaract property: SA_CTL_PKEY_STREAM_EXT_SYNC_RATE" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="1" maxAlarm="1000" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <readExcludedStates>FAULT</readExcludedStates>
       <readExcludedStates>OFF</readExcludedStates>
       <writeExcludedStates>FAULT</writeExcludedStates>
@@ -681,7 +697,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="Shows the maximum load generated by the current stream in percent. It acts like a peak&#xA;detector. The highest load level generated by the currently running stream is&#xA;shown. When starting the trajectory streaming  the load value is reset to zero." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="Shows the maximum load generated by the current stream in percent. It acts like a peak&#xA;detector. The highest load level generated by the currently running stream is&#xA;shown. When starting the trajectory streaming  the load value is reset to zero.&#xA;&#xA;Smaract property: SA_CTL_PKEY_STREAM_LOAD_MAX" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <readExcludedStates>FAULT</readExcludedStates>
       <readExcludedStates>OFF</readExcludedStates>
     </attributes>
@@ -691,7 +707,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="Will change to true when sufficient trajectory stream data have been transmitted&#xA;to the controller so streaming an be started.&#xA;A change event with value true when the stream is ready and with value&#xA;false when the stream is started will be emitted." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="Will change to true when sufficient trajectory stream data have been transmitted&#xA;to the controller so streaming an be started.&#xA;A change event with value true when the stream is ready and with value&#xA;false when the stream is started will be emitted.&#xA;&#xA;Smaract event:  SA_CTL_EVENT_STREAM_READY" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <readExcludedStates>FAULT</readExcludedStates>
       <readExcludedStates>OFF</readExcludedStates>
     </attributes>
@@ -701,7 +717,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="Will change to true when the trajectory stream is started and to false&#xA;when the stream is finished.&#xA;A change event with value true when the stream is started and with value&#xA;false when the stream is finished will be emitted." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="Will change to true when the trajectory stream is started and to false&#xA;when the stream is finished.&#xA;A change event with value true when the stream is started and with value&#xA;false when the stream is finished will be emitted.&#xA;&#xA;Smaract event: SA_CTL_EVENT_STREAM_FINISHED" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <readExcludedStates>FAULT</readExcludedStates>
       <readExcludedStates>OFF</readExcludedStates>
     </attributes>
@@ -711,9 +727,17 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="True, if io module is installed in the controller" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="True, if io module is installed in the controller.&#xA;&#xA;Checked by setting SA_CTL_PKEY_IO_MODULE_OPTIONS&#xA;with SA_CTL_IO_MODULE_OPT_BIT_DIGITAL_OUTPUT_ENABLED and evaluating the return code." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <readExcludedStates>FAULT</readExcludedStates>
       <readExcludedStates>OFF</readExcludedStates>
+    </attributes>
+    <attributes name="LinearInterpolation" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Enable / disable linear interpolation of path between consecutive stream target positions&#xA;true: enabled&#xA;false: disabled&#xA;&#xA;Smaract property: SA_CTL_PKEY_STREAM_OPTIONS/SA_CTL_STREAM_OPT_BIT_INTERPOLATION_DIS" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <attributes name="EventInfo" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="3" maxY="" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:UIntType"/>
@@ -755,7 +779,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="Internal use only" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <readExcludedStates>FAULT</readExcludedStates>
       <readExcludedStates>OFF</readExcludedStates>
     </dynamicAttributes>
