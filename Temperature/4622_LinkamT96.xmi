@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="LinkamT96" pogoRevision="9.6">
+    <description description="Tango device server for the Linkam T96 temperature controller." title="Linkam T96 Temperature Controller" sourcePath="/mxn/home/perhed/git/cosaxs/Pogo/LinkamT96Controller9" language="Cpp" filestogenerate="XMI   file,Code files,Makefile,CMakeLists,Protected Regions,html Pages" license="GPL" copyright="" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <identification contact="at maxiv.lu.se - KITS" author="KITS" emailDomain="maxiv.lu.se" classFamily="Temperature" siteSpecific="" platform="Unix Like" bus="USB" manufacturer="Linkam" reference="https://www.linkam.co.uk/t96"/>
+    </description>
+    <deviceProperties name="SimulationMode" description="Simulates the Linkam T96 HW when set to True.">
+      <type xsi:type="pogoDsl:BooleanType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>False</DefaultPropValue>
+    </deviceProperties>
+    <commands name="About" description="Reads information about the device." execMethod="about" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ForceCooling" description="Forces cooling at the currently programmed rate. &#xA;Used when a manual hold has been invoked.&#xA;If above setpoint, the cooling will stop when setpoint is reached.&#xA;If below setpoint, the cooling will continue with set rate.&#xA;Warning: Possible damage risk if stage over-cooled." execMethod="force_cooling" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>UNKNOWN</excludedStates>
+    </commands>
+    <commands name="ForceHeating" description="Forces heating at the currently programmed rate. &#xA;Used when a manual hold has been invoked.&#xA;If below setpoint, the heating will stop when setpoint is reached.&#xA;If above setpoint, the heating will continue with set rate.&#xA;Warning: Possible damage risk if stage over-heated." execMethod="force_heating" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>UNKNOWN</excludedStates>
+    </commands>
+    <commands name="ForceHold" description="Forces holding the temperature." execMethod="force_hold" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>UNKNOWN</excludedStates>
+    </commands>
+    <commands name="Start" description="Start heating or cooling at the rate specified by the Rate attribute." execMethod="start" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>INIT</excludedStates>
+      <excludedStates>MOVING</excludedStates>
+      <excludedStates>ON</excludedStates>
+      <excludedStates>UNKNOWN</excludedStates>
+    </commands>
+    <commands name="Stop" description="Stop the heating or cooling." execMethod="stop" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>INIT</excludedStates>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its device_status data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device status">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device state">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
+    </commands>
+    <attributes name="ControllerStatus" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Reads the controller status register." label="Controller Status" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <readExcludedStates>INIT</readExcludedStates>
+      <readExcludedStates>UNKNOWN</readExcludedStates>
+    </attributes>
+    <attributes name="HoldTime" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:FloatType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="The hold time (sec) for a ramp, the time to hold the temperature at reached setpoint." label="Hold Time" unit="sec" standardUnit="" displayUnit="" format="" maxValue="" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <readExcludedStates>INIT</readExcludedStates>
+      <readExcludedStates>UNKNOWN</readExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
+      <writeExcludedStates>INIT</writeExcludedStates>
+      <writeExcludedStates>UNKNOWN</writeExcludedStates>
+    </attributes>
+    <attributes name="LnpMode" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="The LNP auto/manual mode. True=Auto, False=Manual." label="LNP Mode" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <readExcludedStates>INIT</readExcludedStates>
+      <readExcludedStates>UNKNOWN</readExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
+      <writeExcludedStates>INIT</writeExcludedStates>
+      <writeExcludedStates>UNKNOWN</writeExcludedStates>
+    </attributes>
+    <attributes name="LnpSpeed" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:FloatType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="The LNP speed for the primary heater (%), i.e. the cooling power deployed." label="LNP Speed" unit="%" standardUnit="" displayUnit="" format="" maxValue="100" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <readExcludedStates>INIT</readExcludedStates>
+      <readExcludedStates>UNKNOWN</readExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
+      <writeExcludedStates>INIT</writeExcludedStates>
+      <writeExcludedStates>UNKNOWN</writeExcludedStates>
+    </attributes>
+    <attributes name="ProgramStatus" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Reads the program status register." label="Program Status" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <readExcludedStates>INIT</readExcludedStates>
+      <readExcludedStates>UNKNOWN</readExcludedStates>
+    </attributes>
+    <attributes name="Rate" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:FloatType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="The universal heater rate, the speed at which the temperature changes (degC/min)." label="Ramp Rate" unit="C/min" standardUnit="" displayUnit="" format="" maxValue="" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <readExcludedStates>INIT</readExcludedStates>
+      <readExcludedStates>UNKNOWN</readExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
+      <writeExcludedStates>INIT</writeExcludedStates>
+      <writeExcludedStates>UNKNOWN</writeExcludedStates>
+    </attributes>
+    <attributes name="Setpoint" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:FloatType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="The universal heater set point, the temperature to obtain (C)." label="Temperature Setpoint" unit="C" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <readExcludedStates>INIT</readExcludedStates>
+      <readExcludedStates>UNKNOWN</readExcludedStates>
+      <writeExcludedStates>FAULT</writeExcludedStates>
+      <writeExcludedStates>INIT</writeExcludedStates>
+      <writeExcludedStates>UNKNOWN</writeExcludedStates>
+    </attributes>
+    <attributes name="Temperature" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:FloatType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Reads the primary sensor temperature reading (degC)." label="Temperature" unit="C" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+      <readExcludedStates>INIT</readExcludedStates>
+      <readExcludedStates>UNKNOWN</readExcludedStates>
+    </attributes>
+    <states name="FAULT" description="When an error has occurred. Can only be cleard by INIT.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="INIT" description="During init_device only, thereafter changes to STANDBY until a movement changes it to MOVING.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="MOVING" description="While heating, cooling.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="ON" description="When the controller is started.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="STANDBY" description="After INIT and when the controller is stopped.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="UNKNOWN" description="">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="/usr/share/pogo/preferences"/>
+  </classes>
+</pogoDsl:PogoSystem>
