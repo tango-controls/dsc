@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="AttoCubeANC350Ctrl" pogoRevision="9.7">
+    <description description="Device server controller device for Attocube ANC350" title="" sourcePath="/home/blume/src/TangoSvn/tango-ds/DeviceClasses/Motion/MotorControllers/Attocube/AttoCubeANC350Ctrl/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" license="GPL" copyright="" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <identification contact="at desy.de - johannes.blume" author="johannes.blume" emailDomain="desy.de" classFamily="Motion" siteSpecific="" platform="Unix Like" bus="Not Applicable" manufacturer="https://www.attocube.com" reference="https://www.attocube.com/en/ressources/legacy-products"/>
+    </description>
+    <deviceProperties name="SerialNumber" mandatory="true" description="serial number, used to identfy device (on label at back of controller)">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device state">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its device_status data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device status">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="AxisState" description="internal use only" execMethod="axis_state" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="axis number">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="axis state:&#xA;0: 1 if axis is connected to a sensor.&#xA;1: 1 if voltage output is enabled&#xA;2: 1 if axis is moving&#xA;3: 1 if target is reached in automatic positioning&#xA;4: 1 if end of travel detected in forward direction&#xA;5: 1 if end of travel detected in backward direction&#xA;6: 1 if the axis` sensor is in error state">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="AxisEnable" description="internal use only" execMethod="axis_enable" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="0: axis number&#xA;1: 0/1  disables / enables voltage out&#xA;2: 0/1 disables / enables voltage output deactivation when end of travel is detected">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetPosition" description="internal use only" execMethod="get_position" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="axis number">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="current position">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SetPosition" description="internal use only" execMethod="set_position" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="0: axis number&#xA;1: target position">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SetFrequency" description="internal use only" execMethod="set_frequency" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="0: axis number&#xA;1: frequency">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetFrequency" description="internal use only" execMethod="get_frequency" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="axis number">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="current frequency">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetAmplitude" description="internal use only" execMethod="get_amplitude" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="axis number">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="current amplitude">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SetAmplitude" description="internal use only" execMethod="set_amplitude" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="0: axis number&#xA;1: amplitude">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="GetVoltage" description="internal use only" execMethod="get_voltage" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="axis number">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="current voltage">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SetVoltage" description="internal use only" execMethod="set_voltage" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="0: axis number&#xA;1: voltage">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SetTargetRange" description="internal use only" execMethod="set_target_range" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="0: axis number&#xA;1: range">
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SetTargetGround" description="internal use only" execMethod="set_target_ground" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="0: axis number&#xA;1: target ground flag">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <attributes name="FirmwareVersion" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:IntType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <preferences docHome="./doc_html" makefileHome="/usr/share/pogo/preferences"/>
+  </classes>
+</pogoDsl:PogoSystem>
