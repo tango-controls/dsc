@@ -120,6 +120,26 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <excludedStates>FAULT</excludedStates>
     </commands>
+    <commands name="SetAxisInfo" description="Set info for this axis (will be stored in h5 file)" execMethod="set_axis_info" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="long[0]: axis number&#xA;string[0]: axis info">
+        <type xsi:type="pogoDsl:LongStringArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="GetAxisInfo" description="Get info for this axis (will be stored in h5 file)" execMethod="get_axis_info" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="axis number">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
     <attributes name="WaveLengthControlState" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:IntType"/>
       <changeEvent fire="false" libCheckCriteria="false"/>
