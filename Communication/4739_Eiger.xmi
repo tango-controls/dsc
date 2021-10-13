@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl" name="Eiger">
+    <description language="PythonHL" description="" license="">
+      <identification classFamily="Communication" platform="All Platforms" reference="" manufacturer="" bus="" contact="kits@maxiv.edu.se"/>
+    </description>
+    <deviceProperties name="host" attType="Scalar" description="">
+      <type xsi:type="pogoDsl:StringType"/>
+    </deviceProperties>
+    <deviceProperties name="port" attType="Scalar" description="">
+      <type xsi:type="pogoDsl:IntType"/>
+    </deviceProperties>
+    <deviceProperties name="data_host" attType="Scalar" description="">
+      <type xsi:type="pogoDsl:StringType"/>
+    </deviceProperties>
+    <deviceProperties name="data_port" attType="Scalar" description="">
+      <type xsi:type="pogoDsl:IntType"/>
+    </deviceProperties>
+    <deviceProperties name="filewriter_host" attType="Scalar" description="">
+      <type xsi:type="pogoDsl:StringType"/>
+    </deviceProperties>
+    <deviceProperties name="filewriter_port" attType="Scalar" description="">
+      <type xsi:type="pogoDsl:IntType"/>
+    </deviceProperties>
+    <deviceProperties name="api_version" attType="Scalar" description="">
+      <type xsi:type="pogoDsl:StringType"/>
+    </deviceProperties>
+    <deviceProperties name="beamline" attType="Scalar" description="">
+      <type xsi:type="pogoDsl:StringType"/>
+    </deviceProperties>
+    <deviceProperties name="path_prefix" attType="Scalar" description="">
+      <type xsi:type="pogoDsl:StringType"/>
+    </deviceProperties>
+    <attributes name="MustArmFlag" attType="Scalar" rwType="READ_WRITE" description="Tells if arming is necessary, ussually after a parameter change">
+      <properties label="MustArmFlag" description="Tells if arming is necessary, ussually after a parameter change"/>
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+    </attributes>
+    <attributes name="NbImages" attType="Scalar" rwType="READ_WRITE" description="Number of images per series">
+      <properties label="NbImages" description="Number of images per series"/>
+      <dataType xsi:type="pogoDsl:IntType"/>
+    </attributes>
+    <attributes name="Temperature" attType="Scalar" rwType="READ" description="Detector temperature">
+      <properties label="Temperature" description="Detector temperature"/>
+      <dataType xsi:type="pogoDsl:FloatType"/>
+    </attributes>
+    <attributes name="Humidity" attType="Scalar" rwType="READ" description="Detector humidity">
+      <properties label="Humidity" description="Detector humidity"/>
+      <dataType xsi:type="pogoDsl:FloatType"/>
+    </attributes>
+    <attributes name="CountTime" attType="Scalar" rwType="READ_WRITE" description="CountTime">
+      <properties label="CountTime" description="CountTime"/>
+      <dataType xsi:type="pogoDsl:FloatType"/>
+    </attributes>
+    <attributes name="FrameTime" attType="Scalar" rwType="READ_WRITE" description="FrameTime">
+      <properties label="FrameTime" description="FrameTime"/>
+      <dataType xsi:type="pogoDsl:FloatType"/>
+    </attributes>
+    <attributes name="PhotonEnergy" attType="Scalar" rwType="READ_WRITE" description="PhotonEnergy">
+      <properties label="PhotonEnergy" description="PhotonEnergy"/>
+      <dataType xsi:type="pogoDsl:FloatType"/>
+    </attributes>
+    <attributes name="Wavelength" attType="Scalar" rwType="READ_WRITE" description="Wavelength">
+      <properties label="Wavelength" description="Wavelength"/>
+      <dataType xsi:type="pogoDsl:FloatType"/>
+    </attributes>
+    <attributes name="EnergyThreshold" attType="Scalar" rwType="READ_WRITE" description="EnergyThreshold">
+      <properties label="EnergyThreshold" description="EnergyThreshold"/>
+      <dataType xsi:type="pogoDsl:FloatType"/>
+    </attributes>
+    <attributes name="FlatfieldEnabled" attType="Scalar" rwType="READ_WRITE" description="FlatfieldEnabled">
+      <properties label="FlatfieldEnabled" description="FlatfieldEnabled"/>
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+    </attributes>
+    <attributes name="AutoSummationEnabled" attType="Scalar" rwType="READ_WRITE" description="AutoSummationEnabled">
+      <properties label="AutoSummationEnabled" description="AutoSummationEnabled"/>
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+    </attributes>
+    <attributes name="TriggerMode" attType="Scalar" rwType="READ_WRITE" description="TriggerMode">
+      <properties label="TriggerMode" description="TriggerMode"/>
+      <dataType xsi:type="pogoDsl:StringType"/>
+    </attributes>
+    <attributes name="RateCorrectionEnabled" attType="Scalar" rwType="READ_WRITE" description="RateCorrectionEnabled">
+      <properties label="RateCorrectionEnabled" description="RateCorrectionEnabled"/>
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+    </attributes>
+    <attributes name="BitDepth" attType="Scalar" rwType="READ" description="BitDepth">
+      <properties label="BitDepth" description="BitDepth"/>
+      <dataType xsi:type="pogoDsl:IntType"/>
+    </attributes>
+    <attributes name="ReadoutTime" attType="Scalar" rwType="READ" description="ReadoutTime">
+      <properties label="ReadoutTime" description="ReadoutTime"/>
+      <dataType xsi:type="pogoDsl:IntType"/>
+    </attributes>
+    <attributes name="Description" attType="Scalar" rwType="READ" description="Description">
+      <properties label="Description" description="Description"/>
+      <dataType xsi:type="pogoDsl:StringType"/>
+    </attributes>
+    <attributes name="Time" attType="Scalar" rwType="READ" description="Detector Time">
+      <properties label="Time" description="Detector Time"/>
+      <dataType xsi:type="pogoDsl:StringType"/>
+    </attributes>
+    <attributes name="NbTriggers" attType="Scalar" rwType="READ_WRITE" description="NbTriggers">
+      <properties label="NbTriggers" description="NbTriggers"/>
+      <dataType xsi:type="pogoDsl:IntType"/>
+    </attributes>
+    <attributes name="CountTimeInte" attType="Scalar" rwType="READ_WRITE" description="CountTimeInte">
+      <properties label="CountTimeInte" description="CountTimeInte"/>
+      <dataType xsi:type="pogoDsl:FloatType"/>
+    </attributes>
+    <attributes name="DownloadDirectory" attType="Scalar" rwType="READ_WRITE" description="DownloadDirectory">
+      <properties label="DownloadDirectory" description="DownloadDirectory"/>
+      <dataType xsi:type="pogoDsl:StringType"/>
+    </attributes>
+    <attributes name="DcuBufferFree" attType="Scalar" rwType="READ" description="DcuBufferFree Time">
+      <properties label="DcuBufferFree" description="DcuBufferFree Time"/>
+      <dataType xsi:type="pogoDsl:IntType"/>
+    </attributes>
+    <attributes name="BeamCenterX" attType="Scalar" rwType="READ_WRITE" description="BeamCenterX">
+      <properties label="BeamCenterX" description="BeamCenterX"/>
+      <dataType xsi:type="pogoDsl:IntType"/>
+    </attributes>
+    <attributes name="BeamCenterY" attType="Scalar" rwType="READ_WRITE" description="BeamCenterY">
+      <properties label="BeamCenterY" description="BeamCenterY"/>
+      <dataType xsi:type="pogoDsl:IntType"/>
+    </attributes>
+    <attributes name="DetectorDistance" attType="Scalar" rwType="READ_WRITE" description="DetectorDistance">
+      <properties label="DetectorDistance" description="DetectorDistance"/>
+      <dataType xsi:type="pogoDsl:FloatType"/>
+    </attributes>
+    <attributes name="OmegaIncrement" attType="Scalar" rwType="READ_WRITE" description="OmegaIncrement">
+      <properties label="OmegaIncrement" description="OmegaIncrement"/>
+      <dataType xsi:type="pogoDsl:FloatType"/>
+    </attributes>
+    <attributes name="OmegaStart" attType="Scalar" rwType="READ_WRITE" description="OmegaStart">
+      <properties label="OmegaStart" description="OmegaStart"/>
+      <dataType xsi:type="pogoDsl:FloatType"/>
+    </attributes>
+    <attributes name="Compression" attType="Scalar" rwType="READ_WRITE" description="Compression">
+      <properties label="Compression" description="Compression"/>
+      <dataType xsi:type="pogoDsl:StringType"/>
+    </attributes>
+    <attributes name="RoiMode" attType="Scalar" rwType="READ_WRITE" description="RoiMode">
+      <properties label="RoiMode" description="RoiMode"/>
+      <dataType xsi:type="pogoDsl:StringType"/>
+    </attributes>
+    <attributes name="XPixelSize" attType="Scalar" rwType="READ" description="XPixelSize">
+      <properties label="XPixelSize" description="XPixelSize"/>
+      <dataType xsi:type="pogoDsl:FloatType"/>
+    </attributes>
+    <attributes name="YPixelSize" attType="Scalar" rwType="READ" description="YPixelSize">
+      <properties label="YPixelSize" description="YPixelSize"/>
+      <dataType xsi:type="pogoDsl:FloatType"/>
+    </attributes>
+    <attributes name="XPixelsDetector" attType="Scalar" rwType="READ" description="XPixelsDetector">
+      <properties label="XPixelsDetector" description="XPixelsDetector"/>
+      <dataType xsi:type="pogoDsl:IntType"/>
+    </attributes>
+    <attributes name="YPixelsDetector" attType="Scalar" rwType="READ" description="YPixelsDetector">
+      <properties label="YPixelsDetector" description="YPixelsDetector"/>
+      <dataType xsi:type="pogoDsl:IntType"/>
+    </attributes>
+    <attributes name="FilesInBuffer" attType="Spectrum" maxX="1000" rwType="READ" description="FilesInBuffer">
+      <properties label="FilesInBuffer" description="FilesInBuffer"/>
+      <dataType xsi:type="pogoDsl:StringType"/>
+    </attributes>
+    <attributes name="Error" attType="Spectrum" rwType="READ" description="Error">
+      <properties label="Error" description="Error"/>
+      <dataType xsi:type="pogoDsl:StringType"/>
+    </attributes>
+    <attributes name="CollectionUUID" attType="Scalar" rwType="READ_WRITE" description="CollectionUUID">
+      <properties label="CollectionUUID" description="CollectionUUID"/>
+      <dataType xsi:type="pogoDsl:StringType"/>
+    </attributes>
+    <attributes name="HeaderDetail" attType="Scalar" rwType="READ_WRITE" description="HeaderDetail">
+      <properties label="HeaderDetail" description="HeaderDetail"/>
+      <dataType xsi:type="pogoDsl:StringType"/>
+    </attributes>
+    <attributes name="HeaderAppendix" attType="Scalar" rwType="READ_WRITE" description="HeaderAppendix">
+      <properties label="HeaderAppendix" description="HeaderAppendix"/>
+      <dataType xsi:type="pogoDsl:StringType"/>
+    </attributes>
+    <attributes name="ImageAppendix" attType="Scalar" rwType="READ_WRITE" description="ImageAppendix">
+      <properties label="ImageAppendix" description="ImageAppendix"/>
+      <dataType xsi:type="pogoDsl:StringType"/>
+    </attributes>
+    <attributes name="StreamState" attType="Scalar" rwType="READ" description="StreamState">
+      <properties label="StreamState" description="StreamState"/>
+      <dataType xsi:type="pogoDsl:StringType"/>
+    </attributes>
+    <attributes name="StreamError" attType="Spectrum" maxX="20" rwType="READ" description="StreamError">
+      <properties label="StreamError" description="StreamError"/>
+      <dataType xsi:type="pogoDsl:StringType"/>
+    </attributes>
+    <attributes name="StreamDropped" attType="Scalar" rwType="READ" description="StreamDropped">
+      <properties label="StreamDropped" description="StreamDropped"/>
+      <dataType xsi:type="pogoDsl:IntType"/>
+    </attributes>
+    <attributes name="FilewriterMode" attType="Scalar" rwType="READ_WRITE" description="Operation mode, can be enabled or disabled.">
+      <properties label="FilewriterMode" description="Operation mode, can be enabled or disabled."/>
+      <dataType xsi:type="pogoDsl:StringType"/>
+    </attributes>
+    <attributes name="TransferMode" attType="Scalar" rwType="READ_WRITE" description="Transfer mode. Currently only http is supported.">
+      <properties label="TransferMode" description="Transfer mode. Currently only http is supported."/>
+      <dataType xsi:type="pogoDsl:StringType"/>
+    </attributes>
+    <attributes name="ImagesPerFile" attType="Scalar" rwType="READ_WRITE" description="Number of images stored in a single data file.">
+      <properties label="ImagesPerFile" description="Number of images stored in a single data file."/>
+      <dataType xsi:type="pogoDsl:IntType"/>
+    </attributes>
+    <attributes name="ImageNbStart" attType="Scalar" rwType="READ_WRITE" description="image_nr_low metadata parameter in the first HDF5 data file.">
+      <properties label="ImageNbStart" description="image_nr_low metadata parameter in the first HDF5 data file."/>
+      <dataType xsi:type="pogoDsl:IntType"/>
+    </attributes>
+    <attributes name="FilenamePattern" attType="Scalar" rwType="READ_WRITE" description="The file naming pattern.">
+      <properties label="FilenamePattern" description="The file naming pattern."/>
+      <dataType xsi:type="pogoDsl:StringType"/>
+    </attributes>
+    <attributes name="CompressionEnabled" attType="Scalar" rwType="READ_WRITE" description="True if the LZ4 data compression is enabled, False otherwise.">
+      <properties label="CompressionEnabled" description="True if the LZ4 data compression is enabled, False otherwise."/>
+      <dataType xsi:type="pogoDsl:IntType"/>
+    </attributes>
+    <attributes name="FilewriterState" attType="Scalar" rwType="READ" description="The filewriter`s status. The status can be one of disabled,\nready, acquire, and error.">
+      <properties label="FilewriterState" description="The filewriter`s status. The status can be one of disabled,\nready, acquire, and error."/>
+      <dataType xsi:type="pogoDsl:StringType"/>
+    </attributes>
+    <attributes name="BufferFree" attType="Scalar" rwType="READ" description="Remaining buffer space in KB.">
+      <properties label="BufferFree" description="Remaining buffer space in KB."/>
+      <dataType xsi:type="pogoDsl:IntType"/>
+    </attributes>
+    <attributes name="FilewriterError" attType="Spectrum" maxX="20" rwType="READ" description="List of status parameters causing error state.">
+      <properties label="FilewriterError" description="List of status parameters causing error state."/>
+      <dataType xsi:type="pogoDsl:StringType"/>
+    </attributes>
+    <attributes name="MonitorMode" attType="Scalar" rwType="READ_WRITE" description="Monitor operation mode.">
+      <properties label="MonitorMode" description="Monitor operation mode."/>
+      <dataType xsi:type="pogoDsl:StringType"/>
+    </attributes>
+    <attributes name="BufferSize" attType="Scalar" rwType="READ_WRITE" description="Number of images that can be buffered in the monitor interface.">
+      <properties label="BufferSize" description="Number of images that can be buffered in the monitor interface."/>
+      <dataType xsi:type="pogoDsl:IntType"/>
+    </attributes>
+    <attributes name="MonitorState" attType="Scalar" rwType="READ" description="Monitor state, can be normal or overflow.">
+      <properties label="MonitorState" description="Monitor state, can be normal or overflow."/>
+      <dataType xsi:type="pogoDsl:StringType"/>
+    </attributes>
+    <attributes name="MonitorError" attType="Spectrum" maxX="20" rwType="READ" description="List of status parameters causing error condition.">
+      <properties label="MonitorError" description="List of status parameters causing error condition."/>
+      <dataType xsi:type="pogoDsl:StringType"/>
+    </attributes>
+    <commands name="Initialize">
+      <argin>
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout>
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+    </commands>
+    <commands name="Arm">
+      <argin>
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout>
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+    </commands>
+    <commands name="Trigger">
+      <argin>
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout>
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+    </commands>
+    <commands name="Abort">
+      <argin>
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout>
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+    </commands>
+    <commands name="Cancel">
+      <argin>
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout>
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+    </commands>
+    <commands name="ClearBuffer">
+      <argin>
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout>
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+    </commands>
+    <commands name="DeleteFileFromBuffer">
+      <argin>
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout>
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+    </commands>
+    <commands name="Disarm">
+      <argin>
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout>
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+    </commands>
+    <commands name="DownloadFilesFromBuffer">
+      <argin>
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout>
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+    </commands>
+    <commands name="EnableStream">
+      <argin>
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout>
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+    </commands>
+    <commands name="DisableStream">
+      <argin>
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout>
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+    </commands>
+    <commands name="FileWriterStart">
+      <argin>
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout>
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+    </commands>
+    <commands name="FileWriterStop">
+      <argin>
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout>
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+    </commands>
+    <commands name="FileWriterStatus">
+      <argin>
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout>
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+    </commands>
+    <commands name="ClearFilewriter">
+      <argin>
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout>
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+    </commands>
+    <commands name="InitializeFilewriter">
+      <argin>
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout>
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+    </commands>
+    <commands name="ClearMonitor">
+      <argin>
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout>
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+    </commands>
+    <commands name="InitializeMonitor">
+      <argin>
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout>
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+    </commands>
+  </classes>
+</pogoDsl:PogoSystem>
