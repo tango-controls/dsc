@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="Keithley6485" pogoRevision="8.4">
-    <description description="Class for controlling the Keithley Picoammeter Model 6485 via socket interface" title="Keithley 6485 Picoammeter" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/MeasureInstruments/Keithley/Keithley6485/trunk" language="Python" filestogenerate="XMI   file,Code files,html Pages" license="GPL" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+  <classes name="Keithley6485" pogoRevision="9.4">
+    <description description="Class for controlling the Keithley Picoammeter Model 6485 via socket interface" title="Keithley 6485 Picoammeter" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/MeasureInstruments/Keithley/Keithley6485/trunk" language="Python" filestogenerate="XMI   file,Code files,Protected Regions,html Pages" license="GPL" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
       <inheritances classname="Device_Impl" sourcePath=""/>
       <identification contact="at mail.desy.de - tnunez" author="tnunez" emailDomain="mail.desy.de" classFamily="MeasureInstruments" siteSpecific="" platform="Unix Like" bus="Socket" manufacturer="Keithley" reference="Model 6485"/>
     </description>
-    <deviceProperties name="IPAdress" mandatory="true" description="Ip Adress of the terminal server">
+    <deviceProperties name="IPAddress" description="Ip Address of the terminal server (in case it is used)">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>None</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="PortNb" description="Port Number (in case connection via terminal server)">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="SerialPort" description="Serial port with the rs232 connection, e.g. /dev/ttyUSB0.">
       <type xsi:type="pogoDsl:StringType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </deviceProperties>
-    <deviceProperties name="PortNb" description="Port Number">
-      <type xsi:type="pogoDsl:IntType"/>
+    <deviceProperties name="BaudRate" description="BaudRate (for direct connection via RS232)">
+      <type xsi:type="pogoDsl:StringType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </deviceProperties>
     <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
