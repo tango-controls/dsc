@@ -23,6 +23,11 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>true</DefaultPropValue>
     </deviceProperties>
+    <deviceProperties name="CommunicationProtocole" description="The communication protocole name : choose between ``SERIAL`` or ``ETHERNET``.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>SERIAL</DefaultPropValue>
+    </deviceProperties>
     <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="none.">
         <type xsi:type="pogoDsl:VoidType"/>
@@ -149,7 +154,7 @@
       <readExcludedStates>FAULT</readExcludedStates>
       <readExcludedStates>UNKNOWN</readExcludedStates>
     </attributes>
-    <attributes name="DoseSinceReset" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0" allocReadMember="false">
+    <attributes name="DoseSinceReset" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="0" maxY="0" allocReadMember="false" isDynamic="false">
       <dataType xsi:type="pogoDsl:DoubleType"/>
       <changeEvent fire="false" libCheckCriteria="false"/>
       <archiveEvent fire="false" libCheckCriteria="false"/>
@@ -199,7 +204,7 @@
       <readExcludedStates>FAULT</readExcludedStates>
       <readExcludedStates>UNKNOWN</readExcludedStates>
     </attributes>
-    <attributes name="ExternalAlarm" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true">
+    <attributes name="ExternalAlarm" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="false" isDynamic="false">
       <dataType xsi:type="pogoDsl:BooleanType"/>
       <changeEvent fire="false" libCheckCriteria="true"/>
       <archiveEvent fire="false" libCheckCriteria="true"/>
@@ -209,7 +214,7 @@
       <readExcludedStates>FAULT</readExcludedStates>
       <readExcludedStates>UNKNOWN</readExcludedStates>
     </attributes>
-    <attributes name="Temperature" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true">
+    <attributes name="Temperature" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="false" isDynamic="false">
       <dataType xsi:type="pogoDsl:DoubleType"/>
       <changeEvent fire="false" libCheckCriteria="true"/>
       <archiveEvent fire="false" libCheckCriteria="true"/>
@@ -219,7 +224,7 @@
       <readExcludedStates>FAULT</readExcludedStates>
       <readExcludedStates>UNKNOWN</readExcludedStates>
     </attributes>
-    <attributes name="LastResetDate" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true">
+    <attributes name="LastResetDate" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="false" isDynamic="false">
       <dataType xsi:type="pogoDsl:StringType"/>
       <changeEvent fire="false" libCheckCriteria="true"/>
       <archiveEvent fire="false" libCheckCriteria="true"/>
@@ -229,7 +234,7 @@
       <readExcludedStates>FAULT</readExcludedStates>
       <readExcludedStates>UNKNOWN</readExcludedStates>
     </attributes>
-    <attributes name="VialName" attType="Scalar" rwType="READ" displayLevel="EXPERT" polledPeriod="0" maxX="" maxY="" allocReadMember="true">
+    <attributes name="VialName" attType="Scalar" rwType="READ" displayLevel="EXPERT" polledPeriod="0" maxX="" maxY="" allocReadMember="false" isDynamic="false">
       <dataType xsi:type="pogoDsl:StringType"/>
       <changeEvent fire="false" libCheckCriteria="true"/>
       <archiveEvent fire="false" libCheckCriteria="true"/>
@@ -239,7 +244,7 @@
       <readExcludedStates>FAULT</readExcludedStates>
       <readExcludedStates>UNKNOWN</readExcludedStates>
     </attributes>
-    <attributes name="SerialNumber" attType="Scalar" rwType="READ" displayLevel="EXPERT" polledPeriod="0" maxX="" maxY="" allocReadMember="true">
+    <attributes name="SerialNumber" attType="Scalar" rwType="READ" displayLevel="EXPERT" polledPeriod="0" maxX="" maxY="" allocReadMember="false" isDynamic="false">
       <dataType xsi:type="pogoDsl:StringType"/>
       <changeEvent fire="false" libCheckCriteria="true"/>
       <archiveEvent fire="false" libCheckCriteria="true"/>
@@ -249,7 +254,7 @@
       <readExcludedStates>FAULT</readExcludedStates>
       <readExcludedStates>UNKNOWN</readExcludedStates>
     </attributes>
-    <attributes name="RemainingDrops" attType="Scalar" rwType="READ" displayLevel="EXPERT" polledPeriod="0" maxX="" maxY="" allocReadMember="true">
+    <attributes name="RemainingDrops" attType="Scalar" rwType="READ" displayLevel="EXPERT" polledPeriod="0" maxX="" maxY="" allocReadMember="false" isDynamic="false">
       <dataType xsi:type="pogoDsl:IntType"/>
       <changeEvent fire="false" libCheckCriteria="true"/>
       <archiveEvent fire="false" libCheckCriteria="true"/>
