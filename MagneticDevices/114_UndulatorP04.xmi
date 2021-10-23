@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="UndulatorP04" pogoRevision="8.4">
-    <description description="Executes virtual motor scripts" title="TANGO Device Server" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/MagneticDevices/UndulatorP04/trunk/new_src" language="Python" filestogenerate="XMI   file,Code files,html Pages" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+  <classes name="UndulatorP04" pogoRevision="9.4">
+    <description description="Executes virtual motor scripts" title="TANGO Device Server" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/MagneticDevices/UndulatorP04/trunk" language="Python" filestogenerate="XMI   file,Code files,Protected Regions,html Pages" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
       <inheritances classname="Device_4Impl" sourcePath=""/>
       <identification contact="at mail.desy.de - tnunez" author="tnunez" emailDomain="mail.desy.de" classFamily="MagneticDevices" siteSpecific="" platform="All Platforms" bus="Not Applicable" manufacturer="none" reference=""/>
     </description>
@@ -99,33 +99,37 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
-    <attributes name="PositionSim" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="1" maxY="1">
+    <attributes name="EnergySim" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="1" maxY="1" allocReadMember="false" isDynamic="false">
       <dataType xsi:type="pogoDsl:DoubleType"/>
       <changeEvent fire="false" libCheckCriteria="false"/>
       <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
-    <attributes name="ResultSim" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="1" maxY="1">
-      <dataType xsi:type="pogoDsl:StringType"/>
+    <attributes name="ResultGapSim" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="1" maxY="1" allocReadMember="false" isDynamic="false">
+      <dataType xsi:type="pogoDsl:IntType"/>
       <changeEvent fire="false" libCheckCriteria="false"/>
       <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
-    <attributes name="GapTarget" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="1" maxY="1">
-      <dataType xsi:type="pogoDsl:FloatType"/>
+    <attributes name="GapTarget" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="1" maxY="1" allocReadMember="false" isDynamic="false">
+      <dataType xsi:type="pogoDsl:IntType"/>
       <changeEvent fire="false" libCheckCriteria="false"/>
       <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="The gaptarget on the undulator." label="" unit="mm" standardUnit="" displayUnit="" format="" maxValue="220" minValue="9.5" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="The gaptarget on the undulator." label="" unit="um" standardUnit="" displayUnit="" format="" maxValue="148000" minValue="11000" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
-    <attributes name="Gap" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="1" maxY="1">
-      <dataType xsi:type="pogoDsl:FloatType"/>
+    <attributes name="Gap" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="1" maxY="1" allocReadMember="false" isDynamic="false">
+      <dataType xsi:type="pogoDsl:IntType"/>
       <changeEvent fire="false" libCheckCriteria="false"/>
       <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="The gap on the undulator." label="" unit="mm" standardUnit="" displayUnit="" format="" maxValue="220" minValue="9.5" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="The gap on the undulator." label="" unit="um" standardUnit="" displayUnit="" format="" maxValue="148000" minValue="11000" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <attributes name="Shift" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="1" maxY="1">
       <dataType xsi:type="pogoDsl:IntType"/>
@@ -140,13 +144,6 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="1 if shift is moving" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
-    </attributes>
-    <attributes name="ShiftModeToSet" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="1" maxY="1" memorized="true" memorizedAtInit="true">
-      <dataType xsi:type="pogoDsl:IntType"/>
-      <changeEvent fire="false" libCheckCriteria="false"/>
-      <archiveEvent fire="false" libCheckCriteria="false"/>
-      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="Value to be set when the shift wants to be moved. Last set value." label="" unit="um" standardUnit="" displayUnit="" format="" maxValue="3" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <states name="ON" description="">
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
