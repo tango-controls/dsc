@@ -38,7 +38,7 @@
     </commands>
     <commands name="CalibrateEncoder" description="Calibrate the encoder given as first argument to the value in the second one." execMethod="calibrate_encoder" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="Encoder number, value to calibrate to">
-        <type xsi:type="pogoDsl:IntArrayType"/>
+        <type xsi:type="pogoDsl:DoubleArrayType"/>
       </argin>
       <argout description="">
         <type xsi:type="pogoDsl:VoidType"/>
