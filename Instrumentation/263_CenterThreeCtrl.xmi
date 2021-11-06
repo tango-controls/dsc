@@ -75,7 +75,6 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <excludedStates>FAULT</excludedStates>
-      <excludedStates>OFF</excludedStates>
     </commands>
     <commands name="ReadCmd" description="Read from device. Used one the device send string without asking.&#xA;(mode set with command COM)." execMethod="read_cmd" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="">
@@ -85,16 +84,7 @@
         <type xsi:type="pogoDsl:StringType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <excludedStates>OFF</excludedStates>
     </commands>
-    <attributes name="ResetCounter" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
-      <dataType xsi:type="pogoDsl:UIntType"/>
-      <changeEvent fire="false" libCheckCriteria="false"/>
-      <archiveEvent fire="false" libCheckCriteria="false"/>
-      <dataReadyEvent fire="false" libCheckCriteria="true"/>
-      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
-    </attributes>
     <states name="ON" description="Everything ok">
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </states>
@@ -102,9 +92,6 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </states>
     <states name="ALARM" description="">
-      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-    </states>
-    <states name="OFF" description="">
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </states>
     <preferences docHome="./doc_html" makefileHome="/usr/share/pogo/preferences"/>
