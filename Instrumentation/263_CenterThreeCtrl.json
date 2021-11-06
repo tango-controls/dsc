@@ -1,10 +1,12 @@
 {
     "263": {
         "buses": [
+            "Ethernet", 
             "Ethernet"
         ], 
         "certified": "False", 
         "class_names": [
+            "CenterThreeCtrl", 
             "CenterThreeCtrl"
         ], 
         "detail_url": "https://www.tango-controls.org/developers/dsc/ds/263/", 
@@ -19,16 +21,19 @@
             }
         ], 
         "families": [
+            "Instrumentation", 
             "Instrumentation"
         ], 
-        "last_update": "2021-11-06 04:22:24.034835+00:00", 
+        "last_update": "2021-11-06 04:22:38.192110+00:00", 
         "last_update_method": "url", 
         "license": "None", 
         "manufacturers": [
+            "none", 
             "none"
         ], 
         "name": "CenterThreeCtrl", 
         "products": [
+            "", 
             ""
         ], 
         "repository_contact_email": "", 
