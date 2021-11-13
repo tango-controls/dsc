@@ -49,8 +49,10 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>MOVING</excludedStates>
+      <excludedStates>RUNNING</excludedStates>
     </commands>
-    <commands name="Calibrate" description="performs a calibration routine for a channel&#xA;&#xA;Smaract command: SA_CTL_Calibrate" execMethod="calibrate" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+    <commands name="CalibrateAxis" description="performs a calibration routine for a channel&#xA;&#xA;Smaract command: SA_CTL_Calibrate&#xA;&#xA;Mostly needed if you hooked up another positioner to this channel." execMethod="calibrate_axis" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="">
         <type xsi:type="pogoDsl:VoidType"/>
       </argin>
@@ -58,6 +60,9 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>MOVING</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>RUNNING</excludedStates>
     </commands>
     <commands name="Stop" description="Stop movement on this axis (holding will be disabled if in closed loop mode).&#xA;&#xA;Smaract command: SA_CTL_Stop" execMethod="stop" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="">
@@ -67,6 +72,19 @@
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>ON</excludedStates>
+    </commands>
+    <commands name="Calibrate" description="Set logical motor position to input value." execMethod="calibrate" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Calibration value">
+        <type xsi:type="pogoDsl:DoubleType"/>
+      </argin>
+      <argout description="either one or an exception will be thrown">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>MOVING</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>RUNNING</excludedStates>
     </commands>
     <dynamicCommands name="CmdVoidVoid" description="For internal use only" execMethod="cmd_void_void" displayLevel="OPERATOR" polledPeriod="0" isDynamic="true">
       <argin description="">
