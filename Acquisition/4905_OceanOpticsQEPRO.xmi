@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="OceanOpticsQEPRO" pogoRevision="9.7">
+    <description description="Tango device server for OceanOptics QE-PRO spectrometer" title="" sourcePath="/home/blume/src/TangoSvn/tango-ds/DeviceClasses/Acquisition/1D/OceanOpticsQEPRO/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" license="GPL" copyright="" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <identification contact="at desy.de - johannes,blume" author="johannes,blume" emailDomain="desy.de" classFamily="Acquisition" siteSpecific="" platform="Unix Like" bus="USB" manufacturer="https://www.oceaninsight.com" reference="https://www.oceaninsight.com/products/spectrometers/high-sensitivity/qepro-series/"/>
+    </description>
+    <deviceProperties name="SerialNumber" mandatory="true" description="Serial number of device, used for identification. If you do not know&#xA;it, plug the device into a linux box and check the output&#xA;of dmesg. You should find something like this:&#xA;&#xA;[17370053.227300] usb 6-2: new full-speed USB device number 2 using uhci_hcd&#xA;[17370053.416349] usb 6-2: New USB device found, idVendor=2457, idProduct 4004, bcdDevice= 0.67&#xA;[17370053.416352] usb 6-2: New USB device strings: Mfr=1, Product=2, SerialNumber=3&#xA;[17370053.416354] usb 6-2: Product: QE-PRO&#xA;[17370053.416356] usb 6-2: Manufacturer: Ocean Optics&#xA;[17370053.416358] usb 6-2: SerialNumber: QEP03366">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="TriggerDeviceAttribute" description="Name of device attribute which generates triggers (if you want to use triggers).&#xA;&#xA;Requirement: a value of 1 means trigger high, 0 means trigger low,&#xA;&#xA;If you cannot provide something like this, leave this property&#xA;at ````. You will then, if you run acquisition with TriggerMode 1 or 3,&#xA;have to make sure that the trigger line is high before you&#xA;call StopAcquisition. Otherwise acquisition will not stop.&#xA;&#xA;At the time of writing these datatypes are suppoted for TriggerDeviceAttribute:&#xA;- Tango::DevLong&#xA;- Tango::DevULong&#xA;-  Tango::DevBoolean&#xA;Can be extended on request">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>&quot;&quot;</DefaultPropValue>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device state">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its device_status data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device status">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="StartAcquisition" description="Start acquiring spectra. Depending on the set integration time&#xA;it may take a while  until you see valid data in attribute Spectrum." execMethod="start_acquisition" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>MOVING</excludedStates>
+    </commands>
+    <commands name="StopAcquisition" description="Stop acquiring spectra. Depending on the set integration time&#xA;it may take a while until the device goes from state MOVING ( = acquiring)&#xA;to state ON, since it will only go to ON after the current spectrum&#xA;has been read." execMethod="stop_acquisition" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>ON</excludedStates>
+      <excludedStates>FAULT</excludedStates>
+    </commands>
+    <commands name="GetDarkSpectrum" description="read dark spectrum and store it in file set in DarkSpectrumFile" execMethod="get_dark_spectrum" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>MOVING</excludedStates>
+    </commands>
+    <commands name="GetBrightSpectrum" description="read bright spectrum and store it in file set in BrightSpectrumFile" execMethod="get_bright_spectrum" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>MOVING</excludedStates>
+    </commands>
+    <attributes name="TriggerMode" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:IntType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Set trigger mode,&#xA;&#xA;0 = normal&#xA;1 = software&#xA;2 = synchronization&#xA;3 = external hardware&#xA;&#xA;There may be more, check your particular spectrometer`s data sheet&#xA;&#xA;Unfortunately there`s no way to find the state of the trigger from the device (the library&#xA;does only provide a set_trigger_state call, but not a get_trigger_call).&#xA;&#xA;To remedy this the server will set the trigger to 0 at server start; this means you have to&#xA;change that after server start if necessary." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="IntegrationTime" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:UIntType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Integration time in microseconds.&#xA;Unfortunately there`s no way to find the set integration time from the device.&#xA;&#xA;The server will set the time to the minimum value at start, change it if needed." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="Lamp" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Enable ( =true ) or disable ( = false) lamp.&#xA;Unfortunately there`s no way to find the set lamp state from the device.&#xA;&#xA;The server will set the lamp state to disabled at start, change it if needed." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="TecTemperature" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Read / write temperature of Thermoelectric cooler" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>MOVING</readExcludedStates>
+      <writeExcludedStates>MOVING</writeExcludedStates>
+    </attributes>
+    <attributes name="TEC" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Enable ( =true ) or disable ( = false) cooler.&#xA;Unfortunately there`s no way to find the set cooler state from the device.&#xA;&#xA;The server will set the cooler state to enabled at start, change it if needed." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="FileDir" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="directory path to store spectra  files in&#xA;&#xA;- the directory must exist&#xA;&#xA;- the server will check if the user running the server has write permissions for this directory,&#xA;  if not, the device will go to state fault / throw an exception&#xA;&#xA;- the attribute is memorized (last written value stored in tango db and read from there&#xA;  at server startup)" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="FilePrefix" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="String prefixed to file names (memorized attribute). Only supported format is hdf5, files will&#xA;have extension 'h5'." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="FileStartNum" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:UIntType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Start number for files:&#xA;&#xA;- incremented after every file&#xA;&#xA;- range 0 - 999999" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="FileSaving" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="if set to true, acquired spectra will be saved to files. Can be set / reset during acquisition." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="SpectraPerFile" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:UIntType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Max. number of spectra written to one file. A new file will be created whenever this value is surpassed.&#xA;0 means all frames go into one file." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="SpectraToAcquire" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:UIntType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Number of spectra to acquire. After this many spectra were acquired the acquisition will stop.&#xA;0 means acquire continuously until StopAcquisition is called." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="DarkSpectrumFile" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="BrightSpectrumFile" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <dynamicAttributes name="Spectrum" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="5000" maxY="" allocReadMember="false" isDynamic="true">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="true" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Spectrum data. A change event will be pushed whenever new data are available.&#xA;&#xA;The data can be read even if no acquisition was started, but only if IntegrationTime is &lt; 3 sec.&#xA;Otherwise the default tango attribute read timeout would hit.&#xA;&#xA;An exception will be thrown if you try to read with IntegrationTime > 3 sec." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+    </dynamicAttributes>
+    <dynamicAttributes name="WaveLength" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="5000" maxY="" allocReadMember="false" isDynamic="true">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="true" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Wavelength data. A change event will be pushed whenever new data are available." label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <readExcludedStates>FAULT</readExcludedStates>
+    </dynamicAttributes>
+    <states name="ON" description="Device is ok and ready to acquire spectra.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="FAULT" description="Something went bananas, check status.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="MOVING" description="Device is acquiring spectra.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="/usr/share/pogo/preferences"/>
+  </classes>
+</pogoDsl:PogoSystem>
