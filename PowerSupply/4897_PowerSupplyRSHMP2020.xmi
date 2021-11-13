@@ -27,7 +27,7 @@
       </argout>
       <status abstract="true" inherited="true" concrete="true"/>
     </commands>
-    <commands name="RampUpVoltage" description="Increase voltage in step size" execMethod="ramp_up_voltage" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+    <commands name="RampUpVoltage" description="Increase voltage in step size given by the attribute VoltageStepSize" execMethod="ramp_up_voltage" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="">
         <type xsi:type="pogoDsl:VoidType"/>
       </argin>
@@ -36,7 +36,7 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
-    <commands name="RampDownVoltage" description="Decrease voltage in step size" execMethod="ramp_down_voltage" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+    <commands name="RampDownVoltage" description="Decrease voltage in step size given by the attribute VoltageStepSize" execMethod="ramp_down_voltage" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="">
         <type xsi:type="pogoDsl:VoidType"/>
       </argin>
@@ -45,7 +45,7 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
-    <commands name="RampUpCurrent" description="Increase current in step size" execMethod="ramp_up_current" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+    <commands name="RampUpCurrent" description="Increase current in step size given by the attribute CurrentStepSize" execMethod="ramp_up_current" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="">
         <type xsi:type="pogoDsl:VoidType"/>
       </argin>
@@ -54,7 +54,7 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
-    <commands name="RampDownCurrent" description="Decrease current in step size" execMethod="ramp_down_current" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+    <commands name="RampDownCurrent" description="Decrease current in step size given by the attribute CurrentStepSize" execMethod="ramp_down_current" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="">
         <type xsi:type="pogoDsl:VoidType"/>
       </argin>
@@ -82,35 +82,35 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
     <commands name="ARBClear" description="Deletes the arbitrary waveform data of the selected channel." execMethod="arbclear" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
-      <argin description="Channel (1, 2, 3 or 4)">
-        <type xsi:type="pogoDsl:IntType"/>
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
       </argin>
       <argout description="">
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
-    <commands name="ARBLoadData" description="Defines the arbitrary voltage, current and time value &#xA;points for the selected channel from the file given as argument" execMethod="arbload_data" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
-      <argin description="File iwith defined sequence">
-        <type xsi:type="pogoDsl:StringType"/>
+    <commands name="ARBLoadData" description="Defines the arbitrary voltage, current and time value &#xA;points for the selected channel from the file &#xA;ARBFilePath/ARBFileName&#xA;The file format has to have the format:&#xA;v1,c1.t1,v2,c2,t2,...&#xA;or in lines&#xA;v1,c1,t1,&#xA;v2,c2,t2,&#xA;..." execMethod="arbload_data" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
       </argin>
       <argout description="">
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
-    <commands name="ARBLoadDataFromMemory" description="Loads a saved arbitrary waveform from the internal memory" execMethod="arbload_data_from_memory" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
-      <argin description="Memory (1, 2 or 3)">
-        <type xsi:type="pogoDsl:IntType"/>
+    <commands name="ARBLoadDataFromMemory" description="Loads a saved arbitrary waveform from the internal memory selected in ARBMemory" execMethod="arbload_data_from_memory" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
       </argin>
       <argout description="">
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
-    <commands name="ARBSaveDataToMemory" description="Saves the arbitrary waveform data in the internal memory. Up to three&#xA;waveforms can be saved in the internal memory" execMethod="arbsave_data_to_memory" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
-      <argin description="Memory (1, 2 or 3)">
-        <type xsi:type="pogoDsl:IntType"/>
+    <commands name="ARBSaveDataToMemory" description="Saves the arbitrary waveform data in the internal memory. Up to three&#xA;waveforms can be saved in the internal memory selected in ARBMemory" execMethod="arbsave_data_to_memory" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
       </argin>
       <argout description="">
         <type xsi:type="pogoDsl:VoidType"/>
@@ -118,8 +118,8 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
     <commands name="ARBStart" description="Starts the arbitrary sequence in the selected channel." execMethod="arbstart" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
-      <argin description="Channel (1, 2, 3 or 4)">
-        <type xsi:type="pogoDsl:IntType"/>
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
       </argin>
       <argout description="">
         <type xsi:type="pogoDsl:VoidType"/>
@@ -127,8 +127,8 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
     <commands name="ARBStop" description="Stops the arbitrary sequence in the selected channel." execMethod="arbstop" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
-      <argin description="Channel (1, 2, 3 or 4)">
-        <type xsi:type="pogoDsl:IntType"/>
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
       </argin>
       <argout description="">
         <type xsi:type="pogoDsl:VoidType"/>
@@ -137,7 +137,7 @@
     </commands>
     <commands name="ARBTransfer" description="Transfers the defined arbitrary points to the selected channel." execMethod="arbtransfer" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="Channel (1, 2, 3 or 4)">
-        <type xsi:type="pogoDsl:IntType"/>
+        <type xsi:type="pogoDsl:VoidType"/>
       </argin>
       <argout description="">
         <type xsi:type="pogoDsl:VoidType"/>
@@ -166,7 +166,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="" label="" unit="V" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="Used as step size by the RampUp/Down Voltage commands" label="" unit="V" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <attributes name="Current" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:DoubleType"/>
@@ -182,7 +182,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="" label="" unit="A" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="Used as step size by the RampUp/Down Current commands" label="" unit="A" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <attributes name="ChannelActive" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:IntType"/>
@@ -215,6 +215,38 @@
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="Sets the repetition rate for the arbitrary waveform for the selected channel. If set&#xA;to 0, the waveform is repited infinitely.&#xA;" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="255" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="ARBFilePath" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Path for file with input data for ARB" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="ARBFileName" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="File with input data for ARB" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="ARBChannel" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:IntType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Channel used by the ARB commands" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="4" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="ARBMemory" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" memorized="true" memorizedAtInit="true" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:IntType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Memory used by the ARB commands" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="3" minValue="0" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <states name="ON" description="">
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
