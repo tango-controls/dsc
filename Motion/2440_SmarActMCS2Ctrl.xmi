@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="SmarActMCS2Ctrl" pogoRevision="9.7">
-    <description description="Controller device server for MCS2 Smaract Control System.&#xA;&#xA;Commands / attributes of this class should never be called directly,&#xA;they are meant to be called from the SmarActMCS2Motor devices.&#xA;&#xA;If your controller is equipped with an IO module, you will see&#xA;an additional attribute:&#xA;&#xA;IoModuleOutputVoltage:&#xA;This attribute specifies the IO module output voltage for the digital outputs.&#xA;Valid value are:&#xA;0: 3V&#xA;1: 5V" title="" sourcePath="/home/blume/src/TangoSvn/tango-ds/DeviceClasses/Motion/MotorControllers/Smaract/SmarActMCS2Ctrl/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" license="GPL" copyright="" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+  <classes name="SmarActMCS2Ctrl" pogoRevision="9.6">
+    <description description="Controller device server for MCS2 Smaract Control System.&#xA;&#xA;Commands / attributes of this class should never be called directly,&#xA;they are meant to be called from the SmarActMCS2Motor devices.&#xA;&#xA;If your controller is equipped with an IO module, you will see&#xA;an additional attribute:&#xA;&#xA;IoModuleOutputVoltage:&#xA;This attribute specifies the IO module output voltage for the digital outputs.&#xA;Valid value are:&#xA;0: 3V&#xA;1: 5V" title="" sourcePath="/ssd/blume/src/TangoSvn/tango-ds/DeviceClasses/Motion/MotorControllers/Smaract/SmarActMCS2Ctrl/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" license="GPL" copyright="" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
       <inheritances classname="Device_Impl" sourcePath=""/>
       <identification contact="at desy.de - johannes.blume" author="johannes.blume" emailDomain="desy.de" classFamily="Motion" siteSpecific="" platform="Unix Like" bus="Not Applicable" manufacturer="Smaract" reference="http://www.smaract.com/products/control-systems/mcs2"/>
     </description>
@@ -559,6 +559,39 @@
     <commands name="SetSensorType" description="Sets sensort type code (use with care!)" execMethod="set_sensor_type" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="0: axis number&#xA;1: sensor type code (cf. Smaract docs). Use with care, setting a wrong sensortype&#xA;may damagage hardware">
         <type xsi:type="pogoDsl:UIntArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>OFF</excludedStates>
+    </commands>
+    <commands name="SetOffset" description="Set logical scale offset in encoder steps (Property SASA_CTL_PKEY_LOGICAL_SCALE_OFFSET)" execMethod="set_offset" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="0: Axis number&#xA;1: offset value">
+        <type xsi:type="pogoDsl:LongArrayType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>OFF</excludedStates>
+    </commands>
+    <commands name="GetOffset" description="returns current logical scale offset  (Property SASA_CTL_PKEY_LOGICAL_SCALE_OFFSET)" execMethod="get_offset" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Axis number">
+        <type xsi:type="pogoDsl:UIntType"/>
+      </argin>
+      <argout description="Currently set offset">
+        <type xsi:type="pogoDsl:LongType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <excludedStates>FAULT</excludedStates>
+      <excludedStates>OFF</excludedStates>
+    </commands>
+    <commands name="SetOffsetAbsolute" description="Since it`s almost impossible to set the offset to a precise value using&#xA;the axis devices Calibrate command (because the positioner will&#xA;constantly waggle a bit and the current position is used to &#xA;calculate the offset) you can use this to set the offset to an absolute value." execMethod="set_offset_absolute" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="0: Axis number&#xA;1: offset value">
+        <type xsi:type="pogoDsl:LongArrayType"/>
       </argin>
       <argout description="">
         <type xsi:type="pogoDsl:VoidType"/>
