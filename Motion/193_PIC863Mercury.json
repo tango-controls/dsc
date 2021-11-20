@@ -1,0 +1,41 @@
+{
+    "193": {
+        "buses": [
+            "Socket"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "PIC863Mercury"
+        ], 
+        "detail_url": "https://www.tango-controls.org/developers/dsc/ds/193/", 
+        "development_status": "released", 
+        "documentation": [
+            {
+                "documentation_type": "Generated", 
+                "pk": 343, 
+                "title": "PDF generated from POGO", 
+                "updated_by_script": true, 
+                "url": "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/tango-ds/Motion/PIC863Mercury/PIC863Mercury.pdf"
+            }
+        ], 
+        "families": [
+            "Motion"
+        ], 
+        "last_update": "2021-11-20 03:57:03.582483+00:00", 
+        "last_update_method": "url", 
+        "license": "GPL", 
+        "manufacturers": [
+            "PI"
+        ], 
+        "name": "PIC863Mercury", 
+        "products": [
+            "C863"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Motion/MotorControllers/PI/PIC863Mercury", 
+        "status": "updated", 
+        "tag": "Release_1_0", 
+        "update_url": "https://www.tango-controls.org/developers/dsc/ds/193/update/", 
+        "updated_by_script": true
+    }
+}
