@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="Serial" pogoRevision="9.4">
+    <description description="C++ source for the SerialClass" title="TANGO Device Server" sourcePath="/mntdirect/_segfs/tango/cppserver/protocols/SerialLine/src" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_4Impl" sourcePath=""/>
+      <identification contact="at esrf.fr - accelerator-control" author="accelerator-control" emailDomain="esrf.fr" classFamily="Communication" siteSpecific="" platform="All Platforms" bus="Serial Line" manufacturer="none" reference=""/>
+    </description>
+    <classProperties name="Simulated" description="If this property is true, do not connect to the serial port.&#xA;It is used when another device simulated this one.">
+      <type xsi:type="pogoDsl:BooleanType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>false</DefaultPropValue>
+    </classProperties>
+    <deviceProperties name="Serialline" description="The path and name of the serial line device to be used.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>/dev/ttyR1</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="Timeout" description="The timout value im ms for for answers of requests send to the serial line.&#xA;This value should be lower than the Tango client server timout value.">
+      <type xsi:type="pogoDsl:ShortType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>100</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="Parity" description="The parity used with the serial line protocol.&#xA;The possibilities are none, even or odd.">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>none</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="Charlength" description="The character length used with the serial line protocol.&#xA;The possibilities are 8, 7, 6 or 5 bits per character.">
+      <type xsi:type="pogoDsl:ShortType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>8</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="Stopbits" description="The number of stop bits used with the serial line protocol.&#xA;The possibilities are 1 or 2 stop bits">
+      <type xsi:type="pogoDsl:ShortType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>1</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="Baudrate" description="The communication speed in baud used with the serial line protocol.">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>9600</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="Newline" description="End of message Character used in particular by the DevSerReadLine command&#xA;Default = 13">
+      <type xsi:type="pogoDsl:ShortType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>13</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="Simulated" description="If this property is true, do not connect to the serial port.&#xA;It is used when another device simulated this one.">
+      <type xsi:type="pogoDsl:BooleanType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>false</DefaultPropValue>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="State Code">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its &lt;i>device_status&lt;/i> data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Status description">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
+    </commands>
+    <commands name="DevSerWriteString" description="Write a string of characters to a serial line and return&#xA;the number of characters written." execMethod="dev_ser_write_string" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="String to write">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="Number of characters written">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="DevSerWriteChar" description="Write N characters to a seria line and return the&#xA;number of characters written." execMethod="dev_ser_write_char" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Characters to write">
+        <type xsi:type="pogoDsl:CharArrayType"/>
+      </argin>
+      <argout description="Number of characters written">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="DevSerReadString" description="Win32 method :&#xA;Read a string of characters, the type of read is specified in the&#xA;input parameter SL_RAW SL_NCHAR SL_LINE" execMethod="dev_ser_read_string" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="type of read SL_RAW SL_NCHAR SL_LINE">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="String read">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="DevSerReadChar" description="Win32 method :&#xA;Read an array of characters, the type of read is specified in the&#xA;input parameter, it can be SL_RAW SL_NCHAR SL_LINE" execMethod="dev_ser_read_char" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="type of read SL_RAW SL_NCHAR SL_LINE">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="Array of characters read">
+        <type xsi:type="pogoDsl:CharArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="WriteRead" description="This method permit to send a request to a device throw the serial line and returns the&#xA;response of the device.&#xA;The commands write and read don't return until they have not finished." execMethod="write_read" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="type of reading strategy(RAW,NCHAR..),command to write on the port com">
+        <type xsi:type="pogoDsl:LongStringArrayType"/>
+      </argin>
+      <argout description="response of the device behind the serial line">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="DevSerGetNChar" description="Return the number of chars available in receiving buffer" execMethod="dev_ser_get_nchar" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="no argin">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="number of char available in receiving buffer">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="DevSerReadNChar" description="Read a string of N characters from the serial line&#xA;If there are no characters to be read returns an empty string." execMethod="dev_ser_read_nchar" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="number of the caracters to read on the serial line">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="pointer to the string read updated">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="DevSerReadRaw" description="read a string from the serialline device in mode raw (no end&#xA;of string expected, just empty the entire serialline receiving buffer)." execMethod="dev_ser_read_raw" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="no argin">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="pointer to the string read updated">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="DevSerReadLine" description="read a string from the serialline device in mode line (up to&#xA;and including the character specified by the NewLine property" execMethod="dev_ser_read_line" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="no argin">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="pointer to the string read updated">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="DevSerFlush" description="Win32 method :&#xA;Flush serial line port according to argin passed." execMethod="dev_ser_flush" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="flush to do 0=input 1=output 2=both">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="no argout">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="DevSerSetParameter" description="Set serial line parameters" execMethod="dev_ser_set_parameter" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="device parameters in pair">
+        <type xsi:type="pogoDsl:IntArrayType"/>
+      </argin>
+      <argout description="no argout">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="DevSerSetTimeout" description="This command sets the new timeout (in ms)." execMethod="dev_ser_set_timeout" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Value of the timeout to set">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="no argout">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="DevSerSetParity" description="Sets the new parity of the serial line.&#xA;NONE 0&#xA;ODD 1&#xA;EVEN 3" execMethod="dev_ser_set_parity" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="The new parity to set.">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="no argout">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="DevSerSetCharLength" description="Sets the new charlength.&#xA;0 = 8 bits&#xA;1 = 7 bits&#xA;2 = 6 bits&#xA;3 = 5 bits" execMethod="dev_ser_set_char_length" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="The new charlength to set">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="no argout">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="DevSerSetStopbit" description="Sets the new stop bit.&#xA;0 = none&#xA;1 = one stop&#xA;2 = 1.5 stop bit" execMethod="dev_ser_set_stopbit" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="The new stopbit to set">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="no argout">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="DevSerSetBaudrate" description="Sets the new baudrateof the serial line ( up to 4 Mega).&#xA;Default is 9600." execMethod="dev_ser_set_baudrate" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="The new baudrate to set">
+        <type xsi:type="pogoDsl:UIntType"/>
+      </argin>
+      <argout description="no argout">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="DevSerSetNewline" description="The new ending character in hexa.&#xA;Default is 0x13 (=CR" execMethod="dev_ser_set_newline" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="The new line character to set">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="no argout">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="DevSerReadRetry" description="read a string from the serialline device in mode raw (no end&#xA;of string expected, just empty the entire serialline receiving buffer).&#xA;If read successfull, read again &quot;nretry&quot; times." execMethod="dev_ser_read_retry" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="number of reading retries">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="pointer to the string read updated">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="DevSerReadNBinData" description="Read the specified number of char from the serial line.&#xA;If the number of caracters is greater than caracters avaiable, this command returns&#xA;all caracters avaiables.&#xA;If there are no characters to be read returns an empty array." execMethod="dev_ser_read_nbin_data" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="nb char to read">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argin>
+      <argout description="array of data">
+        <type xsi:type="pogoDsl:CharArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="DevSerWaitChar" description="Command blocks until a char is available or the timeout expired.&#xA;If the timeout value is 0 then the command returns immediately &#xA;with the number of chars available if any or timeout error if no char available" execMethod="dev_ser_wait_char" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Number of charcters in reading buffer">
+        <type xsi:type="pogoDsl:IntType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="DevSerSetParameterCompat" description="Set serial line parameters.&#xA;The command is the same as DevSerSetParameters, but takes the parameters&#xA;as a short array for compatibility with the old Taco interface." execMethod="dev_ser_set_parameter_compat" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Device parameters in pairs as a short array">
+        <type xsi:type="pogoDsl:ShortArrayType"/>
+      </argin>
+      <argout description="no argout">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="DevSerFlushCompat" description="Flush the serial line port according to argin passed.&#xA;The command is the same as DevSerFlush but takes the&#xA;input parameter as short value for compatibility with the old Taco&#xA;interface." execMethod="dev_ser_flush_compat" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="flush to do 0=input 1=output 2=both">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <preferences docHome="./doc_html" makefileHome="/segfs/tango/cppserver/env"/>
+  </classes>
+</pogoDsl:PogoSystem>
