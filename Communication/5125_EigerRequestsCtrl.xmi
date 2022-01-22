@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="EigerRequestsCtrl" pogoRevision="9.4">
+    <description description="The purpose of this class is to serialize the IO to the Eiger,&#xA;from the Detector server, the Filewriter, the monitor and&#xA;VCs." title="EigerRequestsCtrl" sourcePath="/home/kracht/tango-ds/DeviceClasses/Acquisition/2D/EigerRequestsCtrl/trunk" language="Python" filestogenerate="XMI   file,Code files,Protected Regions,html Pages" license="GPL" copyright="" hasMandatoryProperty="false" hasConcreteProperty="false" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <identification contact="at desy.de - thorsten.kracht" author="thorsten.kracht" emailDomain="desy.de" classFamily="Communication" siteSpecific="" platform="Unix Like" bus="Not Applicable" manufacturer="none" reference=""/>
+    </description>
+    <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device state">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its device_status data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device status">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="get" description="uses requests.get() to query a some value from the Eiger.&#xA;Input: json-encoded dictionary containing keys like:  &#xA;   host (IP address), port, api_version ( e.g. 1.8.0), &#xA;   subsystem (detector, filewriter, monitor), &#xA;   section (e.g. config, command), &#xA;   key (e.g. state, trigger_mode), timeout,return_full, &#xA;   to set Eiger parameter like e.g. state or trigger_mode&#xA;Output: json-encoded response of the requests.get() call" execMethod="get" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="arginDict">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="argoutDict">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="put" description="Uses requests.out() to set Eiger parameters&#xA;Input: json encoded dictionary containing: &#xA;    host (ID address), port, api_version (e.g. 1.8.0), &#xA;    subsystem ( detector, filewriter, monitor), &#xA;    section ( e.g. command, status), &#xA;    key (e.g. count_time), value, timeout, no_data&#xA;Output: json-encoded dictionary containing the response" execMethod="put" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="arginDict">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="responseDict">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <preferences docHome="./doc_html" makefileHome="/usr/share/pogo/preferences"/>
+  </classes>
+</pogoDsl:PogoSystem>
