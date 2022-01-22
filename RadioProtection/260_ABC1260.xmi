@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="ABC1260" pogoRevision="8.2">
-    <description description="This class reads dose and dose rate from the ABC1260 through a serial line.&#xA;The communication interface used is RS485.&#xA;No commands Start, Stop needed." title="ABC1260 Neutron Dosimeter" sourcePath="/home/informatique/ica/elattaoui/devSrc/ABC1260/src" language="Cpp" filestogenerate="XMI   file,Code files,html Pages" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
-      <inheritances classname="Device_4Impl" sourcePath="/segfs/tango/templates/AbstractClasses"/>
+  <classes name="ABC1260" pogoRevision="9.6">
+    <description description="This class reads dose and dose rate from the ABC1260 through a serial line.&#xA;The communication interface used is RS485.&#xA;No commands Start, Stop needed." title="ABC1260 Neutron Dosimeter" sourcePath="/home/informatique/ica/elattaoui/devSrc/ABC1260/src" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions,html Pages" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+      <inheritances classname="Device_4Impl" sourcePath="../../../../../../../segfs/tango/templates/AbstractClasses"/>
       <identification contact="at esrf.fr - chaize" author="chaize" emailDomain="esrf.fr" classFamily="RadioProtection" siteSpecific="" platform="All Platforms" bus="Serial Line" manufacturer="none" reference=""/>
     </description>
     <deviceProperties name="SerialProxyName" description="The name of the Serial DServer used">
@@ -27,6 +27,10 @@
       <type xsi:type="pogoDsl:StringType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>SERIAL</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="DisableAlarmsList" description="Define here which alarm(s) should be disabled.&#xA;Possible values : &#xA;``battery``, ``vial``, ``dose``, ``rate``">
+      <type xsi:type="pogoDsl:StringVectorType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </deviceProperties>
     <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="none.">
@@ -276,6 +280,6 @@
     <states name="UNKNOWN" description="ABC is in an unkwnon state.&#xA;Please swtich OFF it before sending any command.">
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </states>
-    <preferences docHome="../doc/doc_html" makefileHome="$(TANGO_HOME)"/>
+    <preferences docHome="./doc_html" makefileHome="$(TANGO_HOME)"/>
   </classes>
 </pogoDsl:PogoSystem>
