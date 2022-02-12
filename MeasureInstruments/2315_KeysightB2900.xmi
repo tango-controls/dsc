@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="KeysightB2900" pogoRevision="8.4">
-    <description description="Class for controlling a Precision Source/Measure Unit from Keysight Technologies B2900 Series " title="Keysight B2900" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/MeasureInstruments/Agilent/KeysightB2900/trunk" language="Python" filestogenerate="XMI   file,Code files,html Pages" license="GPL" hasMandatoryProperty="true" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
+  <classes name="KeysightB2900" pogoRevision="9.4">
+    <description description="Class for controlling a Precision Source/Measure Unit from Keysight Technologies B2900 Series " title="Keysight B2900" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/MeasureInstruments/KeysightB2900/trunk" language="Python" filestogenerate="XMI   file,Code files,Protected Regions,html Pages" license="GPL" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
       <inheritances classname="Device_Impl" sourcePath=""/>
       <identification contact="at mail.desy.de - tnunez" author="tnunez" emailDomain="mail.desy.de" classFamily="MeasureInstruments" siteSpecific="" platform="Unix Like" bus="Data Socket" manufacturer="Keiysight (Agilent)" reference="B2900 Series"/>
     </description>
-    <deviceProperties name="IpAddress" mandatory="true" description="Ip address of the device">
+    <deviceProperties name="IpAddress" description="Ip address of the device">
       <type xsi:type="pogoDsl:StringType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </deviceProperties>
