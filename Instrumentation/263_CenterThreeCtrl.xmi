@@ -1,49 +1,50 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="CenterThreeCtrl" pogoRevision="9.7">
-    <description description="" title="CenterThreeCtrl" sourcePath="/home/blume/src/TangoSvn/tango-ds/DeviceClasses/SampleEnvironment/CenterThreeCtrl/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+  <classes name="CenterThreeCtrl" pogoRevision="9.6">
+    <description description="Controller class for Pfeiffer CenterThree devices.&#xA;To be used in conjunction with CenterThree/CenterThreeCOM class." title="CenterThreeCtrl" sourcePath="/ssd/blume/src/TangoSvn/tango-ds/DeviceClasses/SampleEnvironment/CenterThreeCtrl/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions,html Pages" license="GPL" copyright="" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="false">
       <inheritances classname="Device_4Impl" sourcePath=""/>
-      <identification contact="at desy.de - johannes.blume" author="johannes.blume" emailDomain="desy.de" classFamily="Instrumentation" siteSpecific="" platform="Unix Like" bus="Ethernet" manufacturer="none" reference=""/>
+      <identification contact="at desy.de - johannes.blume" author="johannes.blume" emailDomain="desy.de" classFamily="Instrumentation" siteSpecific="" platform="Unix Like" bus="Ethernet" manufacturer="Pfeiffer" reference="https://www.pfeiffer-vacuum.com/en/products/measurement-analysis/measurement/centerline/centerline-controllers/16619/centerthree-controller-for-3-gauges"/>
     </description>
-    <deviceProperties name="HostName" description="Hostname or IP Address">
+    <deviceProperties name="HostName" description="Hostname or IP Address of either a terminal server&#xA;the device is connected to or of the device itself if it has&#xA;TCP/IP connectivity.">
       <type xsi:type="pogoDsl:StringType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>&quot;&quot;</DefaultPropValue>
     </deviceProperties>
-    <deviceProperties name="PortNumber" description="Port number">
+    <deviceProperties name="PortNumber" description="Port number of either a terminal server  or the device itself&#xA;if it is connected directly to the network. In the latter case&#xA;the value is 8000.">
       <type xsi:type="pogoDsl:StringType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </deviceProperties>
-    <deviceProperties name="SimulationMode" description="">
+    <deviceProperties name="SimulationMode" description="If set to true, run in simulated mode (no hardware required)">
       <type xsi:type="pogoDsl:IntType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>false</DefaultPropValue>
     </deviceProperties>
     <deviceProperties name="NrChannels" description="Max. Number of channels">
       <type xsi:type="pogoDsl:IntType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>3</DefaultPropValue>
     </deviceProperties>
-    <deviceProperties name="ConnectType" description="`net` or `serial`">
+    <deviceProperties name="ConnectType" description="`net` (for network/terminal server connection) or &#xA;`serial` (for RS232/USB connection).">
       <type xsi:type="pogoDsl:StringType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>&quot;&quot;</DefaultPropValue>
     </deviceProperties>
-    <deviceProperties name="DeviceFile" description="tty device file">
+    <deviceProperties name="DeviceFile" description="tty device file if connected via RS232 /USB">
       <type xsi:type="pogoDsl:StringType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>&quot;&quot;</DefaultPropValue>
     </deviceProperties>
-    <deviceProperties name="BaudRate" description="rs232 baud rate">
+    <deviceProperties name="BaudRate" description="rs232/usb baud rate">
       <type xsi:type="pogoDsl:IntType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>0</DefaultPropValue>
     </deviceProperties>
-    <deviceProperties name="TalkContinously" description="If set to true, the server will send a COM to the controller&#xA;at server start (making the controller send measurement data&#xA;continuously).&#xA;Set this to true, if you use this controller device with the&#xA;CenterThreeCOM class. Otherwise leave it at false.">
+    <deviceProperties name="TalkContinuously" description="If set to true, the controller will be configured to&#xA;continuously send measurement data.&#xA;&#xA;Set this to true if you want to use this class with the&#xA;CenterThreeCom server.&#xA;&#xA;Set this to false if you want to use this class with the&#xA;CenterThree server.">
       <type xsi:type="pogoDsl:BooleanType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>false</DefaultPropValue>
     </deviceProperties>
-    <deviceProperties name="TalkContinouslyRate" description="Time interval of the controller sending measurement data if&#xA;TalkContinously is set to true.&#xA;0: 100 milliseconds&#xA;1: one second (default)&#xA;2: 1 minute">
+    <deviceProperties name="TalkContinuouslyRate" description="The rate at which data are sent from the controller &#xA;if TalkContinuously is set to true:&#xA;&#xA;0: 10 times per second&#xA;1: once per second&#xA;2: once per minute">
       <type xsi:type="pogoDsl:IntType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>1</DefaultPropValue>
@@ -76,7 +77,7 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <excludedStates>FAULT</excludedStates>
     </commands>
-    <commands name="ReadCmd" description="Read from device. Used one the device send string without asking.&#xA;(mode set with command COM)." execMethod="read_cmd" displayLevel="OPERATOR" polledPeriod="0">
+    <commands name="ReadCmd" description="Read from device. Used only with CenterThreeCom device server." execMethod="read_cmd" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
       <argin description="">
         <type xsi:type="pogoDsl:VoidType"/>
       </argin>
