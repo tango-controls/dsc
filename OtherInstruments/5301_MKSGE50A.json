@@ -1,0 +1,33 @@
+{
+    "5301": {
+        "buses": [
+            "Modbus"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "MKSGE50A"
+        ], 
+        "detail_url": "https://www.tango-controls.org/developers/dsc/ds/5301/", 
+        "development_status": "released", 
+        "documentation": [], 
+        "families": [
+            "OtherInstruments"
+        ], 
+        "last_update": "2022-03-12 04:06:47.047993+00:00", 
+        "last_update_method": "url", 
+        "license": "GPL", 
+        "manufacturers": [
+            "MKS"
+        ], 
+        "name": "MKSGE50A", 
+        "products": [
+            "https://www.mksinst.com/f/ge50a-mass-flow-controller"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/OtherInstruments/MKS/MKSGE50A", 
+        "status": "new", 
+        "tag": "Release_1_0", 
+        "update_url": "https://www.tango-controls.org/developers/dsc/ds/5301/update/", 
+        "updated_by_script": true
+    }
+}
