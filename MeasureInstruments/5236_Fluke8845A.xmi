@@ -5,7 +5,7 @@
       <inheritances classname="Device_Impl" sourcePath=""/>
       <identification contact="at mail.desy.de - tnunez" author="tnunez" emailDomain="mail.desy.de" classFamily="MeasureInstruments" siteSpecific="" platform="Unix Like" bus="Ethernet" manufacturer="Fluke" reference="8845A"/>
     </description>
-    <deviceProperties name="IpAddress" description="">
+    <deviceProperties name="IPAddress" description="">
       <type xsi:type="pogoDsl:StringType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </deviceProperties>
