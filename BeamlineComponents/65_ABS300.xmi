@@ -109,7 +109,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="The next attenuation value higher than the one set which would result in a slide&#xA;configuration change.&#xA;&#xA;Value will only be updated if attenuaton was changed via attribute&#xA;Attenuation, but not if slides were moved with command Move or by writing true/false to the&#xA;SlideXX attributes." label="" unit="%" standardUnit="%" displayUnit="%" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="The next attenuation value higher than the one set which would result in a slide&#xA;configuration change." label="" unit="%" standardUnit="%" displayUnit="%" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <readExcludedStates>FAULT</readExcludedStates>
       <writeExcludedStates>FAULT</writeExcludedStates>
       <writeExcludedStates>RUNNING</writeExcludedStates>
@@ -120,7 +120,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="The next attenuation value lower than the one set which would result in a slide&#xA;configuration change.&#xA;&#xA;Value will only be updated if attenuaton was changed via attribute&#xA;Attenuation, but not if slides were moved with command Move or by writing true/false to the&#xA;SlideXX attributes." label="" unit="%" standardUnit="%" displayUnit="%" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="The next attenuation value lower than the one set which would result in a slide&#xA;configuration change." label="" unit="%" standardUnit="%" displayUnit="%" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
       <readExcludedStates>FAULT</readExcludedStates>
       <writeExcludedStates>FAULT</writeExcludedStates>
       <writeExcludedStates>RUNNING</writeExcludedStates>
