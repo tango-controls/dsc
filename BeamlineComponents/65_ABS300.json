@@ -1,10 +1,12 @@
 {
     "65": {
         "buses": [
+            "Modbus", 
             "Modbus"
         ], 
         "certified": "False", 
         "class_names": [
+            "ABS300", 
             "ABS300"
         ], 
         "detail_url": "https://www.tango-controls.org/developers/dsc/ds/65/", 
@@ -19,16 +21,19 @@
             }
         ], 
         "families": [
+            "BeamlineComponents", 
             "BeamlineComponents"
         ], 
-        "last_update": "2022-04-30 03:02:43.718548+00:00", 
+        "last_update": "2022-04-30 03:02:57.757428+00:00", 
         "last_update_method": "url", 
         "license": "GPL", 
         "manufacturers": [
+            "www.adc9001.com", 
             "www.adc9001.com"
         ], 
         "name": "ABS300", 
         "products": [
+            "www.adc9001.com/products/view/637", 
             "www.adc9001.com/products/view/637"
         ], 
         "repository_contact_email": "", 
