@@ -324,7 +324,7 @@
     </attributes>
     <attributes name="Image8" attType="Image" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="16000" maxY="16000" allocReadMember="false" isDynamic="false">
       <dataType xsi:type="pogoDsl:UCharType"/>
-      <changeEvent fire="false" libCheckCriteria="false"/>
+      <changeEvent fire="true" libCheckCriteria="false"/>
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="true" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
@@ -333,7 +333,7 @@
     </attributes>
     <attributes name="Image16" attType="Image" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="16000" maxY="16000" allocReadMember="false" isDynamic="false">
       <dataType xsi:type="pogoDsl:UShortType"/>
-      <changeEvent fire="false" libCheckCriteria="false"/>
+      <changeEvent fire="true" libCheckCriteria="false"/>
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="true" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
@@ -342,7 +342,7 @@
     </attributes>
     <attributes name="ImageRaw" attType="Image" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="1024000000" maxY="1" allocReadMember="false" isDynamic="false">
       <dataType xsi:type="pogoDsl:UCharType"/>
-      <changeEvent fire="false" libCheckCriteria="false"/>
+      <changeEvent fire="true" libCheckCriteria="false"/>
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="true" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
@@ -351,7 +351,7 @@
     </attributes>
     <attributes name="ImageRGB" attType="Image" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="16000" maxY="16000" allocReadMember="false" isDynamic="false">
       <dataType xsi:type="pogoDsl:UIntType"/>
-      <changeEvent fire="false" libCheckCriteria="false"/>
+      <changeEvent fire="true" libCheckCriteria="false"/>
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="true" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
