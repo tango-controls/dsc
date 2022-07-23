@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="Pilatus" pogoRevision="8.4">
-    <description description="Pilatus detectors are a series pixel detecors build by DECTRIS&#xA;&lt;br />&#xA;http://www.dectris.com.&#xA;&lt;br />&#xA;All detectors of this series can talk to the outside world via a socket&#xA;connection. An ASCI protocol is used on this sockect connection to&#xA;communicate with the detector.&#xA;&lt;p>&#xA;The server process which handles the socket on the detecor PC is&#xA;called camserver. Only one client can commumicate with camserver.&#xA;If the native client tvx is connected, the device server cannot connect until&#xA;tvx gets disconnected.&#xA;&lt;/p>" title="Interface class for the Pilatus detectors" sourcePath="/home/kracht/tango-ds/DeviceClasses/Acquisition/2D/Pilatus/trunk" language="Cpp" filestogenerate="XMI   file,Code files" license="GPL" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+  <classes name="Pilatus" pogoRevision="9.4">
+    <description description="Pilatus detectors are a series pixel detecors build by DECTRIS&#xA;&lt;br />&#xA;http://www.dectris.com.&#xA;&lt;br />&#xA;All detectors of this series can talk to the outside world via a socket&#xA;connection. An ASCI protocol is used on this sockect connection to&#xA;communicate with the detector.&#xA;&lt;p>&#xA;The server process which handles the socket on the detecor PC is&#xA;called camserver. Only one client can commumicate with camserver.&#xA;If the native client tvx is connected, the device server cannot connect until&#xA;tvx gets disconnected.&#xA;&lt;/p>" title="Interface class for the Pilatus detectors" sourcePath="/home/tnunez/Tango_svn/DeviceClasses/Acquisition/2D/Pilatus/trunk" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions,html Pages" license="GPL" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false" descriptionHtmlExists="true">
       <inheritances classname="Device_4Impl" sourcePath=""/>
       <identification contact="at esrf.fr - meyer" author="meyer" emailDomain="esrf.fr" classFamily="Acquisition" siteSpecific="" platform="Unix Like" bus="Ethernet" manufacturer="none" reference=""/>
     </description>
@@ -77,6 +77,15 @@
     <commands name="MXsettings" description="Set crystallographic parameters in the image header." execMethod="mxsettings" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="The input string must be in the form:\n\n[parm_name value] [parm_name value] ...\n\nPossible parameter names are: Wavelength, Energy_range, Detector_distance, ...\n(see Pilatus manual for a complete list).">
         <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="SetThresholdAndEnergy" description="Set threshold and energy together" execMethod="set_threshold_and_energy" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="Threshold Energy">
+        <type xsi:type="pogoDsl:IntArrayType"/>
       </argin>
       <argout description="">
         <type xsi:type="pogoDsl:VoidType"/>
