@@ -102,15 +102,24 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
-    <commands name="WriteRaw" description="Write string given in argin to device without adding a line terminator" execMethod="write_raw" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
-      <argin description="">
-        <type xsi:type="pogoDsl:StringType"/>
+    <commands name="WriteRaw" description="Write data given in argin to device `as is`." execMethod="write_raw" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="data to write">
+        <type xsi:type="pogoDsl:CharArrayType"/>
       </argin>
       <argout description="">
         <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
-    <preferences docHome="./doc_html" makefileHome="/usr/share/pogo/preferences"/>
+    <commands name="ReadRaw" description="Read number of bytes given i argin from device." execMethod="read_raw" displayLevel="OPERATOR" polledPeriod="0" isDynamic="false">
+      <argin description="amount of bytes to read">
+        <type xsi:type="pogoDsl:UIntType"/>
+      </argin>
+      <argout description="data read">
+        <type xsi:type="pogoDsl:CharArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <preferences docHome="./doc_html" makefileHome="$(TANGO_DIR)/Libraries/cppserver/common"/>
   </classes>
 </pogoDsl:PogoSystem>
