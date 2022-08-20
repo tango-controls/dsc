@@ -1,0 +1,33 @@
+{
+    "5775": {
+        "buses": [
+            "Ethernet"
+        ], 
+        "certified": "False", 
+        "class_names": [
+            "TDCRoentdekCoboldPCCtrl"
+        ], 
+        "detail_url": "https://www.tango-controls.org/developers/dsc/ds/5775/", 
+        "development_status": "new", 
+        "documentation": [], 
+        "families": [
+            "Acquisition"
+        ], 
+        "last_update": "2022-08-20 02:43:59.057950+00:00", 
+        "last_update_method": "url", 
+        "license": "GPL", 
+        "manufacturers": [
+            "RoentDek"
+        ], 
+        "name": "TDCRoentdekCoboldPCCtrl", 
+        "products": [
+            "TDC8HQ"
+        ], 
+        "repository_contact_email": "", 
+        "repository_url": "http://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Acquisition/1D/TDCRoentdekCoboldPCCtrl", 
+        "status": "new", 
+        "tag": null, 
+        "update_url": "https://www.tango-controls.org/developers/dsc/ds/5775/update/", 
+        "updated_by_script": true
+    }
+}
